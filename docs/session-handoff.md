@@ -54,6 +54,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The official Firebase action for previews needs a JSON key. M-1 tests the command line tool with keyless credentials first.
 - Astro 7 needs Node 22.12 or newer, and the default Node on this Mac is 20.17.0.
 - A typed answer can name a platform and not a choice. Ask a follow-up before you record it.
+- In this shell, `set -e` did not stop a script after `make verify` failed, and a commit with a finding reached PR #2. Chain each step with `&&`.
 
 ### Open questions that block progress
 

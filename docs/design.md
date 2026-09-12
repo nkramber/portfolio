@@ -137,7 +137,7 @@ Scope: the four checks of D-38, each as a `verify:site-*` job and a `make` targe
 Exit tests:
 
 - Each check passes on the placeholder page.
-- Each check fails on a fixture that holds its own planted defect: a wide element, a missing alt text, a large image, or a broken anchor.
+- Each check fails on a fixture with one planted defect. The defects: a wide element, a missing alt text, a large image, and a broken anchor.
 - `make verify` runs all four checks.
 
 Gate: each check joins the `main` ruleset after its first green run (D-11, D-38).
