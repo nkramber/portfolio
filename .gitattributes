@@ -1,0 +1,2 @@
+# One line ending on every platform. The STE checker and the diffs read LF.
+* text=auto eol=lf
