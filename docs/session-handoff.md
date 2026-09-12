@@ -6,15 +6,15 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-12)
 
-- **Main:** `e6369bd`, the first commit. It holds an empty `CLAUDE.md`.
-- **Open pull requests:** #1 (`docs/foundation`), approved by Gitar and ready to merge. PR-2, roadmap draft 1 (`docs/roadmap-draft-1`), stacked on #1, waits for the Gitar review.
-- **Next action:** after the owner merges #1, add `verify:docs` to the `main` ruleset, and rebase PR-2 onto `main`.
-- **Blocked on:** PR-3 waits for the merge of PR-2. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
+- **Main:** `dcd98e6`, the squash merge of PR #1, the repository foundation.
+- **Open pull requests:** PR #2, roadmap draft 1 (`docs/roadmap-draft-1`), rebased onto `main`. It waits for the Gitar review of its new head.
+- **Next action:** answer the Gitar review of PR #2. After the owner merges it, start PR-3, the Astro scaffold.
+- **Blocked on:** PR-3 waits for the merge of PR #2. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
 - **Next ids:** D-44, OQ-6, M-4, PR-14, Session 3.
 
 ## Facts that expire
 
-- The GitHub settings, read 2026-09-12: squash merge alone, automatic delete of a merged branch, and ruleset `main` (id 23087504). The ruleset requires a pull request and refuses a force push and a delete. It holds no required check yet.
+- The GitHub settings, read 2026-09-12: squash merge alone, automatic delete of a merged branch, and ruleset `main` (id 23087504). The ruleset requires a pull request, refuses a force push and a delete, and requires the `verify:docs` check from GitHub Actions (app id 15368).
 - `actions/checkout` tag v7.0.1 points to commit `3d3c42e5aac5ba805825da76410c181273ba90b1`, read 2026-09-12 from the GitHub API.
 - WCAG 2.2 is the W3C Recommendation of 2024-12-12, read 2026-09-12. The minimum target size of 2.5.8 is 24 by 24 CSS pixels.
 - ASD-STE100 Issue 9, dated 2025-01-15, is the current issue, read 2026-09-12.
@@ -35,22 +35,25 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The session checked two conflicts before it asked. decktome D-556 names the product "Decktome", and What You Carry D-106 keeps its repository private. The owner answered both (D-24, D-25).
 - The owner typed "GCP" for both hosting and analytics. The session asked a follow-up for each, and D-34 and D-36 record the answers.
 - The session wrote PR-2: D-19 to D-43, OQ-1 and OQ-2 closed, OQ-3 to OQ-5, draft 1 of `docs/design.md`, and tenet T-6 narrowed by D-26.
+- The owner merged PR #1 as `dcd98e6`. The session added `verify:docs` to the `main` ruleset as a required check (D-11), and rebased PR #2 onto `main`.
 
 ### State of the repository
 
-- `main` is `e6369bd`. PR #1 (`docs/foundation`, head `6d37ff9`) is open, and Gitar approved it with no finding.
-- Branch `docs/roadmap-draft-1` holds PR-2. Its base is `docs/foundation`, so the pull request shows its own commit alone.
+- `main` is `dcd98e6`, the squash merge of PR #1. Gitar approved PR #1 with no finding before the merge.
+- Branch `docs/roadmap-draft-1` holds PR #2, rebased onto `main` after the merge.
+- Remote head: `origin/docs/roadmap-draft-1` at the commit that holds this entry, checked after the push.
 - `make verify`: 0 findings.
 
 ### In flight
 
-- PR #1 waits for the owner to merge.
-- PR-2 waits for the Gitar review, then for the merge of PR #1.
+- PR #2 waits for the Gitar review of its rebased head, then for the merge.
 
 ### Traps and gotchas
 
-- PR-2 stacks on PR #1. After the squash merge of PR #1, rebase PR-2 onto `main`: `git rebase --onto origin/main 6d37ff9 docs/roadmap-draft-1`. Then set the base with `gh pr edit <number> --base main`, and push with `--force-with-lease`.
+- PR #2 stacked on PR #1. After the squash merge, GitHub moved its base to `main`, and `git rebase --onto origin/main 6d37ff9 docs/roadmap-draft-1` removed the old commit of PR #1. A rebase gives a new head, so Gitar needs a new review.
+- The ruleset requires `verify:docs` from the GitHub Actions app alone, so a check of that name from another app does not count.
 - On PR #1, the Gitar pause note came with a full review in a collapsed block. Read that block before you post `Gitar review`.
+- On PR #2, the automatic Gitar pass covered the first head alone. A push after that pass got no Gitar check, so the session posted `Gitar review` for the new head.
 - The official Firebase action for previews needs a JSON key. M-1 tests the command line tool with keyless credentials first.
 - Astro 7 needs Node 22.12 or newer, and the default Node on this Mac is 20.17.0.
 - A typed answer can name a platform and not a choice. Ask a follow-up before you record it.
@@ -62,7 +65,7 @@ OQ-3 blocks the About text of PR-8. OQ-5 blocks the merge of PR-7. OQ-4 blocks n
 
 ### Next concrete action
 
-The owner merges PR #1. Then add `verify:docs` to the `main` ruleset, rebase PR-2 onto `main`, and answer its Gitar review.
+Answer the Gitar review of PR #2. After the owner merges it, start PR-3, the Astro scaffold, from `main`.
 
 ## Session 1: 2026-09-12
 

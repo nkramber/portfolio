@@ -58,7 +58,7 @@ Each entry has an id (PR-# or M-#), a status, a scope, exit tests, and a gate. I
 
 #### PR-1: Repository foundation
 
-Status: in review as #1. Gitar approved it with no finding on 2026-09-12.
+Status: merged as #1, `dcd98e6`, on 2026-09-12. Gitar approved it with no finding, and `verify:docs` became a required check after the merge.
 
 Scope: `CLAUDE.md`, the `AGENTS.md` symlink, the rule files, six skills, four agents, the registers, draft 0 of this file, the session handoff, the STE checker, the `verify:docs` job, Dependabot, and the license (D-5 to D-18).
 
