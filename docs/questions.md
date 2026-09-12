@@ -14,5 +14,8 @@ How to file a question:
 
 ## Register
 
-1. **OQ-1. The tenets.** Set the order and the words of tenets T-1 to T-5 (D-15). Blocks the final text of `CLAUDE.md` and `docs/design.md`. Recommendation: the draft order, with responsive layout first. The owner named it the maximum focus (D-4).
-2. **OQ-2. Hosting.** Choose the host of `natekramber.com`, with the domain at GoDaddy (D-3). Blocks the deploy pull request. Recommendation: none yet. The session first verifies the current free terms of each host, with a date.
+1. **OQ-1. The tenets.** Set the order and the words of tenets T-1 to T-5 (D-15). Blocks the final text of `CLAUDE.md` and `docs/design.md`. Recommendation: the draft order, with responsive layout first. The owner named it the maximum focus (D-4). Resolved 2026-09-12: D-39, the draft order.
+2. **OQ-2. Hosting.** Choose the host of `natekramber.com`, with the domain at GoDaddy (D-3). Blocks the deploy pull request. Recommendation: none yet. The session first verifies the current free terms of each host, with a date. Resolved 2026-09-12: D-34, Firebase Hosting on the Spark plan.
+3. **OQ-3. The bio.** The owner writes the text of the About section (D-28). Blocks the About section pull request. Recommendation: two to four sentences in the plain and direct voice.
+4. **OQ-4. The screenshots.** Real screenshots for the Deck Tome and What You Carry cards replace the placeholders (D-40). Blocks nothing at launch. Recommendation: the owner captures both, and the session resizes them.
+5. **OQ-5. The fonts and the accent color.** The owner picks from the rendered preview page of PR-7 (D-42). Blocks the merge of PR-7. Recommendation: the session publishes the preview with three choices of each.
