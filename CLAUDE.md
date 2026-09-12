@@ -19,20 +19,18 @@ Read `docs/session-handoff.md` before any other file and before any other tool c
 
 This repository holds the portfolio site of Nate Kramber at `natekramber.com` (D-3). The site is one page with a maximum focus on responsive layout, simple and readable code, and best practices (D-4). Each project shows on a card. One card component and one data entry for each project make a new project easy to add (D-2). Deck Tome and What You Carry are the first two projects.
 
-The repository is public. GoDaddy is the registrar of the domain (D-3).
+The repository is public. GoDaddy is the registrar of the domain (D-3). The stack is Astro 7 with vanilla CSS and zero client JavaScript (D-30 to D-33). Firebase Hosting will serve the site from a dedicated Google Cloud project (D-34, D-35).
 
 ## Tenets
 
-The tenets are the constitution of the site. When a tenet conflicts with speed or convenience, the tenet wins. When two tenets conflict, the earlier tenet wins. T-6 is absolute (D-15).
-
-CAUTION: the order and the words of T-1 to T-5 are a draft. OQ-1 asks the owner to set them.
+The tenets are the constitution of the site. When a tenet conflicts with speed or convenience, the tenet wins. When two tenets conflict, the earlier tenet wins. T-6 is absolute (D-15, D-39).
 
 - **T-1. Responsive first.** Every layout works from a 320 px phone to a wide desktop screen, with touch, a mouse, or a keyboard. No layout scrolls sideways. A change that looks right at one width alone is not done.
 - **T-2. Accessible.** The site meets WCAG 2.2 level AA. Every visitor can read and use every part of the site.
 - **T-3. Simple and readable code.** Explicit over clever. A new reader understands a file from the file itself. Two concrete uses come before an abstraction.
-- **T-4. Fast.** The site stays inside the performance budget that the roadmap sets. Every dependency and every large asset must earn its bytes.
+- **T-4. Fast.** The site stays inside the performance budget of D-37. Every dependency and every large asset must earn its bytes.
 - **T-5. Document everything.** Continuity is a duty. Each session updates `docs/session-handoff.md`. The decisions, the questions, and the design change when the intent changes.
-- **T-6. No attribution.** No file, commit, branch name, pull request, or comment names an agent, a harness, or a model as the source of work (D-6).
+- **T-6. No attribution.** No commit, branch name, pull request, comment, or code names an agent, a harness, or a model as the source of work (D-6). The site copy can describe how the owner directs AI coding agents (D-26).
 
 ## Hard rules from the owner
 

@@ -127,8 +127,9 @@ The rules permit these names as written (rule 1.5):
 
 - The site and the owner: natekramber.com, Nate Kramber, the owner.
 - The projects: Deck Tome, What You Carry, terminal-rpg.
-- Tools and services: GitHub, GitHub Actions, Dependabot, Gitar, `gitar-bot`, GoDaddy, Claude Code, Codex, Python, Make.
-- Web standards and tools: HTML, CSS, JavaScript, SVG, WCAG, axe, Playwright, Lighthouse, Core Web Vitals.
+- Tools and services: GitHub, GitHub Actions, Dependabot, Gitar, `gitar-bot`, GoDaddy, Claude Code, Codex, Python, Make, Node.js, npm.
+- Hosting and deploy: Google Cloud, Firebase Hosting, Spark plan, preview channel, Cloud Logging, Workload Identity Federation.
+- Web standards and tools: HTML, CSS, JavaScript, SVG, WCAG, Baseline, Astro, axe, Playwright, Lighthouse, Core Web Vitals.
 - Web terms: viewport, viewport width, breakpoint, layout, section, project card, component, touch target, focus indicator, reduced motion, sideways scroll, performance budget.
 - Process terms: tenet, hard rule, guardrail, session handoff, decision register, questions register, rule file, ruleset, squash merge, required check, pull request.
 - The standard itself: ASD-STE100, STE.
