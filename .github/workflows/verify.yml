@@ -1,0 +1,31 @@
+name: verify
+
+# Runs on every pull request, and by hand. The repository is public, so the
+# Actions minutes cost nothing. `make verify` runs the same checks locally.
+on:
+  pull_request:
+  workflow_dispatch:
+
+# A new push to a branch cancels the run in progress on that branch.
+concurrency:
+  group: verify-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+# Every action is pinned to a commit SHA, and the comment names its tag.
+# verified_at: 2026-09-12, source: https://api.github.com/repos/actions/checkout/git/ref/tags/v7.0.1
+#
+# Each job name is a required check on the main ruleset, so a rename
+# needs the same rename in the ruleset (D-11).
+jobs:
+  docs:
+    name: "verify:docs"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # The ubuntu-latest image ships make and python3.
+      - name: ste check
+        run: make ste-check
