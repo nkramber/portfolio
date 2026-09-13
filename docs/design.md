@@ -5,7 +5,7 @@ Status: **draft 1.** The owner approves draft 1 with the merge of PR-2. No site 
 Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which held Phase 0 alone.
 
 2026-09-12 correction pass: PR-4 follows D-46 to D-50. A Lighthouse 13 script replaces Lighthouse CI, and the fixtures plant a heavy script and a duplicate id.
-2026-09-13 UTC correction pass: PR-1 to PR-4 read merged, and PR-5 names the project and the account of D-51 and D-52.
+2026-09-12 correction pass (Session 5): PR-1 to PR-4 read merged, and PR-5 names the project and the account of D-51 and D-52.
 2026-09-12 correction pass (Session 6): PR-5 and M-1 follow D-53, D-54, D-56 to D-59, D-62, and D-66 to D-68. PR-6 follows D-63. PR-14 applies D-60, and PR-15 applies D-57, D-64, and D-65. The external facts add the research of PR-5.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
