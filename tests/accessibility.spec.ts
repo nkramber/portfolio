@@ -30,6 +30,15 @@ for (const colorScheme of ['light', 'dark'] as const) {
       });
       expect(await violations(page)).toEqual([]);
     });
+
+    // A missing address gets the 404 page, which holds no card (D-71). The status
+    // and the title prove that the server sent our page, not a default error page.
+    test('no WCAG violation on the 404 page', async ({ page }) => {
+      const response = await page.goto('/no-such-page');
+      expect(response?.status()).toBe(404);
+      await expect(page).toHaveTitle(/Nate Kramber/);
+      expect(await violations(page)).toEqual([]);
+    });
   });
 }
 
