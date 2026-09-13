@@ -4,13 +4,13 @@
 
 This file keeps the ten newest sessions, newest first. `docs/session-handoff-archive.md` keeps every older session, word for word.
 
-## Resume here (2026-09-12)
+## Resume here (2026-09-13)
 
 - **Main:** `30fc74e`, the squash merge of PR #5, the documents refresh.
-- **Open pull requests:** the documents pull request of Session 6 (`docs/handoff-after-pr-5`), with D-53 to D-68. It waits for the Gitar review.
-- **Next action:** FIRST, move the repository to `/Volumes/SSD-1TB/portfolio` (D-55). Follow the checklist in the Session 6 entry. Do no other work before the move. After the move, do PR-14, PR-15, and then PR-5.
-- **Blocked on:** the move blocks all other work (D-55). OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
-- **Next ids:** D-69, OQ-8, M-4, PR-16, Session 7.
+- **Open pull requests:** #6, the documents pull request of Session 6 (`docs/handoff-after-pr-5`), with D-53 to D-69. It waits for the Gitar review of its newest head, then for the merge.
+- **Next action:** after the merge of #6, start PR-14 from `main`. Then do PR-15 and PR-5.
+- **Blocked on:** nothing blocks PR-14. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
+- **Next ids:** D-70, OQ-8, M-4, PR-16, Session 7.
 
 ## Facts that expire
 
@@ -33,7 +33,6 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The external facts of the roadmap, each with its source and its date, live in `docs/design.md`.
 - The What You Carry repository is public on 2026-09-12, and its D-106 still reads "Private until launch". The owner records that change in that repository (D-25).
 - decktome.com is invite-only on 2026-09-12 (decktome D-310).
-- `/Volumes/SSD-1TB` is case-sensitive APFS with 930 GiB free, read 2026-09-12. The internal disk is case-insensitive APFS. The repository takes 360 MB, and `node_modules` holds 358 MB of it.
 - The cloud tools on this Mac, read 2026-09-12: gcloud 533.0.0 in `/opt/homebrew/bin`, and a global Firebase CLI 14.14.0 under Node 20.17.0 alone. The newest gcloud is 584.0.0 of 2026-09-09 (https://docs.cloud.google.com/sdk/docs/release-notes).
 - The gcloud configurations on this Mac, read 2026-09-12: `default` (active) and `decktome`, both on the project `wallabee-dev`. No `natekramber` configuration exists.
 - firebase-tools 15.30.0 came out on 2026-09-09, and it needs Node 20 or newer. Version 15.22.2 broke deploys through Workload Identity Federation, and 15.22.3 fixed them (npm registry and firebase-tools issue 10716, read 2026-09-12).
@@ -50,28 +49,29 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The session started PR-5 with four read-only research passes. The passes read the Firebase CLI, Workload Identity Federation, GitHub OIDC, the security headers, and the decktome deploy setup.
 - The owner answered fifteen questions about PR-5, PR-6, and the checks: D-53, D-54, and D-56 to D-68.
 - The session turned on the GitHub setting that requires a full commit SHA for each action (D-61).
-- The owner asked to move the repository to the external drive. The owner then stopped the move and made it the first action of the next session (D-55).
+- The owner asked to move the repository to the external drive, and then queued the move for the next session (D-55).
+- On 2026-09-13 the owner canceled the move as a miscommunication (D-69). No file moved, and the session removed the checklist of the move.
+- Gitar approved #6 after one finding about the order of the correction-pass dates in `docs/design.md`. The fix is `b0f05db`.
 - The session wrote no site code and moved no file.
 
 ### State of the repository
 
 - `main` is `30fc74e`, the squash merge of PR #5.
-- Branch `docs/handoff-after-pr-5` holds this entry and D-53 to D-68.
+- Branch `docs/handoff-after-pr-5` holds this entry and D-53 to D-69, as pull request #6.
 - Remote head: `origin/docs/handoff-after-pr-5` at the commit that holds this entry, checked after the push.
 - `make ste-check`: 0 findings.
 - An `astro preview` server from an earlier session still runs on port 4321, with its working directory in the repository.
 
 ### In flight
 
-- The pull request of this branch waits for the Gitar review, then for the merge.
+- Pull request #6 waits for the Gitar review of its newest head, then for the merge.
 - PR-14, PR-15, and PR-5 have their decisions, and no branch yet. The research reports live in this session alone, so `docs/design.md` keeps the key facts with their sources.
 - Nobody checked yet whether the setting of D-61 stops the Dependabot jobs that GitHub runs. A manual Dependabot check by the owner gives the answer.
 
 ### Traps and gotchas
 
 - A workflow that names a missing GitHub environment creates it with no protection. So PR-6 creates `production` before its workflow runs (D-63).
-- The internal disk of this Mac is case-insensitive APFS, and `/Volumes/SSD-1TB` is case-sensitive APFS. What You Carry on that drive still has `core.ignorecase=true`.
-- Claude Code keys the memory directory by the absolute path. `~/.claude/projects/` holds both `-Users-nate-Repos-what-you-carry` and `-Volumes-SSD-1TB-what-you-carry`.
+- Ask a confirmation question before any step of a request that changes where the repository lives. The move request of D-55 was a miscommunication (D-69).
 - The gcloud configurations `default` and `decktome` both point at `wallabee-dev`. The decktome handoff records that `decktome` also uses the Wallabee account (2026-09-10).
 - Firebase IAM cannot keep a preview deploy off the live site. D-56 answers with a second project.
 - The `astro preview` server of the checks ignores `firebase.json`, so no check sees the headers of D-57 and D-58 yet.
@@ -82,29 +82,11 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ### Open questions that block progress
 
-D-55 puts the move before all other work. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
+None blocks PR-14. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
 
 ### Next concrete action
 
-Move the repository to `/Volumes/SSD-1TB/portfolio` (D-55). Do the steps in this order:
-
-1. Run `ls /Volumes`. Ask the owner to connect the drive when `SSD-1TB` is absent.
-2. Make sure that `/Volumes/SSD-1TB/portfolio` does not exist.
-3. Run `git status --short --branch`. Commit and push each change first.
-4. Stop each `astro preview` server that runs from the repository. Find each one with `ps`.
-5. Ask the owner to close each VS Code window and each terminal in the repository.
-6. Copy the repository with `ditto /Users/nate/Repos/portfolio /Volumes/SSD-1TB/portfolio`.
-7. In the copy, run `git status --short --branch` and `git fsck`. Compare the result with step 3.
-8. Make sure that `AGENTS.md` in the copy is still a symlink to `CLAUDE.md`.
-9. Read `core.ignoreCase` in `git help config`. Set the value that the case-sensitive drive needs.
-10. Copy `~/.claude/projects/-Users-nate-Repos-portfolio/memory` to `~/.claude/projects/-Volumes-SSD-1TB-portfolio/memory`.
-11. In the copy, run `make install` and then `make verify`, with Node 22.23.2 first on the `PATH`.
-12. Ask the owner to open VS Code and a new session in `/Volumes/SSD-1TB/portfolio`.
-13. In the new session, update the paths and the drive CAUTION in `CLAUDE.md`.
-14. Delete the memory note `move-repo-to-ssd-first` in the new memory directory.
-15. Start PR-14 from the new path, and then continue the sequence in `docs/design.md`.
-
-CAUTION: Remove `/Users/nate/Repos/portfolio` only after the owner approves it in the new session. Until then, it is the only local copy with a known good state.
+After the owner merges #6, start PR-14 from `main`. Find the old `astro preview` server on port 4321 with `ps`, and stop it. Then add the `agentic-browsing` floor of D-60 to `lighthouse-budget.json`.
 
 ## Session 5: 2026-09-12
 
