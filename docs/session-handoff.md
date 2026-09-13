@@ -4,17 +4,17 @@
 
 This file keeps the ten newest sessions, newest first. `docs/session-handoff-archive.md` keeps every older session, word for word.
 
-## Resume here (2026-09-12)
+## Resume here (2026-09-13)
 
-- **Main:** `1942877`, the squash merge of PR #4, the site checks.
-- **Open pull requests:** the documents refresh (`docs/handoff-after-pr-4`). It waits for the Gitar review.
-- **Next action:** after the merge of the refresh, start PR-5, the Google Cloud project, from `main`.
-- **Blocked on:** nothing blocks PR-5. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
-- **Next ids:** D-53, OQ-8, M-4, PR-14, Session 6.
+- **Main:** `30fc74e`, the squash merge of PR #5, the documents refresh.
+- **Open pull requests:** #6, the documents pull request of Session 6 (`docs/handoff-after-pr-5`), with D-53 to D-69. It waits for the Gitar review of its newest head, then for the merge.
+- **Next action:** after the merge of #6, start PR-14 from `main`. Then do PR-15 and PR-5.
+- **Blocked on:** nothing blocks PR-14. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
+- **Next ids:** D-70, OQ-8, M-4, PR-16, Session 7.
 
 ## Facts that expire
 
-- The GitHub settings, read 2026-09-12: squash merge alone, automatic delete of a merged branch, and ruleset `main` (id 23087504). The ruleset requires a pull request and refuses a force push and a delete.
+- The GitHub settings, read 2026-09-12: squash merge alone, automatic delete of a merged branch, and ruleset `main` (id 23087504). The ruleset requires a pull request and refuses a force push and a delete. From 2026-09-12, GitHub Actions requires a full commit SHA for each action (D-61).
 - The `main` ruleset requires six checks from GitHub Actions (app id 15368): `verify:docs`, `verify:site`, `verify:site-responsive`, `verify:site-a11y`, `verify:site-lighthouse`, and `verify:site-html`.
 - `actions/checkout` tag v7.0.1 points to commit `3d3c42e5aac5ba805825da76410c181273ba90b1`, read 2026-09-12 from the GitHub API.
 - `actions/setup-node` tag v7.0.0 points to commit `820762786026740c76f36085b0efc47a31fe5020`, read 2026-09-12 from the GitHub API.
@@ -24,7 +24,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The check tools on 2026-09-12: Playwright 1.63.0 with Chromium 153 (build 1243), axe-core 4.13.0, Lighthouse 13.4.1, chrome-launcher 1.2.1, html-validate 11.15.0, and linkinator 8.1.0.
 - `npm audit` reads 0 vulnerabilities on 2026-09-12. Lighthouse CI 0.15.1 added 12 advisories before D-50 removed it.
 - The Gitar trial pauses automatic reviews on 2026-09-12. A `Gitar review` comment runs one review, and the `gitar-review` skill holds the traps.
-- PR-5 creates the project `natekramber-prod` (D-51). Nobody checked yet whether that id is free.
+- PR-5 creates the projects `natekramber-prod` and `natekramber-preview` (D-51, D-56). Nobody checked yet whether each id is free. A project id is permanent, and Google documents no check before creation.
 - WCAG 2.2 is the W3C Recommendation of 2024-12-12, read 2026-09-12. The minimum target size of 2.5.8 is 24 by 24 CSS pixels.
 - ASD-STE100 Issue 9, dated 2025-01-15, is the current issue, read 2026-09-12.
 - Claude Code reads `CLAUDE.md` and not `AGENTS.md`. A rule file with a `paths` list loads when Claude reads a matching file. The session read both facts in the Claude Code memory docs on 2026-09-12.
@@ -33,6 +33,60 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The external facts of the roadmap, each with its source and its date, live in `docs/design.md`.
 - The What You Carry repository is public on 2026-09-12, and its D-106 still reads "Private until launch". The owner records that change in that repository (D-25).
 - decktome.com is invite-only on 2026-09-12 (decktome D-310).
+- The cloud tools on this Mac, read 2026-09-12: gcloud 533.0.0 in `/opt/homebrew/bin`, and a global Firebase CLI 14.14.0 under Node 20.17.0 alone. The newest gcloud is 584.0.0 of 2026-09-09 (https://docs.cloud.google.com/sdk/docs/release-notes).
+- The gcloud configurations on this Mac, read 2026-09-12: `default` (active) and `decktome`, both on the project `wallabee-dev`. No `natekramber` configuration exists.
+- firebase-tools 15.30.0 came out on 2026-09-09, and it needs Node 20 or newer. Version 15.22.2 broke deploys through Workload Identity Federation, and 15.22.3 fixed them (npm registry and firebase-tools issue 10716, read 2026-09-12).
+- `google-github-actions/auth` tag v3.0.0 points to commit `7c6bc770dae815cd3e89ee6cdf493a5fab2cc093`, read 2026-09-12 from the GitHub API. The tag is lightweight. The `releases/latest` endpoint returns the moving tag `v3`.
+- The GitHub ids, read 2026-09-12: repository 1367643959 and owner 190805558. The OIDC `sub` prefix is `repo:nkramber@190805558/portfolio@1367643959`, the immutable format for a repository that GitHub created after 2026-07-15.
+- The repository has no environment, no secret, and no variable, read 2026-09-12. Workflows get a read token by default, and the workflows of a first-time contributor need approval.
+- The DNS of `natekramber.com`, read 2026-09-12: GoDaddy name servers and two A records of the GoDaddy parking host. `www` is a CNAME to the apex, and the domain has no MX, TXT, or CAA record.
+
+## Session 6: 2026-09-12
+
+### What this session did, and why
+
+- The owner merged PR #5 as `30fc74e`. Its tree matches the reviewed head `95e2948`, and it added no required check.
+- The session started PR-5 with four read-only research passes. The passes read the Firebase CLI, Workload Identity Federation, GitHub OIDC, the security headers, and the decktome deploy setup.
+- The owner answered fifteen questions about PR-5, PR-6, and the checks: D-53, D-54, and D-56 to D-68.
+- The session turned on the GitHub setting that requires a full commit SHA for each action (D-61).
+- The owner asked to move the repository to the external drive, and then queued the move for the next session (D-55).
+- On 2026-09-13 the owner canceled the move as a miscommunication (D-69). No file moved, and the session removed the checklist of the move.
+- Gitar approved #6 after one finding about the order of the correction-pass dates in `docs/design.md`. The fix is `b0f05db`.
+- The session wrote no site code and moved no file.
+
+### State of the repository
+
+- `main` is `30fc74e`, the squash merge of PR #5.
+- Branch `docs/handoff-after-pr-5` holds this entry and D-53 to D-69, as pull request #6.
+- Remote head: `origin/docs/handoff-after-pr-5` at the commit that holds this entry, checked after the push.
+- `make ste-check`: 0 findings.
+- An `astro preview` server from an earlier session still runs on port 4321, with its working directory in the repository.
+
+### In flight
+
+- Pull request #6 waits for the Gitar review of its newest head, then for the merge.
+- PR-14, PR-15, and PR-5 have their decisions, and no branch yet. The research reports live in this session alone, so `docs/design.md` keeps the key facts with their sources.
+- Nobody checked yet whether the setting of D-61 stops the Dependabot jobs that GitHub runs. A manual Dependabot check by the owner gives the answer.
+
+### Traps and gotchas
+
+- A workflow that names a missing GitHub environment creates it with no protection. So PR-6 creates `production` before its workflow runs (D-63).
+- Ask a confirmation question before any step of a request that changes where the repository lives. The move request of D-55 was a miscommunication (D-69).
+- The gcloud configurations `default` and `decktome` both point at `wallabee-dev`. The decktome handoff records that `decktome` also uses the Wallabee account (2026-09-10).
+- Firebase IAM cannot keep a preview deploy off the live site. D-56 answers with a second project.
+- The `astro preview` server of the checks ignores `firebase.json`, so no check sees the headers of D-57 and D-58 yet.
+- The OIDC `sub` of this repository holds both numeric ids. The name-only examples in the Google docs do not match it.
+- `firebase projects:addfirebase` returns 403 until the account opens the Firebase console once (decktome `docs/setup-gcp.md`).
+- The Firebase CLI hides the cause of an auth failure without `--debug`. Its debug log prints no `Authorization` header (firebase-tools 15.30.0 source, tested on Node 22.23.2).
+- A `curl` of `cloud.google.com/sdk/docs` returns an empty page, because the docs moved to `docs.cloud.google.com`. Use `curl -L`.
+
+### Open questions that block progress
+
+None blocks PR-14. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
+
+### Next concrete action
+
+After the owner merges #6, start PR-14 from `main`. Find the old `astro preview` server on port 4321 with `ps`, and stop it. Then add the `agentic-browsing` floor of D-60 to `lighthouse-budget.json`.
 
 ## Session 5: 2026-09-12
 

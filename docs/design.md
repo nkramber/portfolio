@@ -5,7 +5,9 @@ Status: **draft 1.** The owner approves draft 1 with the merge of PR-2. No site 
 Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which held Phase 0 alone.
 
 2026-09-12 correction pass: PR-4 follows D-46 to D-50. A Lighthouse 13 script replaces Lighthouse CI, and the fixtures plant a heavy script and a duplicate id.
-2026-09-13 UTC correction pass: PR-1 to PR-4 read merged, and PR-5 names the project and the account of D-51 and D-52.
+2026-09-12 correction pass (Session 5): PR-1 to PR-4 read merged, and PR-5 names the project and the account of D-51 and D-52.
+2026-09-12 correction pass (Session 6): PR-5 and M-1 follow D-53, D-54, D-56 to D-59, D-62, and D-66 to D-68. PR-6 follows D-63. PR-14 applies D-60, and PR-15 applies D-57, D-64, and D-65. The external facts add the research of PR-5.
+2026-09-13 correction pass (Session 6): PR-14 no longer waits for a move of the repository (D-69).
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -28,6 +30,24 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - A Google Cloud budget sends alerts but does not cap spend. Source: https://docs.cloud.google.com/billing/docs/how-to/budgets, read 2026-09-12.
 - Playwright launches Chromium with the sandbox off by default (`chromiumSandbox` defaults to `false`). Source: https://playwright.dev/docs/api/class-browsertype, read 2026-09-12.
 - Lighthouse CI 0.15.1 added 12 npm audit advisories, 7 of them high, and Lighthouse 13.4.1 alone audits with 0 (D-50). Source: `npm audit`, run 2026-09-12.
+- The Hosting quota page gives the Spark plan 10 GB of transfer each month, and the pricing page gives 360 MB each day. Sources: https://firebase.google.com/docs/hosting/usage-quotas-pricing and https://firebase.google.com/pricing, read 2026-09-12.
+- firebase-tools 15.30.0 came out on 2026-09-09 and needs Node 20 or newer. It brings 674 packages, 257 MB, and 9 moderate npm audit advisories. Sources: https://registry.npmjs.org/firebase-tools and `npm audit` in a scratch directory, run 2026-09-12.
+- The Firebase CLI uses Application Default Credentials in CI. Public reports show deploys through Workload Identity Federation with service account impersonation, and version 15.22.3 fixed a break of 15.22.2. Direct federated access with no service account is unverified. Sources: https://firebase.google.com/docs/cli and https://github.com/firebase/firebase-tools/issues/10716, read 2026-09-12.
+- `roles/firebasehosting.admin` permits both a preview channel deploy and a live release through `firebasehosting.sites.update`. Hosting has no IAM policy on one site. Sources: https://cloud.google.com/iam/docs/roles-permissions/firebasehosting and https://firebase.google.com/docs/reference/hosting/rest/v1beta1/projects.sites, read 2026-09-12.
+- The Firebase docs ask for API Keys Viewer (`roles/serviceusage.apiKeysViewer`) for a CLI deploy. The Hosting deploy code of firebase-tools 15.30.0 calls no API Keys endpoint. Source: https://firebase.google.com/docs/projects/iam/roles-predefined-product, read 2026-09-12.
+- A preview channel lasts 7 days by default and 30 days at most. No Firebase doc gives the maximum channel count of a site. Source: https://firebase.google.com/docs/hosting/manage-hosting-resources, read 2026-09-12.
+- Google Cloud recommends a condition on the numeric GitHub ids `repository_id` and `repository_owner_id`, because a deleted name can go to a new owner. Source: https://docs.cloud.google.com/iam/docs/workload-identity-federation-with-deployment-pipelines, read 2026-09-12.
+- A repository that GitHub created after 2026-07-15 gets an immutable OIDC `sub` claim with the owner id and the repository id. Sources: https://docs.github.com/en/actions/reference/security/oidc and https://github.blog/changelog/2026-04-23-immutable-subject-claims-for-github-actions-oidc-tokens/, read 2026-09-12.
+- `google-github-actions/auth` v3.0.0 (commit `7c6bc770dae815cd3e89ee6cdf493a5fab2cc093`) runs on Node 24, and its credentials last 5 minutes. Sources: https://github.com/google-github-actions/auth and the GitHub API, read 2026-09-12.
+- A pull request from a fork gets a read-only token, so its job gets no `id-token: write` permission. Sources: https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows and https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax, read 2026-09-12.
+- An administrator can bypass the protection rules of an environment by default. A workflow that names a missing environment creates it with no protection. Sources: https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments and https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments, read 2026-09-12.
+- The setting "Require actions to be pinned to a full-length commit SHA" refuses each action with no full SHA, and a reusable workflow can still use a tag. Source: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository, read 2026-09-12.
+- Astro 7 inlines a stylesheet under 4 KB by default (`build.inlineStylesheets: 'auto'`). Source: https://docs.astro.build/en/reference/configuration-reference/#buildinlinestylesheets, read 2026-09-12.
+- A CSP in a `meta` element ignores `frame-ancestors`. Source: https://www.w3.org/TR/CSP3/, read 2026-09-12.
+- The five security audits in Best Practices of Lighthouse 13.4.1 are informative and do not change the score. A CSP block still fails the scored audit `errors-in-console`. Source: the default config of the installed Lighthouse 13.4.1, read 2026-09-12.
+- Firebase Hosting overwrites HSTS on `*.web.app`, and a custom domain serves the configured value. Source: https://firebase.google.com/docs/hosting/full-config, read 2026-09-12.
+- An HSTS preload removal takes 6 to 12 weeks to reach most Chrome users. Source: https://hstspreload.org/removal/, read 2026-09-12.
+- Firebase cannot issue a certificate while other A, AAAA, or CNAME records stay on the host. Source: https://firebase.google.com/docs/hosting/custom-domain, read 2026-09-12.
 
 ## 1. Thesis
 
@@ -149,41 +169,96 @@ Gate: each check joins the `main` ruleset after its first green run (D-11, D-38)
 
 > *In plain English:* today nothing stops a change that breaks the layout on a phone or hurts accessibility. This change adds four automatic checks, and it proves that each check can fail. The page itself does not change.
 
-#### PR-5: Google Cloud project, Hosting configuration, and previews
+#### PR-14: Agentic browsing in the Lighthouse budget
 
-Status: planned. The project id is `natekramber-prod`, and the owner account of decktome-prod owns it through a gcloud configuration named `natekramber` (D-51, D-52).
+Status: planned. It comes before PR-15.
+
+Scope:
+
+- An `agentic-browsing` floor of 0.95 in `lighthouse-budget.json` (D-60).
+- The budget script reads that category like the other four categories.
+
+Exit tests:
+
+- `make lighthouse` passes on the placeholder page, and its output lists `agentic-browsing`.
+- The budget fails on a planted defect that lowers `agentic-browsing`, and the output names the category (G-3).
+- The self-test still fails on the planted heavy script.
+
+Gate: the owner merges PR-14.
+
+> *In plain English:* Lighthouse gives five scores today, and the budget checks only four of them. This change adds the missing score, so the budget checks every score, as the owner asked.
+
+#### PR-15: Stylesheet file and placeholder 404 page
+
+Status: planned. It comes after PR-14 and before PR-5 (D-65).
+
+Scope:
+
+- `build.inlineStylesheets: 'never'` in `astro.config.mjs`, so the page loads its CSS from a file (D-57).
+- A minimal `src/pages/404.astro`: one short line and a link home, in the style of the placeholder (D-64).
+- The responsive and accessibility tests also load the 404 page (G-1, G-8).
+
+Out of scope:
+
+- The CSP header. PR-5 holds `firebase.json`.
+- The final words of the 404 page. PR-8 holds them.
+
+Exit tests:
+
+- The built pages hold no `style` element, and `dist/_astro/` holds the stylesheet.
+- `dist/404.html` exists and holds no script (G-5).
+- Every site check passes on both pages, and the Lighthouse budget still holds (G-7).
+- The `copy-editor` agent reviews the words of the 404 page (D-28).
+
+Gate: the owner merges PR-15.
+
+> *In plain English:* the page keeps its styles inside the HTML today, and a missing address shows the generic error page of the host. This change moves the styles into a file, so a strict security policy can permit them. It also adds a short page for a missing address.
+
+#### PR-5: Google Cloud projects, Hosting configuration, and previews
+
+Status: planned. The projects are `natekramber-prod` and `natekramber-preview` (D-51, D-56). The owner account of decktome-prod owns both through a gcloud configuration named `natekramber` (D-52). D-53, D-54, D-56 to D-59, and D-62 answer the design questions of PR-5, and PR-15 ships its site code first (D-65).
 
 Scope:
 
 - `docs/deploy.md` with the setup commands. The owner runs them, because the session creates no cloud resource without the owner (D-34).
-- The commands create a dedicated project on the Spark plan and a Workload Identity Federation pool (D-35).
-- They also create a deploy service account with the least role that a Hosting deploy needs (G-9).
-- `firebase.json` and `.firebaserc`: the build directory, the custom 404 page, and the security and cache headers (D-41).
-- A preview workflow: each pull request deploys its build to a preview channel through Workload Identity Federation (D-35).
+- The commands create two dedicated projects on the Spark plan (D-56).
+- Each project gets its own Workload Identity Federation pool. The preview provider trusts only pull request tokens of this repository (D-35, D-62).
+- They also create one deploy service account in each project, with the least role that a Hosting deploy needs (G-9). The preview account gets no role in `natekramber-prod` (D-56).
+- `firebase.json`: the build directory, the custom 404 page, the cache headers, and the security headers of D-57 and D-58. The repository has no `.firebaserc`, and each command names its project (D-54).
+- `deploy/package.json` and its lockfile hold the Firebase CLI alone, with a Dependabot entry for `/deploy` (D-53).
+- A preview workflow: each pull request deploys its build to a preview channel of `natekramber-preview` through Workload Identity Federation (D-35, D-56).
+- A separate job posts the preview URL as one pull request comment, and it updates that comment on each push (D-66).
+- Each preview deploy sets `--expires 30d`, and a job deletes the channel when its pull request closes (D-67).
+- A header check in the preview workflow. It compares each header of the preview URL with `firebase.json`, and a Playwright test fails on any console error (D-59).
 
 Out of scope:
 
-- The deploy on merge and the domain. PR-6 holds them.
+- The deploy on merge, the domain, and the HSTS check on the live domain. PR-6 holds them.
 
 Exit tests:
 
 - M-1 passes on this pull request, or the owner decides the next step (D-35).
 - The repository and its secrets hold no service account key (G-9).
+- No service account of `natekramber-preview` holds a role in `natekramber-prod` (D-56, G-10).
+- The header check passes on the preview URL, and it fails on one planted wrong header (D-59, G-3).
+- A Dependabot pull request can still merge while `verify:site-preview` skips on it (D-68).
 
-Gate: M-1 has a result in `docs/decisions.md`, and the owner merges PR-5.
+Gate: M-1 has a result in `docs/decisions.md`, and the owner merges PR-5. Then `verify:site-preview` joins the `main` ruleset (D-11, D-68).
 
-> *In plain English:* the site has no home in Google Cloud today. This change writes the setup steps and the host settings. It also gives each change its own preview address, without a stored key.
+> *In plain English:* the site has no home in Google Cloud today. This change writes the setup steps and the host settings. Each change gets its own preview address in a separate project, without a stored key, so a preview can never reach the live site.
 
 #### M-1: Keyless preview deploy
 
 Status: planned.
 
-Scope: the preview workflow of PR-5 runs `firebase hosting:channel:deploy` with the credentials of Workload Identity Federation. The official GitHub action needs a JSON key, so it stays out (read 2026-09-12).
+Scope: the preview workflow of PR-5 runs `firebase hosting:channel:deploy` on `natekramber-preview` with the credentials of Workload Identity Federation (D-56). The official GitHub action needs a JSON key, so it stays out (read 2026-09-12).
 
 Exit tests:
 
 - The workflow prints a preview URL, and the URL serves the build of the pull request.
 - The workflow uses no JSON key.
+- The header check of D-59 passes on the preview URL.
+- The result names the least role set that the deploy needed. The Firebase docs ask for API Keys Viewer, but the Hosting deploy code of firebase-tools 15.30.0 calls no API Keys endpoint (read 2026-09-12).
 
 Gate: a pass keeps the preview workflow. A fail removes the workflow, and the owner chooses between a scoped key and no previews (D-35).
 
@@ -195,7 +270,9 @@ Status: planned.
 
 Scope:
 
-- A deploy workflow that runs on each push to `main` alone, through Workload Identity Federation (D-35, G-10).
+- A deploy workflow that runs on each push to `main` alone, through Workload Identity Federation (D-35, G-10). Its job uses the environment `production` (D-63).
+- The environment `production` accepts the `main` branch alone, and no administrator can bypass it. The owner creates it before the first run of the workflow (D-63).
+- The live service account trusts only the OIDC subject of the environment `production` (D-62, D-63).
 - The GoDaddy records that the Firebase console gives: a TXT record and an A record for `natekramber.com`. The owner enters them (D-3, D-34).
 - A redirect from `www.natekramber.com` to `natekramber.com` (D-41).
 - The DNS records, the deploy, and the rollback steps in `docs/deploy.md`.
@@ -205,6 +282,8 @@ Exit tests:
 - A merge to `main` deploys the placeholder page with no manual step.
 - `https://natekramber.com` answers with a valid certificate, and `www` redirects to it.
 - The response holds every header that `firebase.json` sets.
+- The HSTS header of `https://natekramber.com` reads `max-age=31536000; includeSubDomains` (D-58).
+- A workflow run outside the environment `production` gets no token for the live service account (D-63).
 - The owner opens the site on a phone.
 
 Gate: the placeholder page is live at `natekramber.com` (D-40).
@@ -412,18 +491,20 @@ One owner runs the sequence in strict order. A step starts only when the gate of
 2. PR-2, roadmap draft 1. Gate: the merge approves draft 1.
 3. PR-3, the Astro scaffold and the placeholder page. Gate: `verify:site` becomes a required check.
 4. PR-4, the site checks. Gate: each check becomes a required check.
-5. PR-5, the Google Cloud project, the Hosting configuration, and previews. Gate: M-1 has a result.
-6. M-1, the keyless preview deploy. It runs on the pull request of PR-5.
-7. PR-6, the deploy on merge and the domain. Gate: the placeholder page is live.
-8. M-2, the request logs on the Spark plan. Gate: the result is in `docs/decisions.md`.
-9. PR-7, the design tokens, the fonts, and the accent color. Gate: OQ-5 closes.
-10. PR-8, the page shell. Gate: the owner approves it on a preview address.
-11. PR-9, the project schema and the card component.
-12. PR-10, the Deck Tome card. Gate: the owner approves the card text.
-13. PR-11, the What You Carry card. Gate: the owner approves the card text.
-14. PR-12, the weekly outbound link check.
-15. PR-13, the visit counts. It runs only when M-2 passes.
-16. M-3, the launch audit. Gate: the owner signs off.
+5. PR-14, agentic browsing in the Lighthouse budget.
+6. PR-15, the stylesheet file and the placeholder 404 page (D-65).
+7. PR-5, the Google Cloud projects, the Hosting configuration, and previews. Gate: M-1 has a result.
+8. M-1, the keyless preview deploy. It runs on the pull request of PR-5.
+9. PR-6, the deploy on merge and the domain. Gate: the placeholder page is live.
+10. M-2, the request logs on the Spark plan. Gate: the result is in `docs/decisions.md`.
+11. PR-7, the design tokens, the fonts, and the accent color. Gate: OQ-5 closes.
+12. PR-8, the page shell. Gate: the owner approves it on a preview address.
+13. PR-9, the project schema and the card component.
+14. PR-10, the Deck Tome card. Gate: the owner approves the card text.
+15. PR-11, the What You Carry card. Gate: the owner approves the card text.
+16. PR-12, the weekly outbound link check.
+17. PR-13, the visit counts. It runs only when M-2 passes.
+18. M-3, the launch audit. Gate: the owner signs off.
 
 ## 6. Open questions
 
