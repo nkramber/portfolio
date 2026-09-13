@@ -4,7 +4,7 @@
 
 This file keeps the ten newest sessions, newest first. `docs/session-handoff-archive.md` keeps every older session, word for word.
 
-## Resume here (2026-09-13 UTC)
+## Resume here (2026-09-12)
 
 - **Main:** `1942877`, the squash merge of PR #4, the site checks.
 - **Open pull requests:** the documents refresh (`docs/handoff-after-pr-4`). It waits for the Gitar review.
@@ -14,7 +14,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Facts that expire
 
-- The GitHub settings, read 2026-09-13 UTC: squash merge alone, automatic delete of a merged branch, and ruleset `main` (id 23087504). The ruleset requires a pull request and refuses a force push and a delete.
+- The GitHub settings, read 2026-09-12: squash merge alone, automatic delete of a merged branch, and ruleset `main` (id 23087504). The ruleset requires a pull request and refuses a force push and a delete.
 - The `main` ruleset requires six checks from GitHub Actions (app id 15368): `verify:docs`, `verify:site`, `verify:site-responsive`, `verify:site-a11y`, `verify:site-lighthouse`, and `verify:site-html`.
 - `actions/checkout` tag v7.0.1 points to commit `3d3c42e5aac5ba805825da76410c181273ba90b1`, read 2026-09-12 from the GitHub API.
 - `actions/setup-node` tag v7.0.0 points to commit `820762786026740c76f36085b0efc47a31fe5020`, read 2026-09-12 from the GitHub API.
@@ -23,7 +23,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Astro 7.3.2 is the latest Astro on 2026-09-12, and it needs Node 22.12.0 or newer. The variable `ASTRO_TELEMETRY_DISABLED=1` stops its telemetry.
 - The check tools on 2026-09-12: Playwright 1.63.0 with Chromium 153 (build 1243), axe-core 4.13.0, Lighthouse 13.4.1, chrome-launcher 1.2.1, html-validate 11.15.0, and linkinator 8.1.0.
 - `npm audit` reads 0 vulnerabilities on 2026-09-12. Lighthouse CI 0.15.1 added 12 advisories before D-50 removed it.
-- The Gitar trial pauses automatic reviews on 2026-09-13 UTC. A `Gitar review` comment runs one review, and the `gitar-review` skill holds the traps.
+- The Gitar trial pauses automatic reviews on 2026-09-12. A `Gitar review` comment runs one review, and the `gitar-review` skill holds the traps.
 - PR-5 creates the project `natekramber-prod` (D-51). Nobody checked yet whether that id is free.
 - WCAG 2.2 is the W3C Recommendation of 2024-12-12, read 2026-09-12. The minimum target size of 2.5.8 is 24 by 24 CSS pixels.
 - ASD-STE100 Issue 9, dated 2025-01-15, is the current issue, read 2026-09-12.
@@ -34,7 +34,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The What You Carry repository is public on 2026-09-12, and its D-106 still reads "Private until launch". The owner records that change in that repository (D-25).
 - decktome.com is invite-only on 2026-09-12 (decktome D-310).
 
-## Session 5: 2026-09-13 UTC
+## Session 5: 2026-09-12
 
 ### What this session did, and why
 
