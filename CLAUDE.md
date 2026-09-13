@@ -19,7 +19,7 @@ Read `docs/session-handoff.md` before any other file and before any other tool c
 
 This repository holds the portfolio site of Nate Kramber at `natekramber.com` (D-3). The site is one page with a maximum focus on responsive layout, simple and readable code, and best practices (D-4). Each project shows on a card. One card component and one data entry for each project make a new project easy to add (D-2). Deck Tome and What You Carry are the first two projects.
 
-The repository is public. GoDaddy is the registrar of the domain (D-3). The stack is Astro 7 on Node 22.23.2, with vanilla CSS and zero client JavaScript (D-30 to D-33, D-44). Firebase Hosting will serve the site from the dedicated Google Cloud project `natekramber-prod` (D-34, D-35, D-51).
+The repository is public. GoDaddy is the registrar of the domain (D-3). The stack is Astro 7 on Node 22.23.2, with vanilla CSS and zero client JavaScript (D-30 to D-33, D-44). Firebase Hosting will serve the site from the dedicated Google Cloud project `natekramber-prod`, and pull request previews from `natekramber-preview` (D-34, D-35, D-51, D-56).
 
 ## Tenets
 
