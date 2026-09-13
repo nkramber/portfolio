@@ -91,7 +91,7 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `.nvmrc`: the pinned Node version (D-44).
 - `tests/`: the Playwright tests of the responsive layout and of accessibility, and the fixtures with planted defects (D-38).
 - `playwright.config.ts`: the Playwright setup. It serves `dist/` with `astro preview`.
-- `scripts/lighthouse-budget.mjs` and `lighthouse-budget.json`: the Lighthouse budget (D-48, D-50). `scripts/make-lighthouse-fixture.mjs` writes its planted defect.
+- `scripts/lighthouse-budget.mjs` and `lighthouse-budget.json`: the Lighthouse budget (D-48, D-50, D-60). `scripts/make-lighthouse-fixture.mjs` writes its planted defects.
 - `.htmlvalidate.json`: the rules of `html-validate` (D-46).
 - `.claude/settings.json`: the project settings of Claude Code. It turns off attribution (D-6).
 - `scripts/ste-check.py`: the STE checker (D-7).
@@ -112,7 +112,7 @@ Every command is free, and only `make install` and `make browsers` use the netwo
 - `make no-script-check`: fail when a built HTML file holds a script element (G-5).
 - `make test-responsive`: check each width of the `responsive-qa` skill for sideways scroll, and save a screenshot of each width.
 - `make test-a11y`: scan the page with axe for WCAG 2.2 AA, in the light and the dark scheme.
-- `make lighthouse`: check the Lighthouse budget over three runs, then prove that the budget fails on a planted heavy script.
+- `make lighthouse`: check the Lighthouse budget over three runs, then prove that the budget fails on each planted defect.
 - `make html-check`: validate the built HTML and check its internal links and anchors, then prove that both tools fail on planted defects.
 - `make site-checks`: run the four site checks.
 - `make ste-check`: check every hand-written `.md` file against the STE rules.

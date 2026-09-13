@@ -1,4 +1,5 @@
 // The performance budget of D-37 and D-48, checked with Lighthouse 13 (D-50).
+// D-60 adds the fifth Lighthouse category, agentic-browsing, to the floors.
 //
 // Usage: node scripts/lighthouse-budget.mjs <built directory>
 //
@@ -83,6 +84,7 @@ function measure(lhr) {
     accessibility: categoryScore(lhr, 'accessibility'),
     'best-practices': categoryScore(lhr, 'best-practices'),
     seo: categoryScore(lhr, 'seo'),
+    'agentic-browsing': categoryScore(lhr, 'agentic-browsing'),
     scriptBytes: transferBytes(lhr, 'script'),
     totalBytes: transferBytes(lhr, 'total'),
     lcpMs: auditValue(lhr, 'largest-contentful-paint'),
