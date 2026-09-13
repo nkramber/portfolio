@@ -59,6 +59,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - `astro preview` does not stop on its own. Start it in the background, keep its process id, and stop it after the screenshots.
 - The first local build and preview ran before D-45, with telemetry on. A direct `npm run` command still sends telemetry, so use the `make` targets.
 - Astro 7.3.2 needs Node 22.12.0 or newer, and the default Node on this Mac is 20.17.0.
+- Gitar on PR #3 found that the placeholder padding used `env(safe-area-inset-*)` with the default `viewport-fit`. With that default, the browser insets the page into the safe area itself (WebKit, 2017-09-22), so the padding did nothing and PR-3 removed it. A full-bleed design in PR-8 needs `viewport-fit=cover` and the insets.
 
 ### Open questions that block progress
 
