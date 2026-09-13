@@ -18,9 +18,11 @@ permissions:
 # verified_at: 2026-09-12, sources:
 #   https://api.github.com/repos/actions/checkout/git/ref/tags/v7.0.1
 #   https://api.github.com/repos/actions/setup-node/git/ref/tags/v7.0.0
+#   https://api.github.com/repos/actions/upload-artifact/git/ref/tags/v7.0.1
 #
 # Each job name is a required check on the main ruleset, so a rename
-# needs the same rename in the ruleset (D-11).
+# needs the same rename in the ruleset (D-11). Each job runs one make
+# target, so CI and `make verify` answer the same question.
 jobs:
   docs:
     name: "verify:docs"
@@ -49,3 +51,88 @@ jobs:
         run: make build
       - name: no script in the build
         run: make no-script-check
+
+  site-responsive:
+    name: "verify:site-responsive"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: install
+        run: make install
+      # The Chromium build of the lockfile, with the system libraries it needs.
+      - name: browsers
+        run: npx playwright install --with-deps chromium
+      - name: build
+        run: make build
+      - name: responsive tests
+        run: make test-responsive
+      # One screenshot for each width, kept for review after a pass or a fail.
+      - name: keep the screenshots
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: responsive-screenshots
+          path: test-results/
+          retention-days: 7
+          if-no-files-found: warn
+
+  site-a11y:
+    name: "verify:site-a11y"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: install
+        run: make install
+      - name: browsers
+        run: npx playwright install --with-deps chromium
+      - name: build
+        run: make build
+      - name: accessibility scan
+        run: make test-a11y
+
+  site-lighthouse:
+    name: "verify:site-lighthouse"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: install
+        run: make install
+      # The Lighthouse budget runs the Chromium build of Playwright (CHROME_PATH in the Makefile).
+      - name: browsers
+        run: npx playwright install --with-deps chromium
+      - name: build
+        run: make build
+      - name: lighthouse budget
+        run: make lighthouse
+
+  site-html:
+    name: "verify:site-html"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: install
+        run: make install
+      - name: build
+        run: make build
+      - name: html and links
+        run: make html-check

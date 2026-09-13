@@ -97,7 +97,7 @@ Phase gate: `natekramber.com` serves the placeholder page over HTTPS, each merge
 
 #### PR-3: Astro scaffold and placeholder page
 
-Status: in review.
+Status: merged as #3, `4aacda4`, on 2026-09-13 UTC. Gitar approved it after one finding, and `verify:site` became a required check after the merge.
 
 Scope:
 
@@ -125,19 +125,19 @@ Gate: the owner merges PR-3. Then `verify:site` joins the `main` ruleset as a re
 
 #### PR-4: Site checks
 
-Status: planned.
+Status: in review.
 
 Scope: the four checks of D-38, each as a `verify:site-*` job and a `make` target.
 
 - Responsive tests: Playwright loads the page at each width of the `responsive-qa` skill. A test fails on sideways scroll, and each run saves a screenshot for each width.
-- Accessibility scan: axe checks the page with every card closed and open.
-- Lighthouse CI: the run fails when a score, the page weight, or the script weight breaks the budget of D-37. This pull request sets the page weight cap.
-- HTML validation and an internal link check on the built site.
+- Accessibility scan: axe checks the page for WCAG 2.2 AA in the light and the dark scheme, with every card closed and open.
+- Lighthouse budget: a script runs Lighthouse 13 three times and fails when a median breaks the budget of D-37 and D-48 (D-50).
+- HTML validation with `html-validate`, and an internal link and anchor check with `linkinator` (D-46, D-47).
 
 Exit tests:
 
 - Each check passes on the placeholder page.
-- Each check fails on a fixture with one planted defect. The defects: a wide element, a missing alt text, a large image, and a broken anchor.
+- Each check fails on a fixture with one planted defect. The defects: a wide element, a missing alt text, a heavy script, a duplicate id, and a broken anchor.
 - `make verify` runs all four checks.
 
 Gate: each check joins the `main` ruleset after its first green run (D-11, D-38).

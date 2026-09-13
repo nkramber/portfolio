@@ -33,11 +33,29 @@ const links = [
 </html>
 
 <style is:global>
-  /* Light and dark follow the system setting (D-27). The design tokens of PR-7 replace these values. */
+  /* Light and dark follow the system setting (D-27). The design tokens of PR-7 replace these values.
+     Each pair meets WCAG contrast in its scheme: the text is above 15 to 1, and the links are above 8 to 1. */
   :root {
     color-scheme: light dark;
     font-family: system-ui, sans-serif;
     line-height: 1.5;
+    background: #ffffff;
+    color: #111111;
+  }
+
+  a {
+    color: #0645ad;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      background: #121212;
+      color: #eeeeee;
+    }
+
+    a {
+      color: #8ab4f8;
+    }
   }
 
   body {

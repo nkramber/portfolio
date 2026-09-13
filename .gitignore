@@ -8,3 +8,7 @@ node_modules/
 dist/
 .astro/
 npm-debug.log*
+
+# Test output: Playwright results and reports, and the Lighthouse fixture
+test-results/
+playwright-report/
