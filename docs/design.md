@@ -4,6 +4,9 @@ Status: **draft 1.** The owner approves draft 1 with the merge of PR-2. No site 
 
 Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which held Phase 0 alone.
 
+2026-09-12 correction pass: PR-4 follows D-46 to D-50. A Lighthouse 13 script replaces Lighthouse CI, and the fixtures plant a heavy script and a duplicate id.
+2026-09-13 UTC correction pass: PR-1 to PR-4 read merged, and PR-5 names the project and the account of D-51 and D-52.
+
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
 ## External facts
@@ -23,6 +26,8 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - A preview channel expires after 7 days by default. The official GitHub action for previews requires a JSON service account key. Sources: https://firebase.google.com/docs/hosting/manage-hosting-resources and https://github.com/FirebaseExtended/action-hosting-deploy, read 2026-09-12.
 - Hosting request logs can go to Cloud Logging, with the request URL, the referrer, and the country of each request. The plan that this link needs is unverified. Source: https://firebase.google.com/docs/hosting/web-request-logs-and-metrics, read 2026-09-12.
 - A Google Cloud budget sends alerts but does not cap spend. Source: https://docs.cloud.google.com/billing/docs/how-to/budgets, read 2026-09-12.
+- Playwright launches Chromium with the sandbox off by default (`chromiumSandbox` defaults to `false`). Source: https://playwright.dev/docs/api/class-browsertype, read 2026-09-12.
+- Lighthouse CI 0.15.1 added 12 npm audit advisories, 7 of them high, and Lighthouse 13.4.1 alone audits with 0 (D-50). Source: `npm audit`, run 2026-09-12.
 
 ## 1. Thesis
 
@@ -125,7 +130,7 @@ Gate: the owner merges PR-3. Then `verify:site` joins the `main` ruleset as a re
 
 #### PR-4: Site checks
 
-Status: in review.
+Status: merged as #4, `1942877`, on 2026-09-13 UTC. Gitar approved it after one finding, and the four `verify:site-*` checks became required checks after the merge.
 
 Scope: the four checks of D-38, each as a `verify:site-*` job and a `make` target.
 
@@ -146,7 +151,7 @@ Gate: each check joins the `main` ruleset after its first green run (D-11, D-38)
 
 #### PR-5: Google Cloud project, Hosting configuration, and previews
 
-Status: planned.
+Status: planned. The project id is `natekramber-prod`, and the owner account of decktome-prod owns it through a gcloud configuration named `natekramber` (D-51, D-52).
 
 Scope:
 

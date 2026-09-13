@@ -81,6 +81,7 @@ The file has four parts, in this order:
 
 - Write the handoff in ASD-STE100. The checker reads this file, and it skips the archive.
 - Name the remote head in "State of the repository".
+- Date each entry with the local date of the owner. Mark the time of a GitHub event with UTC.
 - Record each trap that cost the session time. The next session reads it before it makes the same mistake.
 - Never edit an older entry, except to move it to the archive.
 - A merge to `main` after the session ends needs no new entry. The next session records it.

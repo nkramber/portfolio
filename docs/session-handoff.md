@@ -6,15 +6,16 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-12)
 
-- **Main:** `4aacda4`, the squash merge of PR #3, the Astro scaffold.
-- **Open pull requests:** PR-4, the site checks (`site/pr-4-site-checks`). It waits for the Gitar review.
-- **Next action:** answer the Gitar review of PR-4. After the merge, add the four `verify:site-*` checks to the `main` ruleset.
-- **Blocked on:** nothing blocks PR-4. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
-- **Next ids:** D-51, OQ-6, M-4, PR-14, Session 5.
+- **Main:** `1942877`, the squash merge of PR #4, the site checks.
+- **Open pull requests:** the documents refresh (`docs/handoff-after-pr-4`). It waits for the Gitar review.
+- **Next action:** after the merge of the refresh, start PR-5, the Google Cloud project, from `main`.
+- **Blocked on:** nothing blocks PR-5. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
+- **Next ids:** D-53, OQ-8, M-4, PR-14, Session 6.
 
 ## Facts that expire
 
-- The GitHub settings, read 2026-09-12: squash merge alone, automatic delete of a merged branch, and ruleset `main` (id 23087504). The ruleset requires a pull request, refuses a force push and a delete, and requires `verify:docs` and `verify:site` from GitHub Actions (app id 15368).
+- The GitHub settings, read 2026-09-12: squash merge alone, automatic delete of a merged branch, and ruleset `main` (id 23087504). The ruleset requires a pull request and refuses a force push and a delete.
+- The `main` ruleset requires six checks from GitHub Actions (app id 15368): `verify:docs`, `verify:site`, `verify:site-responsive`, `verify:site-a11y`, `verify:site-lighthouse`, and `verify:site-html`.
 - `actions/checkout` tag v7.0.1 points to commit `3d3c42e5aac5ba805825da76410c181273ba90b1`, read 2026-09-12 from the GitHub API.
 - `actions/setup-node` tag v7.0.0 points to commit `820762786026740c76f36085b0efc47a31fe5020`, read 2026-09-12 from the GitHub API.
 - `actions/upload-artifact` tag v7.0.1 points to commit `043fb46d1a93c77aae656e7c1c64a875d1fc6a0a`, read 2026-09-12 from the GitHub API.
@@ -22,14 +23,52 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Astro 7.3.2 is the latest Astro on 2026-09-12, and it needs Node 22.12.0 or newer. The variable `ASTRO_TELEMETRY_DISABLED=1` stops its telemetry.
 - The check tools on 2026-09-12: Playwright 1.63.0 with Chromium 153 (build 1243), axe-core 4.13.0, Lighthouse 13.4.1, chrome-launcher 1.2.1, html-validate 11.15.0, and linkinator 8.1.0.
 - `npm audit` reads 0 vulnerabilities on 2026-09-12. Lighthouse CI 0.15.1 added 12 advisories before D-50 removed it.
+- The Gitar trial pauses automatic reviews on 2026-09-12. A `Gitar review` comment runs one review, and the `gitar-review` skill holds the traps.
+- PR-5 creates the project `natekramber-prod` (D-51). Nobody checked yet whether that id is free.
 - WCAG 2.2 is the W3C Recommendation of 2024-12-12, read 2026-09-12. The minimum target size of 2.5.8 is 24 by 24 CSS pixels.
 - ASD-STE100 Issue 9, dated 2025-01-15, is the current issue, read 2026-09-12.
 - Claude Code reads `CLAUDE.md` and not `AGENTS.md`. A rule file with a `paths` list loads when Claude reads a matching file. The session read both facts in the Claude Code memory docs on 2026-09-12.
 - The toolchain on this Mac, read 2026-09-12: Python 3.9.6, pnpm 9.2.0, and gh 2.100.0. The default Node is 20.17.0, and nvm holds Node 22.23.2 with npm 10.9.8.
 - The Playwright cache in `~/Library/Caches/ms-playwright` holds Chromium build 1243, read 2026-09-12.
-- The external facts of the roadmap, each with its source and the date 2026-09-12, live in `docs/design.md`.
+- The external facts of the roadmap, each with its source and its date, live in `docs/design.md`.
 - The What You Carry repository is public on 2026-09-12, and its D-106 still reads "Private until launch". The owner records that change in that repository (D-25).
 - decktome.com is invite-only on 2026-09-12 (decktome D-310).
+
+## Session 5: 2026-09-12
+
+### What this session did, and why
+
+- The owner merged PR #4 as `1942877`. The session added the four `verify:site-*` checks to the `main` ruleset (D-11).
+- The owner asked for every document to read the current state before a context wipe. The session changed no site code.
+- The owner answered the two questions that PR-5 needs first: the project id `natekramber-prod` (D-51), and the account of decktome-prod (D-52).
+- The refresh touched the design status lines, both registers, this file, `README.md`, and `CLAUDE.md`.
+- It also touched the two auditor agents and four skills: `gitar-review`, `ste-writing`, `responsive-qa`, and `add-project`.
+
+### State of the repository
+
+- `main` is `1942877`, the squash merge of PR #4.
+- Branch `docs/handoff-after-pr-4` holds this refresh, as a pull request of documents alone.
+- Remote head: `origin/docs/handoff-after-pr-4` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on this branch.
+
+### In flight
+
+- The refresh waits for the Gitar review, then for the merge.
+
+### Traps and gotchas
+
+- A pull request of documents alone still runs every site check, because the verify workflow has no path filter. The six jobs finish in under two minutes.
+- A fresh checkout needs `make install` and `make browsers` before `make verify`, with Node 22.23.2 first on the `PATH`.
+- PR-5 creates cloud resources, so the owner runs its setup commands. Create the gcloud configuration `natekramber` first, and check the active project before every command (D-52).
+- Verify the current version of `firebase-tools` and the Workload Identity Federation steps before PR-5 depends on them (hard rule 9).
+
+### Open questions that block progress
+
+None blocks PR-5. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7. OQ-4 blocks nothing at launch.
+
+### Next concrete action
+
+Answer the Gitar review of the refresh. After the owner merges it, start PR-5 from `main` with read-only research, then write `docs/deploy.md`.
 
 ## Session 4: 2026-09-12
 

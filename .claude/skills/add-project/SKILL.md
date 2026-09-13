@@ -7,7 +7,7 @@ description: Add a project to the site as a new project card. Read the source re
 
 Every project on the site uses one card component and one data entry (D-2, G-2). A new project costs one entry and its images, and no layout code. This skill gives the procedure.
 
-CAUTION: the stack pull request sets the data file, the field list, and the image sizes. Until then, step 4 and step 5 have no target. Read the file map of `CLAUDE.md` for the current paths.
+CAUTION: PR-9 sets the data file, the field list, and the image sizes. Until PR-9 merges, step 4 and step 5 have no target. Read the file map of `CLAUDE.md` for the current paths.
 
 ## Procedure
 

@@ -4,6 +4,13 @@ This repository holds the source of the portfolio site of Nate Kramber. The site
 
 `docs/session-handoff.md` gives the current state, and `docs/design.md` gives the plan.
 
+## Set up
+
+1. Install Node 22.23.2, the version in `.nvmrc`, and Python 3.
+2. Run `make install` to install the exact dependencies.
+3. Run `make browsers` to download the Chromium build of the checks.
+4. Run `make verify` to build the site and run every check.
+
 ## Work in this repository
 
 - Read `CLAUDE.md` first. It holds the tenets, the rules, and the read order.

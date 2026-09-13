@@ -17,4 +17,5 @@ These rules keep the decision register, the questions register, and the design d
 - Cite the newer decision when you cite a superseded one.
 - Never delete a refuted claim in `docs/design.md`. Mark it refuted, give the date, and keep it.
 - Give each external fact a source and the date you read it.
+- Date each entry with the local date of the owner. Mark the time of a GitHub event with UTC, for example "2026-09-13 UTC".
 - Record each answer the owner gives in conversation as a decision. The handoff alone is not a record.

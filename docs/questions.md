@@ -19,3 +19,5 @@ How to file a question:
 3. **OQ-3. The bio.** The owner writes the text of the About section (D-28). Blocks the About section pull request. Recommendation: two to four sentences in the plain and direct voice.
 4. **OQ-4. The screenshots.** Real screenshots for the Deck Tome and What You Carry cards replace the placeholders (D-40). Blocks nothing at launch. Recommendation: the owner captures both, and the session resizes them.
 5. **OQ-5. The fonts and the accent color.** The owner picks from the rendered preview page of PR-7 (D-42). Blocks the merge of PR-7. Recommendation: the session publishes the preview with three choices of each.
+6. **OQ-6. The Google Cloud project id.** PR-5 needs the id of the new project (D-34). Blocks PR-5. Recommendation: `natekramber-prod`, after the pattern of decktome-prod. Resolved 2026-09-12: D-51.
+7. **OQ-7. The Google account.** PR-5 needs the account that owns the project, and a gcloud configuration for it. Blocks PR-5. Recommendation: the account of decktome-prod. Resolved 2026-09-12: D-52.
