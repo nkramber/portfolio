@@ -56,27 +56,34 @@ test-responsive: ## Check each responsive-qa width for sideways scroll, with scr
 test-a11y: ## Scan the page with axe for WCAG 2.2 AA, in light and dark (G-8)
 	@npx playwright test tests/accessibility.spec.ts
 
-lighthouse: ## Hold the budget of D-37 and D-48 with Lighthouse 13, then prove it can fail (D-50)
+lighthouse: ## Hold the budget of D-37 and D-48 with Lighthouse 13, then prove it can fail (D-50, D-60)
 	@test -d dist || { echo "lighthouse: dist/ is absent, run make build first"; exit 1; }
 	@CHROME_PATH="$(CHROME_PATH)" node scripts/lighthouse-budget.mjs dist
 	@$(MAKE) --no-print-directory lighthouse-selftest
 
-# The planted defect: a page with a heavy script. The budget must fail, and its
-# output must name the weight cap, so a crash never counts as a pass.
-lighthouse-selftest: ## Prove that the Lighthouse budget fails on a planted heavy script
+# The planted defects, one fixture site for each: a page with a heavy script,
+# and a bad llms.txt. The budget must fail on each, and its output must name the
+# broken value, so a crash never counts as a pass.
+lighthouse-selftest: ## Prove that the Lighthouse budget fails on each planted defect
 	@rm -rf test-results/lighthouse-fixture
 	@node scripts/make-lighthouse-fixture.mjs test-results/lighthouse-fixture
-	@out=$$(LIGHTHOUSE_RUNS=0 node scripts/lighthouse-budget.mjs test-results/lighthouse-fixture 2>&1); rc=$$?; \
+	@out=$$(LIGHTHOUSE_RUNS=0 node scripts/lighthouse-budget.mjs test-results/lighthouse-fixture/heavy-script 2>&1); rc=$$?; \
 	if [ $$rc -ne 0 ] && echo "$$out" | grep -q 'run count'; then \
 		echo "lighthouse-selftest: the budget refused a run count of 0, as it must"; \
 	else \
 		echo "$$out"; echo "lighthouse-selftest: the budget accepted a run count of 0"; exit 1; \
 	fi
-	@out=$$(CHROME_PATH="$(CHROME_PATH)" LIGHTHOUSE_RUNS=1 node scripts/lighthouse-budget.mjs test-results/lighthouse-fixture 2>&1); rc=$$?; \
-	if [ $$rc -ne 0 ] && echo "$$out" | grep -q 'totalBytes'; then \
+	@out=$$(CHROME_PATH="$(CHROME_PATH)" LIGHTHOUSE_RUNS=1 node scripts/lighthouse-budget.mjs test-results/lighthouse-fixture/heavy-script 2>&1); rc=$$?; \
+	if [ $$rc -ne 0 ] && echo "$$out" | grep -qE 'totalBytes: [0-9.]+ is above'; then \
 		echo "lighthouse-selftest: the budget failed on the planted heavy script, as it must"; \
 	else \
 		echo "$$out"; echo "lighthouse-selftest: the budget did not fail on the weight cap"; exit 1; \
+	fi
+	@out=$$(CHROME_PATH="$(CHROME_PATH)" LIGHTHOUSE_RUNS=1 node scripts/lighthouse-budget.mjs test-results/lighthouse-fixture/bad-llms-txt 2>&1); rc=$$?; \
+	if [ $$rc -ne 0 ] && echo "$$out" | grep -qE 'agentic-browsing: [0-9.]+ is below [0-9.]+\. Failed audits: .*llms-txt'; then \
+		echo "lighthouse-selftest: the budget failed on the planted bad llms.txt, as it must"; \
+	else \
+		echo "$$out"; echo "lighthouse-selftest: the budget did not fail on the agentic-browsing floor"; exit 1; \
 	fi
 
 html-check: ## Validate the built HTML and check its internal links and anchors (D-46, D-47)

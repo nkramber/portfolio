@@ -4,7 +4,8 @@
     "performance": 0.95,
     "accessibility": 0.95,
     "best-practices": 0.95,
-    "seo": 0.95
+    "seo": 0.95,
+    "agentic-browsing": 0.95
   },
   "maximum": {
     "scriptBytes": 0,

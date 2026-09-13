@@ -48,6 +48,7 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - Firebase Hosting overwrites HSTS on `*.web.app`, and a custom domain serves the configured value. Source: https://firebase.google.com/docs/hosting/full-config, read 2026-09-12.
 - An HSTS preload removal takes 6 to 12 weeks to reach most Chrome users. Source: https://hstspreload.org/removal/, read 2026-09-12.
 - Firebase cannot issue a certificate while other A, AAAA, or CNAME records stay on the host. Source: https://firebase.google.com/docs/hosting/custom-domain, read 2026-09-12.
+- Lighthouse 13.4.1 scores the `agentic-browsing` category with `agent-accessibility-tree`, `cumulative-layout-shift`, `llms-txt`, and `webmcp-schema-validity`, and two more WebMCP audits are informative. A 404 for `/llms.txt` makes `llms-txt` not applicable, and a served file with no heading, no link, or under 50 characters fails it. Source: the installed Lighthouse 13.4.1, `core/config/default-config.js` and `core/audits/agentic/llms-txt.js`, read 2026-09-13.
 
 ## 1. Thesis
 
@@ -171,12 +172,13 @@ Gate: each check joins the `main` ruleset after its first green run (D-11, D-38)
 
 #### PR-14: Agentic browsing in the Lighthouse budget
 
-Status: planned. It comes before PR-15.
+Status: in review. It comes before PR-15.
 
 Scope:
 
 - An `agentic-browsing` floor of 0.95 in `lighthouse-budget.json` (D-60).
 - The budget script reads that category like the other four categories.
+- The self-test plants a bad `llms.txt` in a fixture site of its own. It checks the exact failure line of each planted defect.
 
 Exit tests:
 
