@@ -6,24 +6,68 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-12)
 
-- **Main:** `dcd98e6`, the squash merge of PR #1, the repository foundation.
-- **Open pull requests:** PR #2, roadmap draft 1 (`docs/roadmap-draft-1`), rebased onto `main`. It waits for the Gitar review of its new head.
-- **Next action:** answer the Gitar review of PR #2. After the owner merges it, start PR-3, the Astro scaffold.
-- **Blocked on:** PR-3 waits for the merge of PR #2. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
-- **Next ids:** D-44, OQ-6, M-4, PR-14, Session 3.
+- **Main:** `60048ba`, the squash merge of PR #2, roadmap draft 1.
+- **Open pull requests:** PR-3, the Astro scaffold (`site/pr-3-astro-scaffold`). It waits for the Gitar review.
+- **Next action:** answer the Gitar review of PR-3. After the merge, add `verify:site` to the `main` ruleset.
+- **Blocked on:** nothing blocks PR-3. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
+- **Next ids:** D-46, OQ-6, M-4, PR-14, Session 4.
 
 ## Facts that expire
 
 - The GitHub settings, read 2026-09-12: squash merge alone, automatic delete of a merged branch, and ruleset `main` (id 23087504). The ruleset requires a pull request, refuses a force push and a delete, and requires the `verify:docs` check from GitHub Actions (app id 15368).
 - `actions/checkout` tag v7.0.1 points to commit `3d3c42e5aac5ba805825da76410c181273ba90b1`, read 2026-09-12 from the GitHub API.
+- `actions/setup-node` tag v7.0.0 points to commit `820762786026740c76f36085b0efc47a31fe5020`, read 2026-09-12 from the GitHub API.
+- The Node release schedule, read 2026-09-12: Node 22 is in maintenance until its end of life on 2027-04-30. Node 24 is the active LTS line until 2026-10-20, and Node 26 becomes LTS on 2026-10-28.
+- Astro 7.3.2 is the latest Astro on 2026-09-12, and it needs Node 22.12.0 or newer. The variable `ASTRO_TELEMETRY_DISABLED=1` stops its telemetry.
 - WCAG 2.2 is the W3C Recommendation of 2024-12-12, read 2026-09-12. The minimum target size of 2.5.8 is 24 by 24 CSS pixels.
 - ASD-STE100 Issue 9, dated 2025-01-15, is the current issue, read 2026-09-12.
 - Claude Code reads `CLAUDE.md` and not `AGENTS.md`. A rule file with a `paths` list loads when Claude reads a matching file. The session read both facts in the Claude Code memory docs on 2026-09-12.
-- The toolchain on this Mac, read 2026-09-12: Python 3.9.6, Node 20.17.0, npm 11.6.2, pnpm 9.2.0, and gh 2.100.0.
-- Astro 7.3.2 is the latest Astro on 2026-09-12, and it needs Node 22.12.0 or newer.
+- The toolchain on this Mac, read 2026-09-12: Python 3.9.6, pnpm 9.2.0, and gh 2.100.0. The default Node is 20.17.0, and nvm holds Node 22.23.2 with npm 10.9.8.
+- A Playwright headless shell, build 1234, sits in `~/Library/Caches/ms-playwright`, read 2026-09-12.
 - The external facts of the roadmap, each with its source and the date 2026-09-12, live in `docs/design.md`.
 - The What You Carry repository is public on 2026-09-12, and its D-106 still reads "Private until launch". The owner records that change in that repository (D-25).
 - decktome.com is invite-only on 2026-09-12 (decktome D-310).
+
+## Session 3: 2026-09-12
+
+### What this session did, and why
+
+- The owner merged PR #2 as `60048ba`, which approved draft 1 of `docs/design.md`. The sequence then allowed PR-3.
+- The session checked each fact of PR-3 at its primary source: the Node release schedule, the npm registry, the Astro template, and GitHub.
+- The owner chose Node 22 LTS over Node 24 LTS (D-44), and turned off the telemetry of Astro (D-45).
+- The session wrote PR-3: the Astro 7 project, the placeholder page, the `verify:site` job, the `make` targets, the npm ecosystem in Dependabot, and `.claude/rules/site.md`.
+- The package file does not include the `allowScripts` field of the Astro template. Neither local npm version documents that field or reads it in its source.
+
+### State of the repository
+
+- `main` is `60048ba`, the squash merge of PR #2.
+- Branch `site/pr-3-astro-scaffold` holds PR-3.
+- Remote head: `origin/site/pr-3-astro-scaffold` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2: 0 findings, one page built, and no script element in `dist/`.
+- `npm install`: 193 packages and 0 vulnerabilities.
+- Headless Chromium screenshots at 320 and 1440 CSS pixels show no clipped text and no sideways scroll.
+
+### In flight
+
+- PR-3 waits for the Gitar review, then for the merge.
+- After the merge, `verify:site` joins the `main` ruleset as a required check.
+
+### Traps and gotchas
+
+- The `--force-dark-mode` flag of the headless shell does not change `prefers-color-scheme`. The dark screenshot had the same file size and the same look as the light one, so the dark scheme has no check yet. PR-4 can emulate the color scheme in Playwright.
+- A foreground `sleep` is blocked in this tool. `curl --retry-connrefused` waits for the preview server with no `sleep`.
+- `astro preview` does not stop on its own. Start it in the background, keep its process id, and stop it after the screenshots.
+- The first local build and preview ran before D-45, with telemetry on. A direct `npm run` command still sends telemetry, so use the `make` targets.
+- Astro 7.3.2 needs Node 22.12.0 or newer, and the default Node on this Mac is 20.17.0.
+- Gitar on PR #3 found that the placeholder padding used `env(safe-area-inset-*)` with the default `viewport-fit`. With that default, the browser insets the page into the safe area itself (WebKit, 2017-09-22), so the padding did nothing and PR-3 removed it. A full-bleed design in PR-8 needs `viewport-fit=cover` and the insets.
+
+### Open questions that block progress
+
+None blocks PR-3. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
+
+### Next concrete action
+
+Answer the Gitar review of PR-3. After the owner merges it, add `verify:site` to the `main` ruleset, then start PR-4, the site checks.
 
 ## Session 2: 2026-09-12
 

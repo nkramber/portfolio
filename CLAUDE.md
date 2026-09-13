@@ -19,7 +19,7 @@ Read `docs/session-handoff.md` before any other file and before any other tool c
 
 This repository holds the portfolio site of Nate Kramber at `natekramber.com` (D-3). The site is one page with a maximum focus on responsive layout, simple and readable code, and best practices (D-4). Each project shows on a card. One card component and one data entry for each project make a new project easy to add (D-2). Deck Tome and What You Carry are the first two projects.
 
-The repository is public. GoDaddy is the registrar of the domain (D-3). The stack is Astro 7 with vanilla CSS and zero client JavaScript (D-30 to D-33). Firebase Hosting will serve the site from a dedicated Google Cloud project (D-34, D-35).
+The repository is public. GoDaddy is the registrar of the domain (D-3). The stack is Astro 7 on Node 22.23.2, with vanilla CSS and zero client JavaScript (D-30 to D-33, D-44). Firebase Hosting will serve the site from a dedicated Google Cloud project (D-34, D-35).
 
 ## Tenets
 
@@ -66,7 +66,7 @@ The tenets are the constitution of the site. When a tenet conflicts with speed o
 | `accessibility-auditor` | Check the local build against WCAG 2.2 level AA. |
 | `copy-editor` | Review the words a visitor reads. |
 
-The two auditors need the browser tooling of the stack pull request. Until it merges, they report that the tooling is absent.
+The two auditors need the browser tooling of PR-4. Until it merges, they report that the tooling is absent.
 
 ## Rule files
 
@@ -77,6 +77,7 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 | `.claude/rules/docs.md` | Every `.md` file |
 | `.claude/rules/registers.md` | `docs/decisions.md`, `docs/questions.md`, `docs/design.md` |
 | `.claude/rules/github.md` | `.github/**` |
+| `.claude/rules/site.md` | `src/**`, `public/**`, `astro.config.mjs`, `package.json` |
 
 ## File map
 
@@ -85,22 +86,34 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `docs/questions.md`: every open question, and the decision that closed each one.
 - `docs/session-handoff.md`: the resume point and the ten newest sessions.
 - `docs/session-handoff-archive.md`: every older session, word for word.
+- `src/pages/index.astro`: the page. It holds the placeholder until PR-8 (D-40).
+- `astro.config.mjs`, `package.json`, `package-lock.json`, and `tsconfig.json`: the Astro project.
+- `.nvmrc`: the pinned Node version (D-44).
 - `.claude/settings.json`: the project settings of Claude Code. It turns off attribution (D-6).
 - `scripts/ste-check.py`: the STE checker (D-7).
-- `.github/workflows/verify.yml`: the checks on each pull request.
-- `.github/dependabot.yml`: the monthly update of the pinned actions (D-16).
+- `.github/workflows/verify.yml`: the checks on each pull request, `verify:docs` and `verify:site`.
+- `.github/dependabot.yml`: the monthly update of the pinned actions and the npm dependencies (D-16).
 - `Makefile`: the local commands.
 - `LICENSE`: the MIT license of the code. The site text and images are not under it (D-18).
 
 ## Commands
 
-Every command is free. Run each command from the repository root.
+Every command is free, and only `make install` uses the network. Run each command from the repository root.
 
-- `make verify`: run every check that the verify workflow runs. Run it before each pull request.
+- `make install`: install the exact dependencies of `package-lock.json`.
+- `make dev`: start the local dev server with live reload.
+- `make build`: build the static site into `dist/`.
+- `make preview`: serve the built site on this machine.
+- `make no-script-check`: fail when a built HTML file holds a script element (G-5).
 - `make ste-check`: check every hand-written `.md` file against the STE rules.
+- `make verify`: run every check that the verify workflow runs. Run it before each pull request.
 - `make help`: list the targets.
 
-The stack pull request adds the build, the local server, and the site checks to `make verify`.
+CAUTION: the site needs Node 22.23.2 from `.nvmrc`. The default Node on this Mac is 20.17.0, and `nvm use` does not change a tool shell. Put `~/.nvm/versions/node/v22.23.2/bin` first on the `PATH` in each command that runs Node.
+
+The Makefile sets `ASTRO_TELEMETRY_DISABLED=1`, so Astro sends no usage data (D-45). A direct `npm run` command does not set it, so use the `make` targets.
+
+PR-4 adds the site checks to `make verify`.
 
 ## Reference repositories
 
