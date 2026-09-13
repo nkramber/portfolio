@@ -111,10 +111,29 @@ if (!directory || !existsSync(directory)) {
   process.exit(1);
 }
 const runs = Number(process.env.LIGHTHOUSE_RUNS ?? budget.runs);
+// With no run, every median is NaN, and NaN passes every limit. Refuse that case.
+if (!Number.isInteger(runs) || runs < 1) {
+  console.error(`lighthouse-budget: the run count must be a positive integer (got "${process.env.LIGHTHOUSE_RUNS ?? budget.runs}")`);
+  process.exit(1);
+}
 
 const server = await serve(resolve(directory));
 const url = `http://127.0.0.1:${server.address().port}/`;
-const chrome = await chromeLauncher.launch({ chromePath: process.env.CHROME_PATH, chromeFlags: ['--headless'] });
+// Playwright launches its Chromium with the sandbox off by default, and the
+// browser tests of this repository run that way. With the sandbox on, Chrome
+// never opened its debug port on the ubuntu-latest runner (ECONNREFUSED in CI
+// run 34731663325). The page under test is our own build.
+let chrome;
+try {
+  chrome = await chromeLauncher.launch({
+    chromePath: process.env.CHROME_PATH,
+    chromeFlags: ['--headless', '--no-sandbox'],
+  });
+} catch (error) {
+  console.error(`lighthouse-budget: Chrome did not start from "${process.env.CHROME_PATH ?? 'the default path'}": ${error.message}`);
+  server.close();
+  process.exit(1);
+}
 
 const measurements = [];
 let lastReport;

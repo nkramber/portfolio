@@ -66,6 +66,12 @@ lighthouse: ## Hold the budget of D-37 and D-48 with Lighthouse 13, then prove i
 lighthouse-selftest: ## Prove that the Lighthouse budget fails on a planted heavy script
 	@rm -rf test-results/lighthouse-fixture
 	@node scripts/make-lighthouse-fixture.mjs test-results/lighthouse-fixture
+	@out=$$(LIGHTHOUSE_RUNS=0 node scripts/lighthouse-budget.mjs test-results/lighthouse-fixture 2>&1); rc=$$?; \
+	if [ $$rc -ne 0 ] && echo "$$out" | grep -q 'run count'; then \
+		echo "lighthouse-selftest: the budget refused a run count of 0, as it must"; \
+	else \
+		echo "$$out"; echo "lighthouse-selftest: the budget accepted a run count of 0"; exit 1; \
+	fi
 	@out=$$(CHROME_PATH="$(CHROME_PATH)" LIGHTHOUSE_RUNS=1 node scripts/lighthouse-budget.mjs test-results/lighthouse-fixture 2>&1); rc=$$?; \
 	if [ $$rc -ne 0 ] && echo "$$out" | grep -q 'totalBytes'; then \
 		echo "lighthouse-selftest: the budget failed on the planted heavy script, as it must"; \

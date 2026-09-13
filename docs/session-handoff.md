@@ -64,6 +64,8 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Lighthouse scored accessibility 0.91 before the dark contrast fix and 1 after it. The cause is unverified: a headless run can follow the dark setting of macOS.
 - Lighthouse CI 0.15.1 brings 12 npm audit advisories. Do not add it again without a decision (D-50).
 - The Lighthouse budget reads its bytes from a server with no compression, so the live site weighs less than the budget output.
+- On the ubuntu-latest runner, Chrome with its sandbox on never opened its debug port, and Lighthouse failed with ECONNREFUSED. The budget script starts Chrome with `--no-sandbox`, as Playwright does by default.
+- Gitar found that a run count of 0 passed the budget with no measurement, because the median of no values is NaN. The script refuses that count now, and the self-test proves it.
 
 ### Open questions that block progress
 
