@@ -12,3 +12,8 @@ npm-debug.log*
 # Test output: Playwright results and reports, and the Lighthouse fixture
 test-results/
 playwright-report/
+
+# The Firebase CLI: the Hosting upload cache of a deploy, and the debug logs
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
