@@ -9,6 +9,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-12 correction pass (Session 6): PR-5 and M-1 follow D-53, D-54, D-56 to D-59, D-62, and D-66 to D-68. PR-6 follows D-63. PR-14 applies D-60, and PR-15 applies D-57, D-64, and D-65. The external facts add the research of PR-5.
 2026-09-13 correction pass (Session 6): PR-14 no longer waits for a move of the repository (D-69).
 2026-09-13 correction pass (Session 6): PR-16 keeps the preview server of the checks in the foreground (D-70), and it comes before PR-14.
+2026-09-13 correction pass (Session 7): PR-14 and PR-16 read merged, and PR-15 follows D-71 to D-74.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -44,6 +45,9 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - An administrator can bypass the protection rules of an environment by default. A workflow that names a missing environment creates it with no protection. Sources: https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments and https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments, read 2026-09-12.
 - The setting "Require actions to be pinned to a full-length commit SHA" refuses each action with no full SHA, and a reusable workflow can still use a tag. Source: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository, read 2026-09-12.
 - Astro 7 inlines a stylesheet under 4 KB by default (`build.inlineStylesheets: 'auto'`). Source: https://docs.astro.build/en/reference/configuration-reference/#buildinlinestylesheets, read 2026-09-12.
+- With `build.inlineStylesheets: 'never'`, Astro sends every project style in an external stylesheet. A `src/pages/404.astro` file builds to `404.html`. Sources: https://docs.astro.build/en/reference/configuration-reference/#buildinlinestylesheets and https://docs.astro.build/en/basics/astro-pages/, read 2026-09-13.
+- `astro preview` of Astro 7.3.2 sends `dist/404.html` with the status 404 for a missing address. Source: the installed `dist/core/preview/vite-plugin-astro-preview.js`, read 2026-09-13.
+- With `--server-root`, linkinator 8.1.0 reads each location as a glob inside the server root. Given `dist` and `dist/404.html` with no server root, it reported the stylesheet and the home link as broken. Sources: the installed `build/src/options.js` and a local run, 2026-09-13.
 - A CSP in a `meta` element ignores `frame-ancestors`. Source: https://www.w3.org/TR/CSP3/, read 2026-09-12.
 - The five security audits in Best Practices of Lighthouse 13.4.1 are informative and do not change the score. A CSP block still fails the scored audit `errors-in-console`. Source: the default config of the installed Lighthouse 13.4.1, read 2026-09-12.
 - Firebase Hosting overwrites HSTS on `*.web.app`, and a custom domain serves the configured value. Source: https://firebase.google.com/docs/hosting/full-config, read 2026-09-12.
@@ -173,7 +177,7 @@ Gate: each check joins the `main` ruleset after its first green run (D-11, D-38)
 
 #### PR-14: Agentic browsing in the Lighthouse budget
 
-Status: in review. It comes before PR-15.
+Status: merged as #7, `28dbda2`, on 2026-09-13 UTC. Gitar approved it with no finding.
 
 Scope:
 
@@ -193,33 +197,38 @@ Gate: the owner merges PR-14.
 
 #### PR-15: Stylesheet file and placeholder 404 page
 
-Status: planned. It comes after PR-14 and before PR-5 (D-65).
+Status: in review. It comes after PR-14 and before PR-5 (D-65).
 
 Scope:
 
 - `build.inlineStylesheets: 'never'` in `astro.config.mjs`, so the page loads its CSS from a file (D-57).
-- A minimal `src/pages/404.astro`: one short line and a link home, in the style of the placeholder (D-64).
-- The responsive and accessibility tests also load the 404 page (G-1, G-8).
+- A minimal `src/pages/404.astro`: one short line and a link home, in the style of the placeholder (D-64, D-74).
+- One layout component, `src/layouts/Placeholder.astro`, for the head and the styles of both pages (D-73).
+- The responsive tests, the axe scan, the HTML validation, and the link check also load the 404 page (D-71, G-1, G-8).
+- `make no-inline-style-check` with a self-test, in the `verify:site` job (D-72).
 
 Out of scope:
 
 - The CSP header. PR-5 holds `firebase.json`.
 - The final words of the 404 page. PR-8 holds them.
+- The Lighthouse budget on the 404 page. The budget stays on the home page (D-71).
 
 Exit tests:
 
-- The built pages hold no `style` element, and `dist/_astro/` holds the stylesheet.
+- `make no-inline-style-check` passes on the build, and its self-test finds both planted defects (D-72, G-3).
+- `dist/_astro/` holds the stylesheet.
 - `dist/404.html` exists and holds no script (G-5).
-- Every site check passes on both pages, and the Lighthouse budget still holds (G-7).
+- The responsive tests, the axe scan, the HTML validation, and the link check pass on both pages (D-71).
+- The Lighthouse budget still holds on the home page (G-7).
 - The `copy-editor` agent reviews the words of the 404 page (D-28).
 
 Gate: the owner merges PR-15.
 
-> *In plain English:* the page keeps its styles inside the HTML today, and a missing address shows the generic error page of the host. This change moves the styles into a file, so a strict security policy can permit them. It also adds a short page for a missing address.
+> *In plain English:* the page keeps its styles inside the HTML today, and a missing address shows the generic error page of the host. This change moves the styles into a file, so a strict security policy can permit them. It also adds a short page for a missing address, and a check that keeps styles out of the HTML.
 
 #### PR-16: Foreground preview server for the checks
 
-Status: in review. It comes before PR-14 (D-70).
+Status: merged as #8, `162ec5b`, on 2026-09-13 UTC. Gitar approved it with no finding.
 
 Scope:
 

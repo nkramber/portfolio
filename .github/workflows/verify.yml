@@ -51,6 +51,9 @@ jobs:
         run: make build
       - name: no script in the build
         run: make no-script-check
+      # The CSP of D-57 blocks inline style. The target also runs its self-test (D-72).
+      - name: no inline style in the build
+        run: make no-inline-style-check
 
   site-responsive:
     name: "verify:site-responsive"

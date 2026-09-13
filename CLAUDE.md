@@ -86,10 +86,12 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `docs/questions.md`: every open question, and the decision that closed each one.
 - `docs/session-handoff.md`: the resume point and the ten newest sessions.
 - `docs/session-handoff-archive.md`: every older session, word for word.
-- `src/pages/index.astro`: the page. It holds the placeholder until PR-8 (D-40).
+- `src/pages/index.astro`: the home page. It holds the placeholder until PR-8 (D-40).
+- `src/pages/404.astro`: the placeholder 404 page (D-64, D-74).
+- `src/layouts/Placeholder.astro`: the head and the styles of both placeholder pages (D-73).
 - `astro.config.mjs`, `package.json`, `package-lock.json`, and `tsconfig.json`: the Astro project.
 - `.nvmrc`: the pinned Node version (D-44).
-- `tests/`: the Playwright tests of the responsive layout and of accessibility, and the fixtures with planted defects (D-38).
+- `tests/`: the Playwright tests of the responsive layout and of accessibility, and the fixtures with planted defects (D-38, D-72).
 - `playwright.config.ts`: the Playwright setup. It serves `dist/` with `astro preview`.
 - `scripts/lighthouse-budget.mjs` and `lighthouse-budget.json`: the Lighthouse budget (D-48, D-50, D-60). `scripts/make-lighthouse-fixture.mjs` writes its planted defects.
 - `.htmlvalidate.json`: the rules of `html-validate` (D-46).
@@ -110,8 +112,9 @@ Every command is free, and only `make install` and `make browsers` use the netwo
 - `make build`: build the static site into `dist/`.
 - `make preview`: serve the built site on this machine.
 - `make no-script-check`: fail when a built HTML file holds a script element (G-5).
-- `make test-responsive`: check each width of the `responsive-qa` skill for sideways scroll, and save a screenshot of each width.
-- `make test-a11y`: scan the page with axe for WCAG 2.2 AA, in the light and the dark scheme.
+- `make no-inline-style-check`: fail when a built HTML file holds a style element or a style attribute (D-72). Its self-test then proves that the check can fail.
+- `make test-responsive`: check both pages at each width of the `responsive-qa` skill for sideways scroll, and save a screenshot of each.
+- `make test-a11y`: scan both pages with axe for WCAG 2.2 AA, in the light and the dark scheme.
 - `make lighthouse`: check the Lighthouse budget over three runs, then prove that the budget fails on each planted defect.
 - `make html-check`: validate the built HTML and check its internal links and anchors, then prove that both tools fail on planted defects.
 - `make site-checks`: run the four site checks.

@@ -1,0 +1,10 @@
+---
+// The placeholder 404 page (D-64). Astro builds it to dist/404.html, and the
+// server sends it for every missing address. PR-8 replaces the words (D-74).
+import Placeholder from '../layouts/Placeholder.astro';
+---
+
+<Placeholder title="Page not found | Nate Kramber">
+  <h1>There’s no page at this address.</h1>
+  <p class="home"><a href="/">Go to the home page</a></p>
+</Placeholder>
