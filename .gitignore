@@ -2,3 +2,9 @@
 .DS_Store
 .vscode/
 .idea/
+
+# Node dependencies, the Astro build, and generated Astro types
+node_modules/
+dist/
+.astro/
+npm-debug.log*

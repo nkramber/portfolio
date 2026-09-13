@@ -1,7 +1,6 @@
-# Keeps the pinned action SHAs current (D-16). Each ecosystem gets one
-# grouped pull request a month, and Dependabot never rebases it on its own,
-# so update pull requests do not pile up. The npm ecosystem joins this file
-# with the stack pull request.
+# Keeps the pinned action SHAs and the npm dependencies current (D-16).
+# Each ecosystem gets one grouped pull request a month, and Dependabot never
+# rebases it on its own, so update pull requests do not pile up.
 version: 2
 updates:
   - package-ecosystem: github-actions
@@ -12,4 +11,13 @@ updates:
     rebase-strategy: disabled
     groups:
       actions:
+        patterns: ["*"]
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 1
+    rebase-strategy: disabled
+    groups:
+      npm:
         patterns: ["*"]

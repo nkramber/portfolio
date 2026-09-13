@@ -74,7 +74,7 @@ Gate: the owner merges PR-1. Then `verify:docs` joins the `main` ruleset as a re
 
 #### PR-2: Roadmap draft 1
 
-Status: in review.
+Status: merged as #2, `60048ba`, on 2026-09-12. Gitar approved it with no finding.
 
 Scope:
 
@@ -97,7 +97,7 @@ Phase gate: `natekramber.com` serves the placeholder page over HTTPS, each merge
 
 #### PR-3: Astro scaffold and placeholder page
 
-Status: planned.
+Status: in review.
 
 Scope:
 
