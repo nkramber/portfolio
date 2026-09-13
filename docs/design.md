@@ -8,6 +8,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-12 correction pass (Session 5): PR-1 to PR-4 read merged, and PR-5 names the project and the account of D-51 and D-52.
 2026-09-12 correction pass (Session 6): PR-5 and M-1 follow D-53, D-54, D-56 to D-59, D-62, and D-66 to D-68. PR-6 follows D-63. PR-14 applies D-60, and PR-15 applies D-57, D-64, and D-65. The external facts add the research of PR-5.
 2026-09-13 correction pass (Session 6): PR-14 no longer waits for a move of the repository (D-69).
+2026-09-13 correction pass (Session 6): PR-16 keeps the preview server of the checks in the foreground (D-70), and it comes before PR-14.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -213,6 +214,28 @@ Exit tests:
 Gate: the owner merges PR-15.
 
 > *In plain English:* the page keeps its styles inside the HTML today, and a missing address shows the generic error page of the host. This change moves the styles into a file, so a strict security policy can permit them. It also adds a short page for a missing address.
+
+#### PR-16: Foreground preview server for the checks
+
+Status: in review. It comes before PR-14 (D-70).
+
+Scope:
+
+- `ASTRO_PREVIEW_BACKGROUND` in the web server environment of `playwright.config.ts`, with a comment that names the Astro source (D-70).
+
+Out of scope:
+
+- The `make preview` target. An agent can still run that server in the background.
+
+Exit tests:
+
+- `make verify` passes in an agent shell with no extra variable.
+- No `astro preview` process stays on port 4321 after the run.
+- The `verify:site-responsive` and `verify:site-a11y` jobs still pass in CI.
+
+Gate: the owner merges PR-16.
+
+> *In plain English:* in a coding-agent shell, the local checks fail today, because Astro moves its preview server into the background. This change keeps that server in the foreground for the checks. CI does not change.
 
 #### PR-5: Google Cloud projects, Hosting configuration, and previews
 
@@ -491,20 +514,21 @@ One owner runs the sequence in strict order. A step starts only when the gate of
 2. PR-2, roadmap draft 1. Gate: the merge approves draft 1.
 3. PR-3, the Astro scaffold and the placeholder page. Gate: `verify:site` becomes a required check.
 4. PR-4, the site checks. Gate: each check becomes a required check.
-5. PR-14, agentic browsing in the Lighthouse budget.
-6. PR-15, the stylesheet file and the placeholder 404 page (D-65).
-7. PR-5, the Google Cloud projects, the Hosting configuration, and previews. Gate: M-1 has a result.
-8. M-1, the keyless preview deploy. It runs on the pull request of PR-5.
-9. PR-6, the deploy on merge and the domain. Gate: the placeholder page is live.
-10. M-2, the request logs on the Spark plan. Gate: the result is in `docs/decisions.md`.
-11. PR-7, the design tokens, the fonts, and the accent color. Gate: OQ-5 closes.
-12. PR-8, the page shell. Gate: the owner approves it on a preview address.
-13. PR-9, the project schema and the card component.
-14. PR-10, the Deck Tome card. Gate: the owner approves the card text.
-15. PR-11, the What You Carry card. Gate: the owner approves the card text.
-16. PR-12, the weekly outbound link check.
-17. PR-13, the visit counts. It runs only when M-2 passes.
-18. M-3, the launch audit. Gate: the owner signs off.
+5. PR-16, the foreground preview server for the checks (D-70).
+6. PR-14, agentic browsing in the Lighthouse budget.
+7. PR-15, the stylesheet file and the placeholder 404 page (D-65).
+8. PR-5, the Google Cloud projects, the Hosting configuration, and previews. Gate: M-1 has a result.
+9. M-1, the keyless preview deploy. It runs on the pull request of PR-5.
+10. PR-6, the deploy on merge and the domain. Gate: the placeholder page is live.
+11. M-2, the request logs on the Spark plan. Gate: the result is in `docs/decisions.md`.
+12. PR-7, the design tokens, the fonts, and the accent color. Gate: OQ-5 closes.
+13. PR-8, the page shell. Gate: the owner approves it on a preview address.
+14. PR-9, the project schema and the card component.
+15. PR-10, the Deck Tome card. Gate: the owner approves the card text.
+16. PR-11, the What You Carry card. Gate: the owner approves the card text.
+17. PR-12, the weekly outbound link check.
+18. PR-13, the visit counts. It runs only when M-2 passes.
+19. M-3, the launch audit. Gate: the owner signs off.
 
 ## 6. Open questions
 

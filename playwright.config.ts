@@ -16,5 +16,10 @@ export default defineConfig({
     command: 'npm run preview -- --host 127.0.0.1 --port 4321',
     url: 'http://127.0.0.1:4321',
     reuseExistingServer: !process.env.CI,
+    // Astro 7.3 runs `astro preview` as a detached background server when it
+    // detects an AI agent, and the command then exits at once, so Playwright
+    // fails. This variable turns that detection off, and the server stays in
+    // the foreground (astro/dist/cli/preview/index.js). CI detects no agent (D-70).
+    env: { ASTRO_PREVIEW_BACKGROUND: '1' },
   },
 });

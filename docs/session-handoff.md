@@ -6,11 +6,11 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-13)
 
-- **Main:** `30fc74e`, the squash merge of PR #5, the documents refresh.
-- **Open pull requests:** #6, the documents pull request of Session 6 (`docs/handoff-after-pr-5`), with D-53 to D-69. It waits for the Gitar review of its newest head, then for the merge.
-- **Next action:** after the merge of #6, start PR-14 from `main`. Then do PR-15 and PR-5.
-- **Blocked on:** nothing blocks PR-14. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
-- **Next ids:** D-70, OQ-8, M-4, PR-16, Session 7.
+- **Main:** `cf80bf3`, the squash merge of PR #6, the decisions of Session 6.
+- **Open pull requests:** #7, PR-14 on `site/pr-14-agentic-browsing-budget`, and PR-16 on `site/pr-16-foreground-preview`. Each waits for the Gitar review, then for the merge.
+- **Next action:** answer the Gitar reviews of #7 and PR-16. After both merges, start PR-15 from `main`, and then PR-5.
+- **Blocked on:** nothing blocks PR-15. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
+- **Next ids:** D-71, OQ-8, M-4, PR-17, Session 7.
 
 ## Facts that expire
 
@@ -40,6 +40,9 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The GitHub ids, read 2026-09-12: repository 1367643959 and owner 190805558. The OIDC `sub` prefix is `repo:nkramber@190805558/portfolio@1367643959`, the immutable format for a repository that GitHub created after 2026-07-15.
 - The repository has no environment, no secret, and no variable, read 2026-09-12. Workflows get a read token by default, and the workflows of a first-time contributor need approval.
 - The DNS of `natekramber.com`, read 2026-09-12: GoDaddy name servers and two A records of the GoDaddy parking host. `www` is a CNAME to the apex, and the domain has no MX, TXT, or CAA record.
+- Lighthouse 13.4.1 has five categories, read 2026-09-13 from the installed source. A 404 for `/llms.txt` makes the audit `llms-txt` not applicable, so the placeholder page scores 1 for agentic browsing.
+- Astro 7.3.2 runs `astro preview` in the background when `am-i-vibing` 0.4.0 detects an agent from a variable such as `AI_AGENT` or `CLAUDECODE`. `ASTRO_PREVIEW_BACKGROUND` turns that detection off (installed `dist/cli/preview/index.js`, read 2026-09-13).
+- Playwright 1.63.0 merges `webServer.env` over `process.env` (installed `lib/runner/index.js`, read 2026-09-13).
 
 ## Session 6: 2026-09-12
 
@@ -51,21 +54,26 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The session turned on the GitHub setting that requires a full commit SHA for each action (D-61).
 - The owner asked to move the repository to the external drive, and then queued the move for the next session (D-55).
 - On 2026-09-13 the owner canceled the move as a miscommunication (D-69). No file moved, and the session removed the checklist of the move.
-- Gitar approved #6 after one finding about the order of the correction-pass dates in `docs/design.md`. The fix is `b0f05db`.
-- The session wrote no site code and moved no file.
+- Gitar approved #6 after two findings: the order of the correction-pass dates in `docs/design.md`, and a stale pointer in D-55. The fixes are `b0f05db` and `5abd241`.
+- The owner merged #6 as `cf80bf3` on 2026-09-13 UTC. Its tree matches the reviewed head `5abd241`, and GitHub deleted the branch.
+- The session wrote PR-14 as #7. It adds the `agentic-browsing` floor of D-60, a fixture site with a bad `llms.txt`, and exact failure lines in the Lighthouse self-test.
+- `make verify` then failed in this agent shell, because Astro ran `astro preview` as a detached background server. That server was also the source of the old server on port 4321, and the session stopped it.
+- The owner chose a separate fix, PR-16 (D-70). The session wrote PR-16, and this entry rides in it.
+- The session changed no page code and moved no file.
 
 ### State of the repository
 
-- `main` is `30fc74e`, the squash merge of PR #5.
-- Branch `docs/handoff-after-pr-5` holds this entry and D-53 to D-69, as pull request #6.
-- Remote head: `origin/docs/handoff-after-pr-5` at the commit that holds this entry, checked after the push.
-- `make ste-check`: 0 findings.
-- An `astro preview` server from an earlier session still runs on port 4321, with its working directory in the repository.
+- `main` is `cf80bf3`, the squash merge of PR #6.
+- Branch `site/pr-14-agentic-browsing-budget` holds PR-14 as #7, at `84d440f`.
+- Branch `site/pr-16-foreground-preview` holds PR-16 and this entry.
+- Remote head: `origin/site/pr-16-foreground-preview` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on both branches. PR-14 needs `ASTRO_PREVIEW_BACKGROUND=1` until PR-16 merges.
+- The Lighthouse budget of PR-14 reads 1 in each of the five categories, 0 script bytes, and 1,793 total bytes. The median LCP is 621 ms, and the CLS and the TBT are 0.
 
 ### In flight
 
-- Pull request #6 waits for the Gitar review of its newest head, then for the merge.
-- PR-14, PR-15, and PR-5 have their decisions, and no branch yet. The research reports live in this session alone, so `docs/design.md` keeps the key facts with their sources.
+- #7 (PR-14) and PR-16 wait for the Gitar review, then for the merge.
+- PR-15 and PR-5 have their decisions, and no branch yet. The research reports live in this session alone, so `docs/design.md` keeps the key facts with their sources.
 - Nobody checked yet whether the setting of D-61 stops the Dependabot jobs that GitHub runs. A manual Dependabot check by the owner gives the answer.
 
 ### Traps and gotchas
@@ -79,14 +87,17 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - `firebase projects:addfirebase` returns 403 until the account opens the Firebase console once (decktome `docs/setup-gcp.md`).
 - The Firebase CLI hides the cause of an auth failure without `--debug`. Its debug log prints no `Authorization` header (firebase-tools 15.30.0 source, tested on Node 22.23.2).
 - A `curl` of `cloud.google.com/sdk/docs` returns an empty page, because the docs moved to `docs.cloud.google.com`. Use `curl -L`.
+- In an agent shell, Astro 7.3.2 starts `astro preview` as a detached background server, and the command exits at once. Playwright then fails, and the server stays on port 4321. PR-16 sets `ASTRO_PREVIEW_BACKGROUND` for the checks (D-70).
+- The old heavy-script self-test matched `totalBytes` in the results table, so any failure of the fixture passed it. PR-14 matches the failure line `totalBytes: N is above`.
+- A missing `llms.txt` does not lower agentic browsing, because Lighthouse marks a 404 as not applicable. Only a served file with a defect fails the audit.
 
 ### Open questions that block progress
 
-None blocks PR-14. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
+None blocks PR-14, PR-15, or PR-16. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
 
 ### Next concrete action
 
-After the owner merges #6, start PR-14 from `main`. Find the old `astro preview` server on port 4321 with `ps`, and stop it. Then add the `agentic-browsing` floor of D-60 to `lighthouse-budget.json`.
+Answer the Gitar reviews of #7 and PR-16. After both merges, start PR-15 from `main`: the stylesheet file of D-57 and the minimal 404 page of D-64.
 
 ## Session 5: 2026-09-12
 
