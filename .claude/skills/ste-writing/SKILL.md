@@ -129,7 +129,7 @@ The rules permit these names as written (rule 1.5):
 - The projects: Deck Tome, What You Carry, terminal-rpg.
 - Tools and services: GitHub, GitHub Actions, Dependabot, Gitar, `gitar-bot`, GoDaddy, Claude Code, Codex, Python, Make, Node.js, npm.
 - Hosting and deploy: Google Cloud, Firebase Hosting, Spark plan, preview channel, Cloud Logging, Workload Identity Federation.
-- Web standards and tools: HTML, CSS, JavaScript, SVG, WCAG, Baseline, Astro, axe, Playwright, Lighthouse, Core Web Vitals.
+- Web standards and tools: HTML, CSS, JavaScript, SVG, WCAG, Baseline, Astro, axe, Playwright, Lighthouse, Core Web Vitals, html-validate, linkinator, chrome-launcher, "Chrome for Testing".
 - Web terms: viewport, viewport width, breakpoint, layout, section, project card, component, touch target, focus indicator, reduced motion, sideways scroll, performance budget.
 - Process terms: tenet, hard rule, guardrail, session handoff, decision register, questions register, rule file, ruleset, squash merge, required check, pull request.
 - The standard itself: ASD-STE100, STE.
@@ -173,6 +173,7 @@ CAUTION: the checker reads "is read-only" as passive voice, because "read" is an
 - The checker skips tables, fenced code blocks, headings, and front matter. Keep the text in a table cell short.
 - Text in backticks counts as one word. So does text in double quotes or in parentheses (8.5, 8.6).
 - A numbered list item counts as a procedural step, so its limit is 20 words.
+- The checker counts the dash of a list item as a word of its first sentence.
 - A line that starts with bold text starts a new paragraph.
 - A sentence can wrap to the next line. The checker joins the lines of a paragraph before it counts.
 - The plain-English paragraphs of the design doc are descriptive text. Rule 6.3 applies.

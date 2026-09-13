@@ -44,6 +44,10 @@ The Gitar trial has a processing limit for each period. At that limit, Gitar pos
 - A green Gitar check does not prove that no finding is open. Read the threads.
 - The REST API names the author `gitar-bot[bot]`, and the GraphQL API names it `gitar-bot`. The session read both names on 2026-09-12, on decktome pull request #144.
 - The owner can merge a pull request before a finding gets its answer. A commit on that branch then never reaches `main`. Carry the fix to a new branch from `main`. Reply on the old thread with the new pull request.
+- The pause note can come beside a full review. Open the collapsed Code Review block of the dashboard comment before you post `Gitar review`.
+- After a push, a paused Gitar posts no new review. Post `Gitar review` for the new head.
+- Gitar can confirm a fix in a reply and resolve its own thread. Read the thread before you resolve it yourself.
+- A manual review can update the dashboard comment and attach no Gitar check to the new head. Check that the review text names the change of that head.
 
 ## Commands
 

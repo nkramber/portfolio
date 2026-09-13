@@ -7,7 +7,7 @@ description: The responsive checklist for every change to the site. Check each v
 
 Responsive layout is tenet T-1, and the owner named it the maximum focus (D-4). A change that looks right at one width alone is not done. Run this checklist before you open a pull request that changes the site. The `responsive-auditor` agent runs the part that a script can prove.
 
-CAUTION: the stack pull request adds the local server and the screenshot tooling. Until it merges, no part of this checklist can run.
+`make test-responsive` runs the automated part: it checks every width for sideways scroll and saves a screenshot of each width in `test-results/`. A person or the `responsive-auditor` agent checks the rest.
 
 The WCAG facts below come from WCAG 2.2, the W3C Recommendation of 2024-12-12. The session read them at https://www.w3.org/TR/WCAG22/ and on the W3C Understanding page for 2.5.8 on 2026-09-12.
 
