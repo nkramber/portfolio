@@ -14,5 +14,13 @@
   },
   "dependencies": {
     "astro": "^7.3.2"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "chrome-launcher": "^1.2.1",
+    "html-validate": "^11.15.0",
+    "lighthouse": "^13.4.1",
+    "linkinator": "^8.1.0"
   }
 }

@@ -28,7 +28,7 @@ The tenets are the constitution of the site. When a tenet conflicts with speed o
 - **T-1. Responsive first.** Every layout works from a 320 px phone to a wide desktop screen, with touch, a mouse, or a keyboard. No layout scrolls sideways. A change that looks right at one width alone is not done.
 - **T-2. Accessible.** The site meets WCAG 2.2 level AA. Every visitor can read and use every part of the site.
 - **T-3. Simple and readable code.** Explicit over clever. A new reader understands a file from the file itself. Two concrete uses come before an abstraction.
-- **T-4. Fast.** The site stays inside the performance budget of D-37. Every dependency and every large asset must earn its bytes.
+- **T-4. Fast.** The site stays inside the performance budget of D-37 and D-48. Every dependency and every large asset must earn its bytes.
 - **T-5. Document everything.** Continuity is a duty. Each session updates `docs/session-handoff.md`. The decisions, the questions, and the design change when the intent changes.
 - **T-6. No attribution.** No commit, branch name, pull request, comment, or code names an agent, a harness, or a model as the source of work (D-6). The site copy can describe how the owner directs AI coding agents (D-26).
 
@@ -66,7 +66,7 @@ The tenets are the constitution of the site. When a tenet conflicts with speed o
 | `accessibility-auditor` | Check the local build against WCAG 2.2 level AA. |
 | `copy-editor` | Review the words a visitor reads. |
 
-The two auditors need the browser tooling of PR-4. Until it merges, they report that the tooling is absent.
+The two auditors use the browser tooling of PR-4: Playwright, axe, and the Chromium build that `make browsers` downloads.
 
 ## Rule files
 
@@ -89,22 +89,32 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `src/pages/index.astro`: the page. It holds the placeholder until PR-8 (D-40).
 - `astro.config.mjs`, `package.json`, `package-lock.json`, and `tsconfig.json`: the Astro project.
 - `.nvmrc`: the pinned Node version (D-44).
+- `tests/`: the Playwright tests of the responsive layout and of accessibility, and the fixtures with planted defects (D-38).
+- `playwright.config.ts`: the Playwright setup. It serves `dist/` with `astro preview`.
+- `scripts/lighthouse-budget.mjs` and `lighthouse-budget.json`: the Lighthouse budget (D-48, D-50). `scripts/make-lighthouse-fixture.mjs` writes its planted defect.
+- `.htmlvalidate.json`: the rules of `html-validate` (D-46).
 - `.claude/settings.json`: the project settings of Claude Code. It turns off attribution (D-6).
 - `scripts/ste-check.py`: the STE checker (D-7).
-- `.github/workflows/verify.yml`: the checks on each pull request, `verify:docs` and `verify:site`.
+- `.github/workflows/verify.yml`: the checks on each pull request, `verify:docs`, `verify:site`, and the four `verify:site-*` jobs.
 - `.github/dependabot.yml`: the monthly update of the pinned actions and the npm dependencies (D-16).
 - `Makefile`: the local commands.
 - `LICENSE`: the MIT license of the code. The site text and images are not under it (D-18).
 
 ## Commands
 
-Every command is free, and only `make install` uses the network. Run each command from the repository root.
+Every command is free, and only `make install` and `make browsers` use the network. Run each command from the repository root.
 
 - `make install`: install the exact dependencies of `package-lock.json`.
+- `make browsers`: download the Chromium build that Playwright and the Lighthouse budget use.
 - `make dev`: start the local dev server with live reload.
 - `make build`: build the static site into `dist/`.
 - `make preview`: serve the built site on this machine.
 - `make no-script-check`: fail when a built HTML file holds a script element (G-5).
+- `make test-responsive`: check each width of the `responsive-qa` skill for sideways scroll, and save a screenshot of each width.
+- `make test-a11y`: scan the page with axe for WCAG 2.2 AA, in the light and the dark scheme.
+- `make lighthouse`: check the Lighthouse budget over three runs, then prove that the budget fails on a planted heavy script.
+- `make html-check`: validate the built HTML and check its internal links and anchors, then prove that both tools fail on planted defects.
+- `make site-checks`: run the four site checks.
 - `make ste-check`: check every hand-written `.md` file against the STE rules.
 - `make verify`: run every check that the verify workflow runs. Run it before each pull request.
 - `make help`: list the targets.
@@ -112,8 +122,6 @@ Every command is free, and only `make install` uses the network. Run each comman
 CAUTION: the site needs Node 22.23.2 from `.nvmrc`. The default Node on this Mac is 20.17.0, and `nvm use` does not change a tool shell. Put `~/.nvm/versions/node/v22.23.2/bin` first on the `PATH` in each command that runs Node.
 
 The Makefile sets `ASTRO_TELEMETRY_DISABLED=1`, so Astro sends no usage data (D-45). A direct `npm run` command does not set it, so use the `make` targets.
-
-PR-4 adds the site checks to `make verify`.
 
 ## Reference repositories
 

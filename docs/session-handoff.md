@@ -6,27 +6,72 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-12)
 
-- **Main:** `60048ba`, the squash merge of PR #2, roadmap draft 1.
-- **Open pull requests:** PR-3, the Astro scaffold (`site/pr-3-astro-scaffold`). It waits for the Gitar review.
-- **Next action:** answer the Gitar review of PR-3. After the merge, add `verify:site` to the `main` ruleset.
-- **Blocked on:** nothing blocks PR-3. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
-- **Next ids:** D-46, OQ-6, M-4, PR-14, Session 4.
+- **Main:** `4aacda4`, the squash merge of PR #3, the Astro scaffold.
+- **Open pull requests:** PR-4, the site checks (`site/pr-4-site-checks`). It waits for the Gitar review.
+- **Next action:** answer the Gitar review of PR-4. After the merge, add the four `verify:site-*` checks to the `main` ruleset.
+- **Blocked on:** nothing blocks PR-4. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
+- **Next ids:** D-51, OQ-6, M-4, PR-14, Session 5.
 
 ## Facts that expire
 
-- The GitHub settings, read 2026-09-12: squash merge alone, automatic delete of a merged branch, and ruleset `main` (id 23087504). The ruleset requires a pull request, refuses a force push and a delete, and requires the `verify:docs` check from GitHub Actions (app id 15368).
+- The GitHub settings, read 2026-09-12: squash merge alone, automatic delete of a merged branch, and ruleset `main` (id 23087504). The ruleset requires a pull request, refuses a force push and a delete, and requires `verify:docs` and `verify:site` from GitHub Actions (app id 15368).
 - `actions/checkout` tag v7.0.1 points to commit `3d3c42e5aac5ba805825da76410c181273ba90b1`, read 2026-09-12 from the GitHub API.
 - `actions/setup-node` tag v7.0.0 points to commit `820762786026740c76f36085b0efc47a31fe5020`, read 2026-09-12 from the GitHub API.
+- `actions/upload-artifact` tag v7.0.1 points to commit `043fb46d1a93c77aae656e7c1c64a875d1fc6a0a`, read 2026-09-12 from the GitHub API.
 - The Node release schedule, read 2026-09-12: Node 22 is in maintenance until its end of life on 2027-04-30. Node 24 is the active LTS line until 2026-10-20, and Node 26 becomes LTS on 2026-10-28.
 - Astro 7.3.2 is the latest Astro on 2026-09-12, and it needs Node 22.12.0 or newer. The variable `ASTRO_TELEMETRY_DISABLED=1` stops its telemetry.
+- The check tools on 2026-09-12: Playwright 1.63.0 with Chromium 153 (build 1243), axe-core 4.13.0, Lighthouse 13.4.1, chrome-launcher 1.2.1, html-validate 11.15.0, and linkinator 8.1.0.
+- `npm audit` reads 0 vulnerabilities on 2026-09-12. Lighthouse CI 0.15.1 added 12 advisories before D-50 removed it.
 - WCAG 2.2 is the W3C Recommendation of 2024-12-12, read 2026-09-12. The minimum target size of 2.5.8 is 24 by 24 CSS pixels.
 - ASD-STE100 Issue 9, dated 2025-01-15, is the current issue, read 2026-09-12.
 - Claude Code reads `CLAUDE.md` and not `AGENTS.md`. A rule file with a `paths` list loads when Claude reads a matching file. The session read both facts in the Claude Code memory docs on 2026-09-12.
 - The toolchain on this Mac, read 2026-09-12: Python 3.9.6, pnpm 9.2.0, and gh 2.100.0. The default Node is 20.17.0, and nvm holds Node 22.23.2 with npm 10.9.8.
-- A Playwright headless shell, build 1234, sits in `~/Library/Caches/ms-playwright`, read 2026-09-12.
+- The Playwright cache in `~/Library/Caches/ms-playwright` holds Chromium build 1243, read 2026-09-12.
 - The external facts of the roadmap, each with its source and the date 2026-09-12, live in `docs/design.md`.
 - The What You Carry repository is public on 2026-09-12, and its D-106 still reads "Private until launch". The owner records that change in that repository (D-25).
 - decktome.com is invite-only on 2026-09-12 (decktome D-310).
+
+## Session 4: 2026-09-12
+
+### What this session did, and why
+
+- The owner merged PR #3 as `4aacda4`. The session added `verify:site` to the `main` ruleset as a required check (D-11).
+- A research pass read the versions, the Node ranges, and the options of each check tool at their primary sources.
+- The owner chose `html-validate`, `linkinator`, a weight cap of 300 KB, and Lighthouse CI (D-46 to D-49).
+- The install of Lighthouse CI added 12 npm audit advisories. Lighthouse 13.4.1 alone audits clean, so the owner replaced Lighthouse CI with a short budget script (D-50).
+- The session wrote PR-4: four checks, a planted defect for each check, and four CI jobs.
+- The first run found two real defects. The placeholder links failed WCAG contrast in the dark scheme, and the link check scanned no link. PR-4 fixes both.
+
+### State of the repository
+
+- `main` is `4aacda4`, the squash merge of PR #3.
+- Branch `site/pr-4-site-checks` holds PR-4.
+- Remote head: `origin/site/pr-4-site-checks` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes: 0 STE findings, a clean build, and every site check.
+- The Lighthouse budget reads 1 in each category, 0 script bytes, and 1,793 total bytes. The median LCP is 615 ms, and the CLS and the TBT are 0.
+- `npm audit`: 0 vulnerabilities.
+
+### In flight
+
+- PR-4 waits for the Gitar review, then for the merge.
+- After the merge, the four `verify:site-*` checks join the `main` ruleset.
+
+### Traps and gotchas
+
+- linkinator matches a `--skip` pattern against its local server address, `http://127.0.0.1`, and not against the path it prints. The pattern in the Makefile skips only the URLs off that server.
+- A check that scans nothing can pass. Each check has a self-test with a planted defect, and the link self-test caught this trap.
+- The Playwright install removed the older browser builds 1208 and 1234 from `~/Library/Caches/ms-playwright`. A decktome smoke run can need `playwright install chromium` again.
+- Lighthouse scored accessibility 0.91 before the dark contrast fix and 1 after it. The cause is unverified: a headless run can follow the dark setting of macOS.
+- Lighthouse CI 0.15.1 brings 12 npm audit advisories. Do not add it again without a decision (D-50).
+- The Lighthouse budget reads its bytes from a server with no compression, so the live site weighs less than the budget output.
+
+### Open questions that block progress
+
+None blocks PR-4. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
+
+### Next concrete action
+
+Answer the Gitar review of PR-4. After the owner merges it, add the four `verify:site-*` checks to the `main` ruleset, then start PR-5, the Google Cloud project.
 
 ## Session 3: 2026-09-12
 

@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fixture: a duplicate id and a broken anchor</title>
+  </head>
+  <body>
+    <main>
+      <!-- The planted defects: a duplicate id for html-validate, and a link to a missing anchor for linkinator. -->
+      <p id="twice">One</p>
+      <p id="twice">Two</p>
+      <a href="#missing">A link to nowhere</a>
+    </main>
+  </body>
+</html>
