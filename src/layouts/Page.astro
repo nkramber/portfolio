@@ -301,6 +301,13 @@ const { title } = Astro.props;
     padding-block: var(--space-section);
   }
 
+  /* A hairline above the footer heading marks the end of the page (D-101). The
+     heading spans the text column, so the line lines up with the text. */
+  .site-footer h2 {
+    padding-block-start: var(--space-l);
+    border-block-start: 1px solid var(--color-rule);
+  }
+
   .links {
     display: flex;
     flex-wrap: wrap;

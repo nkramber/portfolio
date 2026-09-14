@@ -7,10 +7,10 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 ## Resume here (2026-09-14)
 
 - **Main:** `8119f95`, the squash merge of PR #16, the docs refresh after PR-7.
-- **Open pull requests:** PR-8, the page shell, on `site/pr-8-page-shell`. It waits for the Gitar review, the phone check of the owner, and the merge.
-- **Next action:** answer the Gitar review of PR-8, and give the owner the preview address for the phone check (D-93). Ask the owner the three open choices, and draft the bio from the interview answers (D-94).
+- **Open pull requests:** #17 (PR-8), the page shell, on `site/pr-8-page-shell`. It waits for the Gitar review, the phone check of the owner, and the merge.
+- **Next action:** answer the Gitar review of #17, and give the owner the preview address for the phone check (D-93). Draft the bio from the interview answers (D-94).
 - **Blocked on:** OQ-3 blocks the About text of PR-8.
-- **Next ids:** D-99, OQ-8, M-4, PR-17, Session 16.
+- **Next ids:** D-102, OQ-8, M-4, PR-17, Session 16.
 
 ## Facts that expire
 
@@ -76,7 +76,8 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The owner merged #16 as `8119f95` at 19:41 UTC on 2026-09-14. Its tree matches the reviewed head `0614f9d`, and Gitar approved it with no finding in the pause note.
 - Deploy run 34888419843 passed on `8119f95` on 2026-09-14.
 - At 19:50 UTC on 2026-09-14, both certificates still read `CERT_ACTIVE` with the type `TEMPORARY`.
-- On 2026-09-14, `make lighthouse` on the PR-8 branch reads 1 in every category. It reads 41,515 total bytes, a median LCP of 1,202 ms, and a CLS of 0.
+- On 2026-09-14, `make lighthouse` on the PR-8 branch with D-99 and D-101 reads 1 in every category. It reads 41,728 total bytes, a median LCP of 1,204 ms, and a CLS of 0.
+- On 2026-09-14, every check of #17 passed on `c18d8ad`, and the Gitar pause note held an approval with no finding.
 
 ## Session 15: 2026-09-14
 
@@ -88,22 +89,23 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The owner chose the hero rise (D-95), the NK icon (D-96), and the share image with the headline (D-97). The 404 page keeps the words of D-74 (D-98).
 - The session wrote PR-8: the layout, both pages, the icons, the share image script, the new tests, and the docs. Session 5 moved to the archive.
 - The CSP drops `data:` from `img-src`, because D-57 kept it only for the placeholder favicon.
-- The copy review found no defect, and it suggests a first-person meta description for the owner.
+- The copy review found no defect. The owner took its one suggestion, a meta description in the words of D-29 (D-99).
 - The responsive audit found four defects. The branch fixes three, and the fourth is a bare word break at 200 percent text on a 320 px screen.
 - The accessibility audit found no WCAG 2.2 AA defect in the light or the dark scheme.
+- The session opened #17. Every check passed on `c18d8ad`, and the pause note of Gitar held an approval with no finding.
+- The owner kept both lists of profile links (D-100) and chose a hairline above the footer (D-101). The second commit applies D-99 and D-101.
 
 ### State of the repository
 
 - `main` is `8119f95`, the squash merge of PR #16.
-- Branch `site/pr-8-page-shell` holds PR-8 and this entry.
+- Branch `site/pr-8-page-shell` holds PR-8 as #17, and this entry.
 - Remote head: `origin/site/pr-8-page-shell` at the commit that holds this entry, checked after the push.
 - `make verify` on Node 22.23.2 passes on the branch.
 
 ### In flight
 
-- PR-8 waits for the Gitar review, the phone check of the owner on its preview address, and the merge.
+- #17 waits for a Gitar review of the new head, the phone check of the owner, and the merge.
 - The bio interview waits for the answers of the owner. OQ-3 stays open until the owner approves the words (D-94).
-- Three owner choices wait: the first-person meta description, the repeated profile links while About is empty (D-20), and a hairline above the footer.
 - No run tested the PR-6 exit test of D-63 yet.
 - Each certificate has the type `TEMPORARY` at 19:50 UTC, and nobody checked the permanent certificate yet.
 - The private preview page of D-89 still exists on claude.ai.
@@ -115,6 +117,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - A `translate` start offset adds scroll to a page whose content fills the window. `main` clips vertical overflow, and a test holds the first frame still.
 - The clip on `main` leaves 6 px below a focus ring in the worst case. In PR-9, give the last link inside `main` more than 6 px of space below it.
 - The research pass saw no favicon request from the Playwright headless shell. The full Chromium build requested the icon with `channel: 'chromium'`.
+- `make site-checks` runs the accessibility tests after the responsive tests, and Playwright empties `test-results/` at the start of each run. So read the responsive screenshots before the next Playwright run.
 
 ### Open questions that block progress
 

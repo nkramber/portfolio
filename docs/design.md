@@ -16,7 +16,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-14 correction pass (Session 12): M-2 passed (D-88), with the log link of D-87. PR-13 no longer waits for M-2, and the external facts add the research of M-2.
 2026-09-14 correction pass (Session 13): PR-7 follows D-89 to D-92, and D-91 closes OQ-5. The external facts add the research of PR-7.
 2026-09-14 correction pass (Session 14): PR-7 reads merged, and the Phase 1 gate reads passed. Section 6 closes OQ-5, and D-93 sets how the owner gets a preview address.
-2026-09-14 correction pass (Session 15): PR-8 follows D-94 to D-98. The external facts add the research of PR-8.
+2026-09-14 correction pass (Session 15): PR-8 follows D-94 to D-101. The external facts add the research of PR-8.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -441,7 +441,7 @@ Gate: OQ-5 has its answer in `docs/decisions.md`, and the owner merges PR-7.
 
 #### PR-8: Page shell
 
-Status: in progress on `site/pr-8-page-shell` (Session 15). D-94 to D-98 answer its design questions.
+Status: in review as #17 on `site/pr-8-page-shell` (Session 15). D-94 to D-101 answer its design questions.
 
 Scope:
 
