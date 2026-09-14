@@ -6,11 +6,11 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-14)
 
-- **Main:** `af04c17`, the squash merge of PR #12 (PR-6).
-- **Open pull requests:** the docs refresh on `docs/after-pr-6`. It waits for the Gitar review, then for the merge.
-- **Next action:** answer the Gitar review of the refresh. After the merge, start M-2, the request logs on the Spark plan.
+- **Main:** `1b623d3`, the squash merge of PR #13, the docs refresh.
+- **Open pull requests:** the M-2 result on `docs/m-2-request-logs`. It waits for the Gitar review, then for the merge.
+- **Next action:** answer the Gitar review of the M-2 result. After the merge, start PR-7, the design tokens, the fonts, and the accent color.
 - **Blocked on:** OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
-- **Next ids:** D-87, OQ-8, M-4, PR-17, Session 12.
+- **Next ids:** D-89, OQ-8, M-4, PR-17, Session 13.
 
 ## Facts that expire
 
@@ -60,6 +60,51 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The owner made the second DNS visit on 2026-09-14 (D-86). At 16:09 UTC, both GoDaddy name servers gave the A record `199.36.158.100` at `@` and the CNAME `www` to `natekramber-prod.web.app`.
 - The first run of `deploy.yml`, 34859481347, passed at 15:02 UTC on 2026-09-14. It released the version `8ca891d5ede885e2` to the live channel of `natekramber-prod`.
 - The HSTS preload list holds neither `natekramber.com` nor `www.natekramber.com`, read 2026-09-14 from `hstspreload.org`.
+- Since 17:22 UTC on 2026-09-14, the site `natekramber-prod` reads `cloudLoggingEnabled: true` (D-87). A config call with `false` removes the link.
+- On 2026-09-14, both projects enable `logging.googleapis.com` and `monitoring.googleapis.com`. Before M-2, each project held the audit logs alone.
+- M-2 passed on 2026-09-14 (D-88). The log `firebasehosting.googleapis.com/webrequests` of `natekramber-prod` holds the request URL with its query, the referrer, the country, the city, and the full IP address.
+- At 17:16 UTC on 2026-09-14, an automated scan asked `natekramber.com` for `/key.json`, `/firebase-adminsdk.json`, and two other key files. Each request got a 404.
+- On 2026-09-14, `gcloud billing projects describe natekramber-prod` reads `False`, with no billing account. A direct call to the Cloud Billing API returns 403, because that API is off in the project.
+
+## Session 12: 2026-09-14
+
+### What this session did, and why
+
+- The owner merged #13, the docs refresh, as `1b623d3` at 17:12 UTC. Its tree matches the reviewed head `b29aca4`, and Gitar approved it with no finding.
+- The merge started deploy run 34873295079, and it passed. The close run of `preview.yml` passed too.
+- The session started M-2 with a read-only research pass. No primary source says whether the log link needs a billing account.
+- The owner chose the Hosting API for the link (D-87). The session set `cloudLoggingEnabled` at 17:22 UTC, and the call returned HTTP 200.
+- M-2 passed (D-88). A test visit of 17:28 UTC showed in the log `webrequests` at 17:39 UTC, with the URL, the referrer, and the country.
+- The session wrote D-87, D-88, the M-2 and PR-13 status, step 15 of `docs/deploy.md`, six external facts, and this entry. Session 2 moved to the archive.
+
+### State of the repository
+
+- `main` is `1b623d3`, the squash merge of PR #13.
+- Branch `docs/m-2-request-logs` holds the M-2 result, as a pull request of documents alone.
+- Remote head: `origin/docs/m-2-request-logs` at the commit that holds this entry, checked after the push.
+- `make ste-check`: 0 findings.
+
+### In flight
+
+- The M-2 result waits for the Gitar review, then for the merge.
+- Cloud Logging keeps the IP address, the city, and the country of each visitor for 30 days (D-87). PR-13 can change that time.
+- No run tested the PR-6 exit test of D-63 yet.
+- Each certificate has the type `TEMPORARY`, and nobody checked the permanent certificate yet.
+
+### Traps and gotchas
+
+- A Hosting log entry shows 10 to 20 minutes after the request. So a watch for a test visit needs at least 30 minutes.
+- The log held requests from 17:16 UTC, six minutes before the link at 17:22 UTC. The first test visit, at 17:23 UTC, did not show by 17:39 UTC.
+- The first watch matched the test tag in the query alone. Hosting keeps the query in `requestUrl`, so that match works.
+- `gcloud billing projects describe` reads the billing state. A direct call to the Cloud Billing API returns 403 in this project.
+
+### Open questions that block progress
+
+None blocks the M-2 result. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
+
+### Next concrete action
+
+Answer the Gitar review of the M-2 result. After the merge, start PR-7 from `main` with read-only research.
 
 ## Session 11: 2026-09-14
 
@@ -452,45 +497,3 @@ None blocks PR-3. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge 
 ### Next concrete action
 
 Answer the Gitar review of PR-3. After the owner merges it, add `verify:site` to the `main` ruleset, then start PR-4, the site checks.
-
-## Session 2: 2026-09-12
-
-### What this session did, and why
-
-- The owner asked for the roadmap questions after the repository questions. The session asked eleven batches, and D-19 to D-43 record the answers.
-- Two background research passes read the hosting terms, the tools, Baseline, and Google Cloud, each fact with a source and a date.
-- A read-only pass over decktome and What You Carry drafted the facts of both cards.
-- The session checked two conflicts before it asked. decktome D-556 names the product "Decktome", and What You Carry D-106 keeps its repository private. The owner answered both (D-24, D-25).
-- The owner typed "GCP" for both hosting and analytics. The session asked a follow-up for each, and D-34 and D-36 record the answers.
-- The session wrote PR-2: D-19 to D-43, OQ-1 and OQ-2 closed, OQ-3 to OQ-5, draft 1 of `docs/design.md`, and tenet T-6 narrowed by D-26.
-- The owner merged PR #1 as `dcd98e6`. The session added `verify:docs` to the `main` ruleset as a required check (D-11), and rebased PR #2 onto `main`.
-
-### State of the repository
-
-- `main` is `dcd98e6`, the squash merge of PR #1. Gitar approved PR #1 with no finding before the merge.
-- Branch `docs/roadmap-draft-1` holds PR #2, rebased onto `main` after the merge.
-- Remote head: `origin/docs/roadmap-draft-1` at the commit that holds this entry, checked after the push.
-- `make verify`: 0 findings.
-
-### In flight
-
-- PR #2 waits for the Gitar review of its rebased head, then for the merge.
-
-### Traps and gotchas
-
-- PR #2 stacked on PR #1. After the squash merge, GitHub moved its base to `main`, and `git rebase --onto origin/main 6d37ff9 docs/roadmap-draft-1` removed the old commit of PR #1. A rebase gives a new head, so Gitar needs a new review.
-- The ruleset requires `verify:docs` from the GitHub Actions app alone, so a check of that name from another app does not count.
-- On PR #1, the Gitar pause note came with a full review in a collapsed block. Read that block before you post `Gitar review`.
-- On PR #2, the automatic Gitar pass covered the first head alone. A push after that pass got no Gitar check, so the session posted `Gitar review` for the new head.
-- The official Firebase action for previews needs a JSON key. M-1 tests the command line tool with keyless credentials first.
-- Astro 7 needs Node 22.12 or newer, and the default Node on this Mac is 20.17.0.
-- A typed answer can name a platform and not a choice. Ask a follow-up before you record it.
-- In this shell, `set -e` did not stop a script after `make verify` failed, and a commit with a finding reached PR #2. Chain each step with `&&`.
-
-### Open questions that block progress
-
-OQ-3 blocks the About text of PR-8. OQ-5 blocks the merge of PR-7. OQ-4 blocks nothing at launch.
-
-### Next concrete action
-
-Answer the Gitar review of PR #2. After the owner merges it, start PR-3, the Astro scaffold, from `main`.

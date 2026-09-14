@@ -269,6 +269,21 @@ The session and the owner ran steps 11 to 14 on 2026-09-14 (D-82, D-85, D-86).
 - Before step 14, `curl --resolve` with the address `199.36.158.100` showed a valid certificate for each name. That check needs no DNS change.
 - The GoDaddy help pages 19239, 19237, and 19210 give the edit and delete steps of step 14. If GoDaddy locks the A records, page 32079 removes the connection to the other site.
 
+## Step 15: The request logs
+
+M-2 links the Hosting request logs of the live site to Cloud Logging (D-36, D-87). The Firebase CLI has no command for the link, so the session calls the Hosting API.
+
+```sh
+TOKEN=$(gcloud auth print-access-token)
+CONFIG=https://firebasehosting.googleapis.com/v1beta1/projects/natekramber-prod/sites/natekramber-prod/config
+curl -X PATCH -H "Authorization: Bearer $TOKEN" -H "x-goog-user-project: natekramber-prod" -H "Content-Type: application/json" "$CONFIG?updateMask=cloud_logging_enabled" --data '{"cloudLoggingEnabled": true}'
+gcloud logging read 'resource.type="firebase_domain"' --project natekramber-prod --freshness=1h --limit 1
+```
+
+The call needs `updateMask`. With no mask, the call changes `max_versions` alone. An entry shows 10 to 20 minutes after a visit. The same call with `false` removes the link.
+
+The session ran step 15 on 2026-09-14, and M-2 passed (D-88).
+
 ## Rollback
 
 The Firebase CLI has no rollback command (firebase-tools 15.30.0). Each run of `.github/workflows/deploy.yml` prints the name of its new version. The release history of the site in the Firebase console lists the same versions, and its "Roll back" action releases an earlier version again. `firebase hosting:clone` with the site, an earlier version, and the live channel does the same from the CLI.
