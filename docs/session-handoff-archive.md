@@ -2,6 +2,50 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 4: 2026-09-12
+
+### What this session did, and why
+
+- The owner merged PR #3 as `4aacda4`. The session added `verify:site` to the `main` ruleset as a required check (D-11).
+- A research pass read the versions, the Node ranges, and the options of each check tool at their primary sources.
+- The owner chose `html-validate`, `linkinator`, a weight cap of 300 KB, and Lighthouse CI (D-46 to D-49).
+- The install of Lighthouse CI added 12 npm audit advisories. Lighthouse 13.4.1 alone audits clean, so the owner replaced Lighthouse CI with a short budget script (D-50).
+- The session wrote PR-4: four checks, a planted defect for each check, and four CI jobs.
+- The first run found two real defects. The placeholder links failed WCAG contrast in the dark scheme, and the link check scanned no link. PR-4 fixes both.
+
+### State of the repository
+
+- `main` is `4aacda4`, the squash merge of PR #3.
+- Branch `site/pr-4-site-checks` holds PR-4.
+- Remote head: `origin/site/pr-4-site-checks` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes: 0 STE findings, a clean build, and every site check.
+- The Lighthouse budget reads 1 in each category, 0 script bytes, and 1,793 total bytes. The median LCP is 615 ms, and the CLS and the TBT are 0.
+- `npm audit`: 0 vulnerabilities.
+
+### In flight
+
+- PR-4 waits for the Gitar review, then for the merge.
+- After the merge, the four `verify:site-*` checks join the `main` ruleset.
+
+### Traps and gotchas
+
+- linkinator matches a `--skip` pattern against its local server address, `http://127.0.0.1`, and not against the path it prints. The pattern in the Makefile skips only the URLs off that server.
+- A check that scans nothing can pass. Each check has a self-test with a planted defect, and the link self-test caught this trap.
+- The Playwright install removed the older browser builds 1208 and 1234 from `~/Library/Caches/ms-playwright`. A decktome smoke run can need `playwright install chromium` again.
+- Lighthouse scored accessibility 0.91 before the dark contrast fix and 1 after it. The cause is unverified: a headless run can follow the dark setting of macOS.
+- Lighthouse CI 0.15.1 brings 12 npm audit advisories. Do not add it again without a decision (D-50).
+- The Lighthouse budget reads its bytes from a server with no compression, so the live site weighs less than the budget output.
+- On the ubuntu-latest runner, Chrome with its sandbox on never opened its debug port, and Lighthouse failed with ECONNREFUSED. The budget script starts Chrome with `--no-sandbox`, as Playwright does by default.
+- Gitar found that a run count of 0 passed the budget with no measurement, because the median of no values is NaN. The script refuses that count now, and the self-test proves it.
+
+### Open questions that block progress
+
+None blocks PR-4. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
+
+### Next concrete action
+
+Answer the Gitar review of PR-4. After the owner merges it, add the four `verify:site-*` checks to the `main` ruleset, then start PR-5, the Google Cloud project.
+
 ## Session 3: 2026-09-12
 
 ### What this session did, and why
