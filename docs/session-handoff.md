@@ -6,11 +6,11 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-14)
 
-- **Main:** `4d36b43`, the squash merge of PR #10, PR-5.
-- **Open pull requests:** the docs refresh on `docs/after-pr-5`. It waits for the Gitar review, then for the merge.
-- **Next action:** answer the Gitar review of the docs refresh. Then start PR-6 with the research reports and the owner questions.
-- **Blocked on:** PR-6 needs the owner for the DNS records at GoDaddy. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
-- **Next ids:** D-82, OQ-8, M-4, PR-17, Session 10.
+- **Main:** `251afa5`, the squash merge of PR #11, the docs refresh.
+- **Open pull requests:** PR-6 on `site/pr-6-deploy-domain`. It waits for the Gitar review, then for the merge.
+- **Next action:** answer the Gitar review of PR-6. When both certificates read `CERT_ACTIVE`, ask the owner for the second DNS visit.
+- **Blocked on:** the second DNS visit waits for both certificates. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
+- **Next ids:** D-86, OQ-8, M-4, PR-17, Session 11.
 
 ## Facts that expire
 
@@ -38,8 +38,8 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - firebase-tools 15.30.0 came out on 2026-09-09, and it needs Node 20 or newer. Version 15.22.2 broke deploys through Workload Identity Federation, and 15.22.3 fixed them (npm registry and firebase-tools issue 10716, read 2026-09-12).
 - `google-github-actions/auth` tag v3.0.0 points to commit `7c6bc770dae815cd3e89ee6cdf493a5fab2cc093`, read 2026-09-12 from the GitHub API. The tag is lightweight. The `releases/latest` endpoint returns the moving tag `v3`.
 - The GitHub ids, read 2026-09-12: repository 1367643959 and owner 190805558. The OIDC `sub` prefix is `repo:nkramber@190805558/portfolio@1367643959`, the immutable format for a repository that GitHub created after 2026-07-15.
-- The repository has no environment, no secret, and no variable, read 2026-09-12. Workflows get a read token by default, and the workflows of a first-time contributor need approval.
-- `dig` read the DNS of `natekramber.com` on 2026-09-14. The name servers are `ns13.domaincontrol.com` and `ns14.domaincontrol.com` at GoDaddy. The two A records, `76.223.105.230` and `13.248.243.5`, point to the GoDaddy parking host. `www` is a CNAME to the apex, and the domain has no AAAA, MX, TXT, or CAA record.
+- The repository has one environment, `production`, and no secret or variable, read 2026-09-14. Workflows get a read token by default, and the workflows of a first-time contributor need approval.
+- `dig` read the DNS of `natekramber.com` on 2026-09-14. The name servers are `ns13.domaincontrol.com` and `ns14.domaincontrol.com` at GoDaddy. The two A records, `76.223.105.230` and `13.248.243.5`, point to a GoDaddy Website Builder site (D-83). `www` is a CNAME to the apex. After the first DNS visit, the domain has three TXT records and no AAAA, MX, or CAA record.
 - Lighthouse 13.4.1 has five categories, read 2026-09-13 from the installed source. A 404 for `/llms.txt` makes the audit `llms-txt` not applicable, so the placeholder page scores 1 for agentic browsing.
 - Astro 7.3.2 runs `astro preview` in the background when `am-i-vibing` 0.4.0 detects an agent from a variable such as `AI_AGENT` or `CLAUDECODE`. `ASTRO_PREVIEW_BACKGROUND` turns that detection off (installed `dist/cli/preview/index.js`, read 2026-09-13).
 - Playwright 1.63.0 merges `webServer.env` over `process.env` (installed `lib/runner/index.js`, read 2026-09-13).
@@ -53,7 +53,51 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - `actions/download-artifact` tag v8.0.1 points to commit `3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c`, read 2026-09-14 from the GitHub API. The tag is lightweight.
 - `deploy/package-lock.json` pins firebase-tools 15.30.0 with 674 packages. On 2026-09-13, `npm audit` of `deploy/` reads 9 moderate advisories, and the root reads 0.
 - On 2026-09-14, the `live` channel of `natekramber-preview` shows a release at 13:50 UTC. It came before any deploy of this repository, and its cause is unverified.
-- On 2026-09-14, `https://natekramber.com` still answers from the GoDaddy parking host with `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload` (`curl -I`).
+- On 2026-09-14, `https://natekramber.com` still answers from a GoDaddy Website Builder site with `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload` (`curl -I`, D-83).
+- The environment `production` exists since 2026-09-14. Its branch policy lists `branch:main` alone, and the API reads `can_admins_bypass: false`.
+- The custom domains `natekramber.com` and `www.natekramber.com` exist on `natekramber-prod` since 2026-09-14, and `www` redirects to the apex. Both read `OWNERSHIP_ACTIVE` at 14:52 UTC, and both certificates read `CERT_VALIDATING`.
+- The three TXT records of the first DNS visit resolve at GoDaddy, Google, and Cloudflare on 2026-09-14.
+- The second DNS visit removes the A records `76.223.105.230` and `13.248.243.5` at `@` and the CNAME `www` to the apex. It adds the A record `199.36.158.100` at `@` and the CNAME `www` to `natekramber-prod.web.app` (Hosting API, read 2026-09-14).
+
+## Session 10: 2026-09-14
+
+### What this session did, and why
+
+- The owner merged #11, the docs refresh, as `251afa5` on 2026-09-14 UTC. Its tree matches the reviewed head `1b41ce3`.
+- Two read-only research passes read the custom domains of Firebase Hosting and the GitHub environment `production`.
+- The owner answered four questions about PR-6: D-82 to D-85.
+- The session created the environment `production` and both custom domains, and the owner cleared the administrator bypass (D-85).
+- The owner added the three TXT records of the first DNS visit, and both domains then read `OWNERSHIP_ACTIVE` (D-82).
+- The session wrote PR-6: `.github/workflows/deploy.yml`, steps 11 to 14 and the rollback of `docs/deploy.md`, and this entry.
+
+### State of the repository
+
+- `main` is `251afa5`, the squash merge of PR #11.
+- Branch `site/pr-6-deploy-domain` holds PR-6 and this entry.
+- Remote head: `origin/site/pr-6-deploy-domain` at the commit that holds this entry, checked after the push.
+- `make ste-check`: 0 findings. The deploy workflow has no run yet, because it runs on `main` alone.
+
+### In flight
+
+- PR-6 waits for the Gitar review, then for the merge. The first run of `deploy.yml` comes with the merge.
+- Both certificates wait for validation. When both read `CERT_ACTIVE`, the owner makes the second DNS visit (D-82).
+- Step 12 of `docs/deploy.md` reads the state of both custom domains through the Hosting API.
+
+### Traps and gotchas
+
+- The API response of an environment holds `can_admins_bypass`. The jq operator `//` prints its fallback for `false`, so print the field with `tostring`.
+- The A records of `natekramber.com` serve a GoDaddy Website Builder site, not a parking page (D-83).
+- The Hosting API v1beta1 returns 403 without the header `x-goog-user-project`.
+- For `www`, the Hosting API asks for a CNAME to `natekramber-prod.web.app`, not an A record.
+- The deploy workflow runs on `main` alone, so no pull request can test the live deploy before its merge.
+
+### Open questions that block progress
+
+None blocks PR-6. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
+
+### Next concrete action
+
+Answer the Gitar review of PR-6. When both certificates read `CERT_ACTIVE`, ask the owner for the second DNS visit of `docs/deploy.md`.
 
 ## Session 9: 2026-09-14
 

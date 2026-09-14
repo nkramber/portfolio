@@ -11,6 +11,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-13 correction pass (Session 6): PR-16 keeps the preview server of the checks in the foreground (D-70), and it comes before PR-14.
 2026-09-13 correction pass (Session 7): PR-14 and PR-16 read merged, and PR-15 follows D-71 to D-74.
 2026-09-14 correction pass (Sessions 8 and 9): PR-15 and PR-5 read merged, PR-5 follows D-75 to D-81, and M-1 passed (D-80). The external facts add the research of PR-5 and the result of the setup run. The gate of PR-5 marks its ruleset order refuted, because the check joined the ruleset before the merge (D-81).
+2026-09-14 correction pass (Session 10): PR-6 follows D-82 to D-85. The session creates the environment and the custom domains, and the owner makes two DNS visits. The external facts add the research of PR-6.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -73,6 +74,15 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - On 2026-09-14, the projects `natekramber-preview` and `natekramber-prod` enabled `iam`, `iamcredentials`, `sts`, `cloudresourcemanager`, `firebase`, and `firebasehosting` with no billing account. `firebase projects:addfirebase` returned no 403, and each default Hosting site got the project id. Source: the setup run of `docs/deploy.md`, 2026-09-14.
 - Browsers ignore `X-Frame-Options` when an enforced CSP has `frame-ancestors`. Source: https://www.w3.org/TR/CSP3/, section 6.4.2.2, read 2026-09-13.
 - `default-src 'none'` also blocks fonts and a web app manifest. A self-hosted font then needs `font-src 'self'`, which revises D-57. Source: https://www.w3.org/TR/CSP3/, section 6.8.3, read 2026-09-13.
+- firebase-tools 15.30.0 has no command for a custom domain. The Hosting API v1beta1 creates one with `projects.sites.customDomains.create`, and `redirectTarget` makes the domain answer with a 301. Sources: firebase-tools 15.30.0 `lib/commands/index.js` and the Hosting API v1beta1 discovery document, read 2026-09-14.
+- A call to the Hosting API with a user token returns 403 without the header `x-goog-user-project`. Sources: https://docs.cloud.google.com/docs/authentication/rest and a local call, 2026-09-14.
+- For `natekramber.com`, the Hosting API asked for the A record `199.36.158.100` and the TXT record `hosting-site=natekramber-prod`. For `www`, it asked for a CNAME to `natekramber-prod.web.app`. Each domain also got a DNS challenge at `_acme-challenge`. Source: the Hosting API v1beta1, read 2026-09-14.
+- `firebase deploy --only hosting` releases the new version to the live channel at once. With `--json`, the output names the version as `sites/SITE/versions/ID`. Source: firebase-tools 15.30.0 `lib/deploy/hosting/release.js` and `lib/command.js`, read 2026-09-14.
+- firebase-tools 15.30.0 has no rollback command. `hosting:clone` with an earlier version of the same site releases that version again, and the release history of the console has a "Roll back" action. Sources: firebase-tools 15.30.0 `lib/commands/hosting-clone.js` and https://firebase.google.com/docs/hosting/manage-hosting-resources, read 2026-09-14.
+- A browser that stored an HSTS policy gives no way past a certificate error on that host. Source: RFC 6797, sections 8.4 and 12.1 (https://www.rfc-editor.org/rfc/rfc6797), read 2026-09-14.
+- The A records of `natekramber.com` serve a GoDaddy Website Builder page, and GoDaddy documents the parking addresses `3.33.130.190` and `15.197.148.33`. Sources: https://www.godaddy.com/help/park-a-domain-registered-with-godaddy-23936 and `curl`, read 2026-09-14.
+- No REST field creates an environment with the administrator bypass off, but the read response of the environment holds `can_admins_bypass`. Sources: the GitHub REST API description and `gh api repos/nkramber/portfolio/environments/production`, read 2026-09-14.
+- A job that names an environment gets the OIDC subject `repo:OWNER@OWNER_ID/REPO@REPO_ID:environment:NAME` for a push and for a run by hand. The branch rule of the environment fails a job on a refused ref. Sources: https://docs.github.com/en/actions/reference/security/oidc and https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments, read 2026-09-14.
 
 ## 1. Thesis
 
@@ -319,16 +329,16 @@ Gate: a pass keeps the preview workflow. A fail removes the workflow, and the ow
 
 #### PR-6: Deploy on merge and the domain
 
-Status: planned.
+Status: in review. The environment `production` and both custom domains exist since 2026-09-14 (D-82, D-85). Both domains read `OWNERSHIP_ACTIVE`, and both certificates wait for validation.
 
 Scope:
 
-- A deploy workflow that runs on each push to `main` alone, through Workload Identity Federation (D-35, G-10). Its job uses the environment `production` (D-63).
-- The environment `production` accepts the `main` branch alone, and no administrator can bypass it. The owner creates it before the first run of the workflow (D-63).
+- A deploy workflow that runs on each push to `main` and by hand, through Workload Identity Federation (D-35, D-84, G-10). Its job uses the environment `production` (D-63).
+- The environment `production` accepts the `main` branch alone, and no administrator can bypass it. The session creates it, and the owner clears the bypass before the first run of the workflow (D-63, D-85).
 - The live service account trusts only the OIDC subject of the environment `production` (D-62, D-63).
-- The GoDaddy records that the Firebase console gives: a TXT record and an A record for `natekramber.com`. The owner enters them (D-3, D-34).
-- A redirect from `www.natekramber.com` to `natekramber.com` (D-41).
-- The DNS records, the deploy, and the rollback steps in `docs/deploy.md`.
+- The custom domains `natekramber.com` and `www.natekramber.com`, created through the Hosting API. `www` redirects to the apex with a 301 (D-41, D-82).
+- Two DNS visits at GoDaddy by the owner (D-82, D-83). The first adds three TXT records, and the second changes the A record and the `www` CNAME after both certificates are active.
+- The environment, the domains, the DNS records, and the rollback steps in `docs/deploy.md`.
 
 Exit tests:
 
