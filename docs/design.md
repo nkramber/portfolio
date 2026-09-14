@@ -10,7 +10,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-13 correction pass (Session 6): PR-14 no longer waits for a move of the repository (D-69).
 2026-09-13 correction pass (Session 6): PR-16 keeps the preview server of the checks in the foreground (D-70), and it comes before PR-14.
 2026-09-13 correction pass (Session 7): PR-14 and PR-16 read merged, and PR-15 follows D-71 to D-74.
-2026-09-14 correction pass (Sessions 8 and 9): PR-15 and PR-5 read merged, PR-5 follows D-75 to D-81, and M-1 passed (D-80). The external facts add the research of PR-5 and the result of the setup run.
+2026-09-14 correction pass (Sessions 8 and 9): PR-15 and PR-5 read merged, PR-5 follows D-75 to D-81, and M-1 passed (D-80). The external facts add the research of PR-5 and the result of the setup run. The gate of PR-5 marks its ruleset order refuted, because the check joined the ruleset before the merge (D-81).
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -296,7 +296,7 @@ Exit tests:
 - The header check passes on the preview URL, and it fails on one planted wrong header (D-59, G-3).
 - A Dependabot pull request can still merge while `verify:site-preview` skips on it (D-68).
 
-Gate: M-1 has a result in `docs/decisions.md`, and the owner merges PR-5. Then `verify:site-preview` joins the `main` ruleset (D-11, D-68).
+Gate: M-1 has a result in `docs/decisions.md`, and the owner merges PR-5. Then `verify:site-preview` joins the `main` ruleset (D-11, D-68). Refuted 2026-09-14: the check joined the ruleset before the merge of #10, right after its first green run (D-81).
 
 > *In plain English:* the site has no home in Google Cloud today. This change writes the setup steps and the host settings. Each change gets its own preview address in a separate project, without a stored key, so a preview can never reach the live site.
 
