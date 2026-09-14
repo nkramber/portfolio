@@ -13,6 +13,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-14 correction pass (Sessions 8 and 9): PR-15 and PR-5 read merged, PR-5 follows D-75 to D-81, and M-1 passed (D-80). The external facts add the research of PR-5 and the result of the setup run. The gate of PR-5 marks its ruleset order refuted, because the check joined the ruleset before the merge (D-81).
 2026-09-14 correction pass (Session 10): PR-6 follows D-82 to D-85. The session creates the environment and the custom domains, and the owner makes two DNS visits. The external facts add the research of PR-6.
 2026-09-14 correction pass (Session 11): PR-6 reads merged, and D-86 records the second DNS visit.
+2026-09-14 correction pass (Session 12): M-2 passed (D-88), with the log link of D-87. PR-13 no longer waits for M-2, and the external facts add the research of M-2.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -31,7 +32,7 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - A custom apex domain on Firebase Hosting needs a TXT record and an A record, and the certificate can take up to 24 hours. Source: https://firebase.google.com/docs/hosting/custom-domain, read 2026-09-12.
 - GoDaddy does not permit a CNAME record at the apex. Source: https://www.godaddy.com/help/add-a-cname-record-19236, read 2026-09-12.
 - A preview channel expires after 7 days by default. The official GitHub action for previews requires a JSON service account key. Sources: https://firebase.google.com/docs/hosting/manage-hosting-resources and https://github.com/FirebaseExtended/action-hosting-deploy, read 2026-09-12.
-- Hosting request logs can go to Cloud Logging, with the request URL, the referrer, and the country of each request. The plan that this link needs is unverified. Source: https://firebase.google.com/docs/hosting/web-request-logs-and-metrics, read 2026-09-12.
+- Hosting request logs can go to Cloud Logging, with the request URL, the referrer, and the country of each request. The plan that this link needs is unverified. Source: https://firebase.google.com/docs/hosting/web-request-logs-and-metrics, read 2026-09-12. Resolved 2026-09-14: the Spark plan with no billing account gives the link (D-88).
 - A Google Cloud budget sends alerts but does not cap spend. Source: https://docs.cloud.google.com/billing/docs/how-to/budgets, read 2026-09-12.
 - Playwright launches Chromium with the sandbox off by default (`chromiumSandbox` defaults to `false`). Source: https://playwright.dev/docs/api/class-browsertype, read 2026-09-12.
 - Lighthouse CI 0.15.1 added 12 npm audit advisories, 7 of them high, and Lighthouse 13.4.1 alone audits with 0 (D-50). Source: `npm audit`, run 2026-09-12.
@@ -88,6 +89,12 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - Both certificates of PR-6 went from `CERT_PROPAGATING` to `CERT_ACTIVE` while the A records still pointed to GoDaddy. So the certificate step needs no change of host. Source: the Hosting API v1beta1, read at 15:54 and 15:58 UTC on 2026-09-14.
 - GoDaddy locks the A records of a domain that connects to another site. The Remove action above the DNS records table removes that connection. Source: https://www.godaddy.com/help/remove-a-connection-from-my-domain-32079, read 2026-09-14.
 - The HSTS preload list holds neither `natekramber.com` nor `www.natekramber.com`, so the `preload` directive of the GoDaddy header had no effect. Source: https://hstspreload.org/api/v2/status, read 2026-09-14.
+- `SiteConfig.cloudLoggingEnabled` of the Hosting API v1beta1 controls the request logs of a site, and `sites.updateConfig` sets it. A call with no `updateMask` changes `max_versions` alone. Source: the Hosting API v1beta1 discovery document, revision 20260830, read 2026-09-14.
+- A Hosting request log entry has the resource type `firebase_domain` and the log `webrequests`. Its `httpRequest` holds `requestUrl`, `referer`, `remoteIp`, `status`, and `userAgent`. Its `jsonPayload` holds `remoteIpCountry` and `remoteIpCity`. An entry usually shows within 30 minutes. Source: https://firebase.google.com/docs/hosting/web-request-logs-and-metrics, read 2026-09-14.
+- Cloud Logging takes in 50 GiB for each project each month at no cost, and the `_Default` bucket keeps logs for 30 days. Sources: https://cloud.google.com/products/observability/pricing and https://docs.cloud.google.com/logging/quotas, read 2026-09-14.
+- No primary source says whether the Hosting log link needs a billing account. The Firebase FAQ says that Google Cloud features are not available on the Spark plan. The Firebase help for the link names only a free 50 GB and an optional Blaze upgrade. Sources: https://firebase.google.com/support/faq and https://support.google.com/firebase/answer/9748636, read 2026-09-14.
+- A Cloud Billing account on a Spark project upgrades the project to the Blaze plan at once. Source: https://firebase.google.com/docs/projects/billing/firebase-pricing-plans, read 2026-09-14.
+- On 2026-09-14, the Hosting log link worked on `natekramber-prod` with no billing account. A test visit showed in Cloud Logging about 11 minutes after the request. Source: M-2 (D-88).
 
 ## 1. Thesis
 
@@ -360,9 +367,9 @@ Gate: the placeholder page is live at `natekramber.com` (D-40).
 
 #### M-2: Request logs on the Spark plan
 
-Status: planned.
+Status: passed on 2026-09-14 (D-88). The Spark project with no billing account sends the request logs. The entry of a test visit held the URL, the referrer, and the country.
 
-Scope: link Firebase Hosting to Cloud Logging on the Spark project. Make one test visit, then read its log entry. The plan that this link needs is unverified (read 2026-09-12).
+Scope: link Firebase Hosting to Cloud Logging on the Spark project. Make one test visit, then read its log entry. The plan that this link needs is unverified (read 2026-09-12). Resolved 2026-09-14: the Spark plan with no billing account gives the link (D-88).
 
 Exit tests:
 
@@ -515,7 +522,7 @@ Gate: the owner merges PR-12.
 
 #### PR-13: Visit counts
 
-Status: planned. M-2 must pass first.
+Status: planned. M-2 passed on 2026-09-14 (D-88).
 
 Scope: `docs/analytics.md` with a saved Cloud Logging query that counts page views and referrers from the Hosting request logs (D-36).
 
