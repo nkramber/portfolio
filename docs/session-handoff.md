@@ -118,6 +118,8 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The clip on `main` leaves 6 px below a focus ring in the worst case. In PR-9, give the last link inside `main` more than 6 px of space below it.
 - The research pass saw no favicon request from the Playwright headless shell. The full Chromium build requested the icon with `channel: 'chromium'`.
 - `make site-checks` runs the accessibility tests after the responsive tests, and Playwright empties `test-results/` at the start of each run. So read the responsive screenshots before the next Playwright run.
+- On #17, a `Gitar review` comment came seconds after a push. Gitar put its check on the old head, and its text named no change of the new head. Post the comment after the checks of the new head start. Then read the commit of the Gitar check run.
+- A push to #17 kept the preview address, and the preview comment named the new commit. So the owner can reload the same link after a push.
 
 ### Open questions that block progress
 
