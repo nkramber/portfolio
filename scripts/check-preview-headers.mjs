@@ -36,8 +36,14 @@ function expectedHeaders(path) {
 const host = new URL(siteUrl).hostname;
 const firebaseDomain = host.endsWith('.web.app') || host.endsWith('.firebaseapp.com');
 
-function fetchPath(path) {
-  return fetch(new URL(path, siteUrl), { redirect: 'manual' });
+// A stalled preview fails the check in 30 seconds, not at the job timeout. The
+// signal also covers the read of the body.
+async function fetchPath(path) {
+  try {
+    return await fetch(new URL(path, siteUrl), { redirect: 'manual', signal: AbortSignal.timeout(30_000) });
+  } catch (error) {
+    throw new Error(`check-preview-headers: the request for ${path} failed: ${error.message}`);
+  }
 }
 
 const home = await fetchPath('/');

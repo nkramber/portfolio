@@ -7,10 +7,10 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 ## Resume here (2026-09-14)
 
 - **Main:** `d59be43`, the squash merge of PR #9, PR-15.
-- **Open pull requests:** PR-5 on `site/pr-5-hosting-previews`. It waits for its first preview run (M-1), then for the Gitar review, then for the merge.
-- **Next action:** read the first preview run of PR-5, and record the M-1 result in `docs/decisions.md`. Then answer the Gitar review.
-- **Blocked on:** nothing blocks M-1. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
-- **Next ids:** D-80, OQ-8, M-4, PR-17, Session 9.
+- **Open pull requests:** #10, PR-5 on `site/pr-5-hosting-previews`. M-1 passed (D-80). It waits for a green run of `verify:site-preview` with the console fix, then for the Gitar review, then for the merge.
+- **Next action:** read the preview run of the console fix on #10. Then answer the Gitar review of the new head.
+- **Blocked on:** nothing blocks #10. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
+- **Next ids:** D-81, OQ-8, M-4, PR-17, Session 9.
 
 ## Facts that expire
 
@@ -62,20 +62,23 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The owner answered four questions: D-75 to D-78.
 - The session wrote `firebase.json`, the `deploy/` npm project, `docs/deploy.md`, the header check, the console check, and `make preview-check`.
 - On 2026-09-14 the owner asked the session to run `docs/deploy.md` (D-79). The session ran every step, and no step needed the owner.
-- The session then wrote `.github/workflows/preview.yml` with the preview project number. This entry rides in PR-5.
+- The session then wrote `.github/workflows/preview.yml` with the preview project number, and it opened PR-5 as #10. This entry rides in PR-5.
+- The first preview run of #10 passed M-1 (D-80). The deploy needed no key and `roles/firebasehosting.admin` alone, and every header of `firebase.json` matched on the preview.
+- That run failed `verify:site-preview`, because Chrome logs a console error for the 404 status of the 404 page itself. The console check now drops that one message (D-80).
 
 ### State of the repository
 
 - `main` is `d59be43`, the squash merge of PR #9.
-- Branch `site/pr-5-hosting-previews` holds PR-5 and this entry.
+- Branch `site/pr-5-hosting-previews` holds PR-5 as #10, and this entry.
 - Remote head: `origin/site/pr-5-hosting-previews` at the commit that holds this entry, checked after the push.
-- `make verify` on Node 22.23.2 passes on the branch. The preview workflow has no run yet.
+- `make verify` on Node 22.23.2 passes on the branch.
 - The cloud setup of `docs/deploy.md` passed its step 10 checks on 2026-09-14.
+- The channel `pr-10` of `natekramber-preview` serves the preview of #10, and it expires 30 days after the last push.
 
 ### In flight
 
-- PR-5 waits for its first preview run, which is M-1, then for the Gitar review, then for the merge.
-- After the first green run of `verify:site-preview`, that check joins the `main` ruleset (D-68). Ask the owner before the ruleset change (`.claude/rules/github.md`).
+- #10 waits for a green run of `verify:site-preview` with the console fix, then for the Gitar review, then for the merge.
+- After the merge, `verify:site-preview` joins the `main` ruleset (D-68). Ask the owner before the ruleset change (`.claude/rules/github.md`).
 - The live provider `portfolio-production` exists, but no token tested it yet. PR-6 tests it.
 - The three low CSS defects of Session 7 wait for PR-7.
 - Nobody checked yet whether the setting of D-61 stops the Dependabot jobs that GitHub runs.
@@ -89,14 +92,16 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - `firebase hosting:channel:delete` in CI deletes nothing without `--force`, and it still exits 0.
 - In zsh, `set -- $ref` does not split the variable into words. A script that needs the split must run in bash.
 - `actions/download-artifact` is at v8, and `actions/upload-artifact` is at v7. The v8 download still unzips a normal v7 upload, and a hash mismatch now fails the run.
+- Chrome logs a console error for each response with the status 404, and that includes the page itself. A console check of a 404 page must drop that one message, or it always fails.
+- `make preview-check` stops at the first failed step, so a failed console check hides the self-test of the header check.
 
 ### Open questions that block progress
 
-None blocks M-1. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
+None blocks #10. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
 
 ### Next concrete action
 
-Read the first run of `.github/workflows/preview.yml` on the PR-5 pull request. Record the M-1 result in `docs/decisions.md`, then answer the Gitar review.
+Read the preview run of the console fix on #10. When `verify:site-preview` passes, answer the Gitar review of the new head, and tell the owner that #10 is ready to merge.
 
 ## Session 7: 2026-09-13
 
