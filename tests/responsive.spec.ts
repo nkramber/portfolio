@@ -38,11 +38,11 @@ test('the overflow check catches a planted wide element', async ({ page }) => {
   expect(await sidewaysOverflow(page)).toBeGreaterThan(0);
 });
 
-// How many CSS pixels the widest element inside the main landmark holds beyond its
-// own box. Zero means that no word runs into the padding or out of its box.
+// How many CSS pixels the widest element of the page holds beyond its own box.
+// Zero means that no word runs into the padding or out of its box.
 async function textOverflow(page: Page): Promise<number> {
   return page.evaluate(() =>
-    Math.max(0, ...[...document.querySelectorAll('main *')].map((el) => el.scrollWidth - el.clientWidth)),
+    Math.max(0, ...[...document.querySelectorAll('body *')].map((el) => el.scrollWidth - el.clientWidth)),
   );
 }
 
@@ -67,7 +67,7 @@ test('a very long word stays inside its box at 320px', async ({ page }) => {
 test('the focus ring of each link stays on screen in a 568 by 320 window', async ({ page }) => {
   await page.setViewportSize({ width: 568, height: 320 });
   await page.goto('/');
-  const links = await page.locator('main a').count();
+  const links = await page.locator('a').count();
   for (let i = 0; i < links; i++) {
     await page.keyboard.press('Tab');
     const ring = await page.evaluate(() => {
@@ -137,4 +137,65 @@ test('the text face loads once, from the preloaded file', async ({ page }) => {
   const preload = await page.locator('link[rel="preload"][as="font"]').getAttribute('href');
   expect(await page.evaluate(() => document.fonts.check('1rem "Atkinson Hyperlegible Next"'))).toBe(true);
   expect(fontRequests).toEqual([preload]);
+});
+
+// D-95: the hero rises into place when the system allows motion, and it holds still
+// under reduced motion (WCAG 2.3.3). The keyframes change `translate` alone, never
+// the opacity, so the text shows from the first frame.
+test('the hero moves only when the system allows motion, and it never fades', async ({ page }) => {
+  for (const reducedMotion of ['no-preference', 'reduce'] as const) {
+    await page.emulateMedia({ reducedMotion });
+    await page.goto('/');
+    const animationName = await page.locator('.hero').evaluate((hero) => getComputedStyle(hero).animationName);
+    expect(animationName, `prefers-reduced-motion: ${reducedMotion}`).toBe(reducedMotion === 'reduce' ? 'none' : 'rise');
+  }
+  const animatedProperties = await page.evaluate(() =>
+    [...document.styleSheets]
+      .flatMap((sheet) => [...sheet.cssRules])
+      .filter((rule) => rule instanceof CSSKeyframesRule)
+      .flatMap((keyframes) => [...(keyframes as CSSKeyframesRule).cssRules])
+      .flatMap((frame) => [...(frame as CSSKeyframeRule).style]),
+  );
+  expect(animatedProperties).toEqual(['translate']);
+});
+
+// The hero of the 404 page fills the window. At the first frame of the rise, the
+// offset must not make the page taller than the window, or a classic scrollbar
+// flashes and the text jumps sideways (D-95). The test holds that frame still.
+test('the first frame of the hero rise adds no scroll to the 404 page', async ({ page }) => {
+  for (const size of [{ width: 1440, height: 900 }, { width: 390, height: 664 }]) {
+    await page.setViewportSize(size);
+    await page.goto('/no-such-page');
+    const overflow = await page.evaluate(() => {
+      const rise = [...document.styleSheets]
+        .flatMap((sheet) => [...sheet.cssRules])
+        .find((rule) => rule instanceof CSSKeyframesRule && rule.name === 'rise') as CSSKeyframesRule;
+      const hero = document.querySelector('.hero') as HTMLElement;
+      hero.style.animation = 'none';
+      hero.style.translate = (rise.cssRules[0] as CSSKeyframeRule).style.translate;
+      return document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    });
+    expect(overflow, `${size.width} by ${size.height}`).toBe(0);
+  }
+});
+
+// The share card of D-97 and the icons of D-96: each address in the head serves its
+// file. Bytes 16 to 23 of a PNG file hold its width and its height.
+test('the share image and the icons serve from the addresses in the head', async ({ page }) => {
+  await page.goto('/');
+  const shareImage = await page.locator('meta[property="og:image"]').getAttribute('content');
+  const response = await page.request.get(new URL(shareImage ?? '').pathname);
+  expect(response.status()).toBe(200);
+  const png = await response.body();
+  const width = await page.locator('meta[property="og:image:width"]').getAttribute('content');
+  const height = await page.locator('meta[property="og:image:height"]').getAttribute('content');
+  expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual([Number(width), Number(height)]);
+
+  const icons = await page
+    .locator('link[rel="icon"], link[rel="apple-touch-icon"]')
+    .evaluateAll((links) => links.map((link) => link.getAttribute('href') ?? ''));
+  expect(icons).toHaveLength(3);
+  for (const icon of icons) {
+    expect((await page.request.get(icon)).status(), icon).toBe(200);
+  }
 });

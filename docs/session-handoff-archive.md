@@ -2,6 +2,42 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 5: 2026-09-12
+
+### What this session did, and why
+
+- The owner merged PR #4 as `1942877`. The session added the four `verify:site-*` checks to the `main` ruleset (D-11).
+- The owner asked for every document to read the current state before a context wipe. The session changed no site code.
+- The owner answered the two questions that PR-5 needs first: the project id `natekramber-prod` (D-51), and the account of decktome-prod (D-52).
+- The refresh touched the design status lines, both registers, this file, `README.md`, and `CLAUDE.md`.
+- It also touched the two auditor agents and four skills: `gitar-review`, `ste-writing`, `responsive-qa`, and `add-project`.
+
+### State of the repository
+
+- `main` is `1942877`, the squash merge of PR #4.
+- Branch `docs/handoff-after-pr-4` holds this refresh, as a pull request of documents alone.
+- Remote head: `origin/docs/handoff-after-pr-4` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on this branch.
+
+### In flight
+
+- The refresh waits for the Gitar review, then for the merge.
+
+### Traps and gotchas
+
+- A pull request of documents alone still runs every site check, because the verify workflow has no path filter. The six jobs finish in under two minutes.
+- A fresh checkout needs `make install` and `make browsers` before `make verify`, with Node 22.23.2 first on the `PATH`.
+- PR-5 creates cloud resources, so the owner runs its setup commands. Create the gcloud configuration `natekramber` first, and check the active project before every command (D-52).
+- Verify the current version of `firebase-tools` and the Workload Identity Federation steps before PR-5 depends on them (hard rule 9).
+
+### Open questions that block progress
+
+None blocks PR-5. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7. OQ-4 blocks nothing at launch.
+
+### Next concrete action
+
+Answer the Gitar review of the refresh. After the owner merges it, start PR-5 from `main` with read-only research, then write `docs/deploy.md`.
+
 ## Session 4: 2026-09-12
 
 ### What this session did, and why
