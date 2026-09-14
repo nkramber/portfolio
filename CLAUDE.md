@@ -98,6 +98,11 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `.claude/settings.json`: the project settings of Claude Code. It turns off attribution (D-6).
 - `scripts/ste-check.py`: the STE checker (D-7).
 - `.github/workflows/verify.yml`: the checks on each pull request, `verify:docs`, `verify:site`, and the four `verify:site-*` jobs.
+- `.github/workflows/preview.yml`: the preview deploy of each pull request, its comment, the `verify:site-preview` check, and the channel cleanup (D-59, D-66 to D-68).
+- `docs/deploy.md`: the one-time setup of Google Cloud and Firebase, and its run record (D-79).
+- `firebase.json`: the Hosting config, with the headers of D-57, D-58, D-75, and D-77.
+- `deploy/`: the npm project of the Firebase CLI alone (D-53).
+- `scripts/check-preview-headers.mjs`, `playwright.preview.config.ts`, and `tests/preview/`: the header check and the console check of a deployed preview (D-59).
 - `.github/dependabot.yml`: the monthly update of the pinned actions and the npm dependencies (D-16).
 - `Makefile`: the local commands.
 - `LICENSE`: the MIT license of the code. The site text and images are not under it (D-18).
@@ -117,6 +122,7 @@ Every command is free, and only `make install` and `make browsers` use the netwo
 - `make test-a11y`: scan both pages with axe for WCAG 2.2 AA, in the light and the dark scheme.
 - `make lighthouse`: check the Lighthouse budget over three runs, then prove that the budget fails on each planted defect.
 - `make html-check`: validate the built HTML and check its internal links and anchors, then prove that both tools fail on planted defects.
+- `make preview-check PREVIEW_URL=<address>`: compare the headers of a deployed preview with `firebase.json`, and check its console (D-59). Its self-test then proves that the header check can fail.
 - `make site-checks`: run the four site checks.
 - `make ste-check`: check every hand-written `.md` file against the STE rules.
 - `make verify`: run every check that the verify workflow runs. Run it before each pull request.

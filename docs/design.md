@@ -69,6 +69,7 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - The README of the auth action gives the issuer `https://token.actions.githubusercontent.com`, and the Google guide gives the same URL with a trailing slash. M-1 tests the README form. Sources: https://github.com/google-github-actions/auth/blob/v3.0.0/README.md and https://docs.cloud.google.com/iam/docs/workload-identity-federation-with-deployment-pipelines, read 2026-09-13.
 - Google asks for one provider in each pool, a condition on the numeric ids, and the project number in a `principalSet` member. Sources: https://docs.cloud.google.com/iam/docs/best-practices-for-using-workload-identity-federation and the guide above, read 2026-09-13.
 - No primary source confirms that a project with no billing account can enable `iamcredentials.googleapis.com` and `sts.googleapis.com`. The Google guide asks the reader to verify the billing account first. Source: the guide above, read 2026-09-13.
+- On 2026-09-14, the projects `natekramber-preview` and `natekramber-prod` enabled `iam`, `iamcredentials`, `sts`, `cloudresourcemanager`, `firebase`, and `firebasehosting` with no billing account. `firebase projects:addfirebase` returned no 403, and each default Hosting site got the project id. Source: the setup run of `docs/deploy.md`, 2026-09-14.
 - Browsers ignore `X-Frame-Options` when an enforced CSP has `frame-ancestors`. Source: https://www.w3.org/TR/CSP3/, section 6.4.2.2, read 2026-09-13.
 - `default-src 'none'` also blocks fonts and a web app manifest. A self-hosted font then needs `font-src 'self'`, which revises D-57. Source: https://www.w3.org/TR/CSP3/, section 6.8.3, read 2026-09-13.
 
@@ -267,11 +268,11 @@ Gate: the owner merges PR-16.
 
 #### PR-5: Google Cloud projects, Hosting configuration, and previews
 
-Status: planned. The projects are `natekramber-prod` and `natekramber-preview` (D-51, D-56). The owner account of decktome-prod owns both through a gcloud configuration named `natekramber` (D-52). D-53, D-54, D-56 to D-59, and D-62 answer the design questions of PR-5, and PR-15 ships its site code first (D-65).
+Status: in review. The projects `natekramber-prod` (number 321332406577) and `natekramber-preview` (number 573927778532) exist since 2026-09-14 (D-51, D-56, D-79). The owner account of decktome-prod owns both through a gcloud configuration named `natekramber` (D-52). D-53, D-54, D-56 to D-59, D-62, and D-75 to D-79 answer the design questions of PR-5, and PR-15 shipped its site code first (D-65).
 
 Scope:
 
-- `docs/deploy.md` with the setup commands. The owner runs them, because the session creates no cloud resource without the owner (D-34).
+- `docs/deploy.md` with the setup commands. The session runs them with the owner account, and it stops when the owner must act (D-79).
 - The commands create two dedicated projects on the Spark plan (D-56).
 - Each project gets its own Workload Identity Federation pool. The preview provider trusts only pull request tokens of this repository (D-35, D-62).
 - They also create one deploy service account in each project, with the least role that a Hosting deploy needs (G-9). The preview account gets no role in `natekramber-prod` (D-56).

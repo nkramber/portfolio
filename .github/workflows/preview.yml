@@ -1,0 +1,226 @@
+name: preview
+
+# Deploys each pull request to a preview channel of natekramber-preview (D-56),
+# posts its address as one comment (D-66), checks its headers and its console
+# (D-59, D-68), and deletes the channel when the pull request closes (D-67).
+# Every job skips on a fork and on a Dependabot pull request (D-68).
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+# A new event of a pull request cancels its preview run in progress.
+concurrency:
+  group: preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+# Every action is pinned to a commit SHA, and the comment names its tag.
+# verified_at: 2026-09-14 for download-artifact, 2026-09-13 for the rest, sources:
+#   https://api.github.com/repos/actions/checkout/git/ref/tags/v7.0.1
+#   https://api.github.com/repos/actions/setup-node/git/ref/tags/v7.0.0
+#   https://api.github.com/repos/actions/upload-artifact/git/ref/tags/v7.0.1
+#   https://api.github.com/repos/actions/download-artifact/git/ref/tags/v8.0.1
+#   https://api.github.com/repos/google-github-actions/auth/git/ref/tags/v3.0.0
+#
+# The Workload Identity Federation setup of docs/deploy.md. D-78 permits the
+# project number and the service account address in this file.
+env:
+  PREVIEW_PROJECT: natekramber-preview
+  WIF_PROVIDER: projects/573927778532/locations/global/workloadIdentityPools/github/providers/portfolio-pull-requests
+  SERVICE_ACCOUNT: hosting-preview@natekramber-preview.iam.gserviceaccount.com
+  CHANNEL_ID: pr-${{ github.event.pull_request.number }}
+
+jobs:
+  build:
+    name: "preview:build"
+    if: >-
+      github.event.action != 'closed' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.user.login != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: install
+        run: make install
+      - name: build
+        run: make build
+      # The build runs in this job, which holds no id-token (D-66).
+      - name: keep the build for the deploy job
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
+          if-no-files-found: error
+
+  deploy:
+    name: "preview:deploy"
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # id-token: write lets the auth action get a GitHub OIDC token for Workload
+    # Identity Federation, with no key (D-35, G-9). This job has no write token (D-66).
+    permissions:
+      contents: read
+      id-token: write
+    outputs:
+      url: ${{ steps.deploy.outputs.url }}
+      expire_time: ${{ steps.deploy.outputs.expire_time }}
+    steps:
+      # The checkout gives firebase.json and the lockfile of deploy/.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: deploy/package-lock.json
+      - name: get the build
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: dist
+          path: dist/
+      # The install runs before the credentials exist (D-53).
+      - name: install the Firebase CLI
+        run: npm ci --prefix deploy --no-audit --no-fund
+      - name: authenticate with no key
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+        with:
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: ${{ env.SERVICE_ACCOUNT }}
+      # Each deploy restarts the 30 days of the channel (D-67). The site has no
+      # Firebase Auth, so the deploy skips the sync of authorized domains.
+      - name: deploy to the preview channel
+        id: deploy
+        run: |
+          if ! npm exec --prefix deploy -- firebase hosting:channel:deploy "$CHANNEL_ID" \
+            --project "$PREVIEW_PROJECT" --expires 30d --no-authorized-domains --json > channel.json; then
+            cat channel.json
+            exit 1
+          fi
+          cat channel.json
+          node -e '
+            const out = JSON.parse(require("node:fs").readFileSync("channel.json", "utf8"));
+            const [channel] = Object.values(out.result);
+            console.log(`url=${channel.url}`);
+            console.log(`expire_time=${channel.expireTime}`);
+          ' >> "$GITHUB_OUTPUT"
+
+  comment:
+    name: "preview:comment"
+    needs: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    # pull-requests: write lets this job alone create or edit the preview comment (D-66).
+    permissions:
+      pull-requests: write
+    steps:
+      - name: post or update the preview comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          URL: ${{ needs.deploy.outputs.url }}
+          EXPIRE_TIME: ${{ needs.deploy.outputs.expire_time }}
+        run: |
+          marker='<!-- preview-channel -->'
+          body="$marker
+          Preview of $HEAD_SHA: $URL
+
+          The channel expires at $EXPIRE_TIME. Each push restarts its 30 days, and the channel goes away when this pull request closes (D-67)."
+          id=$(gh api --paginate "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" \
+            --jq ".[] | select(.user.login == \"github-actions[bot]\" and (.body | startswith(\"$marker\"))) | .id" | head -n 1)
+          if [ -n "$id" ]; then
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$id" -f body="$body" > /dev/null
+            echo "preview:comment: updated comment $id"
+          else
+            gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" -f body="$body" > /dev/null
+            echo "preview:comment: posted a new comment"
+          fi
+
+  site-preview:
+    name: "verify:site-preview"
+    needs: [build, deploy]
+    # A job that skips because a needed job failed reports success, so it does
+    # not block a merge (GitHub docs, read 2026-09-13). !cancelled() runs this
+    # check after a failed build or deploy, and its first step then fails it.
+    # The rest of the condition skips a fork, a Dependabot pull request, and a
+    # closed pull request, and a skipped check reports success (D-68).
+    if: >-
+      !cancelled() &&
+      github.event.action != 'closed' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.user.login != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: fail when no preview exists
+        if: needs.deploy.result != 'success'
+        env:
+          BUILD_RESULT: ${{ needs.build.result }}
+          DEPLOY_RESULT: ${{ needs.deploy.result }}
+        run: |
+          echo "verify:site-preview: the build is $BUILD_RESULT and the deploy is $DEPLOY_RESULT, so no preview exists to check"
+          exit 1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: install
+        run: make install
+      - name: browsers
+        run: npx playwright install --with-deps chromium
+      - name: headers and console of the preview
+        env:
+          PREVIEW_URL: ${{ needs.deploy.outputs.url }}
+        run: make preview-check PREVIEW_URL="$PREVIEW_URL"
+
+  cleanup:
+    name: "preview:cleanup"
+    if: >-
+      github.event.action == 'closed' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.user.login != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # id-token: write lets the auth action get a GitHub OIDC token to delete the channel (D-67).
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      # The checkout gives firebase.json and the lockfile of deploy/.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: deploy/package-lock.json
+      - name: install the Firebase CLI
+        run: npm ci --prefix deploy --no-audit --no-fund
+      - name: authenticate with no key
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+        with:
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: ${{ env.SERVICE_ACCOUNT }}
+      # Without --force, the CLI deletes nothing in CI and still exits 0. A channel
+      # that is already gone gives HTTP 404, and that is not a failure here
+      # (firebase-tools 15.30.0, read 2026-09-13).
+      - name: delete the preview channel
+        run: |
+          if out=$(npm exec --prefix deploy -- firebase hosting:channel:delete "$CHANNEL_ID" \
+            --project "$PREVIEW_PROJECT" --force 2>&1); then
+            echo "$out"
+          elif echo "$out" | grep -q 'HTTP Error: 404'; then
+            echo "$out"
+            echo "preview:cleanup: the channel $CHANNEL_ID is already gone"
+          else
+            echo "$out"
+            exit 1
+          fi
