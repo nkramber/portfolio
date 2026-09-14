@@ -6,16 +6,16 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-14)
 
-- **Main:** `d59be43`, the squash merge of PR #9, PR-15.
-- **Open pull requests:** #10, PR-5 on `site/pr-5-hosting-previews`. M-1 passed (D-80). It waits for a green run of `verify:site-preview` with the console fix, then for the Gitar review, then for the merge.
-- **Next action:** read the preview run of the console fix on #10. Then answer the Gitar review of the new head.
-- **Blocked on:** nothing blocks #10. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
-- **Next ids:** D-81, OQ-8, M-4, PR-17, Session 9.
+- **Main:** `4d36b43`, the squash merge of PR #10, PR-5.
+- **Open pull requests:** the docs refresh on `docs/after-pr-5`. It waits for the Gitar review, then for the merge.
+- **Next action:** answer the Gitar review of the docs refresh. Then start PR-6 with the research reports and the owner questions.
+- **Blocked on:** PR-6 needs the owner for the DNS records at GoDaddy. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
+- **Next ids:** D-82, OQ-8, M-4, PR-17, Session 10.
 
 ## Facts that expire
 
 - The GitHub settings, read 2026-09-12: squash merge alone, automatic delete of a merged branch, and ruleset `main` (id 23087504). The ruleset requires a pull request and refuses a force push and a delete. From 2026-09-12, GitHub Actions requires a full commit SHA for each action (D-61).
-- The `main` ruleset requires six checks from GitHub Actions (app id 15368): `verify:docs`, `verify:site`, `verify:site-responsive`, `verify:site-a11y`, `verify:site-lighthouse`, and `verify:site-html`.
+- The `main` ruleset requires seven checks from GitHub Actions (app id 15368), read 2026-09-14: `verify:docs`, `verify:site`, `verify:site-responsive`, `verify:site-a11y`, `verify:site-lighthouse`, `verify:site-html`, and `verify:site-preview`.
 - `actions/checkout` tag v7.0.1 points to commit `3d3c42e5aac5ba805825da76410c181273ba90b1`, read 2026-09-12 from the GitHub API.
 - `actions/setup-node` tag v7.0.0 points to commit `820762786026740c76f36085b0efc47a31fe5020`, read 2026-09-12 from the GitHub API.
 - `actions/upload-artifact` tag v7.0.1 points to commit `043fb46d1a93c77aae656e7c1c64a875d1fc6a0a`, read 2026-09-12 from the GitHub API.
@@ -39,7 +39,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - `google-github-actions/auth` tag v3.0.0 points to commit `7c6bc770dae815cd3e89ee6cdf493a5fab2cc093`, read 2026-09-12 from the GitHub API. The tag is lightweight. The `releases/latest` endpoint returns the moving tag `v3`.
 - The GitHub ids, read 2026-09-12: repository 1367643959 and owner 190805558. The OIDC `sub` prefix is `repo:nkramber@190805558/portfolio@1367643959`, the immutable format for a repository that GitHub created after 2026-07-15.
 - The repository has no environment, no secret, and no variable, read 2026-09-12. Workflows get a read token by default, and the workflows of a first-time contributor need approval.
-- The DNS of `natekramber.com`, read 2026-09-12: GoDaddy name servers and two A records of the GoDaddy parking host. `www` is a CNAME to the apex, and the domain has no MX, TXT, or CAA record.
+- `dig` read the DNS of `natekramber.com` on 2026-09-14. The name servers are `ns13.domaincontrol.com` and `ns14.domaincontrol.com` at GoDaddy. The two A records, `76.223.105.230` and `13.248.243.5`, point to the GoDaddy parking host. `www` is a CNAME to the apex, and the domain has no AAAA, MX, TXT, or CAA record.
 - Lighthouse 13.4.1 has five categories, read 2026-09-13 from the installed source. A 404 for `/llms.txt` makes the audit `llms-txt` not applicable, so the placeholder page scores 1 for agentic browsing.
 - Astro 7.3.2 runs `astro preview` in the background when `am-i-vibing` 0.4.0 detects an agent from a variable such as `AI_AGENT` or `CLAUDECODE`. `ASTRO_PREVIEW_BACKGROUND` turns that detection off (installed `dist/cli/preview/index.js`, read 2026-09-13).
 - Playwright 1.63.0 merges `webServer.env` over `process.env` (installed `lib/runner/index.js`, read 2026-09-13).
@@ -52,6 +52,43 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The Firebase CLI of this Mac uses the Wallabee account by default, and the owner account is its second account (read 2026-09-14).
 - `actions/download-artifact` tag v8.0.1 points to commit `3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c`, read 2026-09-14 from the GitHub API. The tag is lightweight.
 - `deploy/package-lock.json` pins firebase-tools 15.30.0 with 674 packages. On 2026-09-13, `npm audit` of `deploy/` reads 9 moderate advisories, and the root reads 0.
+- On 2026-09-14, the `live` channel of `natekramber-preview` shows a release at 13:50 UTC. It came before any deploy of this repository, and its cause is unverified.
+- On 2026-09-14, `https://natekramber.com` still answers from the GoDaddy parking host with `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload` (`curl -I`).
+
+## Session 9: 2026-09-14
+
+### What this session did, and why
+
+- The owner merged #10 (PR-5) as `4d36b43` on 2026-09-14 UTC. Its tree matches the reviewed head `a3be515`.
+- Before the merge, the owner chose to add `verify:site-preview` to the `main` ruleset at once (D-81). The ruleset now requires seven checks.
+- The merge closed #10, and the `closed` run of `preview:cleanup` deleted the channel `pr-10`. The channel list of `natekramber-preview` then showed the `live` channel alone (D-67).
+- The session wrote this refresh: D-81, the D-11 note, the status of PR-5 and M-1, and this entry.
+- The session started PR-6 with two read-only research passes: the custom domain of Firebase Hosting, and the GitHub environment `production`.
+
+### State of the repository
+
+- `main` is `4d36b43`, the squash merge of PR #10.
+- Branch `docs/after-pr-5` holds this refresh, as a pull request of documents alone.
+- Remote head: `origin/docs/after-pr-5` at the commit that holds this entry, checked after the push.
+- `make ste-check`: 0 findings.
+
+### In flight
+
+- The refresh waits for the Gitar review, then for the merge.
+- PR-6 has two research passes in this session alone, and no branch yet.
+
+### Traps and gotchas
+
+- `preview.yml` has no path filter, so a pull request of documents alone also deploys a preview and runs `verify:site-preview`.
+- The GoDaddy parking host still sends an HSTS header with `preload`. PR-6 replaces that host.
+
+### Open questions that block progress
+
+None blocks the refresh. PR-6 needs the owner for the DNS records at GoDaddy. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
+
+### Next concrete action
+
+Answer the Gitar review of the refresh. Then read the PR-6 research reports, and ask the owner the PR-6 questions.
 
 ## Session 8: 2026-09-14
 
