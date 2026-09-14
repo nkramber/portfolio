@@ -6,11 +6,11 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-14)
 
-- **Main:** `251afa5`, the squash merge of PR #11, the docs refresh.
-- **Open pull requests:** PR-6 on `site/pr-6-deploy-domain`. It waits for the Gitar review, then for the merge.
-- **Next action:** answer the Gitar review of PR-6. When both certificates read `CERT_ACTIVE`, ask the owner for the second DNS visit.
-- **Blocked on:** the second DNS visit waits for both certificates. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
-- **Next ids:** D-86, OQ-8, M-4, PR-17, Session 11.
+- **Main:** `af04c17`, the squash merge of PR #12 (PR-6).
+- **Open pull requests:** the docs refresh on `docs/after-pr-6`. It waits for the Gitar review, then for the merge.
+- **Next action:** answer the Gitar review of the refresh. After the merge, start M-2, the request logs on the Spark plan.
+- **Blocked on:** OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
+- **Next ids:** D-87, OQ-8, M-4, PR-17, Session 12.
 
 ## Facts that expire
 
@@ -23,7 +23,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Astro 7.3.2 is the latest Astro on 2026-09-13 (npm registry), and it needs Node 22.12.0 or newer. The variable `ASTRO_TELEMETRY_DISABLED=1` stops its telemetry.
 - The check tools on 2026-09-12: Playwright 1.63.0 with Chromium 153 (build 1243), axe-core 4.13.0, Lighthouse 13.4.1, chrome-launcher 1.2.1, html-validate 11.15.0, and linkinator 8.1.0.
 - `npm audit` reads 0 vulnerabilities on 2026-09-12. Lighthouse CI 0.15.1 added 12 advisories before D-50 removed it.
-- The Gitar trial still pauses automatic reviews on 2026-09-13. On #7 and #8, the pause note held a full review in its collapsed Code Review block. A `Gitar review` comment runs one review, and the `gitar-review` skill holds the traps.
+- The Gitar trial still pauses automatic reviews on 2026-09-14. On #7, #8, and #12, the pause note held a full review in its collapsed Code Review block. A `Gitar review` comment runs one review, and the `gitar-review` skill holds the traps.
 - PR-5 created the projects `natekramber-prod` and `natekramber-preview` on 2026-09-14 (D-51, D-56, D-79). A project id is permanent, and a permission error before creation does not show whether an id is free.
 - WCAG 2.2 is the W3C Recommendation of 2024-12-12, read 2026-09-12. The minimum target size of 2.5.8 is 24 by 24 CSS pixels.
 - ASD-STE100 Issue 9, dated 2025-01-15, is the current issue, read 2026-09-12.
@@ -39,7 +39,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - `google-github-actions/auth` tag v3.0.0 points to commit `7c6bc770dae815cd3e89ee6cdf493a5fab2cc093`, read 2026-09-12 from the GitHub API. The tag is lightweight. The `releases/latest` endpoint returns the moving tag `v3`.
 - The GitHub ids, read 2026-09-12: repository 1367643959 and owner 190805558. The OIDC `sub` prefix is `repo:nkramber@190805558/portfolio@1367643959`, the immutable format for a repository that GitHub created after 2026-07-15.
 - The repository has one environment, `production`, and no secret or variable, read 2026-09-14. Workflows get a read token by default, and the workflows of a first-time contributor need approval.
-- `dig` read the DNS of `natekramber.com` on 2026-09-14. The name servers are `ns13.domaincontrol.com` and `ns14.domaincontrol.com` at GoDaddy. The two A records, `76.223.105.230` and `13.248.243.5`, point to a GoDaddy Website Builder site (D-83). `www` is a CNAME to the apex. After the first DNS visit, the domain has three TXT records and no AAAA, MX, or CAA record.
+- `dig` read the DNS of `natekramber.com` at `ns13.domaincontrol.com` at 16:14 UTC on 2026-09-14, after the second DNS visit. The name servers are `ns13.domaincontrol.com` and `ns14.domaincontrol.com` at GoDaddy. The apex has one A record, `199.36.158.100`, and `www` is a CNAME to `natekramber-prod.web.app`. The three TXT records stay, and the domain has no AAAA, MX, or CAA record.
 - Lighthouse 13.4.1 has five categories, read 2026-09-13 from the installed source. A 404 for `/llms.txt` makes the audit `llms-txt` not applicable, so the placeholder page scores 1 for agentic browsing.
 - Astro 7.3.2 runs `astro preview` in the background when `am-i-vibing` 0.4.0 detects an agent from a variable such as `AI_AGENT` or `CLAUDECODE`. `ASTRO_PREVIEW_BACKGROUND` turns that detection off (installed `dist/cli/preview/index.js`, read 2026-09-13).
 - Playwright 1.63.0 merges `webServer.env` over `process.env` (installed `lib/runner/index.js`, read 2026-09-13).
@@ -53,11 +53,56 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - `actions/download-artifact` tag v8.0.1 points to commit `3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c`, read 2026-09-14 from the GitHub API. The tag is lightweight.
 - `deploy/package-lock.json` pins firebase-tools 15.30.0 with 674 packages. On 2026-09-13, `npm audit` of `deploy/` reads 9 moderate advisories, and the root reads 0.
 - On 2026-09-14, the `live` channel of `natekramber-preview` shows a release at 13:50 UTC. It came before any deploy of this repository, and its cause is unverified.
-- On 2026-09-14, `https://natekramber.com` still answers from a GoDaddy Website Builder site with `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload` (`curl -I`, D-83).
+- On 2026-09-14 at 16:10 UTC, `https://natekramber.com` answered from Firebase Hosting with `Strict-Transport-Security: max-age=31536000; includeSubDomains` (`curl -I` at `199.36.158.100`). `make preview-check` passed on the live domain at 17:04 UTC. Before the second DNS visit, GoDaddy sent `max-age=63072000; includeSubDomains; preload` (D-83).
 - The environment `production` exists since 2026-09-14. Its branch policy lists `branch:main` alone, and the API reads `can_admins_bypass: false`.
-- The custom domains `natekramber.com` and `www.natekramber.com` exist on `natekramber-prod` since 2026-09-14, and `www` redirects to the apex. Both read `OWNERSHIP_ACTIVE` at 14:52 UTC, and both certificates read `CERT_VALIDATING`.
+- The custom domains `natekramber.com` and `www.natekramber.com` exist on `natekramber-prod` since 2026-09-14, and `www` redirects to the apex. Both read `OWNERSHIP_ACTIVE` at 14:52 UTC and `CERT_ACTIVE` at 15:58 UTC. `www` read `HOST_ACTIVE` at 16:20 UTC, and the apex at 16:30 UTC. Each certificate has the type `TEMPORARY` and expires on 2026-12-13.
 - The three TXT records of the first DNS visit resolve at GoDaddy, Google, and Cloudflare on 2026-09-14.
-- The second DNS visit removes the A records `76.223.105.230` and `13.248.243.5` at `@` and the CNAME `www` to the apex. It adds the A record `199.36.158.100` at `@` and the CNAME `www` to `natekramber-prod.web.app` (Hosting API, read 2026-09-14).
+- The owner made the second DNS visit on 2026-09-14 (D-86). At 16:09 UTC, both GoDaddy name servers gave the A record `199.36.158.100` at `@` and the CNAME `www` to `natekramber-prod.web.app`.
+- The first run of `deploy.yml`, 34859481347, passed at 15:02 UTC on 2026-09-14. It released the version `8ca891d5ede885e2` to the live channel of `natekramber-prod`.
+- The HSTS preload list holds neither `natekramber.com` nor `www.natekramber.com`, read 2026-09-14 from `hstspreload.org`.
+
+## Session 11: 2026-09-14
+
+### What this session did, and why
+
+- The owner merged #12 (PR-6) as `af04c17` at 15:01 UTC on 2026-09-14. Its tree matches the reviewed head `4fa6ec8`, and Gitar approved it with no finding.
+- The first run of `deploy.yml`, 34859481347, released the placeholder page to `natekramber-prod` at 15:02 UTC with no manual step.
+- The owner asked the session to watch the certificates. Both certificates read `CERT_ACTIVE` at 15:58 UTC, while the A records still pointed to GoDaddy.
+- The owner chose to make the second DNS visit at once (D-86). The session read the GoDaddy help pages, then gave each step.
+- At 16:09 UTC, both GoDaddy name servers gave the new records. `www` read `HOST_ACTIVE` at 16:20 UTC, and the apex at 16:30 UTC.
+- The owner opened both addresses on a phone with Wi-Fi off, and saw the placeholder page with no warning. GoDaddy locked no record, so the owner removed no connection.
+- At 17:04 UTC, `make preview-check PREVIEW_URL=https://natekramber.com` passed. Every header of `firebase.json` matched, and that includes the HSTS header of D-58. The console check and both self-tests passed.
+- The session wrote this refresh. It adds D-86, the PR-6 status, a run record in `docs/deploy.md`, four external facts, `CLAUDE.md`, and this entry. Session 1 moved to the archive.
+
+### State of the repository
+
+- `main` is `af04c17`, the squash merge of PR #12.
+- Branch `docs/after-pr-6` holds this refresh, as a pull request of documents alone.
+- Remote head: `origin/docs/after-pr-6` at the commit that holds this entry, checked after the push.
+- `make ste-check`: 0 findings.
+
+### In flight
+
+- The refresh waits for the Gitar review, then for the merge.
+- Each certificate has the type `TEMPORARY` and expires on 2026-12-13. Hosting makes a more permanent certificate later, and nobody checked that step yet.
+- No run tested the PR-6 exit test of D-63. A workflow run outside the environment `production` must get no token for the live service account.
+- The GoDaddy Website Builder site can still exist in the GoDaddy account. The owner cancels any paid plan of that site (D-83).
+
+### Traps and gotchas
+
+- In zsh, `set -- $q` does not split the variable into words. A DNS loop then asked for the wrong names, and the empty answers gave a false sign of deleted records. Run such a loop in bash.
+- `dig` with no server skips the DNS cache of macOS, but `curl`, Node, and Chromium use that cache. After the DNS change at 16:09 UTC, this Mac reached the old GoDaddy address until 17:04 UTC. So the live check waited 55 minutes.
+- The Hosting API still found the old A records at 16:15 UTC, six minutes after the change. `www` became active at 16:20 UTC, and the apex 10 minutes later.
+- `curl --resolve NAME:443:199.36.158.100` shows the certificate and the headers of Firebase Hosting before any DNS change.
+- The HTTP challenge of Hosting fails with a 404 while the A records point to another host. The DNS challenge alone gives the certificate.
+
+### Open questions that block progress
+
+None blocks the refresh. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
+
+### Next concrete action
+
+Answer the Gitar review of the refresh. After the merge, start M-2 from `main` with read-only research.
 
 ## Session 10: 2026-09-14
 
@@ -449,39 +494,3 @@ OQ-3 blocks the About text of PR-8. OQ-5 blocks the merge of PR-7. OQ-4 blocks n
 ### Next concrete action
 
 Answer the Gitar review of PR #2. After the owner merges it, start PR-3, the Astro scaffold, from `main`.
-
-## Session 1: 2026-09-12
-
-### What this session did, and why
-
-- The owner asked for the docs first: `CLAUDE.md`, the agents, the skills, and the session handoff. The owner named decktome and What You Carry as the model, and decktome as the model for review (D-1).
-- The session read both repositories. It then asked four batches of repository questions, and D-1 to D-18 record the answers.
-- The session changed the GitHub settings of the repository, as D-11 asks.
-- The session verified the external facts of the skills against primary sources: WCAG 2.2, ASD-STE100, and the Claude Code docs.
-- The session wrote PR-1: `CLAUDE.md`, the symlink, six skills, four agents, three rule files, the registers, the design draft, the checker, the verify workflow, Dependabot, and the license.
-
-### State of the repository
-
-- `main` is `e6369bd`. Branch `docs/foundation` holds PR-1.
-- `make verify`: 0 findings.
-
-### In flight
-
-PR-1 waits for the Gitar review.
-
-### Traps and gotchas
-
-- Claude Code does not read `AGENTS.md`. The symlink serves other tools, so edit `CLAUDE.md` alone.
-- A rule file in `.claude/rules/` loads only when a session reads a file that its `paths` list matches. Codex never loads it.
-- The checker reads "is read-only" as passive voice. Write "treat the repository as read-only".
-- The checker counts a numbered list item as a procedural step, with a limit of 20 words.
-- `/Volumes/SSD-1TB` is an external drive. The What You Carry path is absent when the owner disconnects the drive.
-- The GitHub API lists no app installation for a `gh` token, so the session took the Gitar scope from the owner (D-5).
-
-### Open questions that block progress
-
-None blocks PR-1. OQ-1 and OQ-2 block draft 1 of `docs/design.md`.
-
-### Next concrete action
-
-Answer the Gitar review of PR-1. Ask the roadmap questions while the review runs.

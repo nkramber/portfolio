@@ -249,6 +249,26 @@ make preview-check PREVIEW_URL=https://natekramber.com
 
 On `natekramber.com`, the header check also compares the HSTS header of D-58.
 
+## Run record of steps 11 to 14
+
+The session and the owner ran steps 11 to 14 on 2026-09-14 (D-82, D-85, D-86).
+
+| Step | Result | Time (UTC) |
+|---|---|---|
+| 12 | Both custom domains exist on `natekramber-prod`. | 14:40 |
+| 11 | The environment `production` accepts `branch:main` alone, and the API reads `can_admins_bypass: false`. | 14:50 |
+| 13 | Both domains read `OWNERSHIP_ACTIVE`. | 14:52 |
+| 13 | Both certificates read `CERT_ACTIVE`, with the type `TEMPORARY` and the expiry 2026-12-13. | 15:58 |
+| 14 | Both GoDaddy name servers give the A record `199.36.158.100` and the `www` CNAME. | 16:09 |
+| 14 | `www.natekramber.com` reads `HOST_ACTIVE`. | 16:20 |
+| 14 | `natekramber.com` reads `HOST_ACTIVE`. | 16:30 |
+| 14 | The owner opens both addresses on a phone, and the placeholder page shows with no warning. | after 16:30 |
+| 14 | `make preview-check PREVIEW_URL=https://natekramber.com` passes, with the HSTS header of D-58 and both self-tests. | 17:04 |
+
+- Both certificates became active while the A records still pointed to GoDaddy. The HTTP challenge of Hosting failed with a 404 until step 14, and the DNS challenge was enough.
+- Before step 14, `curl --resolve` with the address `199.36.158.100` showed a valid certificate for each name. That check needs no DNS change.
+- The GoDaddy help pages 19239, 19237, and 19210 give the edit and delete steps of step 14. If GoDaddy locks the A records, page 32079 removes the connection to the other site.
+
 ## Rollback
 
 The Firebase CLI has no rollback command (firebase-tools 15.30.0). Each run of `.github/workflows/deploy.yml` prints the name of its new version. The release history of the site in the Firebase console lists the same versions, and its "Roll back" action releases an earlier version again. `firebase hosting:clone` with the site, an earlier version, and the live channel does the same from the CLI.
