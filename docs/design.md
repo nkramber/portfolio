@@ -16,7 +16,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-14 correction pass (Session 12): M-2 passed (D-88), with the log link of D-87. PR-13 no longer waits for M-2, and the external facts add the research of M-2.
 2026-09-14 correction pass (Session 13): PR-7 follows D-89 to D-92, and D-91 closes OQ-5. The external facts add the research of PR-7.
 2026-09-14 correction pass (Session 14): PR-7 reads merged, and the Phase 1 gate reads passed. Section 6 closes OQ-5, and D-93 sets how the owner gets a preview address.
-2026-09-14 correction pass (Session 15): PR-8 follows D-94 to D-101. The external facts add the research of PR-8.
+2026-09-14 correction pass (Session 15): PR-8 follows D-94 to D-102. The external facts add the research of PR-8.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -441,11 +441,11 @@ Gate: OQ-5 has its answer in `docs/decisions.md`, and the owner merges PR-7.
 
 #### PR-8: Page shell
 
-Status: in review as #17 on `site/pr-8-page-shell` (Session 15). D-94 to D-101 answer its design questions.
+Status: in review as #17 on `site/pr-8-page-shell` (Session 15). D-94 to D-102 answer its design questions.
 
 Scope:
 
-- The hero with the headline of D-29, the About section, and a page footer with the links of D-20 (D-21). The hero keeps its links too.
+- The hero with the headline of D-29 and the links of D-20, and the About section (D-21). The Links section at the end of the page waits for the project cards (D-102).
 - The About text from an owner interview (D-94). Until OQ-3 closes, the section holds no text and stays off the page.
 - The page title, the meta description, a canonical address, the Open Graph tags, and the share image of D-97 (D-41).
 - The icons of D-96, and a CSP with no `data:` in `img-src`.
@@ -510,6 +510,7 @@ Scope: one project entry through the `add-project` skill (D-2, D-24).
 - The text can describe how the owner directs AI coding agents (D-26).
 - The card shows the placeholder image until OQ-4 closes (D-40).
 - When a screenshot shows card art, the card carries the fan content line of Wizards of the Coast. The session verifies the current text of that policy first (D-41).
+- The first card makes the page longer. So the Links section of D-21 returns at the end of the page, with the line of D-101 (D-102).
 
 Exit tests:
 

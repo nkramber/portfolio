@@ -8,9 +8,9 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 - **Main:** `8119f95`, the squash merge of PR #16, the docs refresh after PR-7.
 - **Open pull requests:** #17 (PR-8), the page shell, on `site/pr-8-page-shell`. It waits for the Gitar review, the phone check of the owner, and the merge.
-- **Next action:** answer the Gitar review of #17, and give the owner the preview address for the phone check (D-93). Draft the bio from the interview answers (D-94).
+- **Next action:** answer the Gitar review of the newest head of #17, and ask the owner for the phone check again (D-93). Draft the bio from the interview answers (D-94).
 - **Blocked on:** OQ-3 blocks the About text of PR-8.
-- **Next ids:** D-102, OQ-8, M-4, PR-17, Session 16.
+- **Next ids:** D-103, OQ-8, M-4, PR-17, Session 16.
 
 ## Facts that expire
 
@@ -76,7 +76,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The owner merged #16 as `8119f95` at 19:41 UTC on 2026-09-14. Its tree matches the reviewed head `0614f9d`, and Gitar approved it with no finding in the pause note.
 - Deploy run 34888419843 passed on `8119f95` on 2026-09-14.
 - At 19:50 UTC on 2026-09-14, both certificates still read `CERT_ACTIVE` with the type `TEMPORARY`.
-- On 2026-09-14, `make lighthouse` on the PR-8 branch with D-99 and D-101 reads 1 in every category. It reads 41,728 total bytes, a median LCP of 1,204 ms, and a CLS of 0.
+- On 2026-09-14, `make lighthouse` on the PR-8 branch with D-102 reads 1 in every category. It reads 41,307 total bytes, a median LCP of 1,201 ms, and a CLS of 0.
 - On 2026-09-14, every check of #17 passed on `c18d8ad`, and the Gitar pause note held an approval with no finding.
 
 ## Session 15: 2026-09-14
@@ -94,6 +94,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The accessibility audit found no WCAG 2.2 AA defect in the light or the dark scheme.
 - The session opened #17. Every check passed on `c18d8ad`, and the pause note of Gitar held an approval with no finding.
 - The owner kept both lists of profile links (D-100) and chose a hairline above the footer (D-101). The second commit applies D-99 and D-101.
+- On a phone, the owner saw the same links twice with nothing between them. The owner then chose the hero list alone until the project cards arrive (D-102).
 
 ### State of the repository
 

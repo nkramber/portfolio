@@ -1,9 +1,10 @@
 ---
-// The home page (D-19, D-21): the hero, the About section, and the footer with the
-// profile links. The project cards of PR-9 join between About and the footer.
+// The home page (D-19, D-21): the hero with the profile links, and the About
+// section. The project cards join below About, and the Links section at the end of
+// the page comes back with them (D-102).
 import Page from '../layouts/Page.astro';
 
-// The two profile links of D-20. The hero and the footer both show them.
+// The two profile links of D-20. The hero shows them (D-102).
 const links = [
   { label: 'GitHub', href: 'https://github.com/nkramber' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/nate-kramber' },
@@ -57,11 +58,4 @@ const shareImageUrl = new URL('/og.png', Astro.site).href;
       </section>
     )}
   </main>
-
-  <footer class="site-footer">
-    <h2>Links</h2>
-    <ul class="links">
-      {links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
-    </ul>
-  </footer>
 </Page>

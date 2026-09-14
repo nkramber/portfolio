@@ -7,8 +7,8 @@ import { expect, test } from '@playwright/test';
 const wcagTags = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 
 // The page structure of PR-8 (G-8): one main landmark, one h1, headings in order,
-// one footer at the top level, and no content outside a landmark. axe tags these
-// rules best-practice, so the WCAG scan never runs them (axe-core 4.13.0).
+// at most one footer, at the top level, and no content outside a landmark. axe tags
+// these rules best-practice, so the WCAG scan never runs them (axe-core 4.13.0).
 const structureRules = [
   'landmark-one-main',
   'page-has-heading-one',

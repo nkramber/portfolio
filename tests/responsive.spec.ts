@@ -109,7 +109,7 @@ test('the text spacing of WCAG 1.4.12 keeps every word inside its box at 320px',
 // smallest (https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html). On a
 // phone, pinch zoom scales the whole page and doubles every size.
 test('each fluid text size grows at most 2 times from 320px to 2560px', async ({ page }) => {
-  const selectors = ['.name', 'h1', '.lede', '.links a', '.site-footer h2'];
+  const selectors = ['.name', 'h1', '.lede', '.links a'];
   const sizes: Record<number, number[]> = {};
   for (const width of [320, 2560]) {
     await page.setViewportSize({ width, height: 900 });

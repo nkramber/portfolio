@@ -86,7 +86,7 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `docs/questions.md`: every open question, and the decision that closed each one.
 - `docs/session-handoff.md`: the resume point and the ten newest sessions.
 - `docs/session-handoff-archive.md`: every older session, word for word.
-- `src/pages/index.astro`: the home page of PR-8, with the hero, the About section, and the footer. The About section stays off the page until the bio exists (OQ-3, D-94).
+- `src/pages/index.astro`: the home page of PR-8, with the hero and the About section. The About section stays off the page until the bio exists (OQ-3, D-94).
 - `src/pages/404.astro`: the 404 page, with the words of D-74 (D-98).
 - `src/layouts/Page.astro`: the head, the icon links, the design tokens, the base styles, and the motion of both pages (D-73, D-95).
 - `public/`: the icon `favicon.svg` (D-96), and the three PNG files of `make images`. `scripts/make-images.mjs` draws the share image of D-97 and two icons.
