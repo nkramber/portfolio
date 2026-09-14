@@ -14,6 +14,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-14 correction pass (Session 10): PR-6 follows D-82 to D-85. The session creates the environment and the custom domains, and the owner makes two DNS visits. The external facts add the research of PR-6.
 2026-09-14 correction pass (Session 11): PR-6 reads merged, and D-86 records the second DNS visit.
 2026-09-14 correction pass (Session 12): M-2 passed (D-88), with the log link of D-87. PR-13 no longer waits for M-2, and the external facts add the research of M-2.
+2026-09-14 correction pass (Session 13): PR-7 follows D-89 to D-92, and D-91 closes OQ-5. The external facts add the research of PR-7.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -95,6 +96,22 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - No primary source says whether the Hosting log link needs a billing account. The Firebase FAQ says that Google Cloud features are not available on the Spark plan. The Firebase help for the link names only a free 50 GB and an optional Blaze upgrade. Sources: https://firebase.google.com/support/faq and https://support.google.com/firebase/answer/9748636, read 2026-09-14.
 - A Cloud Billing account on a Spark project upgrades the project to the Blaze plan at once. Source: https://firebase.google.com/docs/projects/billing/firebase-pricing-plans, read 2026-09-14.
 - On 2026-09-14, the Hosting log link worked on `natekramber-prod` with no billing account. A test visit showed in Cloud Logging about 11 minutes after the request. Source: M-2 (D-88).
+- Baseline Widely available on 2026-09-14: `font-display`, WOFF2, `unicode-range`, `font-variation-settings`, `clamp()`, `oklch()`, `color-mix()`, `:focus-visible`, `text-underline-offset`, and `rel=preload`. Sources: https://api.webstatus.dev/v1/features and https://cdn.jsdelivr.net/npm/web-features/data.json, read 2026-09-14.
+- `light-dark()` is Baseline Newly available. `text-wrap: pretty` and the descriptors `ascent-override`, `descent-override`, and `line-gap-override` are Limited. Source: https://api.webstatus.dev/v1/features, read 2026-09-14.
+- `font-src` also governs a font preload. A same-origin font preload still needs `crossorigin`, or the browser ignores the preload. Sources: https://www.w3.org/TR/CSP3/ and https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/rel/preload, read 2026-09-14.
+- `font-display: optional` waits 100 ms at most and never swaps, so it causes no layout shift. When the font arrives late, that page view keeps the fallback font. Source: https://web.dev/articles/font-best-practices, read 2026-09-14.
+- In Lighthouse 13.4.1, `font-display-insight` fails only on `block`, `fallback`, or `auto`, and its weight is 0. A font that the CSP blocks fails `inspector-issues` in Best Practices. Source: the installed `lighthouse` package, read 2026-09-14.
+- A link that differs from its text by color alone fails WCAG 1.4.1. An underline on hover or focus alone does not fix it. Source: https://www.w3.org/WAI/WCAG22/Techniques/failures/F73, read 2026-09-14.
+- The Latin variable WOFF2 files of Instrument Sans and Martian Mono weigh 53,648 bytes together. Atkinson Hyperlegible Next and Mono weigh 51,748 bytes, and IBM Plex Sans and IBM Plex Mono weigh 78,288 bytes. Sources: Fontsource 5.3.0 on https://cdn.jsdelivr.net and IBM Plex on https://www.npmjs.com, read 2026-09-14.
+- Geist and Geist Mono weigh 52,528 bytes, and Inter and JetBrains Mono weigh 88,660 bytes. Every font family above uses the SIL Open Font License 1.1. Sources: the same packages and the GitHub license API, read 2026-09-14.
+- Desktop Chromium zooms a page from 25 to 500 percent, and desktop Firefox zooms up to 500 percent. Firefox on Android stops at 400 percent. Sources: `third_party/blink/common/page/page_zoom.cc` of Chromium and `modules/libpref/init/StaticPrefList.yaml` of Firefox, read 2026-09-14.
+- WCAG 1.4.4 passes when text can grow to 200 percent through at least one text scaling mechanism of the browser. Failure F94 is text that viewport units size. Source: https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html, read 2026-09-14.
+- `text-decoration-thickness` is Baseline Widely available since 2023-09-04, and `overflow-wrap` since 2021-04-02. Sources: https://cdn.jsdelivr.net/npm/web-features/data.json and https://api.webstatus.dev/v1/features, read 2026-09-14.
+- Astro 7.3.2 has a fonts API, but its `Font` component writes a `style` element, and the CSP of D-57 blocks that element. Source: the installed `astro/components/Font.astro`, read 2026-09-14.
+- `hyphens: auto` is Baseline Widely available since 2026-03-18, `overflow-wrap: anywhere` since 2024-09-14, and `scroll-margin-block` since 2024-03-20. Source: web-features 3.38.0 (https://cdn.jsdelivr.net/npm/web-features/data.json), read 2026-09-14.
+- `overflow-wrap: break-word` does not narrow the minimum width of an inline-block, but `anywhere` does. Source: the responsive audit of PR-7 in Chromium 153, 2026-09-14.
+- An `em` in a media query counts the initial font size of the browser, never a declaration of the page. Source: https://www.w3.org/TR/mediaqueries-4/, section 1.3, read 2026-09-14.
+- An `em` in a container query counts the computed font size of the query container. Source: https://www.w3.org/TR/css-contain-3/, section 5.1, read 2026-09-14.
 
 ## 1. Thesis
 
@@ -386,7 +403,7 @@ Phase gate: the page shell passes every site check, and the owner approves it on
 
 #### PR-7: Design tokens, fonts, and accent color
 
-Status: planned.
+Status: in review. The owner picked the fonts and the accent from the preview page on 2026-09-14 (D-89, D-91), and OQ-5 closed. `make verify` passes: every Lighthouse category reads 1, the first load weighs 38,974 bytes, the median LCP is 1,052 ms, and the CLS is 0.
 
 Scope:
 

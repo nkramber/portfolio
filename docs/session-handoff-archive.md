@@ -2,6 +2,47 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 3: 2026-09-12
+
+### What this session did, and why
+
+- The owner merged PR #2 as `60048ba`, which approved draft 1 of `docs/design.md`. The sequence then allowed PR-3.
+- The session checked each fact of PR-3 at its primary source: the Node release schedule, the npm registry, the Astro template, and GitHub.
+- The owner chose Node 22 LTS over Node 24 LTS (D-44), and turned off the telemetry of Astro (D-45).
+- The session wrote PR-3: the Astro 7 project, the placeholder page, the `verify:site` job, the `make` targets, the npm ecosystem in Dependabot, and `.claude/rules/site.md`.
+- The package file does not include the `allowScripts` field of the Astro template. Neither local npm version documents that field or reads it in its source.
+
+### State of the repository
+
+- `main` is `60048ba`, the squash merge of PR #2.
+- Branch `site/pr-3-astro-scaffold` holds PR-3.
+- Remote head: `origin/site/pr-3-astro-scaffold` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2: 0 findings, one page built, and no script element in `dist/`.
+- `npm install`: 193 packages and 0 vulnerabilities.
+- Headless Chromium screenshots at 320 and 1440 CSS pixels show no clipped text and no sideways scroll.
+
+### In flight
+
+- PR-3 waits for the Gitar review, then for the merge.
+- After the merge, `verify:site` joins the `main` ruleset as a required check.
+
+### Traps and gotchas
+
+- The `--force-dark-mode` flag of the headless shell does not change `prefers-color-scheme`. The dark screenshot had the same file size and the same look as the light one, so the dark scheme has no check yet. PR-4 can emulate the color scheme in Playwright.
+- A foreground `sleep` is blocked in this tool. `curl --retry-connrefused` waits for the preview server with no `sleep`.
+- `astro preview` does not stop on its own. Start it in the background, keep its process id, and stop it after the screenshots.
+- The first local build and preview ran before D-45, with telemetry on. A direct `npm run` command still sends telemetry, so use the `make` targets.
+- Astro 7.3.2 needs Node 22.12.0 or newer, and the default Node on this Mac is 20.17.0.
+- Gitar on PR #3 found that the placeholder padding used `env(safe-area-inset-*)` with the default `viewport-fit`. With that default, the browser insets the page into the safe area itself (WebKit, 2017-09-22), so the padding did nothing and PR-3 removed it. A full-bleed design in PR-8 needs `viewport-fit=cover` and the insets.
+
+### Open questions that block progress
+
+None blocks PR-3. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
+
+### Next concrete action
+
+Answer the Gitar review of PR-3. After the owner merges it, add `verify:site` to the `main` ruleset, then start PR-4, the site checks.
+
 ## Session 2: 2026-09-12
 
 ### What this session did, and why
