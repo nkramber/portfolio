@@ -12,6 +12,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-13 correction pass (Session 7): PR-14 and PR-16 read merged, and PR-15 follows D-71 to D-74.
 2026-09-14 correction pass (Sessions 8 and 9): PR-15 and PR-5 read merged, PR-5 follows D-75 to D-81, and M-1 passed (D-80). The external facts add the research of PR-5 and the result of the setup run. The gate of PR-5 marks its ruleset order refuted, because the check joined the ruleset before the merge (D-81).
 2026-09-14 correction pass (Session 10): PR-6 follows D-82 to D-85. The session creates the environment and the custom domains, and the owner makes two DNS visits. The external facts add the research of PR-6.
+2026-09-14 correction pass (Session 11): PR-6 reads merged, and D-86 records the second DNS visit.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -83,6 +84,10 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - The A records of `natekramber.com` serve a GoDaddy Website Builder page, and GoDaddy documents the parking addresses `3.33.130.190` and `15.197.148.33`. Sources: https://www.godaddy.com/help/park-a-domain-registered-with-godaddy-23936 and `curl`, read 2026-09-14.
 - No REST field creates an environment with the administrator bypass off, but the read response of the environment holds `can_admins_bypass`. Sources: the GitHub REST API description and `gh api repos/nkramber/portfolio/environments/production`, read 2026-09-14.
 - A job that names an environment gets the OIDC subject `repo:OWNER@OWNER_ID/REPO@REPO_ID:environment:NAME` for a push and for a run by hand. The branch rule of the environment fails a job on a refused ref. Sources: https://docs.github.com/en/actions/reference/security/oidc and https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments, read 2026-09-14.
+- Only `CERT_ACTIVE` and `CERT_EXPIRING_SOON` give a custom domain its SSL coverage. `CERT_PROPAGATING` means that Hosting has the certificate and sends it to its CDN. A `TEMPORARY` certificate covers a domain until Hosting makes a more permanent certificate. `HOST_MISMATCH` means that the domain points to a host other than Hosting. Source: the Hosting API v1beta1 discovery document, revision 20260830, read 2026-09-14.
+- Both certificates of PR-6 went from `CERT_PROPAGATING` to `CERT_ACTIVE` while the A records still pointed to GoDaddy. So the certificate step needs no change of host. Source: the Hosting API v1beta1, read at 15:54 and 15:58 UTC on 2026-09-14.
+- GoDaddy locks the A records of a domain that connects to another site. The Remove action above the DNS records table removes that connection. Source: https://www.godaddy.com/help/remove-a-connection-from-my-domain-32079, read 2026-09-14.
+- The HSTS preload list holds neither `natekramber.com` nor `www.natekramber.com`, so the `preload` directive of the GoDaddy header had no effect. Source: https://hstspreload.org/api/v2/status, read 2026-09-14.
 
 ## 1. Thesis
 
@@ -329,7 +334,7 @@ Gate: a pass keeps the preview workflow. A fail removes the workflow, and the ow
 
 #### PR-6: Deploy on merge and the domain
 
-Status: in review. The environment `production` and both custom domains exist since 2026-09-14 (D-82, D-85). Both domains read `OWNERSHIP_ACTIVE`, and both certificates wait for validation.
+Status: merged as #12, `af04c17`, on 2026-09-14 UTC. Gitar approved it with no finding. The first run of `deploy.yml` released the placeholder page with no manual step. Both certificates read `CERT_ACTIVE` at 15:58 UTC, and both domains read `HOST_ACTIVE` by 16:30 UTC after the second DNS visit (D-86). The owner opened the site on a phone, and `make preview-check` passed on `https://natekramber.com` at 17:04 UTC, with the HSTS header of D-58. No run tested the exit test of D-63 yet.
 
 Scope:
 
