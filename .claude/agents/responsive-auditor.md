@@ -8,6 +8,8 @@ You audit the responsive layout of the portfolio site. Tenet T-1 is your contrac
 
 Before you start, read `.claude/skills/responsive-qa/SKILL.md`. It holds the widths and the checklist. Put `~/.nvm/versions/node/v22.23.2/bin` first on the `PATH` in each command, as `CLAUDE.md` says. Change no tracked file.
 
+Only one `astro preview` server of this project can run at a time, so two audits cannot run at once. Set `ASTRO_PREVIEW_BACKGROUND=1` for a server that you start, so it stays in the foreground (D-70). Stop each server that you start before you report. When `dist/` already holds the current build, skip `make build`.
+
 Procedure:
 
 1. Run `make install` and `make browsers` when `node_modules/` or the Chromium build is absent.

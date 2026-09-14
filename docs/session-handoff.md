@@ -6,11 +6,11 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-14)
 
-- **Main:** `175d9ff`, the squash merge of PR #14, the M-2 result.
-- **Open pull requests:** PR-7 on `site/pr-7-design-tokens`. It waits for the Gitar review, the phone check of the owner, and the merge.
-- **Next action:** answer the Gitar review of PR-7, and ask the owner for the phone check on its preview address. After the merge, start PR-8, the page shell.
+- **Main:** `a865051`, the squash merge of PR #15 (PR-7).
+- **Open pull requests:** the docs refresh on `docs/after-pr-7`. It waits for the Gitar review, then for the merge.
+- **Next action:** answer the Gitar review of the refresh. After the merge, start PR-8, the page shell, with read-only research and owner questions.
 - **Blocked on:** OQ-3 blocks the About text of PR-8.
-- **Next ids:** D-93, OQ-8, M-4, PR-17, Session 14.
+- **Next ids:** D-94, OQ-8, M-4, PR-17, Session 15.
 
 ## Facts that expire
 
@@ -20,10 +20,10 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - `actions/setup-node` tag v7.0.0 points to commit `820762786026740c76f36085b0efc47a31fe5020`, read 2026-09-12 from the GitHub API.
 - `actions/upload-artifact` tag v7.0.1 points to commit `043fb46d1a93c77aae656e7c1c64a875d1fc6a0a`, read 2026-09-12 from the GitHub API.
 - The Node release schedule, read 2026-09-12: Node 22 is in maintenance until its end of life on 2027-04-30. Node 24 is the active LTS line until 2026-10-20, and Node 26 becomes LTS on 2026-10-28.
-- Astro 7.3.2 is the latest Astro on 2026-09-13 (npm registry), and it needs Node 22.12.0 or newer. The variable `ASTRO_TELEMETRY_DISABLED=1` stops its telemetry.
-- The check tools on 2026-09-12: Playwright 1.63.0 with Chromium 153 (build 1243), axe-core 4.13.0, Lighthouse 13.4.1, chrome-launcher 1.2.1, html-validate 11.15.0, and linkinator 8.1.0.
-- `npm audit` reads 0 vulnerabilities on 2026-09-12. Lighthouse CI 0.15.1 added 12 advisories before D-50 removed it.
-- The Gitar trial still pauses automatic reviews on 2026-09-14. On #7, #8, and #12, the pause note held a full review in its collapsed Code Review block. A `Gitar review` comment runs one review, and the `gitar-review` skill holds the traps.
+- Astro 7.3.2 is the latest Astro on 2026-09-14 (npm registry), and it needs Node 22.12.0 or newer. The variable `ASTRO_TELEMETRY_DISABLED=1` stops its telemetry.
+- On 2026-09-14, npm lists each check tool at its latest release: Playwright 1.63.0, axe-core 4.13.0, Lighthouse 13.4.1, html-validate 11.15.0, and linkinator 8.1.0. Chromium 153 (build 1243) and chrome-launcher 1.2.1 date from 2026-09-12.
+- `npm audit` reads 0 vulnerabilities on 2026-09-14. Lighthouse CI 0.15.1 added 12 advisories before D-50 removed it.
+- The Gitar trial still pauses automatic reviews on 2026-09-14. On #7, #8, and #12 to #15, the pause note held a full review in its collapsed Code Review block. A `Gitar review` comment runs one review, and the `gitar-review` skill holds the traps.
 - PR-5 created the projects `natekramber-prod` and `natekramber-preview` on 2026-09-14 (D-51, D-56, D-79). A project id is permanent, and a permission error before creation does not show whether an id is free.
 - WCAG 2.2 is the W3C Recommendation of 2024-12-12, read 2026-09-12. The minimum target size of 2.5.8 is 24 by 24 CSS pixels.
 - ASD-STE100 Issue 9, dated 2025-01-15, is the current issue, read 2026-09-12.
@@ -35,7 +35,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - decktome.com is invite-only on 2026-09-12 (decktome D-310).
 - The cloud tools on this Mac, read 2026-09-12: gcloud 533.0.0 in `/opt/homebrew/bin`, and a global Firebase CLI 14.14.0 under Node 20.17.0 alone. The newest gcloud is 584.0.0 of 2026-09-09 (https://docs.cloud.google.com/sdk/docs/release-notes).
 - The gcloud configurations on this Mac, read 2026-09-14: `default` (active) and `decktome` on the project `wallabee-dev`, and `natekramber` (inactive) for the owner projects.
-- firebase-tools 15.30.0 came out on 2026-09-09, and it needs Node 20 or newer. Version 15.22.2 broke deploys through Workload Identity Federation, and 15.22.3 fixed them (npm registry and firebase-tools issue 10716, read 2026-09-12).
+- firebase-tools 15.30.0 came out on 2026-09-09, and npm still lists it as the latest release on 2026-09-14. It needs Node 20 or newer. Version 15.22.2 broke deploys through Workload Identity Federation, and 15.22.3 fixed them (npm registry and firebase-tools issue 10716, read 2026-09-12).
 - `google-github-actions/auth` tag v3.0.0 points to commit `7c6bc770dae815cd3e89ee6cdf493a5fab2cc093`, read 2026-09-12 from the GitHub API. The tag is lightweight. The `releases/latest` endpoint returns the moving tag `v3`.
 - The GitHub ids, read 2026-09-12: repository 1367643959 and owner 190805558. The OIDC `sub` prefix is `repo:nkramber@190805558/portfolio@1367643959`, the immutable format for a repository that GitHub created after 2026-07-15.
 - The repository has one environment, `production`, and no secret or variable, read 2026-09-14. Workflows get a read token by default, and the workflows of a first-time contributor need approval.
@@ -51,7 +51,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The projects `natekramber-preview` (number 573927778532) and `natekramber-prod` (number 321332406577) exist since 2026-09-14, with no billing account. Each has Firebase, its default Hosting site, a pool `github`, a provider, and a deploy service account (`docs/deploy.md`).
 - The Firebase CLI of this Mac uses the Wallabee account by default, and the owner account is its second account (read 2026-09-14).
 - `actions/download-artifact` tag v8.0.1 points to commit `3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c`, read 2026-09-14 from the GitHub API. The tag is lightweight.
-- `deploy/package-lock.json` pins firebase-tools 15.30.0 with 674 packages. On 2026-09-13, `npm audit` of `deploy/` reads 9 moderate advisories, and the root reads 0.
+- `deploy/package-lock.json` pins firebase-tools 15.30.0 with 674 packages. On 2026-09-14, `npm audit` of `deploy/` reads 9 moderate advisories, and the root reads 0.
 - On 2026-09-14, the `live` channel of `natekramber-preview` shows a release at 13:50 UTC. It came before any deploy of this repository, and its cause is unverified.
 - On 2026-09-14 at 16:10 UTC, `https://natekramber.com` answered from Firebase Hosting with `Strict-Transport-Security: max-age=31536000; includeSubDomains` (`curl -I` at `199.36.158.100`). `make preview-check` passed on the live domain at 17:04 UTC. Before the second DNS visit, GoDaddy sent `max-age=63072000; includeSubDomains; preload` (D-83).
 - The environment `production` exists since 2026-09-14. Its branch policy lists `branch:main` alone, and the API reads `can_admins_bypass: false`.
@@ -70,6 +70,49 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Astro 7.3.2 has a fonts API. Its `Font` component writes a `style` element, and the CSP of D-57 blocks that element (installed `astro/components/Font.astro`, read 2026-09-14).
 - On 2026-09-14, `make verify` on the PR-7 branch reads 1 in every Lighthouse category. It reads 38,974 total bytes, a median LCP of 1,052 ms, and a CLS of 0.
 - web-features 3.38.0 is the latest release on 2026-09-14. The Web Status API has no feature id for some properties, so the compat key in its `data.json` gives their status.
+- Since deploy run 34887408480 at 19:32 UTC on 2026-09-14, `https://natekramber.com` serves PR-7. `make preview-check` passes on it, with `font-src 'self'` in the CSP.
+- The owner checked the PR-7 preview on an iPhone 16 Pro in Chrome on 2026-09-14 (D-93).
+- `/Users/nate/Repos/terminal-rpg` does not exist on this Mac on 2026-09-14.
+
+## Session 14: 2026-09-14
+
+### What this session did, and why
+
+- Gitar approved #15 (PR-7) with no finding, and all 12 checks passed.
+- The first phone check showed a Firebase "Site Not Found" page. The owner typed the preview address, and its lowercase L reads like 1 or i.
+- The owner chose the Mac clipboard for the address (D-93). The phone check then passed on an iPhone 16 Pro in Chrome.
+- The owner merged #15 as `a865051` at 19:31 UTC. Its tree matches the reviewed head `6a05110`.
+- Deploy run 34887408480 passed, and `make preview-check` passed on `https://natekramber.com`.
+- The owner asked for every doc to show the current state before a context reset. The session read the expiring facts again and wrote this refresh.
+
+### State of the repository
+
+- `main` is `a865051`, the squash merge of PR #15.
+- Branch `docs/after-pr-7` holds this refresh, as a pull request of documents alone.
+- Remote head: `origin/docs/after-pr-7` at the commit that holds this entry, checked after the push.
+- `make ste-check`: 0 findings.
+
+### In flight
+
+- The refresh waits for the Gitar review, then for the merge.
+- PR-8 has no branch and no research yet. OQ-3 blocks its About text.
+- No run tested the PR-6 exit test of D-63 yet.
+- Each certificate has the type `TEMPORARY`, and nobody checked the permanent certificate yet.
+- The private preview page of D-89 still exists on claude.ai.
+
+### Traps and gotchas
+
+- A preview address holds a random part, and a phone keyboard makes a look-alike typo easy. Give the owner the address with no typing (D-93).
+- In zsh, an unquoted `--include=*.md` stops `grep` with "no matches found". The Session 7 trap cost time again, so quote the pattern.
+- `/Users/nate/Repos/terminal-rpg` no longer exists on this Mac. Ask the owner before any work on that project.
+
+### Open questions that block progress
+
+None blocks the refresh. OQ-3 blocks the About text of PR-8.
+
+### Next concrete action
+
+Answer the Gitar review of the refresh. After the merge, start PR-8 from `main` with read-only research and owner questions.
 
 ## Session 13: 2026-09-14
 
@@ -463,47 +506,3 @@ None blocks PR-5. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge 
 ### Next concrete action
 
 Answer the Gitar review of the refresh. After the owner merges it, start PR-5 from `main` with read-only research, then write `docs/deploy.md`.
-
-## Session 4: 2026-09-12
-
-### What this session did, and why
-
-- The owner merged PR #3 as `4aacda4`. The session added `verify:site` to the `main` ruleset as a required check (D-11).
-- A research pass read the versions, the Node ranges, and the options of each check tool at their primary sources.
-- The owner chose `html-validate`, `linkinator`, a weight cap of 300 KB, and Lighthouse CI (D-46 to D-49).
-- The install of Lighthouse CI added 12 npm audit advisories. Lighthouse 13.4.1 alone audits clean, so the owner replaced Lighthouse CI with a short budget script (D-50).
-- The session wrote PR-4: four checks, a planted defect for each check, and four CI jobs.
-- The first run found two real defects. The placeholder links failed WCAG contrast in the dark scheme, and the link check scanned no link. PR-4 fixes both.
-
-### State of the repository
-
-- `main` is `4aacda4`, the squash merge of PR #3.
-- Branch `site/pr-4-site-checks` holds PR-4.
-- Remote head: `origin/site/pr-4-site-checks` at the commit that holds this entry, checked after the push.
-- `make verify` on Node 22.23.2 passes: 0 STE findings, a clean build, and every site check.
-- The Lighthouse budget reads 1 in each category, 0 script bytes, and 1,793 total bytes. The median LCP is 615 ms, and the CLS and the TBT are 0.
-- `npm audit`: 0 vulnerabilities.
-
-### In flight
-
-- PR-4 waits for the Gitar review, then for the merge.
-- After the merge, the four `verify:site-*` checks join the `main` ruleset.
-
-### Traps and gotchas
-
-- linkinator matches a `--skip` pattern against its local server address, `http://127.0.0.1`, and not against the path it prints. The pattern in the Makefile skips only the URLs off that server.
-- A check that scans nothing can pass. Each check has a self-test with a planted defect, and the link self-test caught this trap.
-- The Playwright install removed the older browser builds 1208 and 1234 from `~/Library/Caches/ms-playwright`. A decktome smoke run can need `playwright install chromium` again.
-- Lighthouse scored accessibility 0.91 before the dark contrast fix and 1 after it. The cause is unverified: a headless run can follow the dark setting of macOS.
-- Lighthouse CI 0.15.1 brings 12 npm audit advisories. Do not add it again without a decision (D-50).
-- The Lighthouse budget reads its bytes from a server with no compression, so the live site weighs less than the budget output.
-- On the ubuntu-latest runner, Chrome with its sandbox on never opened its debug port, and Lighthouse failed with ECONNREFUSED. The budget script starts Chrome with `--no-sandbox`, as Playwright does by default.
-- Gitar found that a run count of 0 passed the budget with no measurement, because the median of no values is NaN. The script refuses that count now, and the self-test proves it.
-
-### Open questions that block progress
-
-None blocks PR-4. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
-
-### Next concrete action
-
-Answer the Gitar review of PR-4. After the owner merges it, add the four `verify:site-*` checks to the `main` ruleset, then start PR-5, the Google Cloud project.

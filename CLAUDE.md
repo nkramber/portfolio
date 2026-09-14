@@ -101,7 +101,7 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `.github/workflows/verify.yml`: the checks on each pull request, `verify:docs`, `verify:site`, and the four `verify:site-*` jobs.
 - `.github/workflows/preview.yml`: the preview deploy of each pull request, its comment, the `verify:site-preview` check, and the channel cleanup (D-59, D-66 to D-68).
 - `.github/workflows/deploy.yml`: the live deploy of each push to `main`, in the environment `production` (D-63, D-84).
-- `docs/deploy.md`: the one-time setup of Google Cloud and Firebase, and its run record (D-79).
+- `docs/deploy.md`: the one-time setup of Google Cloud, Firebase, the domain, and the request logs, with a run record for each part (D-79, D-82, D-87).
 - `firebase.json`: the Hosting config, with the headers of D-57, D-58, D-75, and D-77.
 - `deploy/`: the npm project of the Firebase CLI alone (D-53).
 - `scripts/check-preview-headers.mjs`, `playwright.preview.config.ts`, and `tests/preview/`: the header check and the console check of a deployed preview (D-59).
@@ -140,6 +140,6 @@ Treat all three as read-only (hard rule 1).
 
 - `/Users/nate/Repos/decktome`: the model for these docs, the review rule, and the Gitar procedure. It is also the source of the Deck Tome card.
 - `/Volumes/SSD-1TB/what-you-carry`: the model for the tenets, the registers, and the handoff entries. It is also the source of the What You Carry card.
-- `/Users/nate/Repos/terminal-rpg`: a later project. It holds no code on 2026-09-12.
+- `/Users/nate/Repos/terminal-rpg`: a later project. It held no code on 2026-09-12, and the path does not exist on 2026-09-14. Ask the owner where the project lives before you read it.
 
 CAUTION: `/Volumes/SSD-1TB` is an external drive. The path is absent when the owner disconnects the drive. Ask the owner to connect it. Do not guess a project fact.

@@ -52,3 +52,4 @@ Also resize the window slowly from 320 to 2560. A layout can break between two w
 - Write each width you checked, and its result, in the pull request text.
 - Name each check you did by hand on a real phone, and the phone.
 - When the host gives a preview address for each pull request, do the phone check on that address.
+- Give the owner that address with no typing: the link in the pull request comment, or the Mac clipboard after the owner agrees (D-93).

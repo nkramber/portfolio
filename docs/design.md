@@ -15,6 +15,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-14 correction pass (Session 11): PR-6 reads merged, and D-86 records the second DNS visit.
 2026-09-14 correction pass (Session 12): M-2 passed (D-88), with the log link of D-87. PR-13 no longer waits for M-2, and the external facts add the research of M-2.
 2026-09-14 correction pass (Session 13): PR-7 follows D-89 to D-92, and D-91 closes OQ-5. The external facts add the research of PR-7.
+2026-09-14 correction pass (Session 14): PR-7 reads merged, and the Phase 1 gate reads passed. Section 6 closes OQ-5, and D-93 sets how the owner gets a preview address.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -182,7 +183,7 @@ Gate: the owner merges PR-2. The merge approves draft 1, and PR-3 can start.
 
 ### Phase 1: Stack, checks, and first deploy
 
-Phase gate: `natekramber.com` serves the placeholder page over HTTPS, each merge to `main` deploys it, and every site check is a required check.
+Phase gate: `natekramber.com` serves the placeholder page over HTTPS, each merge to `main` deploys it, and every site check is a required check. Passed 2026-09-14: PR-6 put the page on the domain (D-86), and M-2 closed the phase (D-88).
 
 #### PR-3: Astro scaffold and placeholder page
 
@@ -403,7 +404,7 @@ Phase gate: the page shell passes every site check, and the owner approves it on
 
 #### PR-7: Design tokens, fonts, and accent color
 
-Status: in review. The owner picked the fonts and the accent from the preview page on 2026-09-14 (D-89, D-91), and OQ-5 closed. `make verify` passes: every Lighthouse category reads 1, the first load weighs 38,974 bytes, the median LCP is 1,052 ms, and the CLS is 0.
+Status: merged as #15, `a865051`, on 2026-09-14 UTC. Gitar approved it with no finding. The owner picked the fonts and the accent from the preview page (D-89, D-91), and OQ-5 closed. `make verify` passed: every Lighthouse category read 1, the first load weighed 38,974 bytes, the median LCP was 1,052 ms, and the CLS was 0. The owner checked the preview on an iPhone 16 Pro (D-93). After the deploy, `make preview-check` passed on `https://natekramber.com`.
 
 Scope:
 
@@ -601,4 +602,4 @@ One owner runs the sequence in strict order. A step starts only when the gate of
 
 ## 6. Open questions
 
-`docs/questions.md` holds the register. OQ-3 blocks the About text of PR-8. OQ-4 blocks nothing at launch. OQ-5 blocks the merge of PR-7.
+`docs/questions.md` holds the register. OQ-3 blocks the About text of PR-8. OQ-4 blocks nothing at launch. OQ-5 closed with D-91 on 2026-09-14.
