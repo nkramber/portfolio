@@ -10,6 +10,11 @@ const pages = [
   { name: '404', path: '/no-such-page', status: 404 },
 ];
 
+// The fixture cards of D-103: the longest title, links, and tags that the schema
+// allows, one card with a screenshot, and one with the placeholder of D-106.
+// Playwright builds them into dist-fixture/ and serves that folder on port 4322.
+const fixturePage = 'http://127.0.0.1:4322/';
+
 // How many CSS pixels the document is wider than the viewport. Zero means no sideways scroll.
 async function sidewaysOverflow(page: Page): Promise<number> {
   return page.evaluate(
@@ -39,11 +44,33 @@ test('the overflow check catches a planted wide element', async ({ page }) => {
 });
 
 // How many CSS pixels the widest element of the page holds beyond its own box.
-// Zero means that no word runs into the padding or out of its box.
+// Zero means that no word runs into the padding or out of its box. Text for screen
+// readers alone clips itself to 1 pixel on purpose, so the check skips it.
 async function textOverflow(page: Page): Promise<number> {
   return page.evaluate(() =>
-    Math.max(0, ...[...document.querySelectorAll('body *')].map((el) => el.scrollWidth - el.clientWidth)),
+    Math.max(
+      0,
+      ...[...document.querySelectorAll('body *:not(.visually-hidden)')].map((el) => el.scrollWidth - el.clientWidth),
+    ),
   );
+}
+
+// WCAG 1.4.4 and 1.4.12. A style tag can apply after `addStyleTag` returns, and a
+// check that measures too early passes on the default text. So each helper waits
+// until the computed style shows the change.
+const textSpacing =
+  '* { line-height: 1.5 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important; } p { margin-bottom: 2em !important; }';
+
+async function enlargeText(page: Page): Promise<void> {
+  await page.addStyleTag({ content: 'html { font-size: 200%; }' });
+  await expect.poll(() => page.evaluate(() => getComputedStyle(document.documentElement).fontSize)).toBe('32px');
+}
+
+async function applyTextSpacing(page: Page): Promise<void> {
+  await page.addStyleTag({ content: textSpacing });
+  await expect
+    .poll(() => page.evaluate(() => getComputedStyle(document.querySelector('p') as Element).letterSpacing))
+    .not.toBe('normal');
 }
 
 // A word with no break opportunity must break inside its box (G-1): in the headline,
@@ -62,31 +89,33 @@ test('a very long word stays inside its box at 320px', async ({ page }) => {
   expect(await sidewaysOverflow(page)).toBe(0);
 });
 
-// WCAG 2.4.11: Tab brings each link fully into view with its focus ring, even in a
-// short landscape window.
-test('the focus ring of each link stays on screen in a 568 by 320 window', async ({ page }) => {
-  await page.setViewportSize({ width: 568, height: 320 });
-  await page.goto('/');
-  const links = await page.locator('a').count();
-  for (let i = 0; i < links; i++) {
-    await page.keyboard.press('Tab');
-    const ring = await page.evaluate(() => {
-      const focused = document.activeElement as HTMLElement;
-      const box = focused.getBoundingClientRect();
-      const style = getComputedStyle(focused);
-      const reach = parseFloat(style.outlineWidth) + parseFloat(style.outlineOffset);
-      return { top: box.top - reach, bottom: box.bottom + reach, viewport: window.innerHeight };
-    });
-    expect(ring.top).toBeGreaterThanOrEqual(0);
-    expect(ring.bottom).toBeLessThanOrEqual(ring.viewport);
-  }
-});
+// WCAG 2.4.11: Tab brings each link and each card toggle fully into view with its
+// focus ring, even in a short landscape window.
+for (const address of ['/', fixturePage]) {
+  test(`the focus ring of each control stays on screen in a 568 by 320 window on ${address}`, async ({ page }) => {
+    await page.setViewportSize({ width: 568, height: 320 });
+    await page.goto(address);
+    const controls = await page.locator('a, summary').count();
+    for (let i = 0; i < controls; i++) {
+      await page.keyboard.press('Tab');
+      const ring = await page.evaluate(() => {
+        const focused = document.activeElement as HTMLElement;
+        const box = focused.getBoundingClientRect();
+        const style = getComputedStyle(focused);
+        const reach = parseFloat(style.outlineWidth) + parseFloat(style.outlineOffset);
+        return { top: box.top - reach, bottom: box.bottom + reach, viewport: window.innerHeight };
+      });
+      expect(ring.top).toBeGreaterThanOrEqual(0);
+      expect(ring.bottom).toBeLessThanOrEqual(ring.viewport);
+    }
+  });
+}
 
 // WCAG 1.4.4: text at 200 percent keeps all content at the smallest width.
 test('text at 200 percent stays inside its boxes at 320px', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 900 });
   await page.goto('/');
-  await page.addStyleTag({ content: 'html { font-size: 200%; }' });
+  await enlargeText(page);
   expect(await textOverflow(page)).toBe(0);
   expect(await sidewaysOverflow(page)).toBe(0);
 });
@@ -95,10 +124,7 @@ test('text at 200 percent stays inside its boxes at 320px', async ({ page }) => 
 test('the text spacing of WCAG 1.4.12 keeps every word inside its box at 320px', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 900 });
   await page.goto('/');
-  await page.addStyleTag({
-    content:
-      '* { line-height: 1.5 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important; } p { margin-bottom: 2em !important; }',
-  });
+  await applyTextSpacing(page);
   expect(await textOverflow(page)).toBe(0);
   expect(await sidewaysOverflow(page)).toBe(0);
 });
@@ -140,9 +166,9 @@ test('the text face loads once, from the preloaded file', async ({ page }) => {
 });
 
 // D-95: the hero rises into place when the system allows motion, and it holds still
-// under reduced motion (WCAG 2.3.3). The keyframes change `translate` alone, never
-// the opacity, so the text shows from the first frame.
-test('the hero moves only when the system allows motion, and it never fades', async ({ page }) => {
+// under reduced motion (WCAG 2.3.3). Every set of keyframes changes `translate` alone,
+// never the opacity, so text shows from the first frame.
+test('the hero moves only when the system allows motion, and nothing fades', async ({ page }) => {
   for (const reducedMotion of ['no-preference', 'reduce'] as const) {
     await page.emulateMedia({ reducedMotion });
     await page.goto('/');
@@ -156,7 +182,7 @@ test('the hero moves only when the system allows motion, and it never fades', as
       .flatMap((keyframes) => [...(keyframes as CSSKeyframesRule).cssRules])
       .flatMap((frame) => [...(frame as CSSKeyframeRule).style]),
   );
-  expect(animatedProperties).toEqual(['translate']);
+  expect([...new Set(animatedProperties)]).toEqual(['translate']);
 });
 
 // The hero of the 404 page fills the window. At the first frame of the rise, the
@@ -198,4 +224,80 @@ test('the share image and the icons serve from the addresses in the head', async
   for (const icon of icons) {
     expect((await page.request.get(icon)).status(), icon).toBe(200);
   }
+});
+
+// D-103: the production build in dist/ holds no fixture card. A stale content cache
+// once put the fixture entries into dist/ (Session 16), and this test catches that.
+test('the production home page shows no fixture card', async ({ page }) => {
+  await page.goto('/');
+  expect(await page.locator('[aria-labelledby^="project-fixture-"]').count()).toBe(0);
+});
+
+async function openEveryCard(page: Page): Promise<void> {
+  await page.evaluate(() => {
+    document.querySelectorAll('details').forEach((details) => {
+      details.open = true;
+    });
+  });
+}
+
+for (const width of widths) {
+  test(`fixture cards: no sideways scroll and no clipped text at ${width}px, closed and open`, async ({ page }, testInfo) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(fixturePage);
+    expect(await page.locator('.card').count()).toBe(2);
+    expect(await sidewaysOverflow(page)).toBe(0);
+    expect(await textOverflow(page)).toBe(0);
+    await openEveryCard(page);
+    // The screenshot loads lazily, so the test scrolls to it and waits, and the saved
+    // picture shows the image, not an empty box.
+    await page.locator('.shot').scrollIntoViewIfNeeded();
+    await page.waitForFunction(() => [...document.images].every((image) => image.complete && image.naturalWidth > 0));
+    await page.screenshot({ path: testInfo.outputPath(`fixture-${width}.png`), fullPage: true });
+    expect(await sidewaysOverflow(page)).toBe(0);
+    expect(await textOverflow(page)).toBe(0);
+  });
+}
+
+// WCAG 1.4.4 and 1.4.12 on the open fixture cards at the smallest width.
+test('the open fixture cards keep every word inside its box at 320px with larger text and spacing', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 900 });
+  await page.goto(fixturePage);
+  await openEveryCard(page);
+  await enlargeText(page);
+  expect(await textOverflow(page), 'text at 200 percent').toBe(0);
+  expect(await sidewaysOverflow(page), 'text at 200 percent').toBe(0);
+  await applyTextSpacing(page);
+  expect(await textOverflow(page), 'text at 200 percent with the 1.4.12 spacing').toBe(0);
+  expect(await sidewaysOverflow(page), 'text at 200 percent with the 1.4.12 spacing').toBe(0);
+});
+
+// D-23: a card opens and closes in place with a mouse, a touch, and the keyboard.
+// The page holds no script and no inline style (G-5, D-72).
+test('a fixture card opens and closes with a mouse, a touch, and the keyboard', async ({ browser }) => {
+  const context = await browser.newContext({ hasTouch: true });
+  const page = await context.newPage();
+  await page.goto(fixturePage);
+  const details = page.locator('.card details').first();
+  const summary = details.locator('summary');
+  const isOpen = () => details.evaluate((element) => (element as HTMLDetailsElement).open);
+
+  await summary.click();
+  expect(await isOpen(), 'a click opens the card').toBe(true);
+  await summary.click();
+  expect(await isOpen(), 'a click closes the card').toBe(false);
+
+  await summary.tap();
+  expect(await isOpen(), 'a tap opens the card').toBe(true);
+  await summary.tap();
+  expect(await isOpen(), 'a tap closes the card').toBe(false);
+
+  await summary.focus();
+  await page.keyboard.press('Enter');
+  expect(await isOpen(), 'Enter opens the card').toBe(true);
+  await page.keyboard.press('Space');
+  expect(await isOpen(), 'Space closes the card').toBe(false);
+
+  expect(await page.locator('script, style, [style]').count()).toBe(0);
+  await context.close();
 });

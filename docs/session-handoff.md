@@ -6,11 +6,11 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-14)
 
-- **Main:** `8119f95`, the squash merge of PR #16, the docs refresh after PR-7.
-- **Open pull requests:** #17 (PR-8), the page shell, on `site/pr-8-page-shell`. It waits for the Gitar review, the phone check of the owner, and the merge.
-- **Next action:** answer the Gitar review of the newest head of #17, and ask the owner for the phone check again (D-93). Draft the bio from the interview answers (D-94).
-- **Blocked on:** OQ-3 blocks the About text of PR-8.
-- **Next ids:** D-103, OQ-8, M-4, PR-17, Session 16.
+- **Main:** `ec0d764`, the squash merge of PR #17 (PR-8).
+- **Open pull requests:** PR-9, the project schema and card, on `site/pr-9-project-cards`. It waits for the Gitar review and the merge.
+- **Next action:** answer the Gitar review of PR-9. Request it only after the checks of the new head start. Draft the bio from the interview answers when they come (D-94).
+- **Blocked on:** OQ-3 blocks the About text.
+- **Next ids:** D-111, OQ-8, M-4, PR-17, Session 17.
 
 ## Facts that expire
 
@@ -70,7 +70,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Astro 7.3.2 has a fonts API. Its `Font` component writes a `style` element, and the CSP of D-57 blocks that element (installed `astro/components/Font.astro`, read 2026-09-14).
 - On 2026-09-14, `make verify` on the PR-7 branch reads 1 in every Lighthouse category. It reads 38,974 total bytes, a median LCP of 1,052 ms, and a CLS of 0.
 - web-features 3.38.0 is the latest release on 2026-09-14. The Web Status API has no feature id for some properties, so the compat key in its `data.json` gives their status.
-- Since deploy run 34887408480 at 19:32 UTC on 2026-09-14, `https://natekramber.com` serves PR-7. `make preview-check` passes on it, with `font-src 'self'` in the CSP.
+- Since deploy run 34901522463 at 21:57 UTC on 2026-09-14, `https://natekramber.com` serves PR-8. `make preview-check` passes on it, with `font-src 'self'` and `img-src 'self'` in the CSP.
 - The owner checked the PR-7 preview on an iPhone 16 Pro in Chrome on 2026-09-14 (D-93).
 - `/Users/nate/Repos/terminal-rpg` does not exist on this Mac on 2026-09-14.
 - The owner merged #16 as `8119f95` at 19:41 UTC on 2026-09-14. Its tree matches the reviewed head `0614f9d`, and Gitar approved it with no finding in the pause note.
@@ -78,6 +78,59 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - At 19:50 UTC on 2026-09-14, both certificates still read `CERT_ACTIVE` with the type `TEMPORARY`.
 - On 2026-09-14, `make lighthouse` on the PR-8 branch with D-102 reads 1 in every category. It reads 41,307 total bytes, a median LCP of 1,201 ms, and a CLS of 0.
 - On 2026-09-14, every check of #17 passed on `c18d8ad`, and the Gitar pause note held an approval with no finding.
+- The owner merged #17 (PR-8) as `ec0d764` at 21:56:24 UTC on 2026-09-14. Its tree matches the reviewed head `bc8bb08`, and Gitar approved that head with no finding.
+- Deploy run 34901522463 passed on `ec0d764` at 21:57:20 UTC. At 21:59:32 UTC, `make preview-check` passed on `https://natekramber.com`, with `img-src 'self'` in the CSP.
+- On 2026-09-14, the PR-9 branch passes every check of `make verify`. Lighthouse reads 1 in every category, 44,768 total bytes, a median LCP of 1,202 ms, and a CLS of 0.
+- On the PR-9 branch, a fixture build keeps its content cache in `node_modules/.astro-fixtures-1` or `node_modules/.astro-fixtures-invalid`. The site build keeps `node_modules/.astro`.
+
+## Session 16: 2026-09-14
+
+### What this session did, and why
+
+- The owner merged #17 (PR-8) as `ec0d764` at 21:56 UTC. Its tree matches the reviewed head `bc8bb08`, and deploy run 34901522463 passed.
+- `make preview-check` passed on `https://natekramber.com` at 21:59 UTC, with `img-src 'self'` in the CSP.
+- The session started PR-9 with two read-only research passes: the content collection and images, and the disclosure card.
+- The owner answered the PR-9 questions: D-103 to D-110.
+- The session wrote PR-9: the schema, the card component, the Projects section, two fixture cards, the schema self-test, and the new tests.
+- A browser test found fixture cards in `dist/`. One shared content cache let a site build reuse fixture entries, so each fixture build now has its own `cacheDir`.
+- The responsive audit found 4 layout defects and 2 weak checks. The branch fixes all 6, and the owner chose D-108 to D-110.
+- The accessibility audit found no WCAG 2.2 AA defect. The branch applies its 3 low items: forced-color outlines, a row gap, and a note description.
+- The copy review found nothing to change. Session 6 moved to the archive.
+
+### State of the repository
+
+- `main` is `ec0d764`, the squash merge of PR #17.
+- Branch `site/pr-9-project-cards` holds PR-9 and this entry.
+- Remote head: `origin/site/pr-9-project-cards` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on the branch.
+
+### In flight
+
+- PR-9 waits for the Gitar review and the merge. The live page shows no card until PR-10.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- Nobody checked Safari 26 yet for `::-webkit-details-marker`, the list role of `.tags`, and the summary in VoiceOver.
+- No run tested the PR-6 exit test of D-63 yet.
+- Each certificate has the type `TEMPORARY`, and nobody checked the permanent certificate yet.
+- The private preview page of D-89 still exists on claude.ai.
+
+### Traps and gotchas
+
+- Astro keeps the content store of a build in `cacheDir` (`dist/content/paths.js`). A site build after a fixture build with one shared cache reused the fixture entries, so each `PORTFOLIO_FIXTURES` value keeps its own cache.
+- A research claim said that a plain build drops fixture entries. A real build did not, so check each cache claim with the exact build order.
+- `page.addStyleTag` can return before the style applies. So the checks for text at 200 percent and the 1.4.12 spacing now wait for the computed style.
+- A resize loop needs an animation frame between steps, or a size in `vw` keeps its old value.
+- Under `prefers-reduced-motion: reduce`, the reset transition also covers `outline-offset`. So wait one frame before a script reads it.
+- `@axe-core/playwright` needs a page from `browser.newContext()`. A page from `browser.newPage()` stops the scan with an error.
+- The production build warns that the `projects` collection is empty. That warning is expected until PR-10 adds the first entry.
+- An upload of two screenshots to the owner failed once with "socket hang up", and a second try worked.
+
+### Open questions that block progress
+
+None blocks PR-9. OQ-3 blocks the About text.
+
+### Next concrete action
+
+Answer the Gitar review of PR-9, and request it only after the checks of the new head start. After the merge, start PR-10, the Deck Tome card, with the `add-project` skill.
 
 ## Session 15: 2026-09-14
 
@@ -471,58 +524,3 @@ None blocks PR-5. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge 
 ### Next concrete action
 
 Answer the Gitar review of PR-15. After the owner merges it, start PR-5 from `main` with read-only research, and verify the current `firebase-tools` version first (hard rule 9).
-
-## Session 6: 2026-09-12
-
-### What this session did, and why
-
-- The owner merged PR #5 as `30fc74e`. Its tree matches the reviewed head `95e2948`, and it added no required check.
-- The session started PR-5 with four read-only research passes. The passes read the Firebase CLI, Workload Identity Federation, GitHub OIDC, the security headers, and the decktome deploy setup.
-- The owner answered fifteen questions about PR-5, PR-6, and the checks: D-53, D-54, and D-56 to D-68.
-- The session turned on the GitHub setting that requires a full commit SHA for each action (D-61).
-- The owner asked to move the repository to the external drive, and then queued the move for the next session (D-55).
-- On 2026-09-13 the owner canceled the move as a miscommunication (D-69). No file moved, and the session removed the checklist of the move.
-- Gitar approved #6 after two findings: the order of the correction-pass dates in `docs/design.md`, and a stale pointer in D-55. The fixes are `b0f05db` and `5abd241`.
-- The owner merged #6 as `cf80bf3` on 2026-09-13 UTC. Its tree matches the reviewed head `5abd241`, and GitHub deleted the branch.
-- The session wrote PR-14 as #7. It adds the `agentic-browsing` floor of D-60, a fixture site with a bad `llms.txt`, and exact failure lines in the Lighthouse self-test.
-- `make verify` then failed in this agent shell, because Astro ran `astro preview` as a detached background server. That server was also the source of the old server on port 4321, and the session stopped it.
-- The owner chose a separate fix, PR-16 (D-70). The session wrote PR-16, and this entry rides in it.
-- The session changed no page code and moved no file.
-
-### State of the repository
-
-- `main` is `cf80bf3`, the squash merge of PR #6.
-- Branch `site/pr-14-agentic-browsing-budget` holds PR-14 as #7, at `84d440f`.
-- Branch `site/pr-16-foreground-preview` holds PR-16 and this entry.
-- Remote head: `origin/site/pr-16-foreground-preview` at the commit that holds this entry, checked after the push.
-- `make verify` on Node 22.23.2 passes on both branches. PR-14 needs `ASTRO_PREVIEW_BACKGROUND=1` until PR-16 merges.
-- The Lighthouse budget of PR-14 reads 1 in each of the five categories, 0 script bytes, and 1,793 total bytes. The median LCP is 621 ms, and the CLS and the TBT are 0.
-
-### In flight
-
-- #7 (PR-14) and PR-16 wait for the Gitar review, then for the merge.
-- PR-15 and PR-5 have their decisions, and no branch yet. The research reports live in this session alone, so `docs/design.md` keeps the key facts with their sources.
-- Nobody checked yet whether the setting of D-61 stops the Dependabot jobs that GitHub runs. A manual Dependabot check by the owner gives the answer.
-
-### Traps and gotchas
-
-- A workflow that names a missing GitHub environment creates it with no protection. So PR-6 creates `production` before its workflow runs (D-63).
-- Ask a confirmation question before any step of a request that changes where the repository lives. The move request of D-55 was a miscommunication (D-69).
-- The gcloud configurations `default` and `decktome` both point at `wallabee-dev`. The decktome handoff records that `decktome` also uses the Wallabee account (2026-09-10).
-- Firebase IAM cannot keep a preview deploy off the live site. D-56 answers with a second project.
-- The `astro preview` server of the checks ignores `firebase.json`, so no check sees the headers of D-57 and D-58 yet.
-- The OIDC `sub` of this repository holds both numeric ids. The name-only examples in the Google docs do not match it.
-- `firebase projects:addfirebase` returns 403 until the account opens the Firebase console once (decktome `docs/setup-gcp.md`).
-- The Firebase CLI hides the cause of an auth failure without `--debug`. Its debug log prints no `Authorization` header (firebase-tools 15.30.0 source, tested on Node 22.23.2).
-- A `curl` of `cloud.google.com/sdk/docs` returns an empty page, because the docs moved to `docs.cloud.google.com`. Use `curl -L`.
-- In an agent shell, Astro 7.3.2 starts `astro preview` as a detached background server, and the command exits at once. Playwright then fails, and the server stays on port 4321. PR-16 sets `ASTRO_PREVIEW_BACKGROUND` for the checks (D-70).
-- The old heavy-script self-test matched `totalBytes` in the results table, so any failure of the fixture passed it. PR-14 matches the failure line `totalBytes: N is above`.
-- A missing `llms.txt` does not lower agentic browsing, because Lighthouse marks a 404 as not applicable. Only a served file with a defect fails the audit.
-
-### Open questions that block progress
-
-None blocks PR-14, PR-15, or PR-16. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
-
-### Next concrete action
-
-Answer the Gitar reviews of #7 and PR-16. After both merges, start PR-15 from `main`: the stylesheet file of D-57 and the minimal 404 page of D-64.

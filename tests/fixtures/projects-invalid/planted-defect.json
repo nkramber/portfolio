@@ -1,0 +1,8 @@
+{
+  "title": "Planted defect: no pitch field",
+  "status": "Live",
+  "tags": ["Test"],
+  "links": [{ "label": "Example site", "href": "https://example.com/" }],
+  "highlights": ["This entry has no pitch, so the build must fail."],
+  "order": 1
+}

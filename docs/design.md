@@ -17,6 +17,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-14 correction pass (Session 13): PR-7 follows D-89 to D-92, and D-91 closes OQ-5. The external facts add the research of PR-7.
 2026-09-14 correction pass (Session 14): PR-7 reads merged, and the Phase 1 gate reads passed. Section 6 closes OQ-5, and D-93 sets how the owner gets a preview address.
 2026-09-14 correction pass (Session 15): PR-8 follows D-94 to D-102. The external facts add the research of PR-8.
+2026-09-14 correction pass (Session 16): PR-8 reads merged, and the Phase 2 gate reads passed.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -125,6 +126,13 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - Safari 26.0 supports an SVG file for each icon, the favicon included. Source: https://webkit.org/blog/17333/, read 2026-09-14.
 - The page of PR-8 has a PNG icon link and then an SVG icon link. The full Chromium build 1243 in new headless mode requested `/favicon.svg` alone, and no `/favicon.ico`. Source: a local run of the PR-8 build with a request log, 2026-09-14.
 - `overflow: clip` is Baseline Widely available since 2025-03-12, and the interaction media queries `hover` and `pointer` since 2021-06-11. Source: https://api.webstatus.dev/v1/features, read 2026-09-14.
+- Astro 7.3.2 keeps the collection config in `src/content.config.ts`, and `astro/zod` exports zod v4. The image components write no style attribute while `image.responsiveStyles` keeps its default, `false`. Sources: the installed `dist/zod.js` and `dist/core/config/schemas/defaults.js`, and the PR-9 scratch builds, read 2026-09-14.
+- In Astro 7.3.2, the Container API is still `experimental_AstroContainer`. `astro build` and `astro preview` take `--outDir`, and `--ignore-lock` starts a second preview server in the foreground alone. Sources: the installed `dist/container/index.js`, `dist/cli/flags.js`, and `dist/cli/preview/index.js`, read 2026-09-14.
+- Astro puts CSS that several pages share into a separate chunk. So a component that one page uses adds a second stylesheet to that page. Source: https://docs.astro.build/en/guides/styling/, read 2026-09-14.
+- Playwright 1.63.0 accepts a list of web servers in its config. Source: the installed `lib/common/index.js`, read 2026-09-14.
+- In axe-core 4.13.0, `nested-interactive` and `summary-name` carry the tag `wcag2a`. A link inside `summary` fails `nested-interactive`, and an empty `summary` fails `summary-name`. Sources: `axe.getRules()` and a local Chromium run, 2026-09-14.
+- `::details-content` and the `name` attribute of `details` are Baseline Newly available, since 2025-09-16 and 2024-09-03. Baseline lists `interpolate-size` and `hidden="until-found"` as Limited. Source: https://api.webstatus.dev/v1/features, read 2026-09-14.
+- In Chromium 153, the accessibility tree names each card toggle "Highlights of <title>", so the space before the hidden title survives. A trailing space inside a visually hidden span does not: the tree holds "Status:" alone. Source: `Accessibility.getFullAXTree` on the PR-9 fixture build, 2026-09-14.
 - LinkedIn asks for a share image of 1200 by 627 pixels or more, with a ratio of 1.91:1. The file must be 5 MB or less. Source: https://www.linkedin.com/help/linkedin/answer/a521928, read 2026-09-14. The X card docs moved to docs.x.com, and the research found no card page there, so the rules of X stay unverified.
 - The HTML Standard says that a `footer` alone is sufficient for a short list of links, and that a `nav` is usually unnecessary. Source: https://html.spec.whatwg.org/multipage/sections.html, read 2026-09-14.
 - The GOV.UK pattern for a page-not-found page uses the heading "Page not found" and two lines about the address. It asks for no blame of the reader, no "404", and no "oops". Source: https://design-system.service.gov.uk/patterns/page-not-found-pages/, read 2026-09-14.
@@ -416,7 +424,7 @@ Gate: a pass unblocks PR-13. A fail goes to the owner: the Blaze plan, or no vis
 
 ### Phase 2: The page
 
-Phase gate: the page shell passes every site check, and the owner approves it on a preview address or on a phone.
+Phase gate: the page shell passes every site check, and the owner approves it on a preview address or on a phone. Passed 2026-09-14: every site check passed on #17, and the owner merged it after the phone check (D-102).
 
 #### PR-7: Design tokens, fonts, and accent color
 
@@ -441,7 +449,7 @@ Gate: OQ-5 has its answer in `docs/decisions.md`, and the owner merges PR-7.
 
 #### PR-8: Page shell
 
-Status: in review as #17 on `site/pr-8-page-shell` (Session 15). D-94 to D-102 answer its design questions.
+Status: merged as #17, `ec0d764`, on 2026-09-14 UTC. Gitar approved the last head with no finding, and D-94 to D-102 answer its design questions. The owner checked the preview on a phone, which led to D-102. After the deploy, `make preview-check` passed on `https://natekramber.com`.
 
 Scope:
 
@@ -478,26 +486,39 @@ Phase gate: both cards pass every site check, and the owner approves the text of
 
 #### PR-9: Project schema and card component
 
-Status: planned.
+Status: in progress on `site/pr-9-project-cards` (Session 16). D-103 to D-110 answer its design questions.
 
 Scope:
 
-- A content collection schema with the fields of D-22: title, pitch, links, status, stack tags, highlights, screenshot or placeholder, and order (D-23).
-- A link can carry a short label, such as "Invite only" (D-24).
-- One card component. A native disclosure element opens the card in place (D-23, G-5).
-- A designed placeholder image for a card with no screenshot (D-40).
-- A test fixture entry, left out of the production build, with the longest title and the most tags that the schema allows.
+- A content collection `projects` in `src/content.config.ts`, with one JSON file for each project in `src/content/projects/` (D-2).
+- A strict schema with the fields of D-22. An unknown field fails the build.
+  - A title of 40 characters or less, and a pitch of 140 characters or less.
+  - Up to 3 links, each with an optional note such as "Invite only" (D-24).
+  - A status of D-105, up to 6 stack tags, and up to 5 highlights.
+  - An optional screenshot with alt text, and an order number (D-23).
+- One card component, `src/components/ProjectCard.astro`, with its own scoped styles (D-104). The title, the pitch, the status, the tags, and the links always show, and a "Highlights" disclosure opens the rest (D-107, G-5).
+- A status badge beside the title (D-109), and stack tags in hairline outlines (D-108).
+- A CSS panel with the project name, 36rem wide at most, for a card with no screenshot (D-40, D-106, D-110).
+- A Projects section on the home page, sorted by order, that stays off the page while the collection has no entry. PR-10 adds the first entry.
+- Two fixture entries in `tests/fixtures/projects/`, built into `dist-fixture/` for the responsive and the accessibility tests alone (D-103). They hold the longest title and the most tags that the schema allows. Each fixture build keeps its own content cache, so the site build never reuses a fixture entry.
+- `make content-selftest`: a planted entry with no pitch must fail the build (G-3).
+
+Out of scope:
+
+- Real project entries. PR-10 and PR-11 hold them.
+- A height animation on open. It needs a Limited feature (G-6).
 
 Exit tests:
 
-- The build fails on an entry with a missing required field.
-- The card opens and closes with a mouse, a touch, and the keyboard, and the page holds no script (G-5).
-- The fixture card shows no sideways scroll and no clipped text at every width (G-1).
-- The axe scan passes with the card closed and open (G-8).
+- `make content-selftest` passes: the build fails on the planted entry with no pitch.
+- The card opens and closes with a mouse, a touch, and the keyboard (D-23). The fixture page holds no script and no inline style (G-5, D-72).
+- The fixture cards show no sideways scroll and no clipped text at every width, closed and open (G-1).
+- The axe scan passes on the fixture cards, closed and open, in both schemes (G-8).
+- `dist/` holds no fixture entry, and a responsive test checks it.
 
 Gate: the owner merges PR-9.
 
-> *In plain English:* the page has no project cards today. This change builds the one card that every project uses. A new project then needs only its facts and an image (G-2).
+> *In plain English:* the page has no project cards today. This change builds the one card that every project uses, and tests it with made-up projects that never reach the live site. A new project then needs only its facts and an image (G-2).
 
 #### PR-10: Deck Tome card
 
@@ -514,7 +535,7 @@ Scope: one project entry through the `add-project` skill (D-2, D-24).
 
 Exit tests:
 
-- The owner approves the pitch, the summary, and the highlights.
+- The owner approves the pitch and the highlights.
 - Each fact on the card has a source in the pull request text (G-11).
 - Every site check passes.
 
@@ -535,7 +556,7 @@ Scope: one project entry through the `add-project` skill (D-2, D-25).
 
 Exit tests:
 
-- The owner approves the pitch, the summary, and the highlights.
+- The owner approves the pitch and the highlights.
 - Each fact on the card has a source in the pull request text (G-11).
 - Every site check passes.
 

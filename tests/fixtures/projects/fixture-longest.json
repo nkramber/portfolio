@@ -1,0 +1,19 @@
+{
+  "title": "Supercalifragilisticexpialidocious title",
+  "pitch": "A fixture pitch at the length limit of the schema, so the tests can prove that a long pitch wraps inside its box at every width.",
+  "status": "In development",
+  "tags": ["Averyveryverylongtag", "TwentyCharacterTagXY", "Astro", "TypeScript", "Playwright", "Firebase"],
+  "links": [
+    { "label": "fixture.example.com with a long label", "href": "https://example.com/", "note": "Invite only" },
+    { "label": "Repository", "href": "https://example.com/repository", "note": "Twenty chars note ok" },
+    { "label": "Supercalifragilisticexpialidocious link", "href": "https://example.com/long" }
+  ],
+  "highlights": [
+    "The first highlight is a plain sentence of ordinary length.",
+    "The second highlight is short.",
+    "The third highlight names a tool, a check, and a result in one sentence.",
+    "The fourth highlight is also a plain sentence.",
+    "The fifth highlight holds a long word, Supercalifragilisticexpialidocious, so the test can prove that a highlight wraps inside the open card."
+  ],
+  "order": 2
+}

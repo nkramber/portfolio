@@ -2,6 +2,61 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 6: 2026-09-12
+
+### What this session did, and why
+
+- The owner merged PR #5 as `30fc74e`. Its tree matches the reviewed head `95e2948`, and it added no required check.
+- The session started PR-5 with four read-only research passes. The passes read the Firebase CLI, Workload Identity Federation, GitHub OIDC, the security headers, and the decktome deploy setup.
+- The owner answered fifteen questions about PR-5, PR-6, and the checks: D-53, D-54, and D-56 to D-68.
+- The session turned on the GitHub setting that requires a full commit SHA for each action (D-61).
+- The owner asked to move the repository to the external drive, and then queued the move for the next session (D-55).
+- On 2026-09-13 the owner canceled the move as a miscommunication (D-69). No file moved, and the session removed the checklist of the move.
+- Gitar approved #6 after two findings: the order of the correction-pass dates in `docs/design.md`, and a stale pointer in D-55. The fixes are `b0f05db` and `5abd241`.
+- The owner merged #6 as `cf80bf3` on 2026-09-13 UTC. Its tree matches the reviewed head `5abd241`, and GitHub deleted the branch.
+- The session wrote PR-14 as #7. It adds the `agentic-browsing` floor of D-60, a fixture site with a bad `llms.txt`, and exact failure lines in the Lighthouse self-test.
+- `make verify` then failed in this agent shell, because Astro ran `astro preview` as a detached background server. That server was also the source of the old server on port 4321, and the session stopped it.
+- The owner chose a separate fix, PR-16 (D-70). The session wrote PR-16, and this entry rides in it.
+- The session changed no page code and moved no file.
+
+### State of the repository
+
+- `main` is `cf80bf3`, the squash merge of PR #6.
+- Branch `site/pr-14-agentic-browsing-budget` holds PR-14 as #7, at `84d440f`.
+- Branch `site/pr-16-foreground-preview` holds PR-16 and this entry.
+- Remote head: `origin/site/pr-16-foreground-preview` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on both branches. PR-14 needs `ASTRO_PREVIEW_BACKGROUND=1` until PR-16 merges.
+- The Lighthouse budget of PR-14 reads 1 in each of the five categories, 0 script bytes, and 1,793 total bytes. The median LCP is 621 ms, and the CLS and the TBT are 0.
+
+### In flight
+
+- #7 (PR-14) and PR-16 wait for the Gitar review, then for the merge.
+- PR-15 and PR-5 have their decisions, and no branch yet. The research reports live in this session alone, so `docs/design.md` keeps the key facts with their sources.
+- Nobody checked yet whether the setting of D-61 stops the Dependabot jobs that GitHub runs. A manual Dependabot check by the owner gives the answer.
+
+### Traps and gotchas
+
+- A workflow that names a missing GitHub environment creates it with no protection. So PR-6 creates `production` before its workflow runs (D-63).
+- Ask a confirmation question before any step of a request that changes where the repository lives. The move request of D-55 was a miscommunication (D-69).
+- The gcloud configurations `default` and `decktome` both point at `wallabee-dev`. The decktome handoff records that `decktome` also uses the Wallabee account (2026-09-10).
+- Firebase IAM cannot keep a preview deploy off the live site. D-56 answers with a second project.
+- The `astro preview` server of the checks ignores `firebase.json`, so no check sees the headers of D-57 and D-58 yet.
+- The OIDC `sub` of this repository holds both numeric ids. The name-only examples in the Google docs do not match it.
+- `firebase projects:addfirebase` returns 403 until the account opens the Firebase console once (decktome `docs/setup-gcp.md`).
+- The Firebase CLI hides the cause of an auth failure without `--debug`. Its debug log prints no `Authorization` header (firebase-tools 15.30.0 source, tested on Node 22.23.2).
+- A `curl` of `cloud.google.com/sdk/docs` returns an empty page, because the docs moved to `docs.cloud.google.com`. Use `curl -L`.
+- In an agent shell, Astro 7.3.2 starts `astro preview` as a detached background server, and the command exits at once. Playwright then fails, and the server stays on port 4321. PR-16 sets `ASTRO_PREVIEW_BACKGROUND` for the checks (D-70).
+- The old heavy-script self-test matched `totalBytes` in the results table, so any failure of the fixture passed it. PR-14 matches the failure line `totalBytes: N is above`.
+- A missing `llms.txt` does not lower agentic browsing, because Lighthouse marks a 404 as not applicable. Only a served file with a defect fails the audit.
+
+### Open questions that block progress
+
+None blocks PR-14, PR-15, or PR-16. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
+
+### Next concrete action
+
+Answer the Gitar reviews of #7 and PR-16. After both merges, start PR-15 from `main`: the stylesheet file of D-57 and the minimal 404 page of D-64.
+
 ## Session 5: 2026-09-12
 
 ### What this session did, and why

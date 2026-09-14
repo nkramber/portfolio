@@ -6,6 +6,7 @@
 # Node dependencies, the Astro build, and generated Astro types
 node_modules/
 dist/
+dist-fixture/
 .astro/
 npm-debug.log*
 

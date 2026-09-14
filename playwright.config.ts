@@ -14,14 +14,27 @@ export default defineConfig({
     browserName: 'chromium',
     baseURL: 'http://127.0.0.1:4321',
   },
-  webServer: {
-    command: 'npm run preview -- --host 127.0.0.1 --port 4321',
-    url: 'http://127.0.0.1:4321',
-    reuseExistingServer: !process.env.CI,
-    // Astro 7.3 runs `astro preview` as a detached background server when it
-    // detects an AI agent, and the command then exits at once, so Playwright
-    // fails. This variable turns that detection off, and the server stays in
-    // the foreground (astro/dist/cli/preview/index.js). CI detects no agent (D-70).
-    env: { ASTRO_PREVIEW_BACKGROUND: '1' },
-  },
+  webServer: [
+    {
+      command: 'npm run preview -- --host 127.0.0.1 --port 4321',
+      url: 'http://127.0.0.1:4321',
+      reuseExistingServer: !process.env.CI,
+      // Astro 7.3 runs `astro preview` as a detached background server when it
+      // detects an AI agent, and the command then exits at once, so Playwright
+      // fails. This variable turns that detection off, and the server stays in
+      // the foreground (astro/dist/cli/preview/index.js). CI detects no agent (D-70).
+      env: { ASTRO_PREVIEW_BACKGROUND: '1' },
+    },
+    {
+      // The fixture cards of D-103: a second build with the entries of
+      // tests/fixtures/projects/, in dist-fixture/, so dist/ never holds them.
+      // `--ignore-lock` starts this preview server beside the first one, and it
+      // works in the foreground alone (astro/dist/cli/preview/index.js).
+      command:
+        'npm run build -- --outDir dist-fixture && npm run preview -- --outDir dist-fixture --host 127.0.0.1 --port 4322 --ignore-lock',
+      url: 'http://127.0.0.1:4322',
+      reuseExistingServer: !process.env.CI,
+      env: { ASTRO_PREVIEW_BACKGROUND: '1', PORTFOLIO_FIXTURES: '1' },
+    },
+  ],
 });

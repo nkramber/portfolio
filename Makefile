@@ -1,7 +1,7 @@
 # Every target is free. Only `install` and `browsers` use the network.
 .DEFAULT_GOAL := help
 .PHONY: help install browsers dev build preview images no-script-check no-inline-style-check \
-	no-inline-style-selftest ste-check test-responsive test-a11y lighthouse lighthouse-selftest \
+	no-inline-style-selftest content-selftest ste-check test-responsive test-a11y lighthouse lighthouse-selftest \
 	html-check html-selftest preview-check site-checks verify
 
 # Astro sends anonymous usage data unless this variable is set (D-45). Every
@@ -77,6 +77,17 @@ no-inline-style-selftest: ## Prove that the inline style check finds each plante
 		echo "no-inline-style-selftest: the check found the planted style element and style attribute"; \
 	else \
 		echo "no-inline-style-selftest: the check found \"$$found\", not both planted fixtures"; exit 1; \
+	fi
+
+# The planted defect of D-103: a project entry with no pitch. The build must fail
+# and name the schema error, so a crash never counts as a pass. The build writes
+# to test-results/, so dist/ stays the build of the site.
+content-selftest: ## Prove that the project schema fails the build on a missing field (D-103)
+	@out=$$(PORTFOLIO_FIXTURES=invalid npm run build -- --outDir test-results/invalid-build 2>&1); rc=$$?; \
+	if [ $$rc -ne 0 ] && echo "$$out" | grep -q 'InvalidContentEntryDataError' && echo "$$out" | grep -q 'pitch'; then \
+		echo "content-selftest: the build failed on the planted entry with no pitch"; \
+	else \
+		echo "$$out"; echo "content-selftest: the build did not fail on the planted entry with no pitch"; exit 1; \
 	fi
 
 test-responsive: ## Check both pages at each responsive-qa width for sideways scroll, with screenshots, then the text, zoom, font, motion, and share image checks (G-1, D-92, D-95, D-97)
@@ -159,5 +170,5 @@ site-checks: test-responsive test-a11y lighthouse html-check ## Run the four sit
 ste-check: ## Check every hand-written .md file against the STE rules (D-7)
 	@python3 scripts/ste-check.py $(STE_FILES)
 
-verify: ste-check build no-script-check no-inline-style-check site-checks ## Run every check that the verify workflow runs
+verify: ste-check build no-script-check no-inline-style-check content-selftest site-checks ## Run every check that the verify workflow runs
 	@echo "verify: every check passed"
