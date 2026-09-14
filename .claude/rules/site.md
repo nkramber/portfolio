@@ -15,6 +15,8 @@ These rules apply to every file of the site (D-30 to D-33, G-1 to G-11).
 - Write plain CSS with custom properties, native nesting, container queries, and `:has()` (D-31). Add no CSS framework and no preprocessor.
 - Put the CSS in a `<style>` block of a component, and Astro writes it to a stylesheet file (D-65). Write no `style` attribute and no `is:inline` style, because the CSP of D-57 blocks both (D-72).
 - Self-host each font in `src/fonts/` with its license file. Use `font-display: optional`, and preload only a face that every page shows (D-90, D-91, D-92).
+- Put each animation and transition inside `@media (prefers-reduced-motion: no-preference)`. Never start text at an opacity of 0, because the paint metrics wait for it (D-95).
+- Draw the share image and the PNG icons with `make images`, and commit the PNG files. Run it again after a change to the headline, the colors, the text face, or `public/favicon.svg` (D-96, D-97).
 - Use a CSS feature only when Baseline lists it as Widely available. A Newly available feature adds polish alone, with a fallback (D-32, G-6).
 - Size text and spacing with `rem`, `clamp()`, and container units. Set no fixed width on a text container.
 - Give every image a width, a height, and alt text. Give a decorative image an empty `alt`.

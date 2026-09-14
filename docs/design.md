@@ -16,6 +16,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-14 correction pass (Session 12): M-2 passed (D-88), with the log link of D-87. PR-13 no longer waits for M-2, and the external facts add the research of M-2.
 2026-09-14 correction pass (Session 13): PR-7 follows D-89 to D-92, and D-91 closes OQ-5. The external facts add the research of PR-7.
 2026-09-14 correction pass (Session 14): PR-7 reads merged, and the Phase 1 gate reads passed. Section 6 closes OQ-5, and D-93 sets how the owner gets a preview address.
+2026-09-14 correction pass (Session 15): PR-8 follows D-94 to D-98. The external facts add the research of PR-8.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -113,6 +114,21 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - `overflow-wrap: break-word` does not narrow the minimum width of an inline-block, but `anywhere` does. Source: the responsive audit of PR-7 in Chromium 153, 2026-09-14.
 - An `em` in a media query counts the initial font size of the browser, never a declaration of the page. Source: https://www.w3.org/TR/mediaqueries-4/, section 1.3, read 2026-09-14.
 - An `em` in a container query counts the computed font size of the query container. Source: https://www.w3.org/TR/css-contain-3/, section 5.1, read 2026-09-14.
+- Paint Timing counts an element as paintable only when the element and each ancestor have a used opacity above 0. Source: https://w3c.github.io/paint-timing/, read 2026-09-14.
+- The LCP algorithm skips a text node with an opacity of 0 or less, unless the text has a shadow or a stroke. Source: https://w3c.github.io/largest-contentful-paint/, read 2026-09-14.
+- Lighthouse 13.4.1 weights the performance metrics as FCP 10, LCP 25, TBT 30, CLS 25, and SI 10. Source: the installed `core/config/default-config.js`, read 2026-09-14.
+- In the SEO category of Lighthouse 13.4.1, `is-crawlable` weighs 93/23, and nine audits weigh 1 each, among them `document-title`, `meta-description`, and `canonical`. So one failed audit of weight 1 gives about 0.92. Source: the same file, read 2026-09-14.
+- axe-core 4.13.0 tags `region`, `landmark-one-main`, `page-has-heading-one`, and `heading-order` as `best-practice`, so a scan by WCAG tags never runs them. Lighthouse still scores `landmark-one-main` and `heading-order`. Sources: `axe.getRules()` of the installed axe-core and the Lighthouse default config, read 2026-09-14.
+- WCAG 2.2.2 applies to motion that starts automatically, lasts more than five seconds, and shows in parallel with other content. WCAG 2.3.3 Animation from Interactions is level AAA. Sources: https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html and https://www.w3.org/TR/WCAG22/, read 2026-09-14.
+- The individual transform properties `translate`, `scale`, and `rotate` are Baseline Widely available since 2025-02-05. Baseline lists `meta name="theme-color"` as Limited, and `color-scheme` as Widely available since 2024-08-03. Source: https://api.webstatus.dev/v1/features, read 2026-09-14.
+- Google Search takes a favicon in BMP, GIF, ICO, PNG, JPEG, PPM, or TIFF, and no SVG. It recommends a square icon larger than 48 by 48 pixels. Source: https://developers.google.com/search/docs/appearance/favicon-in-search, updated 2026-08-28, read 2026-09-14.
+- Safari 26.0 supports an SVG file for each icon, the favicon included. Source: https://webkit.org/blog/17333/, read 2026-09-14.
+- The page of PR-8 has a PNG icon link and then an SVG icon link. The full Chromium build 1243 in new headless mode requested `/favicon.svg` alone, and no `/favicon.ico`. Source: a local run of the PR-8 build with a request log, 2026-09-14.
+- `overflow: clip` is Baseline Widely available since 2025-03-12, and the interaction media queries `hover` and `pointer` since 2021-06-11. Source: https://api.webstatus.dev/v1/features, read 2026-09-14.
+- LinkedIn asks for a share image of 1200 by 627 pixels or more, with a ratio of 1.91:1. The file must be 5 MB or less. Source: https://www.linkedin.com/help/linkedin/answer/a521928, read 2026-09-14. The X card docs moved to docs.x.com, and the research found no card page there, so the rules of X stay unverified.
+- The HTML Standard says that a `footer` alone is sufficient for a short list of links, and that a `nav` is usually unnecessary. Source: https://html.spec.whatwg.org/multipage/sections.html, read 2026-09-14.
+- The GOV.UK pattern for a page-not-found page uses the heading "Page not found" and two lines about the address. It asks for no blame of the reader, no "404", and no "oops". Source: https://design-system.service.gov.uk/patterns/page-not-found-pages/, read 2026-09-14.
+- sharp 0.35.4 is an optional dependency of Astro 7.3.2, and a build-time image takes its fonts from the build machine. Sources: `package-lock.json` and a test render of the PR-8 research, 2026-09-14.
 
 ## 1. Thesis
 
@@ -425,29 +441,36 @@ Gate: OQ-5 has its answer in `docs/decisions.md`, and the owner merges PR-7.
 
 #### PR-8: Page shell
 
-Status: planned.
+Status: in progress on `site/pr-8-page-shell` (Session 15). D-94 to D-98 answer its design questions.
 
 Scope:
 
-- The hero with the headline of D-29, the About section, and the Links section (D-20, D-21).
-- The About text from the owner (D-28). Until OQ-3 closes, the section holds no text and stays hidden.
-- The page title, the meta description, and the social preview image (D-41).
-- The content of the custom 404 page (D-41).
-- Subtle motion in CSS, off under reduced motion (D-27).
+- The hero with the headline of D-29, the About section, and a page footer with the links of D-20 (D-21). The hero keeps its links too.
+- The About text from an owner interview (D-94). Until OQ-3 closes, the section holds no text and stays off the page.
+- The page title, the meta description, a canonical address, the Open Graph tags, and the share image of D-97 (D-41).
+- The icons of D-96, and a CSP with no `data:` in `img-src`.
+- `make images`: a script draws the share image and the PNG icons in the Chromium build of Playwright. The PNG files stay in git (D-96, D-97).
+- The 404 page keeps the words of D-74 in the new layout (D-98).
+- The hero motion of D-95 in CSS, off under reduced motion (D-27).
+- An axe scan of the page structure with best-practice rules such as `landmark-one-main` and `region` (G-8). A planted fixture proves that the scan can fail (G-3).
 
 Out of scope:
 
 - The project cards. Phase 3 holds them.
+- A web app manifest and `theme-color`. Baseline lists both as Limited (G-6), and `default-src 'none'` blocks a manifest.
 
 Exit tests:
 
-- The page has one `h1`, one `main`, and a landmark for each section (G-8).
+- The page has one `h1`, one `main`, and a landmark for each section (G-8). The structure scan passes on both pages and fails on its fixture.
 - The headline shows no sideways scroll and no clipped text at every width (G-1).
+- Under `prefers-reduced-motion: reduce`, the hero does not move, and the keyframes change `translate` alone (D-95).
+- At the first frame of the rise, the 404 page does not scroll (D-95).
+- The share image and each icon serve from the address in the head (D-96, D-97).
 - Every site check passes, and the built page holds no script (G-5).
 
 Gate: the owner approves the shell on a preview address and merges PR-8.
 
-> *In plain English:* the live page shows a placeholder today. This change builds the real top of the page, the About section, and the links. It adds no script, so the page stays fast.
+> *In plain English:* the live page shows a placeholder today. This change builds the real top of the page, a place for the bio, and the links at the end. It adds an icon and a share card but no script, so the page stays fast.
 
 ### Phase 3: Project cards
 

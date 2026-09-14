@@ -6,11 +6,11 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-14)
 
-- **Main:** `a865051`, the squash merge of PR #15 (PR-7).
-- **Open pull requests:** the docs refresh on `docs/after-pr-7`. It waits for the Gitar review, then for the merge.
-- **Next action:** answer the Gitar review of the refresh. After the merge, start PR-8, the page shell, with read-only research and owner questions.
+- **Main:** `8119f95`, the squash merge of PR #16, the docs refresh after PR-7.
+- **Open pull requests:** PR-8, the page shell, on `site/pr-8-page-shell`. It waits for the Gitar review, the phone check of the owner, and the merge.
+- **Next action:** answer the Gitar review of PR-8, and give the owner the preview address for the phone check (D-93). Ask the owner the three open choices, and draft the bio from the interview answers (D-94).
 - **Blocked on:** OQ-3 blocks the About text of PR-8.
-- **Next ids:** D-94, OQ-8, M-4, PR-17, Session 15.
+- **Next ids:** D-99, OQ-8, M-4, PR-17, Session 16.
 
 ## Facts that expire
 
@@ -73,6 +73,56 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Since deploy run 34887408480 at 19:32 UTC on 2026-09-14, `https://natekramber.com` serves PR-7. `make preview-check` passes on it, with `font-src 'self'` in the CSP.
 - The owner checked the PR-7 preview on an iPhone 16 Pro in Chrome on 2026-09-14 (D-93).
 - `/Users/nate/Repos/terminal-rpg` does not exist on this Mac on 2026-09-14.
+- The owner merged #16 as `8119f95` at 19:41 UTC on 2026-09-14. Its tree matches the reviewed head `0614f9d`, and Gitar approved it with no finding in the pause note.
+- Deploy run 34888419843 passed on `8119f95` on 2026-09-14.
+- At 19:50 UTC on 2026-09-14, both certificates still read `CERT_ACTIVE` with the type `TEMPORARY`.
+- On 2026-09-14, `make lighthouse` on the PR-8 branch reads 1 in every category. It reads 41,515 total bytes, a median LCP of 1,202 ms, and a CLS of 0.
+
+## Session 15: 2026-09-14
+
+### What this session did, and why
+
+- The owner merged #16, the docs refresh, as `8119f95` at 19:41 UTC. Its tree matches the reviewed head `0614f9d`, and Gitar approved it with no finding.
+- The session started PR-8 with two read-only research passes: the head metadata, and the motion and page structure.
+- The owner chose an interview for the bio (D-94). The session asked four interview questions, and the answers are still open.
+- The owner chose the hero rise (D-95), the NK icon (D-96), and the share image with the headline (D-97). The 404 page keeps the words of D-74 (D-98).
+- The session wrote PR-8: the layout, both pages, the icons, the share image script, the new tests, and the docs. Session 5 moved to the archive.
+- The CSP drops `data:` from `img-src`, because D-57 kept it only for the placeholder favicon.
+- The copy review found no defect, and it suggests a first-person meta description for the owner.
+- The responsive audit found four defects. The branch fixes three, and the fourth is a bare word break at 200 percent text on a 320 px screen.
+- The accessibility audit found no WCAG 2.2 AA defect in the light or the dark scheme.
+
+### State of the repository
+
+- `main` is `8119f95`, the squash merge of PR #16.
+- Branch `site/pr-8-page-shell` holds PR-8 and this entry.
+- Remote head: `origin/site/pr-8-page-shell` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on the branch.
+
+### In flight
+
+- PR-8 waits for the Gitar review, the phone check of the owner on its preview address, and the merge.
+- The bio interview waits for the answers of the owner. OQ-3 stays open until the owner approves the words (D-94).
+- Three owner choices wait: the first-person meta description, the repeated profile links while About is empty (D-20), and a hairline above the footer.
+- No run tested the PR-6 exit test of D-63 yet.
+- Each certificate has the type `TEMPORARY` at 19:50 UTC, and nobody checked the permanent certificate yet.
+- The private preview page of D-89 still exists on claude.ai.
+
+### Traps and gotchas
+
+- `grep` on this Mac is ugrep. A pattern with a long range such as `.{0,160}` stops with "exceeds complexity limits", so use Perl for a context search.
+- Under `prefers-reduced-motion: reduce`, the reset gives each property a 0.01 ms transition. A script that reads a style right after a change gets the old value, so wait one frame.
+- A `translate` start offset adds scroll to a page whose content fills the window. `main` clips vertical overflow, and a test holds the first frame still.
+- The clip on `main` leaves 6 px below a focus ring in the worst case. In PR-9, give the last link inside `main` more than 6 px of space below it.
+- The research pass saw no favicon request from the Playwright headless shell. The full Chromium build requested the icon with `channel: 'chromium'`.
+
+### Open questions that block progress
+
+None blocks PR-8. OQ-3 blocks the About text.
+
+### Next concrete action
+
+Answer the Gitar review of PR-8, and ask the owner for the phone check on its preview address. Draft the bio when the interview answers come.
 
 ## Session 14: 2026-09-14
 
@@ -470,39 +520,3 @@ None blocks PR-14, PR-15, or PR-16. OQ-3 blocks the About text of PR-8, and OQ-5
 ### Next concrete action
 
 Answer the Gitar reviews of #7 and PR-16. After both merges, start PR-15 from `main`: the stylesheet file of D-57 and the minimal 404 page of D-64.
-
-## Session 5: 2026-09-12
-
-### What this session did, and why
-
-- The owner merged PR #4 as `1942877`. The session added the four `verify:site-*` checks to the `main` ruleset (D-11).
-- The owner asked for every document to read the current state before a context wipe. The session changed no site code.
-- The owner answered the two questions that PR-5 needs first: the project id `natekramber-prod` (D-51), and the account of decktome-prod (D-52).
-- The refresh touched the design status lines, both registers, this file, `README.md`, and `CLAUDE.md`.
-- It also touched the two auditor agents and four skills: `gitar-review`, `ste-writing`, `responsive-qa`, and `add-project`.
-
-### State of the repository
-
-- `main` is `1942877`, the squash merge of PR #4.
-- Branch `docs/handoff-after-pr-4` holds this refresh, as a pull request of documents alone.
-- Remote head: `origin/docs/handoff-after-pr-4` at the commit that holds this entry, checked after the push.
-- `make verify` on Node 22.23.2 passes on this branch.
-
-### In flight
-
-- The refresh waits for the Gitar review, then for the merge.
-
-### Traps and gotchas
-
-- A pull request of documents alone still runs every site check, because the verify workflow has no path filter. The six jobs finish in under two minutes.
-- A fresh checkout needs `make install` and `make browsers` before `make verify`, with Node 22.23.2 first on the `PATH`.
-- PR-5 creates cloud resources, so the owner runs its setup commands. Create the gcloud configuration `natekramber` first, and check the active project before every command (D-52).
-- Verify the current version of `firebase-tools` and the Workload Identity Federation steps before PR-5 depends on them (hard rule 9).
-
-### Open questions that block progress
-
-None blocks PR-5. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7. OQ-4 blocks nothing at launch.
-
-### Next concrete action
-
-Answer the Gitar review of the refresh. After the owner merges it, start PR-5 from `main` with read-only research, then write `docs/deploy.md`.

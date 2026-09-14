@@ -86,9 +86,10 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `docs/questions.md`: every open question, and the decision that closed each one.
 - `docs/session-handoff.md`: the resume point and the ten newest sessions.
 - `docs/session-handoff-archive.md`: every older session, word for word.
-- `src/pages/index.astro`: the home page. It holds the placeholder until PR-8 (D-40).
-- `src/pages/404.astro`: the placeholder 404 page (D-64, D-74).
-- `src/layouts/Placeholder.astro`: the head, the design tokens, and the base styles of both placeholder pages (D-73, PR-7).
+- `src/pages/index.astro`: the home page of PR-8, with the hero, the About section, and the footer. The About section stays off the page until the bio exists (OQ-3, D-94).
+- `src/pages/404.astro`: the 404 page, with the words of D-74 (D-98).
+- `src/layouts/Page.astro`: the head, the icon links, the design tokens, the base styles, and the motion of both pages (D-73, D-95).
+- `public/`: the icon `favicon.svg` (D-96), and the three PNG files of `make images`. `scripts/make-images.mjs` draws the share image of D-97 and two icons.
 - `src/fonts/`: the two Atkinson Hyperlegible WOFF2 files of D-91, each with its SIL Open Font License file.
 - `astro.config.mjs`, `package.json`, `package-lock.json`, and `tsconfig.json`: the Astro project.
 - `.nvmrc`: the pinned Node version (D-44).
@@ -118,10 +119,11 @@ Every command is free, and only `make install` and `make browsers` use the netwo
 - `make dev`: start the local dev server with live reload.
 - `make build`: build the static site into `dist/`.
 - `make preview`: serve the built site on this machine.
+- `make images`: draw the share image and the two PNG icons into `public/` with the Chromium build of Playwright (D-96, D-97). Run it after a change to the headline, the colors, the text face, or `public/favicon.svg`.
 - `make no-script-check`: fail when a built HTML file holds a script element (G-5).
 - `make no-inline-style-check`: fail when a built HTML file holds a style element or a style attribute (D-72). Its self-test then proves that the check can fail.
-- `make test-responsive`: check both pages at each width of the `responsive-qa` skill for sideways scroll, and save a screenshot of each. It also checks a long word, text at 200 percent, and the text spacing of WCAG 1.4.12. It checks the growth of each fluid text size and the font load too.
-- `make test-a11y`: scan both pages with axe for WCAG 2.2 AA, in the light and the dark scheme.
+- `make test-responsive`: check both pages at each width of the `responsive-qa` skill for sideways scroll, and save a screenshot of each. It also checks a long word, text at 200 percent, and the text spacing of WCAG 1.4.12. It checks the growth of each fluid text size and the font load too. Then it checks the hero motion under each motion setting, and the address of the share image and of each icon (D-95 to D-97).
+- `make test-a11y`: scan both pages with axe for WCAG 2.2 AA, in the light and the dark scheme. It also scans the page structure with the best-practice rules of PR-8, and proves that this scan can fail.
 - `make lighthouse`: check the Lighthouse budget over three runs, then prove that the budget fails on each planted defect.
 - `make html-check`: validate the built HTML and check its internal links and anchors, then prove that both tools fail on planted defects.
 - `make preview-check PREVIEW_URL=<address>`: compare the headers of a deployed preview with `firebase.json`, and check its console (D-59). Its self-test then proves that the header check can fail.

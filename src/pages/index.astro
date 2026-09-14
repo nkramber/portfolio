@@ -1,23 +1,66 @@
 ---
-// The placeholder page (D-40, D-41). It shows the headline (D-29) and the
-// profile links (D-20) until the page shell of PR-8 replaces it.
-import Placeholder from '../layouts/Placeholder.astro';
+// The home page (D-19, D-21): the hero, the About section, and the footer with the
+// profile links. The project cards of PR-9 join between About and the footer.
+import Page from '../layouts/Page.astro';
 
+// The two profile links of D-20. The hero and the footer both show them.
 const links = [
   { label: 'GitHub', href: 'https://github.com/nkramber' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/nate-kramber' },
 ];
+
+// The bio of OQ-3, one string for each paragraph. The session drafts it from an
+// interview with the owner, and the owner approves the words (D-94). The About
+// section stays off the page while this list is empty.
+const about: string[] = [];
+
+const description =
+  'Nate Kramber designs the systems, directs the AI agents that write the code, and decides what ships.';
+
+// Each absolute address comes from `site` in astro.config.mjs (D-41).
+const homeUrl = new URL('/', Astro.site).href;
+const shareImageUrl = new URL('/og.png', Astro.site).href;
 ---
 
-<Placeholder
-  title="Nate Kramber"
-  description="Nate Kramber designs the systems, directs the AI agents that write the code, and decides what ships."
->
-  <p class="name">Nate Kramber</p>
-  <!-- Each "keep" span holds a word pair on one line, so no line ends with a lone "I" or "AI". -->
-  <h1>I design the systems. <span class="keep">AI agents</span> write the code. <span class="keep">I decide</span> what ships.</h1>
-  <p class="lede">Tools and games, built under strict rules and real review.</p>
-  <ul class="links">
-    {links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
-  </ul>
-</Placeholder>
+<Page title="Nate Kramber">
+  <Fragment slot="head">
+    <meta name="description" content={description} />
+    <link rel="canonical" href={homeUrl} />
+    <!-- The share card of D-97 (https://ogp.me). scripts/make-images.mjs draws the image. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={homeUrl} />
+    <meta property="og:title" content="Nate Kramber" />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={shareImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Nate Kramber. I design the systems. AI agents write the code. I decide what ships." />
+    <meta name="twitter:card" content="summary_large_image" />
+  </Fragment>
+
+  <main>
+    <div class="hero">
+      <p class="name">Nate Kramber</p>
+      <!-- Each "keep" span holds a word pair on one line, so no line ends with a lone "I" or "AI". -->
+      <h1>I design the systems. <span class="keep">AI agents</span> write the code. <span class="keep">I decide</span> what ships.</h1>
+      <p class="lede">Tools and games, built under strict rules and real review.</p>
+      <ul class="links">
+        {links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+      </ul>
+    </div>
+
+    {about.length > 0 && (
+      <section class="about" aria-labelledby="about-heading">
+        <h2 id="about-heading">About</h2>
+        {about.map((paragraph) => <p>{paragraph}</p>)}
+      </section>
+    )}
+  </main>
+
+  <footer class="site-footer">
+    <h2>Links</h2>
+    <ul class="links">
+      {links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+    </ul>
+  </footer>
+</Page>

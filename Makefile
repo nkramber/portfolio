@@ -1,6 +1,6 @@
 # Every target is free. Only `install` and `browsers` use the network.
 .DEFAULT_GOAL := help
-.PHONY: help install browsers dev build preview no-script-check no-inline-style-check \
+.PHONY: help install browsers dev build preview images no-script-check no-inline-style-check \
 	no-inline-style-selftest ste-check test-responsive test-a11y lighthouse lighthouse-selftest \
 	html-check html-selftest preview-check site-checks verify
 
@@ -45,6 +45,11 @@ build: ## Build the static site into dist/
 preview: ## Serve the built site from dist/ on this machine
 	@npm run preview
 
+# The share image and the PNG icons are files in git (D-96, D-97). The Chromium
+# build of Playwright draws them, so `make browsers` comes first.
+images: ## Draw the share image and the PNG icons into public/ (D-96, D-97)
+	@node scripts/make-images.mjs
+
 # The page ships no client JavaScript (D-33, G-5). A build with no dist/
 # directory fails here, so the check never passes on nothing.
 no-script-check: ## Fail when a built HTML file holds a script element (G-5)
@@ -74,10 +79,10 @@ no-inline-style-selftest: ## Prove that the inline style check finds each plante
 		echo "no-inline-style-selftest: the check found \"$$found\", not both planted fixtures"; exit 1; \
 	fi
 
-test-responsive: ## Check both pages at each responsive-qa width for sideways scroll, with screenshots, then the text, zoom, and font checks (G-1, D-92)
+test-responsive: ## Check both pages at each responsive-qa width for sideways scroll, with screenshots, then the text, zoom, font, motion, and share image checks (G-1, D-92, D-95, D-97)
 	@npx playwright test tests/responsive.spec.ts
 
-test-a11y: ## Scan both pages with axe for WCAG 2.2 AA, in light and dark (G-8)
+test-a11y: ## Scan both pages with axe for WCAG 2.2 AA in light and dark, and for the page structure (G-8)
 	@npx playwright test tests/accessibility.spec.ts
 
 lighthouse: ## Hold the budget of D-37 and D-48 with Lighthouse 13, then prove it can fail (D-50, D-60)
