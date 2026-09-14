@@ -99,6 +99,7 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `scripts/ste-check.py`: the STE checker (D-7).
 - `.github/workflows/verify.yml`: the checks on each pull request, `verify:docs`, `verify:site`, and the four `verify:site-*` jobs.
 - `.github/workflows/preview.yml`: the preview deploy of each pull request, its comment, the `verify:site-preview` check, and the channel cleanup (D-59, D-66 to D-68).
+- `.github/workflows/deploy.yml`: the live deploy of each push to `main`, in the environment `production` (D-63, D-84).
 - `docs/deploy.md`: the one-time setup of Google Cloud and Firebase, and its run record (D-79).
 - `firebase.json`: the Hosting config, with the headers of D-57, D-58, D-75, and D-77.
 - `deploy/`: the npm project of the Firebase CLI alone (D-53).
