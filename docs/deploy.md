@@ -186,3 +186,69 @@ The session ran every step on 2026-09-14 (D-79). No step needed the owner.
 
 - Both projects enabled the six APIs of step 4 with no billing account.
 - `firebase projects:addfirebase` returned no 403, and each default Hosting site got the project id.
+
+## Step 11: The environment `production`
+
+The live deploy job runs in the GitHub environment `production`, which accepts the `main` branch alone (D-63, D-85). The session creates it with two API calls:
+
+```sh
+echo '{"deployment_branch_policy":{"protected_branches":false,"custom_branch_policies":true}}' | gh api --method PUT repos/nkramber/portfolio/environments/production --input -
+gh api --method POST repos/nkramber/portfolio/environments/production/deployment-branch-policies -f name=main -f type=branch
+```
+
+Then the owner opens Settings > Environments > production on GitHub. The owner clears "Allow administrators to bypass configured protection rules" and saves the protection rules. No API sets or reads that setting (GitHub REST API description, read 2026-09-14).
+
+## Step 12: The custom domains
+
+The Firebase CLI has no command for a custom domain. The session calls the Hosting API v1beta1 with the owner account. The API returns 403 without the header `x-goog-user-project`.
+
+```sh
+TOKEN=$(gcloud auth print-access-token)
+BASE=https://firebasehosting.googleapis.com/v1beta1/projects/natekramber-prod/sites/natekramber-prod/customDomains
+curl -X POST -H "Authorization: Bearer $TOKEN" -H "x-goog-user-project: natekramber-prod" -H "Content-Type: application/json" "$BASE?customDomainId=natekramber.com" --data '{}'
+curl -X POST -H "Authorization: Bearer $TOKEN" -H "x-goog-user-project: natekramber-prod" -H "Content-Type: application/json" "$BASE?customDomainId=www.natekramber.com" --data '{"redirectTarget":"natekramber.com"}'
+curl -H "Authorization: Bearer $TOKEN" -H "x-goog-user-project: natekramber-prod" "$BASE/natekramber.com"
+curl -H "Authorization: Bearer $TOKEN" -H "x-goog-user-project: natekramber-prod" "$BASE/www.natekramber.com"
+```
+
+`www.natekramber.com` sends a 301 redirect to the apex (D-41). Each read gives `requiredDnsUpdates`, `ownershipState`, and `cert.verification.dns`.
+
+## Step 13: The first DNS visit
+
+The GoDaddy page sends HSTS with a `max-age` of two years. A browser with that policy shows a certificate error with no way past it. So the certificate comes first, and the A records change after it (D-82).
+
+The owner adds three TXT records at GoDaddy and removes nothing:
+
+| Type | Name | Value |
+|---|---|---|
+| TXT | `@` | `hosting-site=natekramber-prod` |
+| TXT | `_acme-challenge` | the apex value of `cert.verification.dns` in step 12 |
+| TXT | `_acme-challenge.www` | the `www` value of `cert.verification.dns` in step 12 |
+
+Wait until both domains read `OWNERSHIP_ACTIVE` and `CERT_ACTIVE`.
+
+## Step 14: The second DNS visit
+
+The owner changes these records at GoDaddy:
+
+| Action | Type | Name | Value |
+|---|---|---|---|
+| Remove | A | `@` | `76.223.105.230` |
+| Remove | A | `@` | `13.248.243.5` |
+| Remove | CNAME | `www` | `natekramber.com` |
+| Add | A | `@` | `199.36.158.100` |
+| Add | CNAME | `www` | `natekramber-prod.web.app` |
+
+The two A records to remove serve a GoDaddy Website Builder site, not a parking page. If GoDaddy refuses to remove them, the owner first disconnects that site (D-83).
+
+Then check the live domain:
+
+```sh
+make preview-check PREVIEW_URL=https://natekramber.com
+```
+
+On `natekramber.com`, the header check also compares the HSTS header of D-58.
+
+## Rollback
+
+The Firebase CLI has no rollback command (firebase-tools 15.30.0). Each run of `.github/workflows/deploy.yml` prints the name of its new version. The release history of the site in the Firebase console lists the same versions, and its "Roll back" action releases an earlier version again. `firebase hosting:clone` with the site, an earlier version, and the live channel does the same from the CLI.
