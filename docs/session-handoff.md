@@ -4,13 +4,13 @@
 
 This file keeps the ten newest sessions, newest first. `docs/session-handoff-archive.md` keeps every older session, word for word.
 
-## Resume here (2026-09-13)
+## Resume here (2026-09-14)
 
-- **Main:** `162ec5b`, the squash merge of PR #8, PR-16.
-- **Open pull requests:** PR-15 on `site/pr-15-stylesheet-404`. It waits for the Gitar review, then for the merge.
-- **Next action:** answer the Gitar review of PR-15. After the merge, start PR-5 from `main` with read-only research.
-- **Blocked on:** nothing blocks PR-5. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
-- **Next ids:** D-75, OQ-8, M-4, PR-17, Session 8.
+- **Main:** `d59be43`, the squash merge of PR #9, PR-15.
+- **Open pull requests:** #10, PR-5 on `site/pr-5-hosting-previews`. M-1 passed (D-80). It waits for a green run of `verify:site-preview` with the console fix, then for the Gitar review, then for the merge.
+- **Next action:** read the preview run of the console fix on #10. Then answer the Gitar review of the new head.
+- **Blocked on:** nothing blocks #10. OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
+- **Next ids:** D-81, OQ-8, M-4, PR-17, Session 9.
 
 ## Facts that expire
 
@@ -24,7 +24,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The check tools on 2026-09-12: Playwright 1.63.0 with Chromium 153 (build 1243), axe-core 4.13.0, Lighthouse 13.4.1, chrome-launcher 1.2.1, html-validate 11.15.0, and linkinator 8.1.0.
 - `npm audit` reads 0 vulnerabilities on 2026-09-12. Lighthouse CI 0.15.1 added 12 advisories before D-50 removed it.
 - The Gitar trial still pauses automatic reviews on 2026-09-13. On #7 and #8, the pause note held a full review in its collapsed Code Review block. A `Gitar review` comment runs one review, and the `gitar-review` skill holds the traps.
-- PR-5 creates the projects `natekramber-prod` and `natekramber-preview` (D-51, D-56). Nobody checked yet whether each id is free. A project id is permanent, and Google documents no check before creation.
+- PR-5 created the projects `natekramber-prod` and `natekramber-preview` on 2026-09-14 (D-51, D-56, D-79). A project id is permanent, and a permission error before creation does not show whether an id is free.
 - WCAG 2.2 is the W3C Recommendation of 2024-12-12, read 2026-09-12. The minimum target size of 2.5.8 is 24 by 24 CSS pixels.
 - ASD-STE100 Issue 9, dated 2025-01-15, is the current issue, read 2026-09-12.
 - Claude Code reads `CLAUDE.md` and not `AGENTS.md`. A rule file with a `paths` list loads when Claude reads a matching file. The session read both facts in the Claude Code memory docs on 2026-09-12.
@@ -34,7 +34,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The What You Carry repository is public on 2026-09-12, and its D-106 still reads "Private until launch". The owner records that change in that repository (D-25).
 - decktome.com is invite-only on 2026-09-12 (decktome D-310).
 - The cloud tools on this Mac, read 2026-09-12: gcloud 533.0.0 in `/opt/homebrew/bin`, and a global Firebase CLI 14.14.0 under Node 20.17.0 alone. The newest gcloud is 584.0.0 of 2026-09-09 (https://docs.cloud.google.com/sdk/docs/release-notes).
-- The gcloud configurations on this Mac, read 2026-09-12: `default` (active) and `decktome`, both on the project `wallabee-dev`. No `natekramber` configuration exists.
+- The gcloud configurations on this Mac, read 2026-09-14: `default` (active) and `decktome` on the project `wallabee-dev`, and `natekramber` (inactive) for the owner projects.
 - firebase-tools 15.30.0 came out on 2026-09-09, and it needs Node 20 or newer. Version 15.22.2 broke deploys through Workload Identity Federation, and 15.22.3 fixed them (npm registry and firebase-tools issue 10716, read 2026-09-12).
 - `google-github-actions/auth` tag v3.0.0 points to commit `7c6bc770dae815cd3e89ee6cdf493a5fab2cc093`, read 2026-09-12 from the GitHub API. The tag is lightweight. The `releases/latest` endpoint returns the moving tag `v3`.
 - The GitHub ids, read 2026-09-12: repository 1367643959 and owner 190805558. The OIDC `sub` prefix is `repo:nkramber@190805558/portfolio@1367643959`, the immutable format for a repository that GitHub created after 2026-07-15.
@@ -47,6 +47,61 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Astro 7.3.2 writes a lock file for `astro preview`, and it refuses a second preview server of the same project. The flag `--ignore-lock` starts a second server anyway, and `--force` replaces the first (installed `dist/cli/preview/index.js`, read 2026-09-13).
 - linkinator 8.1.0 reads each location as a glob inside `--server-root` (installed `build/src/options.js`, read 2026-09-13).
 - The verify workflow runs on a pull request and by hand alone. On 2026-09-13, `gh run list --branch main` lists only Dependabot runs.
+- The gcloud configuration `natekramber` exists since 2026-09-14. It stays inactive, and its account is the owner account of decktome-prod. The configuration `default` stays active on `wallabee-dev`.
+- The projects `natekramber-preview` (number 573927778532) and `natekramber-prod` (number 321332406577) exist since 2026-09-14, with no billing account. Each has Firebase, its default Hosting site, a pool `github`, a provider, and a deploy service account (`docs/deploy.md`).
+- The Firebase CLI of this Mac uses the Wallabee account by default, and the owner account is its second account (read 2026-09-14).
+- `actions/download-artifact` tag v8.0.1 points to commit `3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c`, read 2026-09-14 from the GitHub API. The tag is lightweight.
+- `deploy/package-lock.json` pins firebase-tools 15.30.0 with 674 packages. On 2026-09-13, `npm audit` of `deploy/` reads 9 moderate advisories, and the root reads 0.
+
+## Session 8: 2026-09-14
+
+### What this session did, and why
+
+- The owner merged #9 (PR-15) as `d59be43` on 2026-09-13 UTC. Its tree matches the reviewed head `71f10fb`, and it added no check job.
+- The session started PR-5 with four read-only research passes. They read Firebase Hosting and its CLI, GitHub OIDC, Workload Identity Federation, the response headers, and the decktome deploy setup.
+- The owner answered four questions: D-75 to D-78.
+- The session wrote `firebase.json`, the `deploy/` npm project, `docs/deploy.md`, the header check, the console check, and `make preview-check`.
+- On 2026-09-14 the owner asked the session to run `docs/deploy.md` (D-79). The session ran every step, and no step needed the owner.
+- The session then wrote `.github/workflows/preview.yml` with the preview project number, and it opened PR-5 as #10. This entry rides in PR-5.
+- The first preview run of #10 passed M-1 (D-80). The deploy needed no key and `roles/firebasehosting.admin` alone, and every header of `firebase.json` matched on the preview.
+- That run failed `verify:site-preview`, because Chrome logs a console error for the 404 status of the 404 page itself. The console check now drops that one message (D-80).
+
+### State of the repository
+
+- `main` is `d59be43`, the squash merge of PR #9.
+- Branch `site/pr-5-hosting-previews` holds PR-5 as #10, and this entry.
+- Remote head: `origin/site/pr-5-hosting-previews` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on the branch.
+- The cloud setup of `docs/deploy.md` passed its step 10 checks on 2026-09-14.
+- The channel `pr-10` of `natekramber-preview` serves the preview of #10, and it expires 30 days after the last push.
+
+### In flight
+
+- #10 waits for a green run of `verify:site-preview` with the console fix, then for the Gitar review, then for the merge.
+- After the merge, `verify:site-preview` joins the `main` ruleset (D-68). Ask the owner before the ruleset change (`.claude/rules/github.md`).
+- The live provider `portfolio-production` exists, but no token tested it yet. PR-6 tests it.
+- The three low CSS defects of Session 7 wait for PR-7.
+- Nobody checked yet whether the setting of D-61 stops the Dependabot jobs that GitHub runs.
+
+### Traps and gotchas
+
+- `gcloud config configurations create` activates the new configuration by default, and that change reaches every terminal. Use `--no-activate` and `CLOUDSDK_ACTIVE_CONFIG_NAME`.
+- `gcloud projects describe` gives the same permission error for a free id and for a taken id. Only `gcloud projects create` tells the two cases apart.
+- The Firebase CLI of this Mac uses the Wallabee account by default. Give `--account` to each Firebase command of the owner projects.
+- A job that skips because a needed job failed reports success. So `verify:site-preview` runs with `!cancelled()`, and its first step fails when no preview exists.
+- `firebase hosting:channel:delete` in CI deletes nothing without `--force`, and it still exits 0.
+- In zsh, `set -- $ref` does not split the variable into words. A script that needs the split must run in bash.
+- `actions/download-artifact` is at v8, and `actions/upload-artifact` is at v7. The v8 download still unzips a normal v7 upload, and a hash mismatch now fails the run.
+- Chrome logs a console error for each response with the status 404, and that includes the page itself. A console check of a 404 page must drop that one message, or it always fails.
+- `make preview-check` stops at the first failed step, so a failed console check hides the self-test of the header check.
+
+### Open questions that block progress
+
+None blocks #10. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
+
+### Next concrete action
+
+Read the preview run of the console fix on #10. When `verify:site-preview` passes, answer the Gitar review of the new head, and tell the owner that #10 is ready to merge.
 
 ## Session 7: 2026-09-13
 

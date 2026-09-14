@@ -4,6 +4,8 @@ import { defineConfig } from '@playwright/test';
 // config serves it with `astro preview` on a fixed local port.
 export default defineConfig({
   testDir: 'tests',
+  // The preview checks need a deployed preview, so playwright.preview.config.ts runs them.
+  testIgnore: 'preview/**',
   outputDir: 'test-results',
   reporter: 'list',
   forbidOnly: Boolean(process.env.CI),

@@ -2,7 +2,7 @@
 .DEFAULT_GOAL := help
 .PHONY: help install browsers dev build preview no-script-check no-inline-style-check \
 	no-inline-style-selftest ste-check test-responsive test-a11y lighthouse lighthouse-selftest \
-	html-check html-selftest site-checks verify
+	html-check html-selftest preview-check site-checks verify
 
 # Astro sends anonymous usage data unless this variable is set (D-45). Every
 # target below runs with it, and so do the CI jobs, because they call make.
@@ -133,6 +133,20 @@ html-selftest: ## Prove that the HTML and link checks fail on planted defects
 		echo "html-selftest: linkinator caught the planted broken anchor"; \
 	else \
 		echo "$$out"; echo "html-selftest: linkinator missed the planted broken anchor"; exit 1; \
+	fi
+
+# The preview checks of D-59 need a deployed preview channel and its address:
+# make preview-check PREVIEW_URL=<the preview address>. The planted firebase.json
+# expects a wrong value, so the header check must fail on that header (G-3).
+preview-check: ## Compare the headers of a deployed preview with firebase.json, and check its console (D-59)
+	@test -n "$(PREVIEW_URL)" || { echo "preview-check: set PREVIEW_URL to the preview address"; exit 1; }
+	@node scripts/check-preview-headers.mjs "$(PREVIEW_URL)"
+	@PREVIEW_URL="$(PREVIEW_URL)" npx playwright test --config playwright.preview.config.ts
+	@out=$$(node scripts/check-preview-headers.mjs "$(PREVIEW_URL)" tests/fixtures/firebase-wrong-header.json 2>&1); rc=$$?; \
+	if [ $$rc -ne 0 ] && echo "$$out" | grep -q 'x-content-type-options is'; then \
+		echo "preview-check: the header check caught the planted wrong header"; \
+	else \
+		echo "$$out"; echo "preview-check: the header check missed the planted wrong header"; exit 1; \
 	fi
 
 site-checks: test-responsive test-a11y lighthouse html-check ## Run the four site checks of D-38 on the built site

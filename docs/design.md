@@ -54,6 +54,24 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - An HSTS preload removal takes 6 to 12 weeks to reach most Chrome users. Source: https://hstspreload.org/removal/, read 2026-09-12.
 - Firebase cannot issue a certificate while other A, AAAA, or CNAME records stay on the host. Source: https://firebase.google.com/docs/hosting/custom-domain, read 2026-09-12.
 - Lighthouse 13.4.1 scores the `agentic-browsing` category with `agent-accessibility-tree`, `cumulative-layout-shift`, `llms-txt`, and `webmcp-schema-validity`, and two more WebMCP audits are informative. A 404 for `/llms.txt` makes `llms-txt` not applicable, and a served file with no heading, no link, or under 50 characters fails it. Source: the installed Lighthouse 13.4.1, `core/config/default-config.js` and `core/audits/agentic/llms-txt.js`, read 2026-09-13.
+- firebase-tools 15.30.0 is still the latest release, and its `engines.node` accepts Node 20, 22, and 24. Source: https://registry.npmjs.org/firebase-tools, read 2026-09-13.
+- `firebase hosting:channel:deploy` creates a missing channel, and each deploy with `--expires` restarts the lifetime. The `--expires` unit `m` means minutes, and `w` fails. Source: firebase-tools 15.30.0 `lib/commands/hosting-channel-deploy.js` and `lib/hosting/expireUtils.js`, read 2026-09-13.
+- In a non-interactive shell, `firebase hosting:channel:delete` without `--force` deletes nothing and exits with code 0. With `--force`, a missing channel gives HTTP 404 and exit code 1. Source: firebase-tools 15.30.0 `lib/commands/hosting-channel-delete.js`, read 2026-09-13.
+- The Firebase CLI finds `firebase.json` in the current directory or a parent. `npm exec --prefix deploy` runs in the current directory, not in `deploy/`. Sources: firebase-tools 15.30.0 `lib/detectProjectRoot.js` and npm 10.9.8 `libnpmexec/lib/run-script.js`, read 2026-09-13.
+- The Firebase CLI reads a `GOOGLE_APPLICATION_CREDENTIALS` file of type `external_account`. A channel deploy also syncs the authorized domains of Identity Toolkit, and `--no-authorized-domains` skips that step. Source: firebase-tools 15.30.0 `lib/requireAuth.js` and `lib/commands/hosting-channel-deploy.js`, read 2026-09-13.
+- A Hosting deploy writes `.firebase/hosting.<site>.cache` in the current directory. Source: firebase-tools 15.30.0 `lib/deploy/hosting/hashcache.js`, read 2026-09-13.
+- The default Hosting site of a project usually has the project id. The Management API permits `PROJECT_ID-` and five characters when another project has the name. Sources: https://firebase.google.com/docs/hosting/multisites and the Firebase Management API discovery document, read 2026-09-13.
+- Firebase Hosting applies the header rules that match, in their order. It sends `max-age=3600` for a static file with no rule, and a new release clears the CDN cache. Sources: https://firebase.google.com/docs/hosting/full-config and https://firebase.google.com/docs/hosting/manage-cache, read 2026-09-13.
+- A job that an `if:` condition skips reports "Success" and does not block a merge as a required check. A job that skips because a needed job failed can also let a merge through. Sources: https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-jobs-with-conditions and https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/troubleshooting-required-status-checks, read 2026-09-13.
+- GitHub treats a Dependabot pull request like a fork pull request. No GitHub doc says whether its job can get `id-token: write`. Source: https://docs.github.com/en/code-security/reference/supply-chain-security/troubleshoot-dependabot/dependabot-on-actions, read 2026-09-13.
+- `pull-requests: write` alone permits a job to create and edit a pull request comment. Source: https://docs.github.com/en/rest/authentication/permissions-required-for-github-apps, read 2026-09-13.
+- `google-github-actions/auth` v3.0.0 (commit `7c6bc770dae815cd3e89ee6cdf493a5fab2cc093`) is still the latest version, and its input `workload_identity_provider` needs `service_account`. Source: https://github.com/google-github-actions/auth, read 2026-09-13.
+- The README of the auth action gives the issuer `https://token.actions.githubusercontent.com`, and the Google guide gives the same URL with a trailing slash. M-1 tests the README form. Sources: https://github.com/google-github-actions/auth/blob/v3.0.0/README.md and https://docs.cloud.google.com/iam/docs/workload-identity-federation-with-deployment-pipelines, read 2026-09-13.
+- Google asks for one provider in each pool, a condition on the numeric ids, and the project number in a `principalSet` member. Sources: https://docs.cloud.google.com/iam/docs/best-practices-for-using-workload-identity-federation and the guide above, read 2026-09-13.
+- No primary source confirms that a project with no billing account can enable `iamcredentials.googleapis.com` and `sts.googleapis.com`. The Google guide asks the reader to verify the billing account first. Source: the guide above, read 2026-09-13.
+- On 2026-09-14, the projects `natekramber-preview` and `natekramber-prod` enabled `iam`, `iamcredentials`, `sts`, `cloudresourcemanager`, `firebase`, and `firebasehosting` with no billing account. `firebase projects:addfirebase` returned no 403, and each default Hosting site got the project id. Source: the setup run of `docs/deploy.md`, 2026-09-14.
+- Browsers ignore `X-Frame-Options` when an enforced CSP has `frame-ancestors`. Source: https://www.w3.org/TR/CSP3/, section 6.4.2.2, read 2026-09-13.
+- `default-src 'none'` also blocks fonts and a web app manifest. A self-hosted font then needs `font-src 'self'`, which revises D-57. Source: https://www.w3.org/TR/CSP3/, section 6.8.3, read 2026-09-13.
 
 ## 1. Thesis
 
@@ -250,11 +268,11 @@ Gate: the owner merges PR-16.
 
 #### PR-5: Google Cloud projects, Hosting configuration, and previews
 
-Status: planned. The projects are `natekramber-prod` and `natekramber-preview` (D-51, D-56). The owner account of decktome-prod owns both through a gcloud configuration named `natekramber` (D-52). D-53, D-54, D-56 to D-59, and D-62 answer the design questions of PR-5, and PR-15 ships its site code first (D-65).
+Status: in review. The projects `natekramber-prod` (number 321332406577) and `natekramber-preview` (number 573927778532) exist since 2026-09-14 (D-51, D-56, D-79). The owner account of decktome-prod owns both through a gcloud configuration named `natekramber` (D-52). D-53, D-54, D-56 to D-59, D-62, and D-75 to D-79 answer the design questions of PR-5, and PR-15 shipped its site code first (D-65).
 
 Scope:
 
-- `docs/deploy.md` with the setup commands. The owner runs them, because the session creates no cloud resource without the owner (D-34).
+- `docs/deploy.md` with the setup commands. The session runs them with the owner account, and it stops when the owner must act (D-79).
 - The commands create two dedicated projects on the Spark plan (D-56).
 - Each project gets its own Workload Identity Federation pool. The preview provider trusts only pull request tokens of this repository (D-35, D-62).
 - They also create one deploy service account in each project, with the least role that a Hosting deploy needs (G-9). The preview account gets no role in `natekramber-prod` (D-56).

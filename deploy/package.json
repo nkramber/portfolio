@@ -1,0 +1,10 @@
+{
+  "name": "natekramber-deploy",
+  "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "dependencies": {
+    "firebase-tools": "^15.30.0"
+  }
+}
