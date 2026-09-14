@@ -20,3 +20,5 @@ This repository holds the source of the portfolio site of Nate Kramber. The site
 ## License
 
 The MIT license in `LICENSE` covers the source code. It does not cover the text, photos, screenshots, or logos of the site. Those stay © 2026 Nate Kramber, all rights reserved.
+
+The fonts in `src/fonts/` use the SIL Open Font License 1.1. Each license file sits beside its font.

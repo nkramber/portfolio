@@ -74,7 +74,7 @@ no-inline-style-selftest: ## Prove that the inline style check finds each plante
 		echo "no-inline-style-selftest: the check found \"$$found\", not both planted fixtures"; exit 1; \
 	fi
 
-test-responsive: ## Check both pages at each responsive-qa width for sideways scroll, with screenshots (G-1)
+test-responsive: ## Check both pages at each responsive-qa width for sideways scroll, with screenshots, then the text, zoom, and font checks (G-1, D-92)
 	@npx playwright test tests/responsive.spec.ts
 
 test-a11y: ## Scan both pages with axe for WCAG 2.2 AA, in light and dark (G-8)

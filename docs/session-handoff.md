@@ -6,11 +6,11 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-14)
 
-- **Main:** `1b623d3`, the squash merge of PR #13, the docs refresh.
-- **Open pull requests:** the M-2 result on `docs/m-2-request-logs`. It waits for the Gitar review, then for the merge.
-- **Next action:** answer the Gitar review of the M-2 result. After the merge, start PR-7, the design tokens, the fonts, and the accent color.
-- **Blocked on:** OQ-3 blocks the About text, and OQ-5 blocks the merge of PR-7.
-- **Next ids:** D-89, OQ-8, M-4, PR-17, Session 13.
+- **Main:** `175d9ff`, the squash merge of PR #14, the M-2 result.
+- **Open pull requests:** PR-7 on `site/pr-7-design-tokens`. It waits for the Gitar review, the phone check of the owner, and the merge.
+- **Next action:** answer the Gitar review of PR-7, and ask the owner for the phone check on its preview address. After the merge, start PR-8, the page shell.
+- **Blocked on:** OQ-3 blocks the About text of PR-8.
+- **Next ids:** D-93, OQ-8, M-4, PR-17, Session 14.
 
 ## Facts that expire
 
@@ -65,6 +65,57 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - M-2 passed on 2026-09-14 (D-88). The log `firebasehosting.googleapis.com/webrequests` of `natekramber-prod` holds the request URL with its query, the referrer, the country, the city, and the full IP address.
 - At 17:16 UTC on 2026-09-14, an automated scan asked `natekramber.com` for `/key.json`, `/firebase-adminsdk.json`, and two other key files. Each request got a 404.
 - On 2026-09-14, `gcloud billing projects describe natekramber-prod` reads `False`, with no billing account. A direct call to the Cloud Billing API returns 403, because that API is off in the project.
+- The owner picked Atkinson Hyperlegible Next and Mono with the accent Blueprint cobalt on 2026-09-14 (D-91). The preview page of D-89 is a private page on claude.ai.
+- Fontsource 5.3.0 serves the Latin variable WOFF2 files of both Atkinson faces: 33,996 bytes for Next and 17,752 bytes for Mono (read 2026-09-14). GitHub marks both upstream repositories as archived.
+- Astro 7.3.2 has a fonts API. Its `Font` component writes a `style` element, and the CSP of D-57 blocks that element (installed `astro/components/Font.astro`, read 2026-09-14).
+- On 2026-09-14, `make verify` on the PR-7 branch reads 1 in every Lighthouse category. It reads 38,974 total bytes, a median LCP of 1,052 ms, and a CLS of 0.
+- web-features 3.38.0 is the latest release on 2026-09-14. The Web Status API has no feature id for some properties, so the compat key in its `data.json` gives their status.
+
+## Session 13: 2026-09-14
+
+### What this session did, and why
+
+- The owner merged #14, the M-2 result, as `175d9ff` at 17:49 UTC. Its tree matches the reviewed head `fb341ad`, and deploy run 34877052799 passed.
+- The session started PR-7 with two read-only research passes: the platform facts, and the font candidates.
+- The owner chose a private preview page (D-89) and the CSP change `font-src 'self'` (D-90).
+- The session published the preview with three font pairings and three accents. The owner picked Atkinson Hyperlegible Next and Mono with Blueprint cobalt (D-91), and `font-display: optional` (D-92).
+- The session wrote PR-7: the self-hosted fonts, the tokens, the base styles, six responsive checks, and the docs. Session 3 moved to the archive.
+- The responsive audit found five defects. The branch fixes four, and the fifth is the zoom reading of WCAG 1.4.4 under "In flight".
+- The accessibility audit found no WCAG 2.2 AA defect in light or dark. The branch fixes its one readability issue: the kept word pairs of the headline now wrap when enlarged text meets a narrow screen.
+
+### State of the repository
+
+- `main` is `175d9ff`, the squash merge of PR #14.
+- Branch `site/pr-7-design-tokens` holds PR-7 and this entry.
+- Remote head: `origin/site/pr-7-design-tokens` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on the branch.
+
+### In flight
+
+- PR-7 waits for the Gitar review, the phone check of the owner on its preview address, and the merge.
+- The zoom defect of Session 7 uses a stricter rule than the W3C text for WCAG 1.4.4. That text accepts any text scaling mechanism. A test holds each fluid text size within 2 times its minimum, so 400 percent zoom doubles it.
+- No run tested the PR-6 exit test of D-63 yet.
+- Each certificate has the type `TEMPORARY`, and nobody checked the permanent certificate yet.
+
+### Traps and gotchas
+
+- The Astro `Font` component writes a `style` element, so the CSP of D-57 blocks it. Write `@font-face` by hand in the layout.
+- A `?url` import of a font gives the same hashed file as the `url()` in a style block. So the preload and the CSS match.
+- `overflow-wrap: break-word` does not narrow an inline-block, so a long word in a link needs `anywhere`.
+- `hyphens: auto` at every width can hyphenate the approved headline, so it applies only inside `@container (max-width: 14em)`.
+- A Google Fonts request with a wrong axis range fails for every family in it. IBM Plex Mono is static on Google Fonts.
+- The Web Status API returns no feature for `text-decoration-thickness`. The compat key in web-features `data.json` gives its status.
+- Two audits cannot share one `astro preview` server, so the accessibility audit waited for the responsive audit.
+- A no-break space never wraps, so enlarged text splits its words in the middle. A `white-space: nowrap` span can wrap again inside a container query.
+- An `em` in a media query ignores the font size that the page sets, so a test with `html { font-size: 200% }` never reaches it. An `em` in a container query counts the font size of the container.
+
+### Open questions that block progress
+
+None blocks PR-7. OQ-3 blocks the About text of PR-8.
+
+### Next concrete action
+
+Answer the Gitar review of PR-7, and ask the owner for the phone check on its preview address. After the merge, start PR-8 from `main` with read-only research.
 
 ## Session 12: 2026-09-14
 
@@ -456,44 +507,3 @@ None blocks PR-4. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge 
 ### Next concrete action
 
 Answer the Gitar review of PR-4. After the owner merges it, add the four `verify:site-*` checks to the `main` ruleset, then start PR-5, the Google Cloud project.
-
-## Session 3: 2026-09-12
-
-### What this session did, and why
-
-- The owner merged PR #2 as `60048ba`, which approved draft 1 of `docs/design.md`. The sequence then allowed PR-3.
-- The session checked each fact of PR-3 at its primary source: the Node release schedule, the npm registry, the Astro template, and GitHub.
-- The owner chose Node 22 LTS over Node 24 LTS (D-44), and turned off the telemetry of Astro (D-45).
-- The session wrote PR-3: the Astro 7 project, the placeholder page, the `verify:site` job, the `make` targets, the npm ecosystem in Dependabot, and `.claude/rules/site.md`.
-- The package file does not include the `allowScripts` field of the Astro template. Neither local npm version documents that field or reads it in its source.
-
-### State of the repository
-
-- `main` is `60048ba`, the squash merge of PR #2.
-- Branch `site/pr-3-astro-scaffold` holds PR-3.
-- Remote head: `origin/site/pr-3-astro-scaffold` at the commit that holds this entry, checked after the push.
-- `make verify` on Node 22.23.2: 0 findings, one page built, and no script element in `dist/`.
-- `npm install`: 193 packages and 0 vulnerabilities.
-- Headless Chromium screenshots at 320 and 1440 CSS pixels show no clipped text and no sideways scroll.
-
-### In flight
-
-- PR-3 waits for the Gitar review, then for the merge.
-- After the merge, `verify:site` joins the `main` ruleset as a required check.
-
-### Traps and gotchas
-
-- The `--force-dark-mode` flag of the headless shell does not change `prefers-color-scheme`. The dark screenshot had the same file size and the same look as the light one, so the dark scheme has no check yet. PR-4 can emulate the color scheme in Playwright.
-- A foreground `sleep` is blocked in this tool. `curl --retry-connrefused` waits for the preview server with no `sleep`.
-- `astro preview` does not stop on its own. Start it in the background, keep its process id, and stop it after the screenshots.
-- The first local build and preview ran before D-45, with telemetry on. A direct `npm run` command still sends telemetry, so use the `make` targets.
-- Astro 7.3.2 needs Node 22.12.0 or newer, and the default Node on this Mac is 20.17.0.
-- Gitar on PR #3 found that the placeholder padding used `env(safe-area-inset-*)` with the default `viewport-fit`. With that default, the browser insets the page into the safe area itself (WebKit, 2017-09-22), so the padding did nothing and PR-3 removed it. A full-bleed design in PR-8 needs `viewport-fit=cover` and the insets.
-
-### Open questions that block progress
-
-None blocks PR-3. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
-
-### Next concrete action
-
-Answer the Gitar review of PR-3. After the owner merges it, add `verify:site` to the `main` ruleset, then start PR-4, the site checks.
