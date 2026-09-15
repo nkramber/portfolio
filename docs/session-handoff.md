@@ -6,56 +6,55 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-14)
 
-- **Main:** `1bced52`, the squash merge of PR #18 (PR-9).
-- **Open pull requests:** #19 (PR-10), the Deck Tome card, on `site/pr-10-deck-tome-card`. It waits for the Gitar review of its newest head, and the merge.
-- **Next action:** answer the Gitar review of PR-10. Request it only after the checks of the new head start. After the merge, start PR-11, the What You Carry card, with the `add-project` skill.
+- **Main:** `0f983bb`, the squash merge of PR #19 (PR-10).
+- **Open pull requests:** the docs refresh on `docs/after-pr-10`, as a pull request of documents alone. It waits for the Gitar review and the merge.
+- **Next action:** answer the Gitar review of the refresh. Request it only after the checks of the new head start. After the merge, start PR-11, the What You Carry card, with the `add-project` skill.
 - **Blocked on:** OQ-3 blocks the About text.
-- **Next ids:** D-121, OQ-8, M-4, PR-17, Session 18.
+- **Next ids:** D-121, OQ-8, M-4, PR-17, Session 19.
 
 ## Facts that expire
 
-- The GitHub settings, read 2026-09-12: squash merge alone, automatic delete of a merged branch, and ruleset `main` (id 23087504). The ruleset requires a pull request and refuses a force push and a delete. From 2026-09-12, GitHub Actions requires a full commit SHA for each action (D-61).
+- The GitHub settings, read 2026-09-14: squash merge alone, automatic delete of a merged branch, and ruleset `main` (id 23087504). The ruleset requires a pull request and refuses a force push and a delete. From 2026-09-12, GitHub Actions requires a full commit SHA for each action (D-61).
 - The `main` ruleset requires seven checks from GitHub Actions (app id 15368), read 2026-09-14: `verify:docs`, `verify:site`, `verify:site-responsive`, `verify:site-a11y`, `verify:site-lighthouse`, `verify:site-html`, and `verify:site-preview`.
-- `actions/checkout` tag v7.0.1 points to commit `3d3c42e5aac5ba805825da76410c181273ba90b1`, read 2026-09-12 from the GitHub API.
-- `actions/setup-node` tag v7.0.0 points to commit `820762786026740c76f36085b0efc47a31fe5020`, read 2026-09-12 from the GitHub API.
-- `actions/upload-artifact` tag v7.0.1 points to commit `043fb46d1a93c77aae656e7c1c64a875d1fc6a0a`, read 2026-09-12 from the GitHub API.
-- The Node release schedule, read 2026-09-12: Node 22 is in maintenance until its end of life on 2027-04-30. Node 24 is the active LTS line until 2026-10-20, and Node 26 becomes LTS on 2026-10-28.
+- `actions/checkout` tag v7.0.1 points to commit `3d3c42e5aac5ba805825da76410c181273ba90b1`, read 2026-09-14 from the GitHub API. It is still the newest release.
+- `actions/setup-node` tag v7.0.0 points to commit `820762786026740c76f36085b0efc47a31fe5020`, read 2026-09-14 from the GitHub API. It is still the newest release.
+- `actions/upload-artifact` tag v7.0.1 points to commit `043fb46d1a93c77aae656e7c1c64a875d1fc6a0a`, read 2026-09-14 from the GitHub API. It is still the newest release.
+- The Node release schedule, read 2026-09-14: Node 22 is in maintenance until its end of life on 2027-04-30. Node 24 is the active LTS line until 2026-10-20, and Node 26 becomes LTS on 2026-10-28. Node 22.23.2 is still the newest Node 22 release.
 - Astro 7.3.2 is the latest Astro on 2026-09-14 (npm registry), and it needs Node 22.12.0 or newer. The variable `ASTRO_TELEMETRY_DISABLED=1` stops its telemetry.
 - On 2026-09-14, npm lists each check tool at its latest release: Playwright 1.63.0, axe-core 4.13.0, Lighthouse 13.4.1, html-validate 11.15.0, and linkinator 8.1.0. Chromium 153 (build 1243) and chrome-launcher 1.2.1 date from 2026-09-12.
 - `npm audit` reads 0 vulnerabilities on 2026-09-14. Lighthouse CI 0.15.1 added 12 advisories before D-50 removed it.
-- The Gitar trial still pauses automatic reviews on 2026-09-14. On #7, #8, and #12 to #15, the pause note held a full review in its collapsed Code Review block. A `Gitar review` comment runs one review, and the `gitar-review` skill holds the traps.
+- The Gitar trial still pauses automatic reviews on 2026-09-14. On #7, #8, #12 to #17, and #19, the pause note of the first head held a full review in its collapsed Code Review block. A later head of #17 and of #19 needed a `Gitar review` comment, and the `gitar-review` skill holds the traps.
 - PR-5 created the projects `natekramber-prod` and `natekramber-preview` on 2026-09-14 (D-51, D-56, D-79). A project id is permanent, and a permission error before creation does not show whether an id is free.
 - WCAG 2.2 is the W3C Recommendation of 2024-12-12, read 2026-09-12. The minimum target size of 2.5.8 is 24 by 24 CSS pixels.
-- ASD-STE100 Issue 9, dated 2025-01-15, is the current issue, read 2026-09-12.
+- ASD-STE100 Issue 9, dated 2025-01-15, is the current issue, read 2026-09-14.
 - Claude Code reads `CLAUDE.md` and not `AGENTS.md`. A rule file with a `paths` list loads when Claude reads a matching file. The session read both facts in the Claude Code memory docs on 2026-09-12.
-- The toolchain on this Mac, read 2026-09-12: Python 3.9.6, pnpm 9.2.0, and gh 2.100.0. The default Node is 20.17.0, and nvm holds Node 22.23.2 with npm 10.9.8.
-- The Playwright cache in `~/Library/Caches/ms-playwright` holds Chromium build 1243, read 2026-09-12.
+- The toolchain on this Mac, read 2026-09-14: Python 3.9.6, pnpm 9.2.0, and gh 2.100.0. The default Node is 20.17.0, and nvm holds Node 22.23.2 with npm 10.9.8.
+- The Playwright cache in `~/Library/Caches/ms-playwright` holds Chromium build 1243 and its headless shell, read 2026-09-14.
 - The external facts of the roadmap, each with its source and its date, live in `docs/design.md`.
-- The What You Carry repository is public on 2026-09-12, and its D-106 still reads "Private until launch". The owner records that change in that repository (D-25).
-- decktome.com is invite-only on 2026-09-12 (decktome D-310).
-- The cloud tools on this Mac, read 2026-09-12: gcloud 533.0.0 in `/opt/homebrew/bin`, and a global Firebase CLI 14.14.0 under Node 20.17.0 alone. The newest gcloud is 584.0.0 of 2026-09-09 (https://docs.cloud.google.com/sdk/docs/release-notes).
+- The What You Carry repository `nkramber/what-you-carry` is public on 2026-09-14, and its D-106 still reads "Private until launch". The owner records that change in that repository (D-25).
+- The cloud tools on this Mac, read 2026-09-14: gcloud 533.0.0 in `/opt/homebrew/bin`, and a global Firebase CLI 14.14.0 under Node 20.17.0 alone. The newest gcloud is 584.0.0 of 2026-09-09 (https://docs.cloud.google.com/sdk/docs/release-notes).
 - The gcloud configurations on this Mac, read 2026-09-14: `default` (active) and `decktome` on the project `wallabee-dev`, and `natekramber` (inactive) for the owner projects.
-- firebase-tools 15.30.0 came out on 2026-09-09, and npm still lists it as the latest release on 2026-09-14. It needs Node 20 or newer. Version 15.22.2 broke deploys through Workload Identity Federation, and 15.22.3 fixed them (npm registry and firebase-tools issue 10716, read 2026-09-12).
-- `google-github-actions/auth` tag v3.0.0 points to commit `7c6bc770dae815cd3e89ee6cdf493a5fab2cc093`, read 2026-09-12 from the GitHub API. The tag is lightweight. The `releases/latest` endpoint returns the moving tag `v3`.
+- firebase-tools 15.30.1 came out at 21:07 UTC on 2026-09-14, and `deploy/package-lock.json` still pins 15.30.0 (npm registry, read 2026-09-14). Both need Node 20 or newer. Version 15.22.2 broke deploys through Workload Identity Federation, and 15.22.3 fixed them (npm registry and firebase-tools issue 10716, read 2026-09-12).
+- `google-github-actions/auth` tag v3.0.0 points to commit `7c6bc770dae815cd3e89ee6cdf493a5fab2cc093`, read 2026-09-14 from the GitHub API. It is still the newest release. The tag is lightweight. The `releases/latest` endpoint returns the moving tag `v3`.
 - The GitHub ids, read 2026-09-12: repository 1367643959 and owner 190805558. The OIDC `sub` prefix is `repo:nkramber@190805558/portfolio@1367643959`, the immutable format for a repository that GitHub created after 2026-07-15.
 - The repository has one environment, `production`, and no secret or variable, read 2026-09-14. Workflows get a read token by default, and the workflows of a first-time contributor need approval.
-- `dig` read the DNS of `natekramber.com` at `ns13.domaincontrol.com` at 16:14 UTC on 2026-09-14, after the second DNS visit. The name servers are `ns13.domaincontrol.com` and `ns14.domaincontrol.com` at GoDaddy. The apex has one A record, `199.36.158.100`, and `www` is a CNAME to `natekramber-prod.web.app`. The three TXT records stay, and the domain has no AAAA, MX, or CAA record.
+- `dig` read the DNS of `natekramber.com` at `ns13.domaincontrol.com` at 04:11 UTC on 2026-09-15. The name servers are `ns13.domaincontrol.com` and `ns14.domaincontrol.com` at GoDaddy. The apex has one A record, `199.36.158.100`, and `www` is a CNAME to `natekramber-prod.web.app`. The apex holds the TXT record `hosting-site=natekramber-prod`, and the two `_acme-challenge` names hold the other two TXT records. The domain has no AAAA, MX, or CAA record.
 - Lighthouse 13.4.1 has five categories, read 2026-09-13 from the installed source. A 404 for `/llms.txt` makes the audit `llms-txt` not applicable, so the placeholder page scores 1 for agentic browsing.
 - Astro 7.3.2 runs `astro preview` in the background when `am-i-vibing` 0.4.0 detects an agent from a variable such as `AI_AGENT` or `CLAUDECODE`. `ASTRO_PREVIEW_BACKGROUND` turns that detection off (installed `dist/cli/preview/index.js`, read 2026-09-13).
 - Playwright 1.63.0 merges `webServer.env` over `process.env` (installed `lib/runner/index.js`, read 2026-09-13).
 - `astro preview` of Astro 7.3.2 sends `dist/404.html` with the status 404 for a missing address (installed `dist/core/preview/vite-plugin-astro-preview.js`, read 2026-09-13).
 - Astro 7.3.2 writes a lock file for `astro preview`, and it refuses a second preview server of the same project. The flag `--ignore-lock` starts a second server anyway, and `--force` replaces the first (installed `dist/cli/preview/index.js`, read 2026-09-13).
 - linkinator 8.1.0 reads each location as a glob inside `--server-root` (installed `build/src/options.js`, read 2026-09-13).
-- The verify workflow runs on a pull request and by hand alone. On 2026-09-13, `gh run list --branch main` lists only Dependabot runs.
+- The verify workflow runs on a pull request and by hand alone. On 2026-09-15 UTC, `main` has no run of the verify workflow, and its eight newest runs are deploy runs.
 - The gcloud configuration `natekramber` exists since 2026-09-14. It stays inactive, and its account is the owner account of decktome-prod. The configuration `default` stays active on `wallabee-dev`.
 - The projects `natekramber-preview` (number 573927778532) and `natekramber-prod` (number 321332406577) exist since 2026-09-14, with no billing account. Each has Firebase, its default Hosting site, a pool `github`, a provider, and a deploy service account (`docs/deploy.md`).
 - The Firebase CLI of this Mac uses the Wallabee account by default, and the owner account is its second account (read 2026-09-14).
-- `actions/download-artifact` tag v8.0.1 points to commit `3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c`, read 2026-09-14 from the GitHub API. The tag is lightweight.
+- `actions/download-artifact` tag v8.0.1 points to commit `3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c`, read 2026-09-14 from the GitHub API. The tag is lightweight. It is still the newest release.
 - `deploy/package-lock.json` pins firebase-tools 15.30.0 with 674 packages. On 2026-09-14, `npm audit` of `deploy/` reads 9 moderate advisories, and the root reads 0.
 - On 2026-09-14, the `live` channel of `natekramber-preview` shows a release at 13:50 UTC. It came before any deploy of this repository, and its cause is unverified.
-- On 2026-09-14 at 16:10 UTC, `https://natekramber.com` answered from Firebase Hosting with `Strict-Transport-Security: max-age=31536000; includeSubDomains` (`curl -I` at `199.36.158.100`). `make preview-check` passed on the live domain at 17:04 UTC. Before the second DNS visit, GoDaddy sent `max-age=63072000; includeSubDomains; preload` (D-83).
+- At 04:11 UTC on 2026-09-15, `https://natekramber.com` answered 200 with `Strict-Transport-Security: max-age=31536000; includeSubDomains`, and `https://www.natekramber.com` answered 301 to the apex. Before the second DNS visit, GoDaddy sent `max-age=63072000; includeSubDomains; preload` (D-83).
 - The environment `production` exists since 2026-09-14. Its branch policy lists `branch:main` alone, and the API reads `can_admins_bypass: false`.
-- The custom domains `natekramber.com` and `www.natekramber.com` exist on `natekramber-prod` since 2026-09-14, and `www` redirects to the apex. Both read `OWNERSHIP_ACTIVE` at 14:52 UTC and `CERT_ACTIVE` at 15:58 UTC. `www` read `HOST_ACTIVE` at 16:20 UTC, and the apex at 16:30 UTC. Each certificate has the type `TEMPORARY` and expires on 2026-12-13.
+- The custom domains `natekramber.com` and `www.natekramber.com` exist on `natekramber-prod` since 2026-09-14, and `www` redirects to the apex. Both read `OWNERSHIP_ACTIVE` at 14:52 UTC and `CERT_ACTIVE` at 15:58 UTC. `www` read `HOST_ACTIVE` at 16:20 UTC, and the apex at 16:30 UTC. Each certificate had the type `TEMPORARY` and the expiry 2026-12-13. At 04:11 UTC on 2026-09-15, both read `CERT_ACTIVE` with the type `GROUPED`, the standard certificate for Spark plan custom domains, and the expiry 2026-12-13.
 - The three TXT records of the first DNS visit resolve at GoDaddy, Google, and Cloudflare on 2026-09-14.
 - The owner made the second DNS visit on 2026-09-14 (D-86). At 16:09 UTC, both GoDaddy name servers gave the A record `199.36.158.100` at `@` and the CNAME `www` to `natekramber-prod.web.app`.
 - The first run of `deploy.yml`, 34859481347, passed at 15:02 UTC on 2026-09-14. It released the version `8ca891d5ede885e2` to the live channel of `natekramber-prod`.
@@ -68,31 +67,60 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The owner picked Atkinson Hyperlegible Next and Mono with the accent Blueprint cobalt on 2026-09-14 (D-91). The preview page of D-89 is a private page on claude.ai.
 - Fontsource 5.3.0 serves the Latin variable WOFF2 files of both Atkinson faces: 33,996 bytes for Next and 17,752 bytes for Mono (read 2026-09-14). GitHub marks both upstream repositories as archived.
 - Astro 7.3.2 has a fonts API. Its `Font` component writes a `style` element, and the CSP of D-57 blocks that element (installed `astro/components/Font.astro`, read 2026-09-14).
-- On 2026-09-14, `make verify` on the PR-7 branch reads 1 in every Lighthouse category. It reads 38,974 total bytes, a median LCP of 1,052 ms, and a CLS of 0.
 - web-features 3.38.0 is the latest release on 2026-09-14. The Web Status API has no feature id for some properties, so the compat key in its `data.json` gives their status.
-- Since deploy run 34901522463 at 21:57 UTC on 2026-09-14, `https://natekramber.com` serves PR-8. `make preview-check` passes on it, with `font-src 'self'` and `img-src 'self'` in the CSP.
+- Since deploy run 34927622727 on `0f983bb` (2026-09-15 UTC), `https://natekramber.com` serves PR-10 with the Deck Tome card. At 04:11 UTC, `make preview-check` passed on it, with `font-src 'self'` and `img-src 'self'` in the CSP.
 - The owner checked the PR-7 preview on an iPhone 16 Pro in Chrome on 2026-09-14 (D-93).
 - `/Users/nate/Repos/terminal-rpg` does not exist on this Mac on 2026-09-14.
-- The owner merged #16 as `8119f95` at 19:41 UTC on 2026-09-14. Its tree matches the reviewed head `0614f9d`, and Gitar approved it with no finding in the pause note.
-- Deploy run 34888419843 passed on `8119f95` on 2026-09-14.
-- At 19:50 UTC on 2026-09-14, both certificates still read `CERT_ACTIVE` with the type `TEMPORARY`.
-- On 2026-09-14, `make lighthouse` on the PR-8 branch with D-102 reads 1 in every category. It reads 41,307 total bytes, a median LCP of 1,201 ms, and a CLS of 0.
-- On 2026-09-14, every check of #17 passed on `c18d8ad`, and the Gitar pause note held an approval with no finding.
-- The owner merged #17 (PR-8) as `ec0d764` at 21:56:24 UTC on 2026-09-14. Its tree matches the reviewed head `bc8bb08`, and Gitar approved that head with no finding.
-- Deploy run 34901522463 passed on `ec0d764` at 21:57:20 UTC. At 21:59:32 UTC, `make preview-check` passed on `https://natekramber.com`, with `img-src 'self'` in the CSP.
-- On 2026-09-14, the PR-9 branch passes every check of `make verify`. Lighthouse reads 1 in every category, 44,768 total bytes, a median LCP of 1,202 ms, and a CLS of 0.
-- On the PR-9 branch, a fixture build keeps its content cache in `node_modules/.astro-fixtures-1` or `node_modules/.astro-fixtures-invalid`. The site build keeps `node_modules/.astro`.
-- The owner merged #18 (PR-9) as `1bced52` at 00:20:00 UTC on 2026-09-15. Its tree matches the reviewed head `56c9749`, and Gitar approved that head with no finding in the pause note.
-- PR-9 added a step to the `verify:site` job and no new check job, so the `main` ruleset did not change (read 2026-09-15 UTC).
-- Deploy run 34912742795 passed on `1bced52` at 00:20 UTC on 2026-09-15. At 00:27:40 UTC, `make preview-check` passed on `https://natekramber.com`.
+- The Lighthouse budget of `make verify` read 1 in every category and a CLS of 0 from PR-7 to PR-10 (2026-09-14). The total bytes grew from 38,974 (PR-7) to 41,307 (PR-8), 44,768 (PR-9), and 65,511 (PR-10). The median LCP grew from 1,052 ms to 1,354 ms.
+- On `main`, `make verify` runs 57 responsive tests and 15 accessibility tests (2026-09-14).
+- On `main`, a fixture build loads the fixture cards alone (D-112). It keeps its content cache in `node_modules/.astro-fixtures-1` or `node_modules/.astro-fixtures-invalid`, and the site build keeps `node_modules/.astro`.
 - The decktome working tree on this Mac holds the local branch `pr54-theme-words` with uncommitted Go changes, read 2026-09-14. Its docs match `origin/main` at `c7a4ff4`.
 - At 02:02 UTC on 2026-09-15, `gh repo view` read `nkramber/decktome` as public. `https://decktome.com` answered 200, and `www.decktome.com` answered 301 to the apex.
 - The decktome D-310 still reads "No public sign-up", and its D-577 of 2026-09-07 names the product "Deck Tome" (read 2026-09-14).
 - At 02:06 UTC on 2026-09-15, the external drive holds `/Volumes/SSD-1TB/what-you-carry`, the source of PR-11.
-- On the PR-10 branch, a fixture build loads the fixture cards alone (D-112).
-- On 2026-09-14, the PR-10 branch passes every check of `make verify`, with 57 responsive tests and 15 accessibility tests. Lighthouse reads 1 in every category, 65,511 total bytes, a median LCP of 1,354 ms, and a CLS of 0.
 - On the PR-10 build, the Projects heading of a 390 by 844 screen ends at 734 px (D-117). The footer line sits 24 px below the box of the last card at 390 px, and 80 px at 1440 px (D-118).
-- On 2026-09-15 UTC, every check of #19 passed on `2948512`, and the Gitar pause note held an approval with no finding.
+- The owner merged #19 (PR-10) as `0f983bb` at 04:07:54 UTC on 2026-09-15. Its tree matches the reviewed head `5eec2ba`, and Gitar approved that head with no finding. Deploy run 34927622727 passed.
+
+## Session 18: 2026-09-14
+
+### What this session did, and why
+
+- The owner merged #19 (PR-10) as `0f983bb` at 04:07 UTC on 2026-09-15. Its tree matches the reviewed head `5eec2ba`, and Gitar approved that head with no finding.
+- Deploy run 34927622727 passed. At 04:11 UTC, `make preview-check` passed on `https://natekramber.com`.
+- The owner asked for every doc to show the current state before a context reset. The session read the expiring facts again and wrote this refresh. Session 8 moved to the archive.
+- Both custom domains now read `CERT_ACTIVE` with the type `GROUPED`, the standard certificate for Spark plan custom domains. Hosting replaced the `TEMPORARY` certificates.
+- Of the facts that the session read again, one changed: firebase-tools 15.30.1 came out, and `deploy/` still pins 15.30.0. The facts list drops the merge facts of #16 to #18 and the branch results of PR-7 to PR-10.
+
+### State of the repository
+
+- `main` is `0f983bb`, the squash merge of PR #19.
+- Branch `docs/after-pr-10` holds this refresh, as a pull request of documents alone.
+- Remote head: `origin/docs/after-pr-10` at the commit that holds this entry, checked after the push.
+- `make ste-check`: 0 findings.
+
+### In flight
+
+- The refresh waits for the Gitar review, then for the merge.
+- PR-11 has no branch and no research yet. At 02:06 UTC on 2026-09-15, the external drive held `/Volumes/SSD-1TB/what-you-carry`.
+- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
+- The accessibility audit of PR-10 found one AAA item for PR-11. Two cards give two links the same name, "Source on GitHub" (WCAG 2.4.9). A visually hidden project name fixes it, and that fix changes every card.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- Nobody checked Safari 26 yet for `::-webkit-details-marker`, the list role of `.tags`, and the summary in VoiceOver.
+- No run tested the PR-6 exit test of D-63 yet.
+- The private preview page of D-89 still exists on claude.ai.
+
+### Traps and gotchas
+
+- The first head of #19 got a full Gitar review in the pause note with no comment. After the next push, Gitar put no check on the new head for more than 4 minutes.
+- A `Gitar review` comment on that head gave a new summary comment with a new id, and a Gitar check on the head. So read the check runs of the head, not only the old summary comment.
+
+### Open questions that block progress
+
+None blocks the refresh. OQ-3 blocks the About text.
+
+### Next concrete action
+
+Answer the Gitar review of the refresh. After the merge, start PR-11, the What You Carry card, from `main` with the `add-project` skill.
 
 ## Session 17: 2026-09-14
 
@@ -488,53 +516,3 @@ None blocks the refresh. PR-6 needs the owner for the DNS records at GoDaddy. OQ
 ### Next concrete action
 
 Answer the Gitar review of the refresh. Then read the PR-6 research reports, and ask the owner the PR-6 questions.
-
-## Session 8: 2026-09-14
-
-### What this session did, and why
-
-- The owner merged #9 (PR-15) as `d59be43` on 2026-09-13 UTC. Its tree matches the reviewed head `71f10fb`, and it added no check job.
-- The session started PR-5 with four read-only research passes. They read Firebase Hosting and its CLI, GitHub OIDC, Workload Identity Federation, the response headers, and the decktome deploy setup.
-- The owner answered four questions: D-75 to D-78.
-- The session wrote `firebase.json`, the `deploy/` npm project, `docs/deploy.md`, the header check, the console check, and `make preview-check`.
-- On 2026-09-14 the owner asked the session to run `docs/deploy.md` (D-79). The session ran every step, and no step needed the owner.
-- The session then wrote `.github/workflows/preview.yml` with the preview project number, and it opened PR-5 as #10. This entry rides in PR-5.
-- The first preview run of #10 passed M-1 (D-80). The deploy needed no key and `roles/firebasehosting.admin` alone, and every header of `firebase.json` matched on the preview.
-- That run failed `verify:site-preview`, because Chrome logs a console error for the 404 status of the 404 page itself. The console check now drops that one message (D-80).
-
-### State of the repository
-
-- `main` is `d59be43`, the squash merge of PR #9.
-- Branch `site/pr-5-hosting-previews` holds PR-5 as #10, and this entry.
-- Remote head: `origin/site/pr-5-hosting-previews` at the commit that holds this entry, checked after the push.
-- `make verify` on Node 22.23.2 passes on the branch.
-- The cloud setup of `docs/deploy.md` passed its step 10 checks on 2026-09-14.
-- The channel `pr-10` of `natekramber-preview` serves the preview of #10, and it expires 30 days after the last push.
-
-### In flight
-
-- #10 waits for a green run of `verify:site-preview` with the console fix, then for the Gitar review, then for the merge.
-- After the merge, `verify:site-preview` joins the `main` ruleset (D-68). Ask the owner before the ruleset change (`.claude/rules/github.md`).
-- The live provider `portfolio-production` exists, but no token tested it yet. PR-6 tests it.
-- The three low CSS defects of Session 7 wait for PR-7.
-- Nobody checked yet whether the setting of D-61 stops the Dependabot jobs that GitHub runs.
-
-### Traps and gotchas
-
-- `gcloud config configurations create` activates the new configuration by default, and that change reaches every terminal. Use `--no-activate` and `CLOUDSDK_ACTIVE_CONFIG_NAME`.
-- `gcloud projects describe` gives the same permission error for a free id and for a taken id. Only `gcloud projects create` tells the two cases apart.
-- The Firebase CLI of this Mac uses the Wallabee account by default. Give `--account` to each Firebase command of the owner projects.
-- A job that skips because a needed job failed reports success. So `verify:site-preview` runs with `!cancelled()`, and its first step fails when no preview exists.
-- `firebase hosting:channel:delete` in CI deletes nothing without `--force`, and it still exits 0.
-- In zsh, `set -- $ref` does not split the variable into words. A script that needs the split must run in bash.
-- `actions/download-artifact` is at v8, and `actions/upload-artifact` is at v7. The v8 download still unzips a normal v7 upload, and a hash mismatch now fails the run.
-- Chrome logs a console error for each response with the status 404, and that includes the page itself. A console check of a 404 page must drop that one message, or it always fails.
-- `make preview-check` stops at the first failed step, so a failed console check hides the self-test of the header check.
-
-### Open questions that block progress
-
-None blocks #10. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
-
-### Next concrete action
-
-Read the preview run of the console fix on #10. When `verify:site-preview` passes, answer the Gitar review of the new head, and tell the owner that #10 is ready to merge.
