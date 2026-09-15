@@ -2,6 +2,56 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 8: 2026-09-14
+
+### What this session did, and why
+
+- The owner merged #9 (PR-15) as `d59be43` on 2026-09-13 UTC. Its tree matches the reviewed head `71f10fb`, and it added no check job.
+- The session started PR-5 with four read-only research passes. They read Firebase Hosting and its CLI, GitHub OIDC, Workload Identity Federation, the response headers, and the decktome deploy setup.
+- The owner answered four questions: D-75 to D-78.
+- The session wrote `firebase.json`, the `deploy/` npm project, `docs/deploy.md`, the header check, the console check, and `make preview-check`.
+- On 2026-09-14 the owner asked the session to run `docs/deploy.md` (D-79). The session ran every step, and no step needed the owner.
+- The session then wrote `.github/workflows/preview.yml` with the preview project number, and it opened PR-5 as #10. This entry rides in PR-5.
+- The first preview run of #10 passed M-1 (D-80). The deploy needed no key and `roles/firebasehosting.admin` alone, and every header of `firebase.json` matched on the preview.
+- That run failed `verify:site-preview`, because Chrome logs a console error for the 404 status of the 404 page itself. The console check now drops that one message (D-80).
+
+### State of the repository
+
+- `main` is `d59be43`, the squash merge of PR #9.
+- Branch `site/pr-5-hosting-previews` holds PR-5 as #10, and this entry.
+- Remote head: `origin/site/pr-5-hosting-previews` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on the branch.
+- The cloud setup of `docs/deploy.md` passed its step 10 checks on 2026-09-14.
+- The channel `pr-10` of `natekramber-preview` serves the preview of #10, and it expires 30 days after the last push.
+
+### In flight
+
+- #10 waits for a green run of `verify:site-preview` with the console fix, then for the Gitar review, then for the merge.
+- After the merge, `verify:site-preview` joins the `main` ruleset (D-68). Ask the owner before the ruleset change (`.claude/rules/github.md`).
+- The live provider `portfolio-production` exists, but no token tested it yet. PR-6 tests it.
+- The three low CSS defects of Session 7 wait for PR-7.
+- Nobody checked yet whether the setting of D-61 stops the Dependabot jobs that GitHub runs.
+
+### Traps and gotchas
+
+- `gcloud config configurations create` activates the new configuration by default, and that change reaches every terminal. Use `--no-activate` and `CLOUDSDK_ACTIVE_CONFIG_NAME`.
+- `gcloud projects describe` gives the same permission error for a free id and for a taken id. Only `gcloud projects create` tells the two cases apart.
+- The Firebase CLI of this Mac uses the Wallabee account by default. Give `--account` to each Firebase command of the owner projects.
+- A job that skips because a needed job failed reports success. So `verify:site-preview` runs with `!cancelled()`, and its first step fails when no preview exists.
+- `firebase hosting:channel:delete` in CI deletes nothing without `--force`, and it still exits 0.
+- In zsh, `set -- $ref` does not split the variable into words. A script that needs the split must run in bash.
+- `actions/download-artifact` is at v8, and `actions/upload-artifact` is at v7. The v8 download still unzips a normal v7 upload, and a hash mismatch now fails the run.
+- Chrome logs a console error for each response with the status 404, and that includes the page itself. A console check of a 404 page must drop that one message, or it always fails.
+- `make preview-check` stops at the first failed step, so a failed console check hides the self-test of the header check.
+
+### Open questions that block progress
+
+None blocks #10. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
+
+### Next concrete action
+
+Read the preview run of the console fix on #10. When `verify:site-preview` passes, answer the Gitar review of the new head, and tell the owner that #10 is ready to merge.
+
 ## Session 7: 2026-09-13
 
 ### What this session did, and why

@@ -19,6 +19,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-14 correction pass (Session 15): PR-8 follows D-94 to D-102. The external facts add the research of PR-8.
 2026-09-14 correction pass (Session 16): PR-8 reads merged, and the Phase 2 gate reads passed.
 2026-09-14 correction pass (Session 17): PR-9 reads merged. PR-10 follows D-111 to D-119, and D-112 changes the fixture build of PR-9. The external facts add the research of PR-10.
+2026-09-14 correction pass (Session 18): PR-10 reads merged. The external facts add the `GROUPED` certificates of both custom domains.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -143,6 +144,8 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - The decktome repository is public, and `https://decktome.com` answers 200. The decktome D-310 still reads "No public sign-up". Sources: `gh repo view`, `curl`, and the decktome `docs/decisions.md`, read 2026-09-14.
 - The decktome D-577 of 2026-09-07 names the product "Deck Tome", in two words, and corrects its D-556. Source: the decktome `docs/decisions.md` on `main`, read 2026-09-14.
 - The decktome decision register holds 721 unique decision ids, from D-1 on 2026-08-23 to D-727 on 2026-09-14. Source: `grep` on the decktome `docs/decisions.md`, read 2026-09-14.
+- A certificate of the type `GROUPED` is the standard certificate for Spark plan custom domains. A `TEMPORARY` certificate covers a domain while Hosting creates a more permanent certificate. Source: the Hosting API v1beta1 discovery document, revision 20260830, read 2026-09-14.
+- At 04:11 UTC on 2026-09-15, both custom domains read `CERT_ACTIVE` with the type `GROUPED` and an expiry of 2026-12-13. So Hosting replaced the temporary certificates of PR-6. Source: the Hosting API v1beta1 calls of `docs/deploy.md`.
 
 ## 1. Thesis
 
@@ -528,7 +531,7 @@ Gate: the owner merges PR-9.
 
 #### PR-10: Deck Tome card
 
-Status: in review as #19 on `site/pr-10-deck-tome-card` (Session 17). D-111 to D-119 answer its design questions. The owner approved the words of the card on 2026-09-14 (D-113 to D-116), and skipped the phone check (D-120).
+Status: merged as #19, `0f983bb`, on 2026-09-15 UTC. Gitar approved the last head with no finding, and D-111 to D-120 answer its design questions. The owner approved the words of the card (D-113 to D-116) and skipped the phone check (D-120). After the deploy, `make preview-check` passed on `https://natekramber.com`.
 
 Scope: one project entry through the `add-project` skill (D-2, D-24).
 

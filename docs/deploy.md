@@ -268,6 +268,7 @@ The session and the owner ran steps 11 to 14 on 2026-09-14 (D-82, D-85, D-86).
 - Both certificates became active while the A records still pointed to GoDaddy. The HTTP challenge of Hosting failed with a 404 until step 14, and the DNS challenge was enough.
 - Before step 14, `curl --resolve` with the address `199.36.158.100` showed a valid certificate for each name. That check needs no DNS change.
 - The GoDaddy help pages 19239, 19237, and 19210 give the edit and delete steps of step 14. If GoDaddy locks the A records, page 32079 removes the connection to the other site.
+- At 04:11 UTC on 2026-09-15, both certificates read `CERT_ACTIVE` with the type `GROUPED`, the standard certificate for Spark plan custom domains. Hosting replaced the `TEMPORARY` certificates with no action by the owner.
 
 ## Step 15: The request logs
 
