@@ -6,9 +6,9 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-14)
 
-- **Main:** `0f983bb`, the squash merge of PR #19 (PR-10).
-- **Open pull requests:** the docs refresh on `docs/after-pr-10`, as a pull request of documents alone. It waits for the Gitar review and the merge.
-- **Next action:** answer the Gitar review of the refresh. Request it only after the checks of the new head start. After the merge, start PR-11, the What You Carry card, with the `add-project` skill.
+- **Main:** `5fffed4`, the squash merge of PR #20, the docs refresh. The small pull request that writes this block merges after it, with documents alone.
+- **Open pull requests:** none after that merge.
+- **Next action:** start PR-11, the What You Carry card, from `main` with the `add-project` skill. Treat `/Volumes/SSD-1TB/what-you-carry` as read-only.
 - **Blocked on:** OQ-3 blocks the About text.
 - **Next ids:** D-121, OQ-8, M-4, PR-17, Session 19.
 
@@ -80,6 +80,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - At 02:06 UTC on 2026-09-15, the external drive holds `/Volumes/SSD-1TB/what-you-carry`, the source of PR-11.
 - On the PR-10 build, the Projects heading of a 390 by 844 screen ends at 734 px (D-117). The footer line sits 24 px below the box of the last card at 390 px, and 80 px at 1440 px (D-118).
 - The owner merged #19 (PR-10) as `0f983bb` at 04:07:54 UTC on 2026-09-15. Its tree matches the reviewed head `5eec2ba`, and Gitar approved that head with no finding. Deploy run 34927622727 passed.
+- The owner merged #20, the docs refresh, as `5fffed4` at 04:32:35 UTC on 2026-09-15. Its tree matches the reviewed head `69a4689`, and Gitar approved that head with no finding. Deploy run 34929234875 passed.
 
 ## Session 18: 2026-09-14
 
