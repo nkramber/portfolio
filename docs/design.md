@@ -528,7 +528,7 @@ Gate: the owner merges PR-9.
 
 #### PR-10: Deck Tome card
 
-Status: in progress on `site/pr-10-deck-tome-card` (Session 17). D-111 to D-119 answer its design questions. The owner approved the words of the card on 2026-09-14 (D-113 to D-116).
+Status: in review as #19 on `site/pr-10-deck-tome-card` (Session 17). D-111 to D-119 answer its design questions. The owner approved the words of the card on 2026-09-14 (D-113 to D-116), and skipped the phone check (D-120).
 
 Scope: one project entry through the `add-project` skill (D-2, D-24).
 

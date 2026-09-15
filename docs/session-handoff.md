@@ -7,10 +7,10 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 ## Resume here (2026-09-14)
 
 - **Main:** `1bced52`, the squash merge of PR #18 (PR-9).
-- **Open pull requests:** PR-10, the Deck Tome card, on `site/pr-10-deck-tome-card`. It waits for the Gitar review, the phone check of the owner, and the merge.
+- **Open pull requests:** #19 (PR-10), the Deck Tome card, on `site/pr-10-deck-tome-card`. It waits for the Gitar review of its newest head, and the merge.
 - **Next action:** answer the Gitar review of PR-10. Request it only after the checks of the new head start. After the merge, start PR-11, the What You Carry card, with the `add-project` skill.
 - **Blocked on:** OQ-3 blocks the About text.
-- **Next ids:** D-120, OQ-8, M-4, PR-17, Session 18.
+- **Next ids:** D-121, OQ-8, M-4, PR-17, Session 18.
 
 ## Facts that expire
 
@@ -92,6 +92,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - On the PR-10 branch, a fixture build loads the fixture cards alone (D-112).
 - On 2026-09-14, the PR-10 branch passes every check of `make verify`, with 57 responsive tests and 15 accessibility tests. Lighthouse reads 1 in every category, 65,511 total bytes, a median LCP of 1,354 ms, and a CLS of 0.
 - On the PR-10 build, the Projects heading of a 390 by 844 screen ends at 734 px (D-117). The footer line sits 24 px below the box of the last card at 390 px, and 80 px at 1440 px (D-118).
+- On 2026-09-15 UTC, every check of #19 passed on `2948512`, and the Gitar pause note held an approval with no finding.
 
 ## Session 17: 2026-09-14
 
@@ -107,6 +108,8 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The session wrote PR-10: the entry, the Links section of D-102, the mono preload, the fixture change, the new tests, and the docs. Session 7 moved to the archive.
 - The responsive audit passed 54 of 54 tests and found 4 defects. The owner chose three fixes (D-117 to D-119). The session accepts the fourth: at 320 px with 200 percent text and the 1.4.12 spacing together, "decktome.com" breaks before its last letter.
 - The accessibility audit found no WCAG 2.2 AA defect in the light or the dark scheme.
+- The session opened #19. Every check passed on `2948512`, and the Gitar pause note held an approval with no finding.
+- The owner skipped the phone check of the preview (D-120).
 
 ### State of the repository
 
@@ -117,7 +120,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ### In flight
 
-- PR-10 waits for the Gitar review, the phone check of the owner, and the merge.
+- #19 waits for the Gitar review of the head that records D-120, and for the merge. The paused Gitar reviews a new head only after a `Gitar review` comment.
 - The accessibility audit found one AAA item for PR-11. Two cards give two links the same name, "Source on GitHub" (WCAG 2.4.9). A visually hidden project name fixes it, and that fix changes every card.
 - The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
 - Nobody checked Safari 26 yet for `::-webkit-details-marker`, the list role of `.tags`, and the summary in VoiceOver.
