@@ -2,12 +2,14 @@
 // file in src/content/projects/. The schema fails the build on a missing field, an
 // oversized field, or an unknown field, so a card never renders with a gap.
 //
-// PORTFOLIO_FIXTURES adds test entries, for test builds alone (D-103):
+// PORTFOLIO_FIXTURES swaps the site entries for test entries, for test builds alone
+// (D-103, D-112):
 // - "1": the fixture cards of tests/fixtures/projects/. Playwright builds them into
 //   dist-fixture/ for the responsive and the accessibility tests.
 // - "invalid": an entry with a missing field, for `make content-selftest`.
-// Each value keeps its own content cache (astro.config.mjs), so a site build never
-// reuses a test entry.
+// A test build loads no site entry, so the fixture page stays the same when a project
+// joins the site. Each value keeps its own content cache (astro.config.mjs), so a
+// site build never reuses a test entry.
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
@@ -24,7 +26,7 @@ const text = (max: number) => z.string().trim().min(1).max(max);
 const projects = defineCollection({
   loader: glob({
     base: '.',
-    pattern: ['src/content/projects/*.json', ...(fixtureFolder ? [`${fixtureFolder}/*.json`] : [])],
+    pattern: fixtureFolder ? `${fixtureFolder}/*.json` : 'src/content/projects/*.json',
     // The file name is the id, for example "deck-tome", so ids stay short and stable.
     generateId: ({ entry }) => entry.replace(/^.*\//, '').replace(/\.json$/, ''),
   }),

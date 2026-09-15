@@ -2,6 +2,54 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 7: 2026-09-13
+
+### What this session did, and why
+
+- The owner merged #7 (PR-14) as `28dbda2` and #8 (PR-16) as `162ec5b` on 2026-09-13 UTC. Each tree matches its reviewed head, and neither pull request added a check job.
+- Gitar approved both pull requests with no finding. Each approval sat in the collapsed Code Review block of the pause note.
+- `make verify` passed on `main` in this agent shell with no extra variable, so the exit tests of PR-16 hold.
+- The session started PR-15 with read-only research: the Astro docs, the installed preview server of Astro, linkinator, and html-validate.
+- The owner answered four questions about PR-15: D-71 to D-74.
+- The session wrote PR-15: the stylesheet file, the placeholder layout, the 404 page, the inline style check, and the tests of the 404 page. This entry rides in PR-15.
+- The `copy-editor` agent found no defect in the words of the 404 page.
+- The `accessibility-auditor` agent found no WCAG 2.2 AA defect on either page. The `responsive-auditor` agent found no regression, and the home page screenshots match `main` byte for byte.
+
+### State of the repository
+
+- `main` is `162ec5b`, the squash merge of PR #8.
+- Branch `site/pr-15-stylesheet-404` holds PR-15 and this entry.
+- Remote head: `origin/site/pr-15-stylesheet-404` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on `main` and on the branch.
+- The Lighthouse budget of PR-15 reads 1 in each of the five categories, 0 script bytes, and 2,037 total bytes. The median LCP is 751 ms, and the CLS and the TBT are 0.
+
+### In flight
+
+- PR-15 waits for the Gitar review, then for the merge.
+- PR-5 has its decisions, and no branch yet.
+- Nobody checked yet whether the setting of D-61 stops the Dependabot jobs that GitHub runs.
+- The auditors found three low defects in the CSS of PR-3, and PR-15 did not change that CSS. PR-7 holds the base styles, so the session left the defects for PR-7:
+  - At 320 px with text at 200 percent, the words "systems." and "address." run into the side padding of the `h1`.
+  - The CSS has no `overflow-wrap` rule, so a very long word makes the page scroll sideways at 320 px.
+  - The `h1` measures 96 px at 200 percent zoom in a 1280 px window, where double size is 144 px (WCAG 1.4.4).
+
+### Traps and gotchas
+
+- The verify workflow runs on pull requests alone, so a merge to `main` starts no check. After two merges, run `make verify` on `main`.
+- No page links to `404.html`, so the link check from `dist` never read it. `html-check` now starts at `'**/*.html'` with `--server-root dist`.
+- With two locations and no `--server-root`, linkinator reported the stylesheet and the home link of `dist/` as broken.
+- Astro 7.3.2 refuses a second `astro preview` server of the same project. So two auditors cannot serve the same build at the same time, and one auditor waited for the other.
+- In zsh, an unquoted `--include=*.js` stops `grep` with "no matches found". Quote the pattern.
+- A `cd` in one tool command moves the working directory of the next commands. Use absolute paths.
+
+### Open questions that block progress
+
+None blocks PR-5. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
+
+### Next concrete action
+
+Answer the Gitar review of PR-15. After the owner merges it, start PR-5 from `main` with read-only research, and verify the current `firebase-tools` version first (hard rule 9).
+
 ## Session 6: 2026-09-12
 
 ### What this session did, and why

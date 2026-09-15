@@ -6,11 +6,11 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-14)
 
-- **Main:** `ec0d764`, the squash merge of PR #17 (PR-8).
-- **Open pull requests:** PR-9, the project schema and card, on `site/pr-9-project-cards`. It waits for the Gitar review and the merge.
-- **Next action:** answer the Gitar review of PR-9. Request it only after the checks of the new head start. Draft the bio from the interview answers when they come (D-94).
+- **Main:** `1bced52`, the squash merge of PR #18 (PR-9).
+- **Open pull requests:** PR-10, the Deck Tome card, on `site/pr-10-deck-tome-card`. It waits for the Gitar review, the phone check of the owner, and the merge.
+- **Next action:** answer the Gitar review of PR-10. Request it only after the checks of the new head start. After the merge, start PR-11, the What You Carry card, with the `add-project` skill.
 - **Blocked on:** OQ-3 blocks the About text.
-- **Next ids:** D-111, OQ-8, M-4, PR-17, Session 17.
+- **Next ids:** D-120, OQ-8, M-4, PR-17, Session 18.
 
 ## Facts that expire
 
@@ -82,6 +82,65 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Deploy run 34901522463 passed on `ec0d764` at 21:57:20 UTC. At 21:59:32 UTC, `make preview-check` passed on `https://natekramber.com`, with `img-src 'self'` in the CSP.
 - On 2026-09-14, the PR-9 branch passes every check of `make verify`. Lighthouse reads 1 in every category, 44,768 total bytes, a median LCP of 1,202 ms, and a CLS of 0.
 - On the PR-9 branch, a fixture build keeps its content cache in `node_modules/.astro-fixtures-1` or `node_modules/.astro-fixtures-invalid`. The site build keeps `node_modules/.astro`.
+- The owner merged #18 (PR-9) as `1bced52` at 00:20:00 UTC on 2026-09-15. Its tree matches the reviewed head `56c9749`, and Gitar approved that head with no finding in the pause note.
+- PR-9 added a step to the `verify:site` job and no new check job, so the `main` ruleset did not change (read 2026-09-15 UTC).
+- Deploy run 34912742795 passed on `1bced52` at 00:20 UTC on 2026-09-15. At 00:27:40 UTC, `make preview-check` passed on `https://natekramber.com`.
+- The decktome working tree on this Mac holds the local branch `pr54-theme-words` with uncommitted Go changes, read 2026-09-14. Its docs match `origin/main` at `c7a4ff4`.
+- At 02:02 UTC on 2026-09-15, `gh repo view` read `nkramber/decktome` as public. `https://decktome.com` answered 200, and `www.decktome.com` answered 301 to the apex.
+- The decktome D-310 still reads "No public sign-up", and its D-577 of 2026-09-07 names the product "Deck Tome" (read 2026-09-14).
+- At 02:06 UTC on 2026-09-15, the external drive holds `/Volumes/SSD-1TB/what-you-carry`, the source of PR-11.
+- On the PR-10 branch, a fixture build loads the fixture cards alone (D-112).
+- On 2026-09-14, the PR-10 branch passes every check of `make verify`, with 57 responsive tests and 15 accessibility tests. Lighthouse reads 1 in every category, 65,511 total bytes, a median LCP of 1,354 ms, and a CLS of 0.
+- On the PR-10 build, the Projects heading of a 390 by 844 screen ends at 734 px (D-117). The footer line sits 24 px below the box of the last card at 390 px, and 80 px at 1440 px (D-118).
+
+## Session 17: 2026-09-14
+
+### What this session did, and why
+
+- The owner merged #18 (PR-9) as `1bced52` at 00:20 UTC on 2026-09-15. Its tree matches the reviewed head `56c9749`, and deploy run 34912742795 passed.
+- `make preview-check` passed on `https://natekramber.com` at 00:27 UTC. PR-9 added no check job, so the ruleset did not change.
+- The session started PR-10 with the `add-project` skill and a read-only research pass on the decktome repository.
+- The first real entry breaks the fixture build: `fixture-screenshot.json` and Deck Tome both take order 1. The owner chose a fixture build with the fixture cards alone (D-112).
+- The first card puts the mono face on the home page. A local measurement showed that a preload makes the face render on a fast first visit. The owner chose a preload on the home page alone (D-111).
+- The owner picked the pitch, the highlights, the tags, and the links (D-113 to D-116). The owner kept the chosen words over two changes of the copy review.
+- The session checked each card fact in the decktome repository, and with `gh` and `curl` (G-11).
+- The session wrote PR-10: the entry, the Links section of D-102, the mono preload, the fixture change, the new tests, and the docs. Session 7 moved to the archive.
+- The responsive audit passed 54 of 54 tests and found 4 defects. The owner chose three fixes (D-117 to D-119). The session accepts the fourth: at 320 px with 200 percent text and the 1.4.12 spacing together, "decktome.com" breaks before its last letter.
+- The accessibility audit found no WCAG 2.2 AA defect in the light or the dark scheme.
+
+### State of the repository
+
+- `main` is `1bced52`, the squash merge of PR #18.
+- Branch `site/pr-10-deck-tome-card` holds PR-10 and this entry.
+- Remote head: `origin/site/pr-10-deck-tome-card` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on the branch. Lighthouse reads 1 in every category, 65,511 total bytes, a median LCP of 1,354 ms, and a CLS of 0.
+
+### In flight
+
+- PR-10 waits for the Gitar review, the phone check of the owner, and the merge.
+- The accessibility audit found one AAA item for PR-11. Two cards give two links the same name, "Source on GitHub" (WCAG 2.4.9). A visually hidden project name fixes it, and that fix changes every card.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- Nobody checked Safari 26 yet for `::-webkit-details-marker`, the list role of `.tags`, and the summary in VoiceOver.
+- No run tested the PR-6 exit test of D-63 yet.
+- Each certificate has the type `TEMPORARY`, and nobody checked the permanent certificate yet.
+- The private preview page of D-89 still exists on claude.ai.
+
+### Traps and gotchas
+
+- In zsh, `${PIPESTATUS[0]}` is empty, so an `EXIT=` line printed nothing. Use `$pipestatus` in zsh, or run the command in bash.
+- The research report said that the decktome working tree matched `origin/main`. The tree held uncommitted Go changes, so check the diff of each cited file.
+- A strict `grep` for the decision rows of decktome found 693 rows, and a count of unique ids found 721. Count the unique ids.
+- A fixture build that adds its entries to the site entries breaks on the first real entry. Two entries share an order number, and the tests count the cards (D-112).
+- The first card puts the mono face on the home page. So the font test that expects one font request must change with the card.
+- A measurement script under `prefers-reduced-motion: reduce` read a note 22 px above its link right after a text size change. After 500 ms it read 16 px below, as the screenshot showed. The reset transition covers font sizes too, so wait one frame, or measure with motion allowed.
+
+### Open questions that block progress
+
+None blocks PR-10. OQ-3 blocks the About text.
+
+### Next concrete action
+
+Answer the Gitar review of PR-10, and request it only after the checks of the new head start. After the merge, start PR-11, the What You Carry card, with the `add-project` skill.
 
 ## Session 16: 2026-09-14
 
@@ -476,51 +535,3 @@ None blocks #10. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge o
 ### Next concrete action
 
 Read the preview run of the console fix on #10. When `verify:site-preview` passes, answer the Gitar review of the new head, and tell the owner that #10 is ready to merge.
-
-## Session 7: 2026-09-13
-
-### What this session did, and why
-
-- The owner merged #7 (PR-14) as `28dbda2` and #8 (PR-16) as `162ec5b` on 2026-09-13 UTC. Each tree matches its reviewed head, and neither pull request added a check job.
-- Gitar approved both pull requests with no finding. Each approval sat in the collapsed Code Review block of the pause note.
-- `make verify` passed on `main` in this agent shell with no extra variable, so the exit tests of PR-16 hold.
-- The session started PR-15 with read-only research: the Astro docs, the installed preview server of Astro, linkinator, and html-validate.
-- The owner answered four questions about PR-15: D-71 to D-74.
-- The session wrote PR-15: the stylesheet file, the placeholder layout, the 404 page, the inline style check, and the tests of the 404 page. This entry rides in PR-15.
-- The `copy-editor` agent found no defect in the words of the 404 page.
-- The `accessibility-auditor` agent found no WCAG 2.2 AA defect on either page. The `responsive-auditor` agent found no regression, and the home page screenshots match `main` byte for byte.
-
-### State of the repository
-
-- `main` is `162ec5b`, the squash merge of PR #8.
-- Branch `site/pr-15-stylesheet-404` holds PR-15 and this entry.
-- Remote head: `origin/site/pr-15-stylesheet-404` at the commit that holds this entry, checked after the push.
-- `make verify` on Node 22.23.2 passes on `main` and on the branch.
-- The Lighthouse budget of PR-15 reads 1 in each of the five categories, 0 script bytes, and 2,037 total bytes. The median LCP is 751 ms, and the CLS and the TBT are 0.
-
-### In flight
-
-- PR-15 waits for the Gitar review, then for the merge.
-- PR-5 has its decisions, and no branch yet.
-- Nobody checked yet whether the setting of D-61 stops the Dependabot jobs that GitHub runs.
-- The auditors found three low defects in the CSS of PR-3, and PR-15 did not change that CSS. PR-7 holds the base styles, so the session left the defects for PR-7:
-  - At 320 px with text at 200 percent, the words "systems." and "address." run into the side padding of the `h1`.
-  - The CSS has no `overflow-wrap` rule, so a very long word makes the page scroll sideways at 320 px.
-  - The `h1` measures 96 px at 200 percent zoom in a 1280 px window, where double size is 144 px (WCAG 1.4.4).
-
-### Traps and gotchas
-
-- The verify workflow runs on pull requests alone, so a merge to `main` starts no check. After two merges, run `make verify` on `main`.
-- No page links to `404.html`, so the link check from `dist` never read it. `html-check` now starts at `'**/*.html'` with `--server-root dist`.
-- With two locations and no `--server-root`, linkinator reported the stylesheet and the home link of `dist/` as broken.
-- Astro 7.3.2 refuses a second `astro preview` server of the same project. So two auditors cannot serve the same build at the same time, and one auditor waited for the other.
-- In zsh, an unquoted `--include=*.js` stops `grep` with "no matches found". Quote the pattern.
-- A `cd` in one tool command moves the working directory of the next commands. Use absolute paths.
-
-### Open questions that block progress
-
-None blocks PR-5. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
-
-### Next concrete action
-
-Answer the Gitar review of PR-15. After the owner merges it, start PR-5 from `main` with read-only research, and verify the current `firebase-tools` version first (hard rule 9).

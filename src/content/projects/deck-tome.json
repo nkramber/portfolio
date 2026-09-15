@@ -1,0 +1,16 @@
+{
+  "title": "Deck Tome",
+  "pitch": "Describe the deck you want, answer a few questions, and get a legal Magic: The Gathering deck.",
+  "status": "Live",
+  "tags": ["Go", "TypeScript", "React"],
+  "links": [
+    { "label": "decktome.com", "href": "https://decktome.com/", "note": "Invite only" },
+    { "label": "Source on GitHub", "href": "https://github.com/nkramber/decktome" }
+  ],
+  "highlights": [
+    "A rules engine checks every card for legality on the day, color identity, power bracket, and ownership before you see the deck.",
+    "I direct AI coding agents. Every change goes on a branch, gets an automated code review and a full CI run, and waits for me to merge.",
+    "I keep a dated, public decision register: 721 decisions in the first 23 days."
+  ],
+  "order": 1
+}

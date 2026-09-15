@@ -111,23 +111,41 @@ for (const address of ['/', fixturePage]) {
   });
 }
 
-// WCAG 1.4.4: text at 200 percent keeps all content at the smallest width.
+// WCAG 1.4.4: text at 200 percent keeps all content at the smallest width, with
+// every card open (D-112).
 test('text at 200 percent stays inside its boxes at 320px', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 900 });
   await page.goto('/');
+  await openEveryCard(page);
   await enlargeText(page);
   expect(await textOverflow(page)).toBe(0);
   expect(await sidewaysOverflow(page)).toBe(0);
 });
 
-// WCAG 1.4.12: the page keeps all content with the text spacing of the standard.
+// WCAG 1.4.12: the page keeps all content with the text spacing of the standard,
+// with every card open (D-112).
 test('the text spacing of WCAG 1.4.12 keeps every word inside its box at 320px', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 900 });
   await page.goto('/');
+  await openEveryCard(page);
   await applyTextSpacing(page);
   expect(await textOverflow(page)).toBe(0);
   expect(await sidewaysOverflow(page)).toBe(0);
 });
+
+// D-112: the fixture build holds the fixture cards alone, so the cards of the site
+// get their width check on the home page, with every card open.
+for (const width of widths) {
+  test(`home page: no sideways scroll and no clipped text at ${width}px, with every card open`, async ({ page }, testInfo) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+    expect(await page.locator('.card').count()).toBeGreaterThan(0);
+    await openEveryCard(page);
+    await page.screenshot({ path: testInfo.outputPath(`home-open-${width}.png`), fullPage: true });
+    expect(await sidewaysOverflow(page)).toBe(0);
+    expect(await textOverflow(page)).toBe(0);
+  });
+}
 
 // WCAG 1.4.4 accepts any text scaling mechanism of the browser. Firefox on Android
 // zooms to 400 percent, and desktop Chromium and Firefox to 500 percent. So a fluid
@@ -135,7 +153,7 @@ test('the text spacing of WCAG 1.4.12 keeps every word inside its box at 320px',
 // smallest (https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html). On a
 // phone, pinch zoom scales the whole page and doubles every size.
 test('each fluid text size grows at most 2 times from 320px to 2560px', async ({ page }) => {
-  const selectors = ['.name', 'h1', '.lede', '.links a'];
+  const selectors = ['.name', 'h1', '.lede', '.links a', '.site-footer h2'];
   const sizes: Record<number, number[]> = {};
   for (const width of [320, 2560]) {
     await page.setViewportSize({ width, height: 900 });
@@ -151,18 +169,29 @@ test('each fluid text size grows at most 2 times from 320px to 2560px', async ({
   });
 });
 
-// The text face downloads once, from the file that the page preloads (D-92). A
-// preload with another address or another CORS mode fetches the font twice.
-test('the text face loads once, from the preloaded file', async ({ page }) => {
+// Each face downloads once, from the file that the page preloads (D-92). A preload
+// with another address or another CORS mode fetches the font twice. The home page
+// also preloads the mono face of its cards, and the 404 page shows no mono text, so
+// it preloads the text face alone (D-111).
+test('each face loads once, from its preloaded file', async ({ page }) => {
   const fontRequests: string[] = [];
   page.on('request', (request) => {
     if (request.resourceType() === 'font') fontRequests.push(new URL(request.url()).pathname);
   });
+  const fontPreloads = () =>
+    page.locator('link[rel="preload"][as="font"]').evaluateAll((links) => links.map((link) => link.getAttribute('href') ?? ''));
+
   await page.goto('/');
   await page.evaluate(() => document.fonts.ready);
-  const preload = await page.locator('link[rel="preload"][as="font"]').getAttribute('href');
-  expect(await page.evaluate(() => document.fonts.check('1rem "Atkinson Hyperlegible Next"'))).toBe(true);
-  expect(fontRequests).toEqual([preload]);
+  const preloads = await fontPreloads();
+  expect(preloads).toHaveLength(2);
+  for (const face of ['Atkinson Hyperlegible Next', 'Atkinson Hyperlegible Mono']) {
+    expect(await page.evaluate((family) => document.fonts.check(`1rem "${family}"`), face), face).toBe(true);
+  }
+  expect([...fontRequests].sort()).toEqual([...preloads].sort());
+
+  await page.goto('/no-such-page');
+  expect(await fontPreloads()).toHaveLength(1);
 });
 
 // D-95: the hero rises into place when the system allows motion, and it holds still
@@ -270,6 +299,76 @@ test('the open fixture cards keep every word inside its box at 320px with larger
   await applyTextSpacing(page);
   expect(await textOverflow(page), 'text at 200 percent with the 1.4.12 spacing').toBe(0);
   expect(await sidewaysOverflow(page), 'text at 200 percent with the 1.4.12 spacing').toBe(0);
+});
+
+// D-119: a note that moves under its link sits close to that link, at most half as
+// far from it as from the next link. The check measures the text of each link,
+// without its padding.
+test('each link note stays with its own link at 320px with text at 200 percent', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 900 });
+  await page.goto(fixturePage);
+  await enlargeText(page);
+  const gaps = await page.locator('.card-links .note').evaluateAll((notes) =>
+    notes.flatMap((note) => {
+      const textBox = (link: Element) => {
+        const box = link.getBoundingClientRect();
+        const style = getComputedStyle(link);
+        return { top: box.top + parseFloat(style.paddingTop), bottom: box.bottom - parseFloat(style.paddingBottom) };
+      };
+      const item = note.parentElement as HTMLElement;
+      const own = textBox(item.querySelector('a') as Element);
+      const nextLink = item.nextElementSibling?.querySelector('a');
+      const noteBox = note.getBoundingClientRect();
+      // A note beside its link, or a note of the last link, has no gap to compare.
+      if (noteBox.top < own.bottom || !nextLink) return [];
+      return [{ above: noteBox.top - own.bottom, below: textBox(nextLink).top - noteBox.bottom }];
+    }),
+  );
+  expect(gaps.length).toBeGreaterThan(0);
+  for (const { above, below } of gaps) {
+    expect(above).toBeLessThanOrEqual(below / 2);
+  }
+});
+
+// D-117: with cards below it, the hero leaves room for the Projects heading on the
+// first screen. The 404 page has no cards, so its hero keeps the full height.
+test('the Projects heading shows on the first screen, and the 404 hero keeps the full height', async ({ page }) => {
+  const sizes = [
+    { width: 375, height: 667 },
+    { width: 390, height: 844 },
+    { width: 768, height: 1024 },
+    { width: 1440, height: 900 },
+    { width: 2560, height: 1440 },
+  ];
+  for (const size of sizes) {
+    await page.setViewportSize(size);
+    await page.goto('/');
+    const bottom = await page.locator('#projects-heading').evaluate((heading) => heading.getBoundingClientRect().bottom);
+    expect(bottom, `${size.width} by ${size.height}`).toBeLessThanOrEqual(size.height);
+  }
+  await page.goto('/no-such-page');
+  const hero = await page.locator('.hero').evaluate((element) => ({
+    height: element.getBoundingClientRect().height,
+    viewport: window.innerHeight,
+  }));
+  expect(hero.height).toBeGreaterThanOrEqual(hero.viewport);
+});
+
+// D-118: the footer heading stays smaller than a card title, and the footer adds no
+// space above its hairline, so the Links section never reads as another card.
+test('the Links section reads as the end of the page, not as another card', async ({ page }) => {
+  for (const width of [390, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+    const footer = await page.evaluate(() => {
+      const fontSize = (selector: string) => parseFloat(getComputedStyle(document.querySelector(selector) as Element).fontSize);
+      const projects = (document.querySelector('.projects') as Element).getBoundingClientRect();
+      const heading = (document.querySelector('.site-footer h2') as Element).getBoundingClientRect();
+      return { headingSize: fontSize('.site-footer h2'), cardTitleSize: fontSize('.card h3'), spaceAbove: heading.top - projects.bottom };
+    });
+    expect(footer.headingSize, `${width}px`).toBeLessThan(footer.cardTitleSize);
+    expect(footer.spaceAbove, `${width}px`).toBeLessThanOrEqual(1);
+  }
 });
 
 // D-23: a card opens and closes in place with a mouse, a touch, and the keyboard.
