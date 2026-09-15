@@ -78,3 +78,53 @@ test('the structure scan catches a planted page with no main landmark and no h1'
     expect(found.some((violation) => violation.startsWith(`${rule} `)), rule).toBe(true);
   }
 });
+
+// The fixture cards of D-103, which Playwright serves from dist-fixture/ on port
+// 4322: the WCAG scan with every card closed and open, in both schemes (G-8), and
+// the structure scan.
+const fixturePage = 'http://127.0.0.1:4322/';
+
+for (const colorScheme of ['light', 'dark'] as const) {
+  test(`no WCAG violation on the fixture cards, closed and open, in the ${colorScheme} scheme`, async ({ page }) => {
+    await page.emulateMedia({ colorScheme });
+    await page.goto(fixturePage);
+    expect(await page.locator('.card').count()).toBe(2);
+    expect(await violations(new AxeBuilder({ page }).withTags(wcagTags)), 'closed').toEqual([]);
+    await page.evaluate(() => {
+      document.querySelectorAll('details').forEach((details) => {
+        details.open = true;
+      });
+    });
+    expect(await violations(new AxeBuilder({ page }).withTags(wcagTags)), 'open').toEqual([]);
+  });
+}
+
+test('the page structure of the fixture cards passes', async ({ page }) => {
+  await page.goto(fixturePage);
+  expect(await violations(new AxeBuilder({ page }).withRules(structureRules))).toEqual([]);
+});
+
+// D-107: each toggle names its card for a screen reader, as "Highlights of <title>".
+// The name joins the visible word and the visually hidden title.
+test('each card toggle names its card', async ({ page }) => {
+  await page.goto(fixturePage);
+  const titles = await page.locator('.card h3').allTextContents();
+  expect(titles).toHaveLength(2);
+  for (const [index, title] of titles.entries()) {
+    await expect(page.locator('.card summary').nth(index)).toHaveAccessibleName(`Highlights of ${title}`);
+  }
+});
+
+// A note such as "Invite only" describes its link (D-24), so a screen reader user who
+// tabs from link to link still hears it.
+test('each link note describes its link', async ({ page }) => {
+  await page.goto(fixturePage);
+  const notes = page.locator('.card-links .note');
+  const count = await notes.count();
+  expect(count).toBeGreaterThan(0);
+  for (let index = 0; index < count; index++) {
+    const note = notes.nth(index);
+    const text = (await note.textContent()) ?? '';
+    await expect(note.locator('xpath=preceding-sibling::a')).toHaveAccessibleDescription(text.trim());
+  }
+});

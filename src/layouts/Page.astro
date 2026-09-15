@@ -81,6 +81,7 @@ const { title } = Astro.props;
     /* The type scale. Each fluid size stays at or under 2 times its smallest value,
        so browser zoom at 400 percent still doubles the text (WCAG 1.4.4). */
     --text-base: 1rem;
+    --text-label: 0.875rem; /* the mono tags, badges, and notes of the cards */
     --text-name: clamp(1rem, 0.9rem + 0.4vw, 1.125rem);
     --text-link: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
     --text-lead: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
@@ -129,6 +130,7 @@ const { title } = Astro.props;
 
   h1,
   h2,
+  h3,
   p,
   ul {
     margin: 0;
@@ -163,6 +165,17 @@ const { title } = Astro.props;
   ::selection {
     background: var(--color-accent-tint);
     color: var(--color-text);
+  }
+
+  /* Text for screen readers alone, such as the project name in each "Highlights"
+     toggle of a card (D-107). */
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   /* Motion (D-27, D-95). The page moves only when the system allows motion, so a
@@ -271,7 +284,7 @@ const { title } = Astro.props;
     text-wrap: balance;
   }
 
-  /* A section heading, such as About. */
+  /* A section heading, such as About or Projects. */
   h2 {
     font-size: var(--text-lead);
     font-weight: 650;
@@ -288,6 +301,15 @@ const { title } = Astro.props;
 
   .about p {
     max-width: 65ch;
+  }
+
+  /* The Projects section of the home page (D-21). Each card draws its own hairline
+     (src/components/ProjectCard.astro). */
+  .projects {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+    padding-block: var(--space-section);
   }
 
   .links {

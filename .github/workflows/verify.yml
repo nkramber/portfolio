@@ -54,6 +54,9 @@ jobs:
       # The CSP of D-57 blocks inline style. The target also runs its self-test (D-72).
       - name: no inline style in the build
         run: make no-inline-style-check
+      # The project schema must fail the build on a missing field (D-103).
+      - name: project schema self-test
+        run: make content-selftest
 
   site-responsive:
     name: "verify:site-responsive"

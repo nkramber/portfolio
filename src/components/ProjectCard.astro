@@ -1,0 +1,268 @@
+---
+// One project card (D-2, G-2). Every project uses this component, and its facts
+// come from one entry of the `projects` collection (src/content.config.ts).
+//
+// The title, the pitch, the status, the tags, and the links always show. A native
+// disclosure opens the highlights and the screenshot, with no script (D-23, D-107).
+// No link sits inside `summary`: the axe rule nested-interactive fails that.
+// A card with no screenshot shows a panel with its name (D-106). The panel repeats
+// the title, so it is hidden from screen readers.
+// A link note, such as "Invite only", also describes its link, so a screen reader
+// user who tabs from link to link still hears it.
+import type { CollectionEntry } from 'astro:content';
+import { Picture } from 'astro:assets';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { title, pitch, status, tags, links, highlights, screenshot } = project.data;
+const headingId = `project-${project.id}`;
+---
+
+<article class="card" aria-labelledby={headingId}>
+  <div class="head">
+    <h3 id={headingId}>{title}</h3>
+    <p class="status"><span class="visually-hidden">Status: </span>{status}</p>
+  </div>
+  <p class="pitch">{pitch}</p>
+  <ul class="tags">
+    {tags.map((tag) => <li>{tag}</li>)}
+  </ul>
+  <ul class="card-links">
+    {
+      links.map((link, index) => {
+        const noteId = `${headingId}-note-${index}`;
+        return (
+          <li>
+            <a href={link.href} aria-describedby={link.note ? noteId : undefined}>
+              {link.label}
+            </a>
+            {link.note && (
+              <span class="note" id={noteId}>
+                {link.note}
+              </span>
+            )}
+          </li>
+        );
+      })
+    }
+  </ul>
+  <details>
+    <summary>Highlights<span class="visually-hidden"> of {title}</span></summary>
+    <div class="more">
+      <ul class="highlights">
+        {highlights.map((highlight) => <li>{highlight}</li>)}
+      </ul>
+      {
+        screenshot ? (
+          <Picture
+            class="shot"
+            src={screenshot.src}
+            alt={screenshot.alt}
+            formats={['avif', 'webp']}
+            widths={[480, 960, 1440]}
+            sizes="(min-width: 60rem) 57.5rem, calc(100vw - 2.5rem)"
+          />
+        ) : (
+          <div class="placeholder" aria-hidden="true">{title}</div>
+        )
+      }
+    </div>
+  </details>
+</article>
+
+<style>
+  /* One project row (D-27): a hairline above the card, then its facts in one column. */
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    padding-block: var(--space-l);
+    border-block-start: 1px solid var(--color-rule);
+  }
+
+  /* The status badge follows the title, and wraps under it on a narrow row (D-109). */
+  .head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-s) var(--space-m);
+  }
+
+  h3 {
+    font-size: var(--text-lead);
+    font-weight: 650;
+    line-height: var(--leading-lead);
+    /* A flex item keeps its longest word as its minimum width, so a long name must
+       break anywhere to stay inside the page (G-1). */
+    overflow-wrap: anywhere;
+  }
+
+  /* The labels of D-27 use the mono face. */
+  .status,
+  .tags,
+  .note {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    overflow-wrap: anywhere;
+  }
+
+  /* The accent on its tint meets 5.38:1 in light and 6.34:1 in dark (WCAG 1.4.3).
+     Forced colors drop the tint, and the transparent outline then takes the text
+     color, so the pill keeps its shape. */
+  .status {
+    padding: 0.125rem 0.625rem;
+    border-radius: 1rem;
+    background: var(--color-accent-tint);
+    color: var(--color-accent);
+    outline: 1px solid transparent;
+  }
+
+  .pitch,
+  .highlights {
+    max-width: 65ch;
+  }
+
+  .tags,
+  .card-links {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tags {
+    gap: var(--space-s);
+    color: var(--color-muted);
+  }
+
+  /* Each tag sits in a hairline outline, so a tag that wraps still reads as one tag
+     (D-108). The outline is decoration, so no contrast rule applies to it. */
+  .tags li {
+    padding-inline: 0.4em;
+    border: 1px solid var(--color-rule);
+    border-radius: 0.25rem;
+  }
+
+  .card-links {
+    gap: var(--space-s) var(--space-l);
+    font-size: var(--text-link);
+  }
+
+  /* A note stays beside its link, or moves under it as one unit, so it never splits
+     across two lines or hangs between two links. The row gap keeps the 6 px focus
+     ring of the link off a note below it. */
+  .card-links li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5em;
+  }
+
+  /* The padding makes each link a pointer target well above 24 by 24 CSS pixels (WCAG 2.5.8). */
+  .card-links a {
+    display: inline-block;
+    padding-block: var(--space-s);
+    overflow-wrap: anywhere;
+  }
+
+  .note {
+    color: var(--color-muted);
+  }
+
+  /* Only the toggle opens the card, not the whole row (D-107). The padding keeps it
+     a pointer target above 24 CSS pixels (WCAG 2.5.8). */
+  summary {
+    width: fit-content;
+    padding-block: var(--space-s);
+    color: var(--color-accent);
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+    /* Tab scrolls the toggle into view with room for its focus ring (WCAG 2.4.11). */
+    scroll-margin-block: 1rem;
+  }
+
+  /* Older Safari releases draw the marker through this pseudo-element. Whether
+     Safari 26 still does is unverified (PR-9 research, 2026-09-14). */
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* A chevron from two borders. Its content is empty, so it adds nothing to the name
+     of the toggle, and it points down when the card is open. */
+  summary::before {
+    content: '';
+    display: inline-block;
+    width: 0.45em;
+    height: 0.45em;
+    margin-inline-end: 0.6em;
+    border-inline-end: 2px solid currentColor;
+    border-block-end: 2px solid currentColor;
+    rotate: -45deg;
+    translate: 0 -0.1em;
+  }
+
+  details[open] > summary::before {
+    rotate: 45deg;
+  }
+
+  .more {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+    padding-block-start: var(--space-s);
+  }
+
+  .highlights {
+    padding-inline-start: 1.25em;
+  }
+
+  /* A block image leaves no gap below it for the text baseline. The hairline frames
+     a screenshot with a light background in the light scheme. */
+  .shot {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--color-rule);
+  }
+
+  /* D-106: a 16:10 panel with the project name. It stops at 36rem wide and sits at
+     the start of the column (D-110). The box grows when enlarged text needs more room.
+     Forced colors drop the tint, and the transparent outline then draws the panel edge. */
+  .placeholder {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 10;
+    max-inline-size: 36rem;
+    padding: var(--space-l);
+    background: var(--color-accent-tint);
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: var(--text-lead);
+    text-align: center;
+    overflow-wrap: anywhere;
+    outline: 1px solid transparent;
+  }
+
+  /* Motion (D-95): only when the system allows it. The open content drops a few
+     pixels into place with `translate` alone. A height animation needs a Limited
+     feature, so the card has none. */
+  @media (prefers-reduced-motion: no-preference) {
+    summary::before {
+      transition: rotate 150ms ease-out;
+    }
+
+    details[open] > .more {
+      animation: card-drop 200ms ease-out;
+    }
+  }
+
+  @keyframes card-drop {
+    from {
+      translate: 0 -0.5rem;
+    }
+  }
+</style>

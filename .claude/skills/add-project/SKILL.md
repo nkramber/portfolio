@@ -7,15 +7,15 @@ description: Add a project to the site as a new project card. Read the source re
 
 Every project on the site uses one card component and one data entry (D-2, G-2). A new project costs one entry and its images, and no layout code. This skill gives the procedure.
 
-CAUTION: PR-9 sets the data file, the field list, and the image sizes. Until PR-9 merges, step 4 and step 5 have no target. Read the file map of `CLAUDE.md` for the current paths.
+Each project is one JSON file in `src/content/projects/`. The schema in `src/content.config.ts` gives every field and its limit, and it fails the build on a wrong field (D-22, D-105).
 
 ## Procedure
 
 1. Confirm the project name, the source repository path, and the public links with the owner.
 2. Run the `project-researcher` agent on the source repository. It reads the repository and never changes it.
 3. Show the draft entry to the owner. Ask what the site can show, for example a private repository link or a screenshot.
-4. Add one entry to the project data file. Fill every required field of the schema.
-5. Add the images at the sizes and formats that `docs/design.md` sets. Give each content image alt text.
+4. Add one JSON file to `src/content/projects/`, named after the project, for example `deck-tome.json`. Fill every required field of the schema. Give the card an order number that no other entry uses (D-23).
+5. Put each screenshot next to its entry file. Name the file and its alt text in the `screenshot` field. With no screenshot, the card shows the placeholder panel of D-106.
 6. Run the `copy-editor` agent on the card text.
 7. Load the `responsive-qa` skill, and check the card at every width.
 8. Run the `accessibility-auditor` agent on the section that holds the card.
