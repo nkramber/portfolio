@@ -146,8 +146,10 @@ const headingId = `project-${project.id}`;
     border-radius: 0.25rem;
   }
 
+  /* The gap between two links is wider than the gap between a link and its note, so
+     a note that moves under its link stays with that link (D-119). */
   .card-links {
-    gap: var(--space-s) var(--space-l);
+    gap: var(--space-l);
     font-size: var(--text-link);
   }
 
@@ -166,6 +168,12 @@ const headingId = `project-${project.id}`;
     display: inline-block;
     padding-block: var(--space-s);
     overflow-wrap: anywhere;
+  }
+
+  /* A link with a note has no bottom padding, so a note under it sits close to it
+     (D-119). The top padding and the line height keep the target above 24 CSS pixels. */
+  .card-links a:has(+ .note) {
+    padding-block-end: 0;
   }
 
   .note {

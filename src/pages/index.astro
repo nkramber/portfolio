@@ -1,12 +1,16 @@
 ---
 // The home page (D-19, D-21): the hero with the profile links, the About section,
-// and the project cards. The Links section at the end of the page comes back with
-// the cards (D-102).
+// the project cards, and the Links section at the end of the page. The Links section
+// shows only with the cards, because they make the page long (D-102).
 import { getCollection } from 'astro:content';
 import Page from '../layouts/Page.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+// The hashed address of the mono face, the same file that the @font-face rule of the
+// layout loads (src/layouts/Page.astro).
+import monoFontUrl from '../fonts/atkinson-hyperlegible-mono-latin-wght-normal.woff2?url';
 
-// The two profile links of D-20. The hero shows them (D-102).
+// The two profile links of D-20. The hero shows them, and the Links section at the
+// end of the page repeats them below the cards (D-102).
 const links = [
   { label: 'GitHub', href: 'https://github.com/nkramber' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/nate-kramber' },
@@ -49,6 +53,10 @@ const shareImageUrl = new URL('/og.png', Astro.site).href;
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Nate Kramber. I design the systems. AI agents write the code. I decide what ships." />
     <meta name="twitter:card" content="summary_large_image" />
+    <!-- The tags and the status badges of the cards use the mono face. Without a
+         preload, the browser finds the face too late for `font-display: optional`,
+         and a first visit shows the fallback face (D-111). -->
+    {projects.length > 0 && <link rel="preload" href={monoFontUrl} as="font" type="font/woff2" crossorigin />}
   </Fragment>
 
   <main>
@@ -76,4 +84,13 @@ const shareImageUrl = new URL('/og.png', Astro.site).href;
       </section>
     )}
   </main>
+
+  {projects.length > 0 && (
+    <footer class="site-footer">
+      <h2>Links</h2>
+      <ul class="links">
+        {links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+      </ul>
+    </footer>
+  )}
 </Page>

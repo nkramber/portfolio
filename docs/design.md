@@ -18,6 +18,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-14 correction pass (Session 14): PR-7 reads merged, and the Phase 1 gate reads passed. Section 6 closes OQ-5, and D-93 sets how the owner gets a preview address.
 2026-09-14 correction pass (Session 15): PR-8 follows D-94 to D-102. The external facts add the research of PR-8.
 2026-09-14 correction pass (Session 16): PR-8 reads merged, and the Phase 2 gate reads passed.
+2026-09-14 correction pass (Session 17): PR-9 reads merged. PR-10 follows D-111 to D-119, and D-112 changes the fixture build of PR-9. The external facts add the research of PR-10.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -137,6 +138,11 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - The HTML Standard says that a `footer` alone is sufficient for a short list of links, and that a `nav` is usually unnecessary. Source: https://html.spec.whatwg.org/multipage/sections.html, read 2026-09-14.
 - The GOV.UK pattern for a page-not-found page uses the heading "Page not found" and two lines about the address. It asks for no blame of the reader, no "404", and no "oops". Source: https://design-system.service.gov.uk/patterns/page-not-found-pages/, read 2026-09-14.
 - sharp 0.35.4 is an optional dependency of Astro 7.3.2, and a build-time image takes its fonts from the build machine. Sources: `package-lock.json` and a test render of the PR-8 research, 2026-09-14.
+- With `font-display: optional` and no preload, the mono face of the fixture cards rendered in 1 of 3 first visits with no network throttling. With a preload, it rendered in 3 of 3. Source: a local run of the PR-9 fixture build in Chromium build 1243 at 390 by 844 pixels, 2026-09-14 (D-111).
+- On the DevTools "Slow 4G" profile with a 4 times CPU slowdown, both faces used the fallback face on each first visit. The mono preload did not change that result. Source: the same run (D-111).
+- The decktome repository is public, and `https://decktome.com` answers 200. The decktome D-310 still reads "No public sign-up". Sources: `gh repo view`, `curl`, and the decktome `docs/decisions.md`, read 2026-09-14.
+- The decktome D-577 of 2026-09-07 names the product "Deck Tome", in two words, and corrects its D-556. Source: the decktome `docs/decisions.md` on `main`, read 2026-09-14.
+- The decktome decision register holds 721 unique decision ids, from D-1 on 2026-08-23 to D-727 on 2026-09-14. Source: `grep` on the decktome `docs/decisions.md`, read 2026-09-14.
 
 ## 1. Thesis
 
@@ -486,7 +492,7 @@ Phase gate: both cards pass every site check, and the owner approves the text of
 
 #### PR-9: Project schema and card component
 
-Status: in progress on `site/pr-9-project-cards` (Session 16). D-103 to D-110 answer its design questions.
+Status: merged as #18, `1bced52`, on 2026-09-15 UTC. Gitar approved it with no finding, and D-103 to D-110 answer its design questions. D-112 changes its fixture build in PR-10.
 
 Scope:
 
@@ -500,7 +506,7 @@ Scope:
 - A status badge beside the title (D-109), and stack tags in hairline outlines (D-108).
 - A CSS panel with the project name, 36rem wide at most, for a card with no screenshot (D-40, D-106, D-110).
 - A Projects section on the home page, sorted by order, that stays off the page while the collection has no entry. PR-10 adds the first entry.
-- Two fixture entries in `tests/fixtures/projects/`, built into `dist-fixture/` for the responsive and the accessibility tests alone (D-103). They hold the longest title and the most tags that the schema allows. Each fixture build keeps its own content cache, so the site build never reuses a fixture entry.
+- Two fixture entries in `tests/fixtures/projects/`, built into `dist-fixture/` for the responsive and the accessibility tests alone (D-103). They hold the longest title and the most tags that the schema allows. Each fixture build keeps its own content cache, so the site build never reuses a fixture entry. Revised in part by D-112 on 2026-09-14: a fixture build loads the fixture entries alone.
 - `make content-selftest`: a planted entry with no pitch must fail the build (G-3).
 
 Out of scope:
@@ -522,26 +528,36 @@ Gate: the owner merges PR-9.
 
 #### PR-10: Deck Tome card
 
-Status: planned.
+Status: in review as #19 on `site/pr-10-deck-tome-card` (Session 17). D-111 to D-119 answer its design questions. The owner approved the words of the card on 2026-09-14 (D-113 to D-116), and skipped the phone check (D-120).
 
 Scope: one project entry through the `add-project` skill (D-2, D-24).
 
 - The name is "Deck Tome", and the order number puts the card first (D-24, D-43).
-- The links go to `decktome.com` and the public repository, with the "Invite only" label (D-24).
-- The text can describe how the owner directs AI coding agents (D-26).
+- The links go to `decktome.com` and the public repository, with the "Invite only" label (D-24, D-116).
+- The pitch, the three highlights, and the three stack tags of D-113 to D-115. One highlight describes how the owner directs AI coding agents (D-26).
 - The card shows the placeholder image until OQ-4 closes (D-40).
 - When a screenshot shows card art, the card carries the fan content line of Wizards of the Coast. The session verifies the current text of that policy first (D-41).
 - The first card makes the page longer. So the Links section of D-21 returns at the end of the page, with the line of D-101 (D-102).
+- The home page preloads the mono face of the card (D-111).
+- A fixture build loads the fixture cards alone, and the home page tests open every card (D-112).
+- While the home page shows cards, the hero leaves room for the Projects heading on the first screen (D-117).
+- The footer heading takes the body size and the muted color, and the footer adds no space above its line (D-118).
+- In every card, a note that moves under its link stays close to that link (D-119).
 
 Exit tests:
 
 - The owner approves the pitch and the highlights.
 - Each fact on the card has a source in the pull request text (G-11).
+- The font test finds two font preloads on the home page and one on the 404 page, and one request for each face (D-111).
+- The home page shows no sideways scroll and no clipped text at each width with every card open (G-1, D-112).
+- The Projects heading shows on the first screen at five screen sizes, and the 404 hero keeps the full height (D-117).
+- The footer heading is smaller than a card title, and the footer adds no space above its line (D-118).
+- At 320 px with 200 percent text, each note sits near its own link, not midway to the next link (D-119).
 - Every site check passes.
 
 Gate: the owner merges PR-10.
 
-> *In plain English:* the page lists no projects today. This change adds Deck Tome, the live project, as the first card.
+> *In plain English:* the page lists no projects today. This change adds Deck Tome, the live project, as the first card. The profile links return to the end of the page.
 
 #### PR-11: What You Carry card
 
