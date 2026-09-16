@@ -2,7 +2,7 @@
 .DEFAULT_GOAL := help
 .PHONY: help install browsers dev build preview images no-script-check no-inline-style-check \
 	no-inline-style-selftest content-selftest ste-check test-responsive test-a11y lighthouse lighthouse-selftest \
-	html-check html-selftest preview-check site-checks verify
+	html-check html-selftest preview-check link-check link-selftest site-checks verify
 
 # Astro sends anonymous usage data unless this variable is set (D-45). Every
 # target below runs with it, and so do the CI jobs, because they call make.
@@ -163,6 +163,31 @@ preview-check: ## Compare the headers of a deployed preview with firebase.json, 
 		echo "preview-check: the header check caught the planted wrong header"; \
 	else \
 		echo "$$out"; echo "preview-check: the header check missed the planted wrong header"; exit 1; \
+	fi
+
+# The outbound links of the live site, once a week in CI and by hand (PR-12,
+# D-16, D-131). This is the one target that needs the network and a live site.
+# linkinator follows only the links of the same root domain, so it reads each
+# outbound address once. linkedin.com stays out of the run: it answers 999 to a
+# GET with a default agent and with a browser agent, it answers 405 to a HEAD,
+# and its robots.txt prohibits automated access without permission (2026-09-16,
+# D-130). A removed profile answers 999 too, so an accepted 999 proves nothing.
+LIVE_SITE := https://natekramber.com
+SKIP_LINKS := linkedin\.com
+
+link-check: ## Check every outbound link of the live site, and skip linkedin.com (D-130 to D-132). It needs the network
+	@npx linkinator '$(LIVE_SITE)' --recurse --skip '$(SKIP_LINKS)' --timeout 20000 --retry --retry-errors
+	@$(MAKE) --no-print-directory link-selftest
+
+# The planted defect: a page with one address that the live site answers with
+# 404. The check must fail on it, and its output must name that address, so a
+# crash never counts as a pass (G-3).
+link-selftest: ## Prove that the link check fails on a planted dead link
+	@out=$$(npx linkinator tests/fixtures/dead-link.html --skip '$(SKIP_LINKS)' --timeout 20000 2>&1); rc=$$?; \
+	if [ $$rc -ne 0 ] && echo "$$out" | grep -q 'no-such-page-for-the-link-selftest'; then \
+		echo "link-selftest: the check failed on the planted dead link, as it must"; \
+	else \
+		echo "$$out"; echo "link-selftest: the check did not fail on the planted dead link"; exit 1; \
 	fi
 
 site-checks: test-responsive test-a11y lighthouse html-check ## Run the four site checks of D-38 on the built site

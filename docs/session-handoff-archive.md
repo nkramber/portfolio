@@ -2,6 +2,46 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 10: 2026-09-14
+
+### What this session did, and why
+
+- The owner merged #11, the docs refresh, as `251afa5` on 2026-09-14 UTC. Its tree matches the reviewed head `1b41ce3`.
+- Two read-only research passes read the custom domains of Firebase Hosting and the GitHub environment `production`.
+- The owner answered four questions about PR-6: D-82 to D-85.
+- The session created the environment `production` and both custom domains, and the owner cleared the administrator bypass (D-85).
+- The owner added the three TXT records of the first DNS visit, and both domains then read `OWNERSHIP_ACTIVE` (D-82).
+- The session wrote PR-6: `.github/workflows/deploy.yml`, steps 11 to 14 and the rollback of `docs/deploy.md`, and this entry.
+
+### State of the repository
+
+- `main` is `251afa5`, the squash merge of PR #11.
+- Branch `site/pr-6-deploy-domain` holds PR-6 and this entry.
+- Remote head: `origin/site/pr-6-deploy-domain` at the commit that holds this entry, checked after the push.
+- `make ste-check`: 0 findings. The deploy workflow has no run yet, because it runs on `main` alone.
+
+### In flight
+
+- PR-6 waits for the Gitar review, then for the merge. The first run of `deploy.yml` comes with the merge.
+- Both certificates wait for validation. When both read `CERT_ACTIVE`, the owner makes the second DNS visit (D-82).
+- Step 12 of `docs/deploy.md` reads the state of both custom domains through the Hosting API.
+
+### Traps and gotchas
+
+- The API response of an environment holds `can_admins_bypass`. The jq operator `//` prints its fallback for `false`, so print the field with `tostring`.
+- The A records of `natekramber.com` serve a GoDaddy Website Builder site, not a parking page (D-83).
+- The Hosting API v1beta1 returns 403 without the header `x-goog-user-project`.
+- For `www`, the Hosting API asks for a CNAME to `natekramber-prod.web.app`, not an A record.
+- The deploy workflow runs on `main` alone, so no pull request can test the live deploy before its merge.
+
+### Open questions that block progress
+
+None blocks PR-6. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
+
+### Next concrete action
+
+Answer the Gitar review of PR-6. When both certificates read `CERT_ACTIVE`, ask the owner for the second DNS visit of `docs/deploy.md`.
+
 ## Session 9: 2026-09-14
 
 ### What this session did, and why
