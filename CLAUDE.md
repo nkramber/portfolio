@@ -90,12 +90,12 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `src/pages/404.astro`: the 404 page, with the words of D-74 (D-98).
 - `src/layouts/Page.astro`: the head, the icon links, the design tokens, the base styles, and the motion of both pages (D-73, D-95).
 - `public/`: the icon `favicon.svg` (D-96), and the three PNG files of `make images`. `scripts/make-images.mjs` draws the share image of D-97 and two icons.
-- `src/content.config.ts`: the `projects` collection and its strict schema (D-22, D-105). Each project is one JSON file in `src/content/projects/`, for example `deck-tome.json` (D-113 to D-116).
+- `src/content.config.ts`: the `projects` collection and its strict schema (D-22, D-105, D-133). Each project is one JSON file in `src/content/projects/`, for example `deck-tome.json` (D-113 to D-116). An entry can also name a logo and a screenshot, and each image file sits next to it (D-133, D-134).
 - `src/components/ProjectCard.astro`: the one project card, with its own scoped styles (D-104, D-133).
 - `src/fonts/`: the two Atkinson Hyperlegible WOFF2 files of D-91, each with its SIL Open Font License file.
 - `astro.config.mjs`, `package.json`, `package-lock.json`, and `tsconfig.json`: the Astro project.
 - `.nvmrc`: the pinned Node version (D-44).
-- `tests/`: the Playwright tests of the responsive layout and of accessibility, and the fixtures with planted defects (D-38, D-72). `tests/fixtures/projects/` holds the fixture cards of D-103, and a fixture build loads those cards alone (D-112).
+- `tests/`: the Playwright tests of the responsive layout and of accessibility, and the fixtures with planted defects (D-38, D-72). `tests/fixtures/projects/` holds the fixture cards of D-103 with their logo file, and a fixture build loads those cards alone (D-112). `tests/fixtures/projects-invalid/` and `tests/fixtures/projects-unknown/` hold the two entries that the schema must refuse (D-103, D-133).
 - `playwright.config.ts`: the Playwright setup. It serves `dist/` with `astro preview` on port 4321. It also builds the fixture cards alone into `dist-fixture/`, and serves that folder on port 4322 (D-103, D-112).
 - `scripts/lighthouse-budget.mjs` and `lighthouse-budget.json`: the Lighthouse budget (D-48, D-50, D-60). `scripts/make-lighthouse-fixture.mjs` writes its planted defects.
 - `.htmlvalidate.json`: the rules of `html-validate` (D-46).
@@ -126,8 +126,8 @@ Every command is free. Only `make install`, `make browsers`, and `make link-chec
 - `make no-script-check`: fail when a built HTML file holds a script element (G-5).
 - `make no-inline-style-check`: fail when a built HTML file holds a style element or a style attribute (D-72). Its self-test then proves that the check can fail.
 - `make test-responsive`: check both pages at each width of the `responsive-qa` skill for sideways scroll, and save a screenshot of each. It also checks a long word, text at 200 percent, and the text spacing of WCAG 1.4.12. It checks the growth of each fluid text size and the load of each font face too (D-111). Then it checks the hero motion under each motion setting, and the address of the share image and of each icon (D-95 to D-97). It checks the home page at each width with its cards (D-112). It checks the first screen of the home page and the link notes too (D-117, D-119). It also checks the fixture cards of D-103 at each width, the image of each card, and the page that holds no disclosure (D-133, D-134).
-- `make test-a11y`: scan both pages with axe for WCAG 2.2 AA, in the light and the dark scheme. It also scans the page structure with the best-practice rules of PR-8, and proves that this scan can fail. Then it scans the fixture cards, closed and open. It also checks the screen reader name of each card toggle and each card link (D-107, D-121).
-- `make content-selftest`: build with a planted project entry that has no pitch, and prove that the schema fails the build (D-103).
+- `make test-a11y`: scan both pages with axe for WCAG 2.2 AA, in the light and the dark scheme. It also scans the page structure with the best-practice rules of PR-8, and proves that this scan can fail. Then it scans the fixture cards. It also checks the name of each card link, the name of each tag list, and the alt text of each card image (D-121, D-133).
+- `make content-selftest`: build with two planted project entries, one with no pitch and one with a `highlights` field. It proves that the schema fails the build on each one (D-103, D-133).
 - `make lighthouse`: check the Lighthouse budget over three runs, then prove that the budget fails on each planted defect.
 - `make html-check`: validate the built HTML and check its internal links and anchors, then prove that both tools fail on planted defects.
 - `make preview-check PREVIEW_URL=<address>`: compare the headers of a deployed preview with `firebase.json`, and check its console (D-59). Its self-test then proves that the header check can fail.

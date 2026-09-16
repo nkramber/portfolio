@@ -6,24 +6,24 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-16)
 
-- **Main:** `3ca291e`, the squash merge of PR #23, the weekly link check.
-- **Open pull requests:** #24 on branch `site/pr-17-card-shape`, PR-17. It waits for the Gitar review and the merge.
-- **Next action:** answer the Gitar review of #24. After the merge, start PR-13, the visit counts, from `main`.
+- **Main:** `eb1dccf`, the squash merge of PR #24, the flat card.
+- **Open pull requests:** none. The branch `docs/after-pr-17` holds this refresh, with no commit yet.
+- **Next action:** commit the refresh on `docs/after-pr-17`, and open its pull request. After the merge, start PR-13, the visit counts, from `main`.
 - **Blocked on:** OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
-- **Next ids:** D-139, OQ-9, M-4, PR-18, Session 22.
+- **Next ids:** D-139, OQ-9, M-4, PR-18, Session 23.
 
 ## Facts that expire
 
 - The GitHub settings, read 2026-09-14: squash merge alone, automatic delete of a merged branch, and ruleset `main` (id 23087504). The ruleset requires a pull request and refuses a force push and a delete. From 2026-09-12, GitHub Actions requires a full commit SHA for each action (D-61).
-- The `main` ruleset requires seven checks from GitHub Actions (app id 15368), read 2026-09-14: `verify:docs`, `verify:site`, `verify:site-responsive`, `verify:site-a11y`, `verify:site-lighthouse`, `verify:site-html`, and `verify:site-preview`.
-- `actions/checkout` tag v7.0.1 points to commit `3d3c42e5aac5ba805825da76410c181273ba90b1`, read 2026-09-14 from the GitHub API. It is still the newest release.
-- `actions/setup-node` tag v7.0.0 points to commit `820762786026740c76f36085b0efc47a31fe5020`, read 2026-09-14 from the GitHub API. It is still the newest release.
-- `actions/upload-artifact` tag v7.0.1 points to commit `043fb46d1a93c77aae656e7c1c64a875d1fc6a0a`, read 2026-09-14 from the GitHub API. It is still the newest release.
+- The `main` ruleset requires seven checks from GitHub Actions (app id 15368), read 2026-09-16: `verify:docs`, `verify:site`, `verify:site-responsive`, `verify:site-a11y`, `verify:site-lighthouse`, `verify:site-html`, and `verify:site-preview`.
+- `actions/checkout` tag v7.0.1 points to commit `3d3c42e5aac5ba805825da76410c181273ba90b1`, read 2026-09-16 from the GitHub API. It is still the newest release.
+- `actions/setup-node` tag v7.0.0 points to commit `820762786026740c76f36085b0efc47a31fe5020`, read 2026-09-16 from the GitHub API. It is still the newest release.
+- `actions/upload-artifact` tag v7.0.1 points to commit `043fb46d1a93c77aae656e7c1c64a875d1fc6a0a`, read 2026-09-16 from the GitHub API. It is still the newest release.
 - The Node release schedule, read 2026-09-14: Node 22 is in maintenance until its end of life on 2027-04-30. Node 24 is the active LTS line until 2026-10-20, and Node 26 becomes LTS on 2026-10-28. Node 22.23.2 is still the newest Node 22 release.
-- Astro 7.3.2 is the latest Astro on 2026-09-14 (npm registry), and it needs Node 22.12.0 or newer. The variable `ASTRO_TELEMETRY_DISABLED=1` stops its telemetry.
+- Astro 7.3.2 is the latest Astro on 2026-09-16 (npm registry), and it needs Node 22.12.0 or newer. The variable `ASTRO_TELEMETRY_DISABLED=1` stops its telemetry.
 - On 2026-09-14, npm lists each check tool at its latest release: Playwright 1.63.0, axe-core 4.13.0, Lighthouse 13.4.1, html-validate 11.15.0, and linkinator 8.1.0. Chromium 153 (build 1243) and chrome-launcher 1.2.1 date from 2026-09-12.
 - `npm audit` reads 0 vulnerabilities on 2026-09-14. Lighthouse CI 0.15.1 added 12 advisories before D-50 removed it.
-- The Gitar trial still pauses automatic reviews on 2026-09-16. On 13 pull requests (#7, #8, #12 to #17, and #19 to #23), the pause note of the first head held a full review in its collapsed Code Review block. A later head of #17, of #19, and of #22 needed a `Gitar review` comment, and the `gitar-review` skill holds the traps.
+- The Gitar trial still pauses automatic reviews on 2026-09-16. On 14 pull requests (#7, #8, #12 to #17, and #19 to #24), the pause note of the first head held a full review in its collapsed Code Review block. A later head of #17, of #19, and of #22 needed a `Gitar review` comment, and the `gitar-review` skill holds the traps.
 - PR-5 created the projects `natekramber-prod` and `natekramber-preview` on 2026-09-14 (D-51, D-56, D-79). A project id is permanent, and a permission error before creation does not show whether an id is free.
 - WCAG 2.2 is the W3C Recommendation of 2024-12-12, read 2026-09-12. The minimum target size of 2.5.8 is 24 by 24 CSS pixels.
 - ASD-STE100 Issue 9, dated 2025-01-15, is the current issue, read 2026-09-14.
@@ -34,8 +34,8 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The What You Carry repository `nkramber/what-you-carry` is public on 2026-09-15, and its D-106 still reads "Private until launch". The owner records that change in that repository (D-25).
 - The cloud tools on this Mac, read 2026-09-14: gcloud 533.0.0 in `/opt/homebrew/bin`, and a global Firebase CLI 14.14.0 under Node 20.17.0 alone. The newest gcloud is 584.0.0 of 2026-09-09 (https://docs.cloud.google.com/sdk/docs/release-notes).
 - The gcloud configurations on this Mac, read 2026-09-14: `default` (active) and `decktome` on the project `wallabee-dev`, and `natekramber` (inactive) for the owner projects.
-- firebase-tools 15.30.1 came out at 21:07 UTC on 2026-09-14, and `deploy/package-lock.json` still pins 15.30.0 (npm registry, read 2026-09-14). Both need Node 20 or newer. Version 15.22.2 broke deploys through Workload Identity Federation, and 15.22.3 fixed them (npm registry and firebase-tools issue 10716, read 2026-09-12).
-- `google-github-actions/auth` tag v3.0.0 points to commit `7c6bc770dae815cd3e89ee6cdf493a5fab2cc093`, read 2026-09-14 from the GitHub API. It is still the newest release. The tag is lightweight. The `releases/latest` endpoint returns the moving tag `v3`.
+- firebase-tools 15.30.1 came out at 21:07 UTC on 2026-09-14, and it is still the newest release. `deploy/package-lock.json` still pins 15.30.0 (npm registry, read 2026-09-16). Both need Node 20 or newer. Version 15.22.2 broke deploys through Workload Identity Federation, and 15.22.3 fixed them (npm registry and firebase-tools issue 10716, read 2026-09-12).
+- `google-github-actions/auth` tag v3.0.0 points to commit `7c6bc770dae815cd3e89ee6cdf493a5fab2cc093`, read 2026-09-16 from the GitHub API. It is still the newest release. The tag is lightweight. The `releases/latest` endpoint returns the moving tag `v3`.
 - The GitHub ids, read 2026-09-12: repository 1367643959 and owner 190805558. The OIDC `sub` prefix is `repo:nkramber@190805558/portfolio@1367643959`, the immutable format for a repository that GitHub created after 2026-07-15.
 - The repository has one environment, `production`, and no secret or variable, read 2026-09-14. Workflows get a read token by default, and the workflows of a first-time contributor need approval.
 - `dig` read the DNS of `natekramber.com` at `ns13.domaincontrol.com` at 04:11 UTC on 2026-09-15. The name servers are `ns13.domaincontrol.com` and `ns14.domaincontrol.com` at GoDaddy. The apex has one A record, `199.36.158.100`, and `www` is a CNAME to `natekramber-prod.web.app`. The apex holds the TXT record `hosting-site=natekramber-prod`, and the two `_acme-challenge` names hold the other two TXT records. The domain has no AAAA, MX, or CAA record.
@@ -49,7 +49,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The gcloud configuration `natekramber` exists since 2026-09-14. It stays inactive, and its account is the owner account of decktome-prod. The configuration `default` stays active on `wallabee-dev`.
 - The projects `natekramber-preview` (number 573927778532) and `natekramber-prod` (number 321332406577) exist since 2026-09-14, with no billing account. Each has Firebase, its default Hosting site, a pool `github`, a provider, and a deploy service account (`docs/deploy.md`).
 - The Firebase CLI of this Mac uses the Wallabee account by default, and the owner account is its second account (read 2026-09-14).
-- `actions/download-artifact` tag v8.0.1 points to commit `3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c`, read 2026-09-14 from the GitHub API. The tag is lightweight. It is still the newest release.
+- `actions/download-artifact` tag v8.0.1 points to commit `3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c`, read 2026-09-16 from the GitHub API. The tag is lightweight. It is still the newest release.
 - `deploy/package-lock.json` pins firebase-tools 15.30.0 with 674 packages. On 2026-09-14, `npm audit` of `deploy/` reads 9 moderate advisories, and the root reads 0.
 - On 2026-09-14, the `live` channel of `natekramber-preview` shows a release at 13:50 UTC. It came before any deploy of this repository, and its cause is unverified.
 - At 04:11 UTC on 2026-09-15, `https://natekramber.com` answered 200 with `Strict-Transport-Security: max-age=31536000; includeSubDomains`, and `https://www.natekramber.com` answered 301 to the apex. Before the second DNS visit, GoDaddy sent `max-age=63072000; includeSubDomains; preload` (D-83).
@@ -68,20 +68,67 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Fontsource 5.3.0 serves the Latin variable WOFF2 files of both Atkinson faces: 33,996 bytes for Next and 17,752 bytes for Mono (read 2026-09-14). GitHub marks both upstream repositories as archived.
 - Astro 7.3.2 has a fonts API. Its `Font` component writes a `style` element, and the CSP of D-57 blocks that element (installed `astro/components/Font.astro`, read 2026-09-14).
 - web-features 3.38.0 is the latest release on 2026-09-14. The Web Status API has no feature id for some properties, so the compat key in its `data.json` gives their status.
-- Since deploy run 35064220205 on `3ca291e` (2026-09-16 UTC), `https://natekramber.com` serves the two cards of PR-11. PR-12 changed no site file. At 05:50 UTC, `make preview-check` passed on the site, with `font-src 'self'` and `img-src 'self'` in the CSP.
+- Since deploy run 35065647135 on `eb1dccf` (2026-09-16 UTC), `https://natekramber.com` serves the flat cards of PR-17. `make preview-check` passed on the site after that deploy, with `font-src 'self'` and `img-src 'self'` in the CSP.
 - The owner checked the PR-7 preview on an iPhone 16 Pro in Chrome on 2026-09-14 (D-93).
 - `/Users/nate/Repos/terminal-rpg` does not exist on this Mac on 2026-09-14.
-- The Lighthouse budget of `make verify` read 1 in every category and a CLS of 0 from PR-7 to PR-11 (2026-09-15). The total bytes grew from 38,974 (PR-7) to 41,307 (PR-8), 44,768 (PR-9), 65,511 (PR-10), and 67,219 (PR-11). The median LCP grew from 1,052 ms to 1,352 ms. On the PR-17 branch the total bytes fall to 64,242, because the highlights left the cards (2026-09-16).
-- On `main`, `make verify` runs 57 responsive tests and 16 accessibility tests. On the PR-17 branch it runs 58 and 15 (2026-09-16).
-- On `main`, a fixture build loads the fixture cards alone (D-112). It keeps its content cache in `node_modules/.astro-fixtures-1` or `node_modules/.astro-fixtures-invalid`, and the site build keeps `node_modules/.astro`.
+- The Lighthouse budget of `make verify` read 1 in every category and a CLS of 0 from PR-7 to PR-11 (2026-09-15). The total bytes grew from 38,974 (PR-7) to 41,307 (PR-8), 44,768 (PR-9), 65,511 (PR-10), and 67,219 (PR-11). The median LCP grew from 1,052 ms to 1,352 ms. On `main` with PR-17, the total bytes read 64,242, because the highlights left the cards (2026-09-16).
+- On `main`, `make verify` runs 58 responsive tests and 15 accessibility tests (2026-09-16).
+- On `main`, a fixture build loads the fixture cards alone (D-112). It keeps its content cache in `node_modules/.astro-fixtures-1`, `-invalid`, or `-unknown`, and the site build keeps `node_modules/.astro`.
 - The decktome working tree on this Mac holds the local branch `pr54-theme-words` with uncommitted Go changes, read 2026-09-14. Its docs match `origin/main` at `c7a4ff4`.
 - At 02:02 UTC on 2026-09-15, `gh repo view` read `nkramber/decktome` as public. `https://decktome.com` answered 200, and `www.decktome.com` answered 301 to the apex.
 - The decktome D-310 still reads "No public sign-up", and its D-577 of 2026-09-07 names the product "Deck Tome" (read 2026-09-14).
-- At 05:45 UTC on 2026-09-15, the external drive holds `/Volumes/SSD-1TB/what-you-carry`, the source of PR-11. Its working tree is on the branch `feat/pr-65-ramp-meshes`, and the card of PR-11 cites its `main` at `a4bf6d6`. GitHub `main` then moved to `4bc8cd4`.
-- On the PR-11 build, the Projects heading sits 46 to 110 px above the bottom of the first screen in portrait (D-117). On a landscape phone, it sits below that screen (D-128). The smallest pointer target is 49.7 by 36.2 px. On the PR-17 branch, the page keeps at least 64 px below its last card (D-137), and the home page has 5 tab stops.
+- The external drive holds `/Volumes/SSD-1TB/what-you-carry`, the source of PR-11. Its working tree is on the branch `feat/pr-65-ramp-meshes`, and the card of PR-11 cites its `main` at `a4bf6d6`. On 2026-09-16 the GitHub `main` of that repository reads `7345c9c`.
+- On the PR-17 build, the Projects heading sits 46 to 110 px above the bottom of the first screen in portrait (D-117). On a landscape phone, it sits below that screen (D-128). The page keeps at least 64 px below its last card (D-137). The home page has 5 tab stops, and the smallest pointer target is 49.7 by 36.2 px.
 - The owner merged #23 (PR-12) as `3ca291e` on 2026-09-16. Its tree matches the reviewed head `503dfd5`, and Gitar approved that head with no finding. Deploy run 35064220205 passed.
+- The owner merged #24 (PR-17) as `eb1dccf` on 2026-09-16. Its tree matches the reviewed head `8da4c11`, and Gitar approved that head with no finding. Deploy run 35065647135 passed.
 - Run 35064260365 of `links.yml`, started by hand on 2026-09-16, read 13 links of the live site. Each one answered 200, and the self-test failed on the planted dead link.
-- The owner merged #22 (PR-11) as `c272a86` at 05:48:44 UTC on 2026-09-16. Its tree matches the reviewed head `b8a640e`, and Gitar approved that head with no finding. Deploy run 35061020052 passed.
+
+## Session 22: 2026-09-16
+
+### What this session did, and why
+
+- The owner merged #24 (PR-17) as `eb1dccf`. Its tree matches the reviewed head `8da4c11`, and Gitar approved that head with no finding.
+- Deploy run 35065647135 passed, and `make preview-check` passed on `https://natekramber.com`. The live site shows the flat cards.
+- The owner asked for a docs refresh before a context reset, with no commit, no push, and no pull request.
+- The session read the facts that expire again. Two changed: the `main` of What You Carry, and the newest deploy run of this repository.
+- Each action pin is still the newest release, the ruleset still requires seven checks, and firebase-tools 15.30.1 is still ahead of the pinned 15.30.0.
+- The design doc marks PR-11, PR-12, and PR-17 merged, and the Phase 3 gate passed. Its correction lines read oldest first again.
+- The external facts of the design doc gain the image research of PR-17. Session 12 moved to the archive.
+
+### State of the repository
+
+- `main` is `eb1dccf`, the squash merge of PR #24.
+- Branch `docs/after-pr-17` holds this refresh, with no commit yet.
+- `make ste-check`: 0 findings.
+
+### In flight
+
+- This refresh waits for a commit, a pull request, and the Gitar review.
+- PR-13 has no branch and no research yet. It needs a way to count page views in Cloud Logging on a project with no billing account.
+- OQ-4 waits for a screenshot, and OQ-8 waits for a logo file. Each card shows no image until then.
+- A logo file needs an opaque ground. The fixture mark reads 2.81:1 against the dark page, and 3.10:1 on forced black.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- Nobody checked Safari 26 and VoiceOver yet: the link names of D-122, the status line, and the logo row.
+- The hairline around a screenshot reads 1.24:1 against the page, so the edge of a light screenshot is faint.
+- No run tested the PR-6 exit test of D-63 yet.
+- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
+- The private preview page of D-89 still exists on claude.ai.
+
+### Traps and gotchas
+
+- The correction lines of `docs/design.md` read oldest first. Session 20 put its line above Session 19, and this session put both in order.
+- A branch that starts before the merge of another pull request meets one conflict in `docs/decisions.md`. Each branch adds its rows at the end of the table.
+- The responsive audit of a card change took about 20 minutes, and the accessibility audit about 10. Start each audit early, and run one at a time.
+- `make verify` stops at its first step, so a failed `make ste-check` hides every other check.
+- An HTML comment in an Astro template reaches the built page. A note about a component belongs in its frontmatter.
+
+### Open questions that block progress
+
+None blocks the refresh. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the images of the cards.
+
+### Next concrete action
+
+Commit this refresh on `docs/after-pr-17`, open its pull request, and answer the Gitar review. After the merge, start PR-13, the visit counts, from `main` with read-only research.
 
 ## Session 21: 2026-09-16
 
@@ -506,43 +553,3 @@ None blocks PR-7. OQ-3 blocks the About text of PR-8.
 ### Next concrete action
 
 Answer the Gitar review of PR-7, and ask the owner for the phone check on its preview address. After the merge, start PR-8 from `main` with read-only research.
-
-## Session 12: 2026-09-14
-
-### What this session did, and why
-
-- The owner merged #13, the docs refresh, as `1b623d3` at 17:12 UTC. Its tree matches the reviewed head `b29aca4`, and Gitar approved it with no finding.
-- The merge started deploy run 34873295079, and it passed. The close run of `preview.yml` passed too.
-- The session started M-2 with a read-only research pass. No primary source says whether the log link needs a billing account.
-- The owner chose the Hosting API for the link (D-87). The session set `cloudLoggingEnabled` at 17:22 UTC, and the call returned HTTP 200.
-- M-2 passed (D-88). A test visit of 17:28 UTC showed in the log `webrequests` at 17:39 UTC, with the URL, the referrer, and the country.
-- The session wrote D-87, D-88, the M-2 and PR-13 status, step 15 of `docs/deploy.md`, six external facts, and this entry. Session 2 moved to the archive.
-
-### State of the repository
-
-- `main` is `1b623d3`, the squash merge of PR #13.
-- Branch `docs/m-2-request-logs` holds the M-2 result, as a pull request of documents alone.
-- Remote head: `origin/docs/m-2-request-logs` at the commit that holds this entry, checked after the push.
-- `make ste-check`: 0 findings.
-
-### In flight
-
-- The M-2 result waits for the Gitar review, then for the merge.
-- Cloud Logging keeps the IP address, the city, and the country of each visitor for 30 days (D-87). PR-13 can change that time.
-- No run tested the PR-6 exit test of D-63 yet.
-- Each certificate has the type `TEMPORARY`, and nobody checked the permanent certificate yet.
-
-### Traps and gotchas
-
-- A Hosting log entry shows 10 to 20 minutes after the request. So a watch for a test visit needs at least 30 minutes.
-- The log held requests from 17:16 UTC, six minutes before the link at 17:22 UTC. The first test visit, at 17:23 UTC, did not show by 17:39 UTC.
-- The first watch matched the test tag in the query alone. Hosting keeps the query in `requestUrl`, so that match works.
-- `gcloud billing projects describe` reads the billing state. A direct call to the Cloud Billing API returns 403 in this project.
-
-### Open questions that block progress
-
-None blocks the M-2 result. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
-
-### Next concrete action
-
-Answer the Gitar review of the M-2 result. After the merge, start PR-7 from `main` with read-only research.

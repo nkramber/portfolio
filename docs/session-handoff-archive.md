@@ -2,6 +2,46 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 12: 2026-09-14
+
+### What this session did, and why
+
+- The owner merged #13, the docs refresh, as `1b623d3` at 17:12 UTC. Its tree matches the reviewed head `b29aca4`, and Gitar approved it with no finding.
+- The merge started deploy run 34873295079, and it passed. The close run of `preview.yml` passed too.
+- The session started M-2 with a read-only research pass. No primary source says whether the log link needs a billing account.
+- The owner chose the Hosting API for the link (D-87). The session set `cloudLoggingEnabled` at 17:22 UTC, and the call returned HTTP 200.
+- M-2 passed (D-88). A test visit of 17:28 UTC showed in the log `webrequests` at 17:39 UTC, with the URL, the referrer, and the country.
+- The session wrote D-87, D-88, the M-2 and PR-13 status, step 15 of `docs/deploy.md`, six external facts, and this entry. Session 2 moved to the archive.
+
+### State of the repository
+
+- `main` is `1b623d3`, the squash merge of PR #13.
+- Branch `docs/m-2-request-logs` holds the M-2 result, as a pull request of documents alone.
+- Remote head: `origin/docs/m-2-request-logs` at the commit that holds this entry, checked after the push.
+- `make ste-check`: 0 findings.
+
+### In flight
+
+- The M-2 result waits for the Gitar review, then for the merge.
+- Cloud Logging keeps the IP address, the city, and the country of each visitor for 30 days (D-87). PR-13 can change that time.
+- No run tested the PR-6 exit test of D-63 yet.
+- Each certificate has the type `TEMPORARY`, and nobody checked the permanent certificate yet.
+
+### Traps and gotchas
+
+- A Hosting log entry shows 10 to 20 minutes after the request. So a watch for a test visit needs at least 30 minutes.
+- The log held requests from 17:16 UTC, six minutes before the link at 17:22 UTC. The first test visit, at 17:23 UTC, did not show by 17:39 UTC.
+- The first watch matched the test tag in the query alone. Hosting keeps the query in `requestUrl`, so that match works.
+- `gcloud billing projects describe` reads the billing state. A direct call to the Cloud Billing API returns 403 in this project.
+
+### Open questions that block progress
+
+None blocks the M-2 result. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
+
+### Next concrete action
+
+Answer the Gitar review of the M-2 result. After the merge, start PR-7 from `main` with read-only research.
+
 ## Session 11: 2026-09-14
 
 ### What this session did, and why
