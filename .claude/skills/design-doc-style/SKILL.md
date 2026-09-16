@@ -32,7 +32,7 @@ Add one of these sections only when an entry fills it (D-10):
 ```markdown
 #### PR-<n>: <title>
 
-Status: <planned | in progress | in review | merged as #<number>, `<sha>` | parked, D-# | dropped, D-#>.
+Status: <planned | in progress | complete in #<number> | parked, D-# | dropped, D-#>.
 
 Scope:
 
@@ -56,6 +56,7 @@ Gate: <what must hold before the next entry starts>.
 - Ids: PR-# pull requests, M-# measurements, G-# guardrails, T-# tenets, F-# findings, L-# lessons, D-# decisions, OQ-# questions.
 - The numbers continue across revisions. Never renumber.
 - One concern for each pull request applies to each entry.
+- A pull request writes its own status, "complete in #<number>", before the merge. It records no merge commit, because git holds it (D-147). An older status that reads "merged as" stays as history.
 - Cite a decision by its id. Never restate it.
 - Every external fact has a source and a date.
 - Never delete a refuted claim. Mark it refuted, give the date, and keep it.

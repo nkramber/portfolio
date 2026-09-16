@@ -27,6 +27,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-16 correction pass (Session 23): PR-13 follows D-139 to D-141. D-141 adds a command to its scope. The external facts add the log research of PR-13.
 2026-09-16 correction pass (Session 24): PR-13 reads merged. M-3 holds the result of the two audits and of Lighthouse on the live site. PR-18 follows D-142 to D-145.
 2026-09-16 correction pass (Session 25): PR-18 reads merged. M-3 holds the hand check of the owner. D-146 supersedes D-18, and the code license is GPL-3.0.
+2026-09-16 correction pass (Session 26): PR-19 follows D-147 to D-152, and G-12 joins the guardrails. From PR-19 on, a status reads "complete in #N" before the merge, and no later pull request changes it to "merged" (D-147). The external facts add the hook research of PR-19.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -175,6 +176,11 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - The `no-redundant-role` rule of html-validate 11.15.0 takes an `exclude` list of role keywords. With `list` in that list, the rule still fails on `role="main"` on a `main` element. Source: the installed rule and a test file, read 2026-09-16.
 - The token `--color-rule` reads 1.24:1 in the light scheme and 1.34:1 in the dark scheme against the page. The new token `--color-tag-rule` reads 3.19:1 and 3.30:1, measured in the browser on the built page. Source: the M-3 audit and a browser measurement, 2026-09-16.
 - On 2026-09-15 the live site answered 901 requests. 580 of them were a 404 scan for addresses such as `/wp-admin/install.php` and `/.env`. 155 were a 200 answer for a page address. 30 of those came from a self-declared machine, and 35 more from one agent of 2019 with a false referrer. Every referrer named this same site or a spam address. Source: a read of the request log, 2026-09-16.
+- A Claude Code hook gets `session_id`, `transcript_path`, `cwd`, `permission_mode`, and `hook_event_name` in its input, and a PreToolUse hook also gets `tool_name` and `tool_input`. Exit code 2 blocks a PreToolUse call, and the stderr text becomes the message. Another exit code, except 0, is a non-blocking error. Source: https://code.claude.com/docs/en/hooks, read 2026-09-16.
+- The hook `timeout` counts seconds. `${CLAUDE_PROJECT_DIR}` names the project root where the session started, also in a worktree. Hooks run inside a subagent, and the input then adds `agent_id`. Source: the same page, read 2026-09-16.
+- No documented environment variable gives the session id to a Bash command. The docs do not say whether `session_id` changes after `/compact`, `/clear`, or a resume. A fork makes a new session id. Sources: https://code.claude.com/docs/en/env-vars and https://code.claude.com/docs/en/sessions, read 2026-09-16.
+- The `pull_request` event runs a workflow on `opened`, `synchronize`, and `reopened` when `types` is absent, and `edited` is a valid type. The GitHub webhook page gives a wrong description of `edited`, so PR-19 checks it on its own pull request. Source: https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows, read 2026-09-16.
+- An edit of the body of #32 at 19:51:44 UTC started run 35143102517 of `pr-lifecycle.yml` at 19:51:49 UTC. The run used the same head, with no push. So `edited` covers a body edit. Source: `gh run list`, read 2026-09-16.
 - The What You Carry workflow `bit-identity.yml` runs on each pull request and each push to `main`. It has a Linux, a Windows, and a macOS job, and a job that compares the three hashes. Its workflow `night.yml` runs at 08:07 UTC, with 5,000 seeds for each of two bots and a reachability sweep of 100,000 seeds. Source: What You Carry `main` at `a4bf6d6`, read 2026-09-15.
 
 ## 1. Thesis
@@ -202,6 +208,7 @@ Every pull request keeps each guardrail. Only an owner decision changes a guardr
 9. **G-9. No deploy key.** Every deploy authenticates through Workload Identity Federation. No service account key lives in the repository or in its secrets (D-35).
 10. **G-10. Only `main` deploys.** Only a merge to `main` reaches production (D-35).
 11. **G-11. Every card fact has a source.** Each fact on a card comes from its repository or from the owner. The site copy invents no metric (hard rule 9).
+12. **G-12. One pull request, one session.** Each pull request starts in a new clean session and holds its own documents and handoff. No pull request records the merge of an earlier pull request (D-147).
 
 ## 4. Roadmap
 
@@ -749,6 +756,53 @@ Gate: the owner merges PR-18.
 
 > *In plain English:* the launch audit found a faint outline that does a real job, and a list that Safari can strip of its meaning. This change fixes both. Neither fix moves the layout, and every site check still passes.
 
+#### PR-19: One pull request, one session
+
+Status: complete in #32. `verify:pr-lifecycle` passed on its first run and joined the `main` ruleset on 2026-09-16 (D-149).
+
+Scope:
+
+- The `one-pr-one-session` skill: the session binding, the stop condition, the start gate, the documentation gate, the Gitar rounds, and the completion gate (D-147, D-152).
+- Hard rules 3 and 11 of `CLAUDE.md` name the skill path. The `session-handoff` and `design-doc-style` skills record no merge (D-147).
+- `scripts/pr-lifecycle-check.py`, `make pr-template`, `make pr-check`, and the job `verify:pr-lifecycle` (D-148, D-151).
+- The ruleset change of D-149 after the first green run of that job.
+- `scripts/session-bind-hook.py` as a PreToolUse hook in `.claude/settings.json` (D-150).
+- `scripts/skill-check.py` and `make lifecycle-check` in `make verify` and in `verify:docs`.
+
+Out of scope:
+
+- The site. No file of `src/` or `public/` changes.
+- The `gitar-review` skill. It already asks for an answer to each finding before the merge (D-152).
+
+Enforcement:
+
+| Invariant | Kind | How |
+|---|---|---|
+| The body binds one branch, one pull request, one role, and a base commit | Machine | `verify:pr-lifecycle` |
+| Each document category has a specific entry, and no entry defers work | Machine | `verify:pr-lifecycle` |
+| Each `Changed` entry matches the diff, and each changed category says `Changed` | Machine | `verify:pr-lifecycle` |
+| The pull request changes `docs/session-handoff.md` | Machine | `verify:pr-lifecycle` |
+| No branch or title names a record of an earlier merge | Machine | `verify:pr-lifecycle` |
+| The skill is valid, `CLAUDE.md` names it, and the hook is in the settings | Machine | `make lifecycle-check` in `verify:docs` |
+| A Claude Code session pushes to one branch alone | Machine, local | The hook of D-150 |
+| The session holds no work of another pull request, a fork, or a summary | Agent | The stop condition of the skill |
+| Each reason is true, and the handoff describes only this pull request | Agent | The documentation gate of the skill |
+| The session stops at the end and offers no next pull request | Agent | The completion gate of the skill |
+| A new session starts for each pull request, and each merge waits for a current review | Owner | The owner starts each session and merges |
+| The history of a fork, a summary, or another tool | Not observable | No harness exposes it, and CI sees no conversation |
+
+This repository has no separate implementation head. Gitar reviews the newest head, and the handoff names "the commit that holds this entry". So a commit of the handoff alone gets its own review, and it never hides a code change (D-5).
+
+Exit tests:
+
+- `make lifecycle-check` passes, and each self-test fails on its planted defect (G-3).
+- `verify:pr-lifecycle` passes on this pull request, and it runs again after an edit of the body.
+- `make verify` passes.
+
+Gate: the owner merges PR-19. The next pull request starts in a new clean session.
+
+> *In plain English:* today one session can open many pull requests, and a later pull request writes down the merge of an earlier one. This change gives each pull request one fresh session and all of its own documents. It changes no page of the site, so no visitor sees a difference.
+
 ### Later
 
 These items have no id yet. Each one gets an entry when it starts.
@@ -781,6 +835,7 @@ One owner runs the sequence in strict order. A step starts only when the gate of
 19. PR-13, the visit counts. It runs only when M-2 passes.
 20. M-3, the launch audit. Gate: the owner signs off.
 21. PR-18, the audit fixes of M-3. Gate: the owner merges it.
+22. PR-19, one pull request, one session. Gate: the owner merges it.
 
 ## 6. Open questions
 

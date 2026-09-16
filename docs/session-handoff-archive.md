@@ -2,6 +2,55 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 16: 2026-09-14
+
+### What this session did, and why
+
+- The owner merged #17 (PR-8) as `ec0d764` at 21:56 UTC. Its tree matches the reviewed head `bc8bb08`, and deploy run 34901522463 passed.
+- `make preview-check` passed on `https://natekramber.com` at 21:59 UTC, with `img-src 'self'` in the CSP.
+- The session started PR-9 with two read-only research passes: the content collection and images, and the disclosure card.
+- The owner answered the PR-9 questions: D-103 to D-110.
+- The session wrote PR-9: the schema, the card component, the Projects section, two fixture cards, the schema self-test, and the new tests.
+- A browser test found fixture cards in `dist/`. One shared content cache let a site build reuse fixture entries, so each fixture build now has its own `cacheDir`.
+- The responsive audit found 4 layout defects and 2 weak checks. The branch fixes all 6, and the owner chose D-108 to D-110.
+- The accessibility audit found no WCAG 2.2 AA defect. The branch applies its 3 low items: forced-color outlines, a row gap, and a note description.
+- The copy review found nothing to change. Session 6 moved to the archive.
+
+### State of the repository
+
+- `main` is `ec0d764`, the squash merge of PR #17.
+- Branch `site/pr-9-project-cards` holds PR-9 and this entry.
+- Remote head: `origin/site/pr-9-project-cards` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on the branch.
+
+### In flight
+
+- PR-9 waits for the Gitar review and the merge. The live page shows no card until PR-10.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- Nobody checked Safari 26 yet for `::-webkit-details-marker`, the list role of `.tags`, and the summary in VoiceOver.
+- No run tested the PR-6 exit test of D-63 yet.
+- Each certificate has the type `TEMPORARY`, and nobody checked the permanent certificate yet.
+- The private preview page of D-89 still exists on claude.ai.
+
+### Traps and gotchas
+
+- Astro keeps the content store of a build in `cacheDir` (`dist/content/paths.js`). A site build after a fixture build with one shared cache reused the fixture entries, so each `PORTFOLIO_FIXTURES` value keeps its own cache.
+- A research claim said that a plain build drops fixture entries. A real build did not, so check each cache claim with the exact build order.
+- `page.addStyleTag` can return before the style applies. So the checks for text at 200 percent and the 1.4.12 spacing now wait for the computed style.
+- A resize loop needs an animation frame between steps, or a size in `vw` keeps its old value.
+- Under `prefers-reduced-motion: reduce`, the reset transition also covers `outline-offset`. So wait one frame before a script reads it.
+- `@axe-core/playwright` needs a page from `browser.newContext()`. A page from `browser.newPage()` stops the scan with an error.
+- The production build warns that the `projects` collection is empty. That warning is expected until PR-10 adds the first entry.
+- An upload of two screenshots to the owner failed once with "socket hang up", and a second try worked.
+
+### Open questions that block progress
+
+None blocks PR-9. OQ-3 blocks the About text.
+
+### Next concrete action
+
+Answer the Gitar review of PR-9, and request it only after the checks of the new head start. After the merge, start PR-10, the Deck Tome card, with the `add-project` skill.
+
 ## Session 15: 2026-09-14
 
 ### What this session did, and why

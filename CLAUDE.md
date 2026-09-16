@@ -36,7 +36,7 @@ The tenets are the constitution of the site. When a tenet conflicts with speed o
 
 1. **Write scope.** This repository permits writes. Treat every other repository as read-only (D-1). Read a project repository to describe it, and never change it.
 2. **Every change starts on a branch.** Never commit to `main`, and never push to it. Push the branch, and open a pull request. The owner merges. The `main` ruleset refuses a direct push, a force push, and every merge method except squash (D-11).
-3. **One concern for each pull request.** A session can open more than one pull request (D-12).
+3. **One pull request, one clean session.** Each pull request has one concern and gets a new, clean session. That session works on no other pull request. The pull request holds its documents and its handoff, and no later pull request records its merge. Read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-12, D-147).
 4. **Gitar reviews every pull request.** A pull request of documents alone waits for the review too. Load the `gitar-review` skill after each push. Gitar is the only review this repository asks for (D-5).
 5. **Write docs in ASD-STE100.** Load the `ste-writing` skill before you write a `.md` file. The words a visitor reads on the site are exempt (D-7). Run `make ste-check` before you commit a `.md` file.
 6. **No attribution.** Tenet T-6 applies. `.claude/settings.json` turns off the co-author trailer and the pull request footer (D-6).
@@ -44,7 +44,7 @@ The tenets are the constitution of the site. When a tenet conflicts with speed o
 8. **Never hesitate to ask or to push back.** When two owner statements conflict, quote both. When a request rests on a wrong premise, say so with the evidence. Silence is the mistake, not the question.
 9. **Do the research.** Verify each external fact against a primary source, and record the date. Browser support, web standards, and the terms of each host change.
 10. **Keep personal data out.** The repository is public. Write no email, phone number, or street address in a file, an issue, or a pull request. Only a decision can approve one.
-11. **Make the handoff simple.** Before you end a session, load the `session-handoff` skill. Update `docs/session-handoff.md`.
+11. **Make the handoff simple.** Before you end a session, load the `session-handoff` skill. Update `docs/session-handoff.md` in the pull request that it describes.
 
 ## Skills
 
@@ -56,6 +56,7 @@ The tenets are the constitution of the site. When a tenet conflicts with speed o
 | `add-project` | When the owner names a new project for the site. |
 | `responsive-qa` | Before you open a pull request that changes the site. |
 | `session-handoff` | At the start and at the end of each session. |
+| `one-pr-one-session` | Before any work for a pull request: author, review, correction, or handoff. |
 
 ## Agents
 
@@ -99,9 +100,10 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `playwright.config.ts`: the Playwright setup. It serves `dist/` with `astro preview` on port 4321. It also builds the fixture cards alone into `dist-fixture/`, and serves that folder on port 4322 (D-103, D-112).
 - `scripts/lighthouse-budget.mjs` and `lighthouse-budget.json`: the Lighthouse budget (D-48, D-50, D-60). `scripts/make-lighthouse-fixture.mjs` writes its planted defects.
 - `.htmlvalidate.json`: the rules of `html-validate` (D-46). It excludes the keyword `list` from the `no-redundant-role` rule, because each `ul` of the site carries `role="list"` (D-143).
-- `.claude/settings.json`: the project settings of Claude Code. It turns off attribution (D-6).
+- `.claude/settings.json`: the project settings of Claude Code. It turns off attribution (D-6), and it runs `scripts/session-bind-hook.py` before each Bash command (D-150).
 - `scripts/ste-check.py`: the STE checker (D-7).
 - `.github/workflows/verify.yml`: the checks on each pull request, `verify:docs`, `verify:site`, and the four `verify:site-*` jobs.
+- `.github/workflows/pr-lifecycle.yml`: the `verify:pr-lifecycle` check of each pull request body with `scripts/pr-lifecycle-check.py` (D-148).
 - `.github/workflows/preview.yml`: the preview deploy of each pull request, its comment, the `verify:site-preview` check, and the channel cleanup (D-59, D-66 to D-68).
 - `.github/workflows/deploy.yml`: the live deploy of each push to `main`, in the environment `production` (D-63, D-84).
 - `.github/workflows/links.yml`: the weekly check of every outbound link of the live site, and a run by hand (D-130 to D-132).
@@ -136,6 +138,7 @@ Every command is free. Only `make install`, `make browsers`, `make link-check`, 
 - `make visits DAY=<YYYY-MM-DD>`: print the page requests of one UTC day, and the same count after the machine filter (D-139 to D-141). It reads the Hosting request log with the gcloud configuration `natekramber`, so it needs the network. No check calls it.
 - `make site-checks`: run the four site checks.
 - `make ste-check`: check every hand-written `.md` file against the STE rules.
+- `make lifecycle-check`, `make pr-template`, and `make pr-check BODY=<file>`: the checks and the body format of the `one-pr-one-session` skill (D-147, D-148).
 - `make verify`: run every check that the verify workflow runs. Run it before each pull request.
 - `make help`: list the targets.
 

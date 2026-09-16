@@ -19,7 +19,8 @@ The file has four parts, in this order:
 1. Read "Resume here" first, then the newest session entry.
 2. Run `git fetch origin` and `git status --short --branch`.
 3. Compare the state of git with "Resume here". When they differ, trust git and tell the owner.
-4. Read the files that the next action names.
+4. A merge of the pull request that "Resume here" names needs no record. Git holds it (D-147).
+5. Read the files that the next action names.
 
 ## At the end of a session
 
@@ -27,8 +28,8 @@ The file has four parts, in this order:
 2. Take the highest session number and add one.
 3. Add the new entry above the newest entry. Never add text to an older entry.
 4. Write the six parts of the entry. Use the template below.
-5. Update "Resume here": `main`, the open pull requests, the next action, the blockers, and the next ids.
-6. Update "Facts that expire" with each fact the session read, and its date.
+5. Update "Resume here": the base, the pull requests, the next action, the blockers, and the next ids.
+6. Update "Facts that expire" with each fact the session read, and its date. Add no merge fact, because git holds it.
 7. Count the entries. Move each entry after the tenth to the top of the archive, word for word.
 8. Commit the handoff with the work it describes, on the same branch.
 9. Push the branch.
@@ -40,9 +41,9 @@ The file has four parts, in this order:
 ```markdown
 ## Resume here (<YYYY-MM-DD>)
 
-- **Main:** `<sha>`, <the newest merge>.
-- **Open pull requests:** <#number, branch, and state, or none>.
-- **Next action:** <the first thing to do>.
+- **Base:** `<sha>`, the commit of `origin/main` where this pull request started.
+- **Pull requests:** <#number and branch of this session>, pending the owner merge. <Each other open pull request, or none>.
+- **Next action:** <the first thing to do, in a new clean session>.
 - **Blocked on:** <each OQ-# and the work it blocks, or nothing>.
 - **Next ids:** D-<n>, OQ-<n>, Session <n>.
 ```
@@ -56,7 +57,7 @@ The file has four parts, in this order:
 
 ### State of the repository
 
-- `main` is `<sha>`, <the newest merge>.
+- Base: `origin/main` at `<sha>` when the session started.
 - Remote head: `origin/<branch>` at `<sha>`, checked after the push.
 - `make verify`: <result>.
 
@@ -74,7 +75,7 @@ The file has four parts, in this order:
 
 ### Next concrete action
 
-<one action that a fresh session can start at once>
+<one action that a new clean session can start at once>
 ```
 
 ## Rules
@@ -84,4 +85,5 @@ The file has four parts, in this order:
 - Date each entry with the local date of the owner. Mark the time of a GitHub event with UTC.
 - Record each trap that cost the session time. The next session reads it before it makes the same mistake.
 - Never edit an older entry, except to move it to the archive.
-- A merge to `main` after the session ends needs no new entry. The next session records it.
+- A merge needs no entry and no pull request. Git and GitHub hold the merge commit and its time (D-147).
+- The entry describes only the work of its own pull request.

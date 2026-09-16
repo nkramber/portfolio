@@ -1,0 +1,10 @@
+.claude/settings.json
+.claude/skills/one-pr-one-session/SKILL.md
+.claude/skills/session-handoff/SKILL.md
+CLAUDE.md
+Makefile
+docs/decisions.md
+docs/design.md
+docs/session-handoff-archive.md
+docs/session-handoff.md
+scripts/pr-lifecycle-check.py
