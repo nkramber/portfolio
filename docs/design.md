@@ -29,6 +29,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-16 correction pass (Session 25): PR-18 reads merged. M-3 holds the hand check of the owner. D-146 supersedes D-18, and the code license is GPL-3.0.
 2026-09-16 correction pass (Session 26): PR-19 follows D-147 to D-152, and G-12 joins the guardrails. From PR-19 on, a status reads "complete in #N" before the merge, and no later pull request changes it to "merged" (D-147). The external facts add the hook research of PR-19.
 2026-09-16 correction pass (Session 28): PR-20 follows D-153 to D-159. The external facts move to `docs/external-facts.md` (D-156), and the entries of Phases 0 to 3 move to `docs/roadmaps/` (D-155).
+2026-09-16 correction pass (Session 29): PR-21 follows D-160.
 
 Owner decisions live in `docs/decisions.md` (D-#), and `make decisions-index` lists them (D-157). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -266,6 +267,31 @@ Gate: the owner merges PR-20.
 
 > *In plain English:* each session reads about 238 kilobytes of history before it starts, and the model gets that text again at each step. This change reads only the current part at the start. Every word stays in a file, and a new check keeps the start set small.
 
+#### PR-21: The Gitar push wait
+
+Status: complete in #36.
+
+Scope:
+
+- The `gitar-review` skill waits three minutes or more after each push, before a `Gitar review` comment (D-160).
+- After that wait, the skill asks for a manual review only when no automatic review started (D-160).
+- Command E of the skill holds the wait and the Gitar check of the head.
+
+Out of scope:
+
+- The copies of the skill in the reference repositories. The owner changes them, because this repository writes to no other repository (D-1).
+- The site. No file of `src/` or `public/` changes.
+
+Exit tests:
+
+- Each step reference of the skill procedure names the correct step.
+- Command E reads the Gitar check of a real pull request head.
+- `make verify` passes.
+
+Gate: the owner merges PR-21.
+
+> *In plain English:* a session can ask for a review before the automatic review starts, and two reviews then run. This change makes each session wait three minutes first. The site does not change.
+
 ### Later
 
 These items have no id yet. Each one gets an entry when it starts.
@@ -300,6 +326,7 @@ One owner runs the sequence in strict order. A step starts only when the gate of
 21. PR-18, the audit fixes of M-3. Gate: the owner merges it.
 22. PR-19, one pull request, one session. Gate: the owner merges it.
 23. PR-20, the session-start context size. Gate: the owner merges it.
+24. PR-21, the Gitar push wait. Gate: the owner merges it.
 
 ## 6. Open questions
 
