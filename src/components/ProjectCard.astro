@@ -37,10 +37,10 @@ const headingId = `project-${project.id}`;
     <p class="status"><span class="visually-hidden">Status: </span>{status}</p>
   </div>
   <p class="pitch">{pitch}</p>
-  <ul class="tags" aria-label="Tags">
+  <ul class="tags" role="list" aria-label="Tags">
     {tags.map((tag) => <li>{tag}</li>)}
   </ul>
-  <ul class="card-links">
+  <ul class="card-links" role="list">
     {
       links.map((link, index) => {
         const noteId = `${headingId}-note-${index}`;
@@ -151,11 +151,12 @@ const headingId = `project-${project.id}`;
     color: var(--color-muted);
   }
 
-  /* Each tag sits in a hairline outline, so a tag that wraps still reads as one tag
-     (D-108). The outline is decoration, so no contrast rule applies to it. */
+  /* Each tag sits in an outline, so a tag that wraps still reads as one tag
+     (D-108). That outline carries information, so it holds 3:1 against the page
+     (WCAG 1.4.11, D-142). The card hairline stays decoration at --color-rule. */
   .tags li {
     padding-inline: 0.4em;
-    border: 1px solid var(--color-rule);
+    border: 1px solid var(--color-tag-rule);
     border-radius: 0.25rem;
   }
 

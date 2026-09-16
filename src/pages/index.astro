@@ -64,7 +64,7 @@ const shareImageUrl = new URL('/og.png', Astro.site).href;
       <!-- Each "keep" span holds a word pair on one line, so no line ends with a lone "I" or "AI". -->
       <h1>I design the systems. <span class="keep">AI agents</span> write the code. <span class="keep">I decide</span> what ships.</h1>
       <p class="lede">Tools and games, built under strict rules and real review.</p>
-      <ul class="links">
+      <ul class="links" role="list">
         {links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
       </ul>
     </div>

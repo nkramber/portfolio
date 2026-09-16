@@ -88,7 +88,7 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `docs/session-handoff-archive.md`: every older session, word for word.
 - `src/pages/index.astro`: the home page, with the hero, the About section, and the project cards (D-21, D-136). The About section stays off the page until the bio exists (OQ-3, D-94). While the page shows cards, it preloads the mono face (D-111).
 - `src/pages/404.astro`: the 404 page, with the words of D-74 (D-98).
-- `src/layouts/Page.astro`: the head, the icon links, the design tokens, the base styles, and the motion of both pages (D-73, D-95).
+- `src/layouts/Page.astro`: the head, the icon links, the design tokens, the base styles, and the motion of both pages (D-73, D-95). The token `--color-rule` is decoration, and `--color-tag-rule` holds 3:1 for the tag outline (D-142).
 - `public/`: the icon `favicon.svg` (D-96), and the three PNG files of `make images`. `scripts/make-images.mjs` draws the share image of D-97 and two icons.
 - `src/content.config.ts`: the `projects` collection and its strict schema (D-22, D-105, D-133). Each project is one JSON file in `src/content/projects/`, for example `deck-tome.json` (D-113 to D-116). An entry can also name a logo and a screenshot, and each image file sits next to it (D-133, D-134).
 - `src/components/ProjectCard.astro`: the one project card, with its own scoped styles (D-104, D-133).
@@ -98,7 +98,7 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `tests/`: the Playwright tests of the responsive layout and of accessibility, and the fixtures with planted defects (D-38, D-72). `tests/fixtures/projects/` holds the fixture cards of D-103 with their logo file, and a fixture build loads those cards alone (D-112). `tests/fixtures/projects-invalid/` and `tests/fixtures/projects-unknown/` hold the two entries that the schema must refuse (D-103, D-133).
 - `playwright.config.ts`: the Playwright setup. It serves `dist/` with `astro preview` on port 4321. It also builds the fixture cards alone into `dist-fixture/`, and serves that folder on port 4322 (D-103, D-112).
 - `scripts/lighthouse-budget.mjs` and `lighthouse-budget.json`: the Lighthouse budget (D-48, D-50, D-60). `scripts/make-lighthouse-fixture.mjs` writes its planted defects.
-- `.htmlvalidate.json`: the rules of `html-validate` (D-46).
+- `.htmlvalidate.json`: the rules of `html-validate` (D-46). It excludes the keyword `list` from the `no-redundant-role` rule, because each `ul` of the site carries `role="list"` (D-143).
 - `.claude/settings.json`: the project settings of Claude Code. It turns off attribution (D-6).
 - `scripts/ste-check.py`: the STE checker (D-7).
 - `.github/workflows/verify.yml`: the checks on each pull request, `verify:docs`, `verify:site`, and the four `verify:site-*` jobs.
