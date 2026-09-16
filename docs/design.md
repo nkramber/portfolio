@@ -20,8 +20,10 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-14 correction pass (Session 16): PR-8 reads merged, and the Phase 2 gate reads passed.
 2026-09-14 correction pass (Session 17): PR-9 reads merged. PR-10 follows D-111 to D-119, and D-112 changes the fixture build of PR-9. The external facts add the research of PR-10.
 2026-09-14 correction pass (Session 18): PR-10 reads merged. The external facts add the `GROUPED` certificates of both custom domains.
-2026-09-16 correction pass (Session 20): PR-11 reads merged, and PR-12 follows D-130 to D-132. The external facts add the research of PR-12.
 2026-09-15 correction pass (Session 19): PR-11 follows D-121 to D-128. D-121 and D-122 add the project name to the screen reader name of each card link, and D-128 limits D-117 to portrait screens. The external facts add the research of PR-11.
+2026-09-16 correction pass (Session 20): PR-11 reads merged, and PR-12 follows D-130 to D-132. The external facts add the research of PR-12.
+2026-09-16 correction pass (Session 21): PR-12 reads merged, and PR-17 follows D-133 to D-138. PR-17 removes the highlights, the disclosure, and the Links section.
+2026-09-16 correction pass (Session 22): PR-17 reads merged, and the Phase 3 gate reads passed. The external facts add the image research of PR-17.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -156,6 +158,9 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - linkinator 8.1.0 has the flags `--skip`, `--status-code "CODE:ACTION"` with the actions ok, warn, skip, and error, `--retry`, `--retry-errors`, and `--user-agent`. Source: `npx linkinator --help`, read 2026-09-16.
 - The GitHub schedule event can come late under load, and the high load times include the start of every hour. A scheduled workflow runs on the newest commit of the default branch. GitHub stops a scheduled workflow after 60 days with no activity in a public repository. Source: https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows, read 2026-09-16.
 - On 2026-09-16, `make link-check` read 13 links of the live site, and each one answered 200. The site has four outbound addresses: `decktome.com` and three GitHub addresses. The run skipped the LinkedIn address. Source: a local run.
+- `image()` of Astro 7.3.2 takes an SVG file. It reads the width and the height from the file or from its `viewBox`. The `Image` component then renders a plain `img` with the file untouched. It writes `width`, `height`, `loading`, and `decoding`, and no `style` attribute. Source: the installed `astro` package and two scratch builds, read 2026-09-16.
+- The `Picture` component fails a build on an SVG, because sharp refuses that file. The HTML still gets `source` addresses for files that never exist. An ESM import of an SVG renders an inline `svg` element, and that element can hold a `style` element, which the CSP of D-57 blocks. Source: the same reads, 2026-09-16.
+- A browser keeps the colors of an `img` in every scheme. The fixture logo measures 6.49:1 against the light page, 2.81:1 against the dark page, and 3.10:1 on forced black. Source: the accessibility audit of PR-17, 2026-09-16.
 - The What You Carry workflow `bit-identity.yml` runs on each pull request and each push to `main`. It has a Linux, a Windows, and a macOS job, and a job that compares the three hashes. Its workflow `night.yml` runs at 08:07 UTC, with 5,000 seeds for each of two bots and a reachability sweep of 100,000 seeds. Source: What You Carry `main` at `a4bf6d6`, read 2026-09-15.
 
 ## 1. Thesis
@@ -502,7 +507,7 @@ Gate: the owner approves the shell on a preview address and merges PR-8.
 
 ### Phase 3: Project cards
 
-Phase gate: both cards pass every site check, and the owner approves the text of each card.
+Phase gate: both cards pass every site check, and the owner approves the text of each card. Passed 2026-09-16: the owner approved each card and merged PR-11 (#22). PR-17 then changed the shape of every card (D-133).
 
 #### PR-9: Project schema and card component
 
@@ -575,7 +580,7 @@ Gate: the owner merges PR-10.
 
 #### PR-11: What You Carry card
 
-Status: in review. D-121 to D-128 answer its design questions.
+Status: merged as #22, `c272a86`, on 2026-09-16 UTC. Gitar approved the last head with no finding, and D-121 to D-129 answer its design questions. The owner approved the words of the card (D-123 to D-126) and skipped the hand checks (D-129). After the deploy, `make preview-check` passed on `https://natekramber.com`.
 
 Scope: one project entry through the `add-project` skill (D-2, D-25).
 
@@ -604,7 +609,7 @@ Gate: the owner merges PR-11.
 
 #### PR-17: Card shape, images, and the page end
 
-Status: in progress. D-133 to D-138 answer its design questions.
+Status: merged as #24, `eb1dccf`, on 2026-09-16 UTC. Gitar approved it with no finding, and D-133 to D-138 answer its design questions. The responsive audit and the accessibility audit found no defect that the owner did not accept. After the deploy, `make preview-check` passed on `https://natekramber.com`.
 
 Scope: the card component, the project schema, and the end of the home page.
 
@@ -639,7 +644,7 @@ Phase gate: the owner signs off M-3. That sign-off is the launch.
 
 #### PR-12: Weekly outbound link check
 
-Status: in review. D-130 to D-132 answer its design questions.
+Status: merged as #23, `3ca291e`, on 2026-09-16 UTC. Gitar approved it with no finding. After the merge, run 35064260365 of `links.yml` started by hand. It read 13 links of the live site, each one at 200, and its self-test failed on the planted dead link.
 
 Scope: a scheduled workflow checks every outbound link of the live site once a week, and the owner can start it by hand (D-16, D-131).
 
