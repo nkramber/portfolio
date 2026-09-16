@@ -4,13 +4,13 @@
 
 This file keeps the ten newest sessions, newest first. `docs/session-handoff-archive.md` keeps every older session, word for word.
 
-## Resume here (2026-09-15)
+## Resume here (2026-09-16)
 
 - **Main:** `1315691`, the squash merge of PR #21, which points the handoff at the merge of PR #20.
-- **Open pull requests:** #22 on branch `site/pr-11-what-you-carry-card`, PR-11. It waits for the Gitar review and the merge.
+- **Open pull requests:** #22 on branch `site/pr-11-what-you-carry-card`, PR-11. Every check passed, and it waits for the Gitar review of its newest head and for the merge.
 - **Next action:** answer the Gitar review of #22. After the merge, start PR-12, the weekly outbound link check, from `main`.
 - **Blocked on:** OQ-3 blocks the About text.
-- **Next ids:** D-129, OQ-8, M-4, PR-17, Session 20.
+- **Next ids:** D-130, OQ-8, M-4, PR-17, Session 20.
 
 ## Facts that expire
 
@@ -81,6 +81,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - On the PR-11 build, the Projects heading sits 46 to 110 px above the bottom of the first screen in portrait (D-117). On a landscape phone, it sits below that screen (D-128). The footer line sits 48 px below the box of the last card at 320 to 430 px (D-118). The smallest pointer target is 49.7 by 36.2 px, and the home page has 9 tab stops.
 - The owner merged #21, the handoff pointer, as `1315691` at 04:52:03 UTC on 2026-09-15. Its tree matches the reviewed head `e8c8d3b`, and Gitar approved that head with no finding. Deploy run 34930474549 passed.
 - The owner merged #20, the docs refresh, as `5fffed4` at 04:32:35 UTC on 2026-09-15. Its tree matches the reviewed head `69a4689`, and Gitar approved that head with no finding. Deploy run 34929234875 passed.
+- Every check of #22 passed on `f6fd79f` at 04:33 UTC on 2026-09-16, and the Gitar pause note held an approval with no finding. The preview channel of #22 expires on 2026-10-16.
 
 ## Session 19: 2026-09-15
 
@@ -94,7 +95,8 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The session checked each card fact on What You Carry `main`, and the pull request text gives the source of each fact (G-11).
 - The responsive audit found no sideways scroll at any width, and two low defects. The owner accepted both (D-127, D-128).
 - The accessibility audit found no WCAG 2.2 AA defect in the light or the dark scheme. In the Chromium accessibility tree, each card link has the name of D-122 with no extra space.
-- The session opened #22. Session 9 moved to the archive.
+- The session opened #22, and every check passed on `f6fd79f`. The Gitar pause note held an approval with no finding.
+- The owner skipped the phone check and the VoiceOver check of the preview (D-129). Session 9 moved to the archive.
 
 ### State of the repository
 
@@ -105,7 +107,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ### In flight
 
-- #22 waits for the Gitar review and the merge.
+- #22 waits for the Gitar review of the head that records D-129, and for the merge.
 - What You Carry D-106 still reads "Private until launch", and that repository is public. The owner records the change there (D-25).
 - The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
 - Nobody checked Safari 26 yet for `::-webkit-details-marker`, the list role of `.tags`, and the summary in VoiceOver. The link names of D-122 need the same check. Chromium keeps each hidden text in its own text node, so a screen reader can read "Status:" as a line of its own.
