@@ -2,6 +2,41 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 9: 2026-09-14
+
+### What this session did, and why
+
+- The owner merged #10 (PR-5) as `4d36b43` on 2026-09-14 UTC. Its tree matches the reviewed head `a3be515`.
+- Before the merge, the owner chose to add `verify:site-preview` to the `main` ruleset at once (D-81). The ruleset now requires seven checks.
+- The merge closed #10, and the `closed` run of `preview:cleanup` deleted the channel `pr-10`. The channel list of `natekramber-preview` then showed the `live` channel alone (D-67).
+- The session wrote this refresh: D-81, the D-11 note, the status of PR-5 and M-1, and this entry.
+- The session started PR-6 with two read-only research passes: the custom domain of Firebase Hosting, and the GitHub environment `production`.
+
+### State of the repository
+
+- `main` is `4d36b43`, the squash merge of PR #10.
+- Branch `docs/after-pr-5` holds this refresh, as a pull request of documents alone.
+- Remote head: `origin/docs/after-pr-5` at the commit that holds this entry, checked after the push.
+- `make ste-check`: 0 findings.
+
+### In flight
+
+- The refresh waits for the Gitar review, then for the merge.
+- PR-6 has two research passes in this session alone, and no branch yet.
+
+### Traps and gotchas
+
+- `preview.yml` has no path filter, so a pull request of documents alone also deploys a preview and runs `verify:site-preview`.
+- The GoDaddy parking host still sends an HSTS header with `preload`. PR-6 replaces that host.
+
+### Open questions that block progress
+
+None blocks the refresh. PR-6 needs the owner for the DNS records at GoDaddy. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
+
+### Next concrete action
+
+Answer the Gitar review of the refresh. Then read the PR-6 research reports, and ask the owner the PR-6 questions.
+
 ## Session 8: 2026-09-14
 
 ### What this session did, and why

@@ -115,6 +115,26 @@ test('each card toggle names its card', async ({ page }) => {
   }
 });
 
+// D-121 and D-122: each card link names its card for a screen reader, as
+// "<label> (<title>)". Two cards can then share a visible label, such as "Source on
+// GitHub", and a list of the links on the page still tells them apart (WCAG 2.4.9).
+// The exact match also catches a stray space before the hidden text.
+test('each card link names its card', async ({ page }) => {
+  await page.goto(fixturePage);
+  const cards = await page.locator('.card').all();
+  expect(cards).toHaveLength(2);
+  for (const card of cards) {
+    const title = await card.locator('h3').textContent();
+    const links = await card.locator('.card-links a').all();
+    expect(links.length).toBeGreaterThan(0);
+    for (const link of links) {
+      // The first text node of the link is its visible label, before the hidden title.
+      const label = await link.evaluate((a) => a.firstChild?.textContent?.trim());
+      await expect(link).toHaveAccessibleName(`${label} (${title})`);
+    }
+  }
+});
+
 // A note such as "Invite only" describes its link (D-24), so a screen reader user who
 // tabs from link to link still hears it.
 test('each link note describes its link', async ({ page }) => {

@@ -4,13 +4,13 @@
 
 This file keeps the ten newest sessions, newest first. `docs/session-handoff-archive.md` keeps every older session, word for word.
 
-## Resume here (2026-09-14)
+## Resume here (2026-09-15)
 
-- **Main:** `5fffed4`, the squash merge of PR #20, the docs refresh. The small pull request that writes this block merges after it, with documents alone.
-- **Open pull requests:** none after that merge.
-- **Next action:** start PR-11, the What You Carry card, from `main` with the `add-project` skill. Treat `/Volumes/SSD-1TB/what-you-carry` as read-only.
+- **Main:** `1315691`, the squash merge of PR #21, which points the handoff at the merge of PR #20.
+- **Open pull requests:** #22 on branch `site/pr-11-what-you-carry-card`, PR-11. It waits for the Gitar review and the merge.
+- **Next action:** answer the Gitar review of #22. After the merge, start PR-12, the weekly outbound link check, from `main`.
 - **Blocked on:** OQ-3 blocks the About text.
-- **Next ids:** D-121, OQ-8, M-4, PR-17, Session 19.
+- **Next ids:** D-129, OQ-8, M-4, PR-17, Session 20.
 
 ## Facts that expire
 
@@ -23,7 +23,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Astro 7.3.2 is the latest Astro on 2026-09-14 (npm registry), and it needs Node 22.12.0 or newer. The variable `ASTRO_TELEMETRY_DISABLED=1` stops its telemetry.
 - On 2026-09-14, npm lists each check tool at its latest release: Playwright 1.63.0, axe-core 4.13.0, Lighthouse 13.4.1, html-validate 11.15.0, and linkinator 8.1.0. Chromium 153 (build 1243) and chrome-launcher 1.2.1 date from 2026-09-12.
 - `npm audit` reads 0 vulnerabilities on 2026-09-14. Lighthouse CI 0.15.1 added 12 advisories before D-50 removed it.
-- The Gitar trial still pauses automatic reviews on 2026-09-14. On #7, #8, #12 to #17, and #19, the pause note of the first head held a full review in its collapsed Code Review block. A later head of #17 and of #19 needed a `Gitar review` comment, and the `gitar-review` skill holds the traps.
+- The Gitar trial still pauses automatic reviews on 2026-09-15. On 11 pull requests (#7, #8, #12 to #17, and #19 to #21), the pause note of the first head held a full review in its collapsed Code Review block. A later head of #17 and of #19 needed a `Gitar review` comment, and the `gitar-review` skill holds the traps.
 - PR-5 created the projects `natekramber-prod` and `natekramber-preview` on 2026-09-14 (D-51, D-56, D-79). A project id is permanent, and a permission error before creation does not show whether an id is free.
 - WCAG 2.2 is the W3C Recommendation of 2024-12-12, read 2026-09-12. The minimum target size of 2.5.8 is 24 by 24 CSS pixels.
 - ASD-STE100 Issue 9, dated 2025-01-15, is the current issue, read 2026-09-14.
@@ -31,7 +31,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The toolchain on this Mac, read 2026-09-14: Python 3.9.6, pnpm 9.2.0, and gh 2.100.0. The default Node is 20.17.0, and nvm holds Node 22.23.2 with npm 10.9.8.
 - The Playwright cache in `~/Library/Caches/ms-playwright` holds Chromium build 1243 and its headless shell, read 2026-09-14.
 - The external facts of the roadmap, each with its source and its date, live in `docs/design.md`.
-- The What You Carry repository `nkramber/what-you-carry` is public on 2026-09-14, and its D-106 still reads "Private until launch". The owner records that change in that repository (D-25).
+- The What You Carry repository `nkramber/what-you-carry` is public on 2026-09-15, and its D-106 still reads "Private until launch". The owner records that change in that repository (D-25).
 - The cloud tools on this Mac, read 2026-09-14: gcloud 533.0.0 in `/opt/homebrew/bin`, and a global Firebase CLI 14.14.0 under Node 20.17.0 alone. The newest gcloud is 584.0.0 of 2026-09-09 (https://docs.cloud.google.com/sdk/docs/release-notes).
 - The gcloud configurations on this Mac, read 2026-09-14: `default` (active) and `decktome` on the project `wallabee-dev`, and `natekramber` (inactive) for the owner projects.
 - firebase-tools 15.30.1 came out at 21:07 UTC on 2026-09-14, and `deploy/package-lock.json` still pins 15.30.0 (npm registry, read 2026-09-14). Both need Node 20 or newer. Version 15.22.2 broke deploys through Workload Identity Federation, and 15.22.3 fixed them (npm registry and firebase-tools issue 10716, read 2026-09-12).
@@ -71,16 +71,64 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Since deploy run 34927622727 on `0f983bb` (2026-09-15 UTC), `https://natekramber.com` serves PR-10 with the Deck Tome card. At 04:11 UTC, `make preview-check` passed on it, with `font-src 'self'` and `img-src 'self'` in the CSP.
 - The owner checked the PR-7 preview on an iPhone 16 Pro in Chrome on 2026-09-14 (D-93).
 - `/Users/nate/Repos/terminal-rpg` does not exist on this Mac on 2026-09-14.
-- The Lighthouse budget of `make verify` read 1 in every category and a CLS of 0 from PR-7 to PR-10 (2026-09-14). The total bytes grew from 38,974 (PR-7) to 41,307 (PR-8), 44,768 (PR-9), and 65,511 (PR-10). The median LCP grew from 1,052 ms to 1,354 ms.
-- On `main`, `make verify` runs 57 responsive tests and 15 accessibility tests (2026-09-14).
+- The Lighthouse budget of `make verify` read 1 in every category and a CLS of 0 from PR-7 to PR-11 (2026-09-15). The total bytes grew from 38,974 (PR-7) to 41,307 (PR-8), 44,768 (PR-9), 65,511 (PR-10), and 67,219 (PR-11). The median LCP grew from 1,052 ms to 1,352 ms.
+- On the PR-11 branch, `make verify` runs 57 responsive tests and 16 accessibility tests (2026-09-15).
 - On `main`, a fixture build loads the fixture cards alone (D-112). It keeps its content cache in `node_modules/.astro-fixtures-1` or `node_modules/.astro-fixtures-invalid`, and the site build keeps `node_modules/.astro`.
 - The decktome working tree on this Mac holds the local branch `pr54-theme-words` with uncommitted Go changes, read 2026-09-14. Its docs match `origin/main` at `c7a4ff4`.
 - At 02:02 UTC on 2026-09-15, `gh repo view` read `nkramber/decktome` as public. `https://decktome.com` answered 200, and `www.decktome.com` answered 301 to the apex.
 - The decktome D-310 still reads "No public sign-up", and its D-577 of 2026-09-07 names the product "Deck Tome" (read 2026-09-14).
-- At 02:06 UTC on 2026-09-15, the external drive holds `/Volumes/SSD-1TB/what-you-carry`, the source of PR-11.
-- On the PR-10 build, the Projects heading of a 390 by 844 screen ends at 734 px (D-117). The footer line sits 24 px below the box of the last card at 390 px, and 80 px at 1440 px (D-118).
-- The owner merged #19 (PR-10) as `0f983bb` at 04:07:54 UTC on 2026-09-15. Its tree matches the reviewed head `5eec2ba`, and Gitar approved that head with no finding. Deploy run 34927622727 passed.
+- At 05:45 UTC on 2026-09-15, the external drive holds `/Volumes/SSD-1TB/what-you-carry`, the source of PR-11. Its working tree is on the branch `feat/pr-65-ramp-meshes`, and the card of PR-11 cites its `main` at `a4bf6d6`. GitHub `main` then moved to `4bc8cd4`.
+- On the PR-11 build, the Projects heading sits 46 to 110 px above the bottom of the first screen in portrait (D-117). On a landscape phone, it sits below that screen (D-128). The footer line sits 48 px below the box of the last card at 320 to 430 px (D-118). The smallest pointer target is 49.7 by 36.2 px, and the home page has 9 tab stops.
+- The owner merged #21, the handoff pointer, as `1315691` at 04:52:03 UTC on 2026-09-15. Its tree matches the reviewed head `e8c8d3b`, and Gitar approved that head with no finding. Deploy run 34930474549 passed.
 - The owner merged #20, the docs refresh, as `5fffed4` at 04:32:35 UTC on 2026-09-15. Its tree matches the reviewed head `69a4689`, and Gitar approved that head with no finding. Deploy run 34929234875 passed.
+
+## Session 19: 2026-09-15
+
+### What this session did, and why
+
+- The owner merged #21, the handoff pointer, as `1315691` at 04:52 UTC on 2026-09-15. Its tree matches the reviewed head `e8c8d3b`, Gitar approved that head, and deploy run 34930474549 passed.
+- The session started PR-11 with the `add-project` skill and a read-only research pass on What You Carry `main` at `a4bf6d6`.
+- The owner chose a visually hidden project name in each card link (D-121). The question named two wrong WCAG facts, and the session corrected them from the W3C pages.
+- The first run of the new link name test found a space before a hidden comma. A scratch page showed the cause, and the owner chose parentheses (D-122).
+- The owner picked the pitch, the tags, and two highlights (D-123 to D-125). The copy review found jargon in one highlight, and the owner took its plain words (D-126).
+- The session checked each card fact on What You Carry `main`, and the pull request text gives the source of each fact (G-11).
+- The responsive audit found no sideways scroll at any width, and two low defects. The owner accepted both (D-127, D-128).
+- The accessibility audit found no WCAG 2.2 AA defect in the light or the dark scheme. In the Chromium accessibility tree, each card link has the name of D-122 with no extra space.
+- The session opened #22. Session 9 moved to the archive.
+
+### State of the repository
+
+- `main` is `1315691`, the squash merge of PR #21.
+- Branch `site/pr-11-what-you-carry-card` holds PR-11 and this entry.
+- Remote head: `origin/site/pr-11-what-you-carry-card` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on the branch. Lighthouse reads 1 in every category, 67,219 total bytes, a median LCP of 1,352 ms, and a CLS of 0.
+
+### In flight
+
+- #22 waits for the Gitar review and the merge.
+- What You Carry D-106 still reads "Private until launch", and that repository is public. The owner records the change there (D-25).
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- Nobody checked Safari 26 yet for `::-webkit-details-marker`, the list role of `.tags`, and the summary in VoiceOver. The link names of D-122 need the same check. Chromium keeps each hidden text in its own text node, so a screen reader can read "Status:" as a line of its own.
+- No run tested the PR-6 exit test of D-63 yet.
+- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
+- The private preview page of D-89 still exists on claude.ai.
+
+### Traps and gotchas
+
+- The working tree of What You Carry is on a feature branch. The research pass and the copy review both read files there, so read each cited file on `origin/main` with `git show`.
+- In another repository, `git status` can write the index. Pass `--no-optional-locks` to each git command there, and never run `git fetch` there.
+- A visually hidden span counts as a block in the accessible name, so the name gets a space before its text. A hidden text that starts with a comma then reads "Source on GitHub , Deck Tome" (D-122).
+- The question of D-121 gave WCAG 2.4.4 as level AA and the card heading as its context. Both were wrong: 2.4.4 is level A, and H80 is advisory alone. Read the W3C Understanding page before a question cites a level or a technique.
+- The date of the owner changed at midnight in the session. So D-121 has the date 2026-09-14, and D-122 to D-128 have 2026-09-15.
+- The responsive audit took about 20 minutes, and the two audits cannot share one `astro preview` server. So start the audits early, one after the other.
+
+### Open questions that block progress
+
+None blocks PR-11. OQ-3 blocks the About text.
+
+### Next concrete action
+
+Answer the Gitar review of #22, and post `Gitar review` only after the checks of the new head start. After the merge, start PR-12, the weekly outbound link check, from `main`.
 
 ## Session 18: 2026-09-14
 
@@ -482,38 +530,3 @@ None blocks PR-6. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge 
 ### Next concrete action
 
 Answer the Gitar review of PR-6. When both certificates read `CERT_ACTIVE`, ask the owner for the second DNS visit of `docs/deploy.md`.
-
-## Session 9: 2026-09-14
-
-### What this session did, and why
-
-- The owner merged #10 (PR-5) as `4d36b43` on 2026-09-14 UTC. Its tree matches the reviewed head `a3be515`.
-- Before the merge, the owner chose to add `verify:site-preview` to the `main` ruleset at once (D-81). The ruleset now requires seven checks.
-- The merge closed #10, and the `closed` run of `preview:cleanup` deleted the channel `pr-10`. The channel list of `natekramber-preview` then showed the `live` channel alone (D-67).
-- The session wrote this refresh: D-81, the D-11 note, the status of PR-5 and M-1, and this entry.
-- The session started PR-6 with two read-only research passes: the custom domain of Firebase Hosting, and the GitHub environment `production`.
-
-### State of the repository
-
-- `main` is `4d36b43`, the squash merge of PR #10.
-- Branch `docs/after-pr-5` holds this refresh, as a pull request of documents alone.
-- Remote head: `origin/docs/after-pr-5` at the commit that holds this entry, checked after the push.
-- `make ste-check`: 0 findings.
-
-### In flight
-
-- The refresh waits for the Gitar review, then for the merge.
-- PR-6 has two research passes in this session alone, and no branch yet.
-
-### Traps and gotchas
-
-- `preview.yml` has no path filter, so a pull request of documents alone also deploys a preview and runs `verify:site-preview`.
-- The GoDaddy parking host still sends an HSTS header with `preload`. PR-6 replaces that host.
-
-### Open questions that block progress
-
-None blocks the refresh. PR-6 needs the owner for the DNS records at GoDaddy. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
-
-### Next concrete action
-
-Answer the Gitar review of the refresh. Then read the PR-6 research reports, and ask the owner the PR-6 questions.

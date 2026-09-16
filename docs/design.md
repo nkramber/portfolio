@@ -20,6 +20,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-14 correction pass (Session 16): PR-8 reads merged, and the Phase 2 gate reads passed.
 2026-09-14 correction pass (Session 17): PR-9 reads merged. PR-10 follows D-111 to D-119, and D-112 changes the fixture build of PR-9. The external facts add the research of PR-10.
 2026-09-14 correction pass (Session 18): PR-10 reads merged. The external facts add the `GROUPED` certificates of both custom domains.
+2026-09-15 correction pass (Session 19): PR-11 follows D-121 to D-128. D-121 and D-122 add the project name to the screen reader name of each card link, and D-128 limits D-117 to portrait screens. The external facts add the research of PR-11.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -146,6 +147,11 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - The decktome decision register holds 721 unique decision ids, from D-1 on 2026-08-23 to D-727 on 2026-09-14. Source: `grep` on the decktome `docs/decisions.md`, read 2026-09-14.
 - A certificate of the type `GROUPED` is the standard certificate for Spark plan custom domains. A `TEMPORARY` certificate covers a domain while Hosting creates a more permanent certificate. Source: the Hosting API v1beta1 discovery document, revision 20260830, read 2026-09-14.
 - At 04:11 UTC on 2026-09-15, both custom domains read `CERT_ACTIVE` with the type `GROUPED` and an expiry of 2026-12-13. So Hosting replaced the temporary certificates of PR-6. Source: the Hosting API v1beta1 calls of `docs/deploy.md`.
+- WCAG 2.4.4 Link Purpose (In Context) is level A. Its sufficient techniques include C7, CSS that hides a part of the link text. H80, the link text with the heading before it, is an advisory technique alone. Source: https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context.html, updated 2026-05-18, read 2026-09-15.
+- WCAG 2.4.9 Link Purpose (Link Only) is level AAA. WCAG 2.5.3 Label in Name is level A, and its Understanding page calls a name that starts with the visible label a best practice. Sources: https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-link-only.html and https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html, read 2026-09-15.
+- The Chromium 153 accessibility tree and the name code of Playwright 1.63.0 give the same link names. A visually hidden span that starts with a comma gives "Source on GitHub , Deck Tome", with a space before the comma. An inline-block span gives the same space, and a span that starts with a space gives a clean name. Source: a scratch page with the `.visually-hidden` rules of the site, 2026-09-15 (D-122).
+- The What You Carry repository is public, with no description and no homepage, and its `main` is `a4bf6d6`. Its `README.md` calls the game "a solo third-person dungeon crawler for Steam" (line 3). Sources: `gh repo view nkramber/what-you-carry` and `git show`, read 2026-09-15.
+- The What You Carry workflow `bit-identity.yml` runs on each pull request and each push to `main`. It has a Linux, a Windows, and a macOS job, and a job that compares the three hashes. Its workflow `night.yml` runs at 08:07 UTC, with 5,000 seeds for each of two bots and a reachability sweep of 100,000 seeds. Source: What You Carry `main` at `a4bf6d6`, read 2026-09-15.
 
 ## 1. Thesis
 
@@ -564,24 +570,32 @@ Gate: the owner merges PR-10.
 
 #### PR-11: What You Carry card
 
-Status: planned.
+Status: in review. D-121 to D-128 answer its design questions.
 
 Scope: one project entry through the `add-project` skill (D-2, D-25).
 
 - The order number puts the card second (D-43).
-- The card links to the public repository (D-25).
+- The card links to the public repository with the label "Source on GitHub" and no note, like the Deck Tome card (D-25, D-116).
 - The card does not mention Steam or any release plan (D-25).
 - The status badge shows that the game is in development, and the card shows the placeholder image until OQ-4 closes (D-40).
+- The pitch, the two highlights, and the three stack tags of D-123 to D-126. No highlight describes the AI coding agents.
+- Each card link holds the project name as hidden text, so two cards can share the visible label "Source on GitHub" (D-121, D-122). This change applies to every card (G-2).
+
+Out of scope:
+
+- A badge that keeps "In development" whole at 200 percent text on a 320 px screen (D-127).
+- A hero rule that shows the Projects heading on the first screen of a landscape phone (D-128).
 
 Exit tests:
 
 - The owner approves the pitch and the highlights.
 - Each fact on the card has a source in the pull request text (G-11).
+- The name of each fixture card link reads "<label> (<title>)", with no extra space (D-121, D-122).
 - Every site check passes.
 
 Gate: the owner merges PR-11.
 
-> *In plain English:* the page shows one project after PR-10. This change adds the game as the second card. It says nothing about release plans that the owner did not announce.
+> *In plain English:* the page shows one project after PR-10. This change adds the game as the second card. It says nothing about release plans that the owner did not announce. Each card link also gives a screen reader the name of its project.
 
 ### Phase 4: Launch and upkeep
 

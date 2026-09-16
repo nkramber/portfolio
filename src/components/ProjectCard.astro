@@ -9,6 +9,10 @@
 // the title, so it is hidden from screen readers.
 // A link note, such as "Invite only", also describes its link, so a screen reader
 // user who tabs from link to link still hears it.
+// Each link also holds the project name as hidden text, for example "Source on
+// GitHub (Deck Tome)", so two cards can share a visible label (D-121). The hidden
+// text starts with a space: the span counts as a block, so a leading comma would
+// get a stray space before it (D-122).
 import type { CollectionEntry } from 'astro:content';
 import { Picture } from 'astro:assets';
 
@@ -37,7 +41,7 @@ const headingId = `project-${project.id}`;
         return (
           <li>
             <a href={link.href} aria-describedby={link.note ? noteId : undefined}>
-              {link.label}
+              {link.label}<span class="visually-hidden"> ({title})</span>
             </a>
             {link.note && (
               <span class="note" id={noteId}>

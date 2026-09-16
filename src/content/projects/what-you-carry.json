@@ -1,0 +1,12 @@
+{
+  "title": "What You Carry",
+  "pitch": "Descend a collapsed mine and decide at every stairwell: risk the gear you carry, or climb out and keep it.",
+  "status": "In development",
+  "tags": ["C#", "Godot", ".NET"],
+  "links": [{ "label": "Source on GitHub", "href": "https://github.com/nkramber/what-you-carry" }],
+  "highlights": [
+    "Every change runs the game simulation on three operating systems, and the results must match bit for bit.",
+    "Every night, bots play 10,000 runs, and a test builds 100,000 floors to check that every chamber can be reached."
+  ],
+  "order": 2
+}
