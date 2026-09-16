@@ -2,6 +2,52 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 13: 2026-09-14
+
+### What this session did, and why
+
+- The owner merged #14, the M-2 result, as `175d9ff` at 17:49 UTC. Its tree matches the reviewed head `fb341ad`, and deploy run 34877052799 passed.
+- The session started PR-7 with two read-only research passes: the platform facts, and the font candidates.
+- The owner chose a private preview page (D-89) and the CSP change `font-src 'self'` (D-90).
+- The session published the preview with three font pairings and three accents. The owner picked Atkinson Hyperlegible Next and Mono with Blueprint cobalt (D-91), and `font-display: optional` (D-92).
+- The session wrote PR-7: the self-hosted fonts, the tokens, the base styles, six responsive checks, and the docs. Session 3 moved to the archive.
+- The responsive audit found five defects. The branch fixes four, and the fifth is the zoom reading of WCAG 1.4.4 under "In flight".
+- The accessibility audit found no WCAG 2.2 AA defect in light or dark. The branch fixes its one readability issue: the kept word pairs of the headline now wrap when enlarged text meets a narrow screen.
+
+### State of the repository
+
+- `main` is `175d9ff`, the squash merge of PR #14.
+- Branch `site/pr-7-design-tokens` holds PR-7 and this entry.
+- Remote head: `origin/site/pr-7-design-tokens` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on the branch.
+
+### In flight
+
+- PR-7 waits for the Gitar review, the phone check of the owner on its preview address, and the merge.
+- The zoom defect of Session 7 uses a stricter rule than the W3C text for WCAG 1.4.4. That text accepts any text scaling mechanism. A test holds each fluid text size within 2 times its minimum, so 400 percent zoom doubles it.
+- No run tested the PR-6 exit test of D-63 yet.
+- Each certificate has the type `TEMPORARY`, and nobody checked the permanent certificate yet.
+
+### Traps and gotchas
+
+- The Astro `Font` component writes a `style` element, so the CSP of D-57 blocks it. Write `@font-face` by hand in the layout.
+- A `?url` import of a font gives the same hashed file as the `url()` in a style block. So the preload and the CSS match.
+- `overflow-wrap: break-word` does not narrow an inline-block, so a long word in a link needs `anywhere`.
+- `hyphens: auto` at every width can hyphenate the approved headline, so it applies only inside `@container (max-width: 14em)`.
+- A Google Fonts request with a wrong axis range fails for every family in it. IBM Plex Mono is static on Google Fonts.
+- The Web Status API returns no feature for `text-decoration-thickness`. The compat key in web-features `data.json` gives its status.
+- Two audits cannot share one `astro preview` server, so the accessibility audit waited for the responsive audit.
+- A no-break space never wraps, so enlarged text splits its words in the middle. A `white-space: nowrap` span can wrap again inside a container query.
+- An `em` in a media query ignores the font size that the page sets, so a test with `html { font-size: 200% }` never reaches it. An `em` in a container query counts the font size of the container.
+
+### Open questions that block progress
+
+None blocks PR-7. OQ-3 blocks the About text of PR-8.
+
+### Next concrete action
+
+Answer the Gitar review of PR-7, and ask the owner for the phone check on its preview address. After the merge, start PR-8 from `main` with read-only research.
+
 ## Session 12: 2026-09-14
 
 ### What this session did, and why

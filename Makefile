@@ -1,8 +1,9 @@
-# Every target is free. Only `install` and `browsers` use the network.
+# Every target is free. Only `install`, `browsers`, `link-check`, and
+# `visits` use the network.
 .DEFAULT_GOAL := help
 .PHONY: help install browsers dev build preview images no-script-check no-inline-style-check \
 	no-inline-style-selftest content-selftest ste-check test-responsive test-a11y lighthouse lighthouse-selftest \
-	html-check html-selftest preview-check link-check link-selftest site-checks verify
+	html-check html-selftest preview-check link-check link-selftest visits site-checks verify
 
 # Astro sends anonymous usage data unless this variable is set (D-45). Every
 # target below runs with it, and so do the CI jobs, because they call make.
@@ -196,6 +197,13 @@ link-selftest: ## Prove that the link check fails on a planted dead link
 	else \
 		echo "$$out"; echo "link-selftest: the check did not fail on the planted dead link"; exit 1; \
 	fi
+
+# The count reads the Hosting request log of the live site (D-36, D-139). It
+# needs the gcloud configuration `natekramber` and the network. No check calls
+# it, because it reads the cloud project and not the build.
+visits: ## Count the page requests of one day, as make visits DAY=YYYY-MM-DD (D-139). It needs the network
+	@test -n "$(DAY)" || { echo "visits: set DAY to a day as YYYY-MM-DD"; exit 1; }
+	@sh scripts/visits.sh "$(DAY)"
 
 site-checks: test-responsive test-a11y lighthouse html-check ## Run the four site checks of D-38 on the built site
 
