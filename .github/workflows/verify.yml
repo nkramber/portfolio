@@ -36,6 +36,9 @@ jobs:
       # The skills, the root guidance, the session hook, and the self-test of each lifecycle check (D-147).
       - name: lifecycle check
         run: make lifecycle-check
+      # The byte caps of the session-start set, and the self-test of each cap (D-159).
+      - name: context budget
+        run: make context-budget
 
   site:
     name: "verify:site"

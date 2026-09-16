@@ -2,6 +2,47 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 18: 2026-09-14
+
+### What this session did, and why
+
+- The owner merged #19 (PR-10) as `0f983bb` at 04:07 UTC on 2026-09-15. Its tree matches the reviewed head `5eec2ba`, and Gitar approved that head with no finding.
+- Deploy run 34927622727 passed. At 04:11 UTC, `make preview-check` passed on `https://natekramber.com`.
+- The owner asked for every doc to show the current state before a context reset. The session read the expiring facts again and wrote this refresh. Session 8 moved to the archive.
+- Both custom domains now read `CERT_ACTIVE` with the type `GROUPED`, the standard certificate for Spark plan custom domains. Hosting replaced the `TEMPORARY` certificates.
+- Of the facts that the session read again, one changed: firebase-tools 15.30.1 came out, and `deploy/` still pins 15.30.0. The facts list drops the merge facts of #16 to #18 and the branch results of PR-7 to PR-10.
+
+### State of the repository
+
+- `main` is `0f983bb`, the squash merge of PR #19.
+- Branch `docs/after-pr-10` holds this refresh, as a pull request of documents alone.
+- Remote head: `origin/docs/after-pr-10` at the commit that holds this entry, checked after the push.
+- `make ste-check`: 0 findings.
+
+### In flight
+
+- The refresh waits for the Gitar review, then for the merge.
+- PR-11 has no branch and no research yet. At 02:06 UTC on 2026-09-15, the external drive held `/Volumes/SSD-1TB/what-you-carry`.
+- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
+- The accessibility audit of PR-10 found one AAA item for PR-11. Two cards give two links the same name, "Source on GitHub" (WCAG 2.4.9). A visually hidden project name fixes it, and that fix changes every card.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- Nobody checked Safari 26 yet for `::-webkit-details-marker`, the list role of `.tags`, and the summary in VoiceOver.
+- No run tested the PR-6 exit test of D-63 yet.
+- The private preview page of D-89 still exists on claude.ai.
+
+### Traps and gotchas
+
+- The first head of #19 got a full Gitar review in the pause note with no comment. After the next push, Gitar put no check on the new head for more than 4 minutes.
+- A `Gitar review` comment on that head gave a new summary comment with a new id, and a Gitar check on the head. So read the check runs of the head, not only the old summary comment.
+
+### Open questions that block progress
+
+None blocks the refresh. OQ-3 blocks the About text.
+
+### Next concrete action
+
+Answer the Gitar review of the refresh. After the merge, start PR-11, the What You Carry card, from `main` with the `add-project` skill.
+
 ## Session 17: 2026-09-14
 
 ### What this session did, and why

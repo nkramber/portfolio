@@ -16,11 +16,12 @@ The file has four parts, in this order:
 
 ## At the start of a session
 
-1. Read "Resume here" first, then the newest session entry.
+1. Run `make resume`. It prints "Resume here" and the newest session entry (D-154).
 2. Run `git fetch origin` and `git status --short --branch`.
 3. Compare the state of git with "Resume here". When they differ, trust git and tell the owner.
 4. A merge of the pull request that "Resume here" names needs no record. Git holds it (D-147).
 5. Read the files that the next action names.
+6. Read "Facts that expire" or an older entry only when the task needs it.
 
 ## At the end of a session
 

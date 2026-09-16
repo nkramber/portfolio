@@ -2,7 +2,7 @@
 # `visits` use the network.
 .DEFAULT_GOAL := help
 .PHONY: help install browsers dev build preview images no-script-check no-inline-style-check \
-	no-inline-style-selftest content-selftest ste-check lifecycle-check pr-template pr-check test-responsive test-a11y lighthouse lighthouse-selftest \
+	no-inline-style-selftest content-selftest ste-check lifecycle-check resume decisions-index context-budget pr-template pr-check test-responsive test-a11y lighthouse lighthouse-selftest \
 	html-check html-selftest preview-check link-check link-selftest visits site-checks verify
 
 # Astro sends anonymous usage data unless this variable is set (D-45). Every
@@ -218,6 +218,19 @@ lifecycle-check: ## Check the skills, the root guidance, and the session hook, t
 	@python3 scripts/pr-lifecycle-check.py --selftest
 	@python3 scripts/session-bind-hook.py --selftest
 
+# The session-start context (D-154 to D-159). Each file that a session reads goes
+# to the model again with each later call, so a session reads history on demand.
+resume: ## Print the header, "Resume here", and the newest session entry of the handoff (D-154)
+	@python3 scripts/resume.py
+
+decisions-index: ## Print the id, the date, the topic, and the first words of each decision (D-157)
+	@python3 scripts/decisions-index.py
+
+context-budget: ## Check the byte caps of the session-start set, then prove that each check can fail (D-159)
+	@python3 scripts/context-budget.py
+	@python3 scripts/context-budget.py --selftest
+	@python3 scripts/decisions-index.py --selftest
+
 pr-template: ## Print the session binding and the documentation-impact matrix for a pull request body (D-148)
 	@python3 scripts/pr-lifecycle-check.py --template
 
@@ -226,5 +239,5 @@ pr-check: ## Check a pull request body file against the diff from origin/main, a
 	@test -n "$(BODY)" || { echo "pr-check: set BODY to a file that holds the pull request body"; exit 1; }
 	@python3 scripts/pr-lifecycle-check.py --body "$(BODY)" --base origin/main --branch "$$(git rev-parse --abbrev-ref HEAD)"
 
-verify: ste-check lifecycle-check build no-script-check no-inline-style-check content-selftest site-checks ## Run every check that the verify workflow runs
+verify: ste-check lifecycle-check context-budget build no-script-check no-inline-style-check content-selftest site-checks ## Run every check that the verify workflow runs
 	@echo "verify: every check passed"

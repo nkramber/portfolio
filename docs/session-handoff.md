@@ -1,17 +1,17 @@
 # Session handoff
 
-`CLAUDE.md` sends you here first. Read "Resume here", then the newest session entry. The `session-handoff` skill holds the rules of this file (D-8).
+`make resume` prints the header, "Resume here", and the newest session entry (D-154). Read the rest of this file when the task needs it, and at the end of the session. The `session-handoff` skill holds the rules of this file (D-8).
 
 This file keeps the ten newest sessions, newest first. `docs/session-handoff-archive.md` keeps every older session, word for word.
 
 ## Resume here (2026-09-16)
 
-- **Do this first:** start a new clean session for each pull request. Read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-147).
-- **Base:** `799cbaa`, the commit of `origin/main` where this pull request started.
-- **Pull requests:** the branch `update-gitar-skill`, pending the owner merge. No other pull request is open.
+- **Do this first:** start a new clean session for each pull request. Run `make resume`, then read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-147, D-154).
+- **Base:** `1bee1b0`, the commit of `origin/main` where this pull request started.
+- **Pull requests:** the branch `docs/pr-20-session-start-context` (PR-20), pending the owner merge. No other pull request is open.
 - **Next action:** in a new clean session, ask the owner how a link tells the visitor about a new tab (T-2). The owner asked on 2026-09-16 that each link opens in a new tab.
 - **Blocked on:** M-3 waits for the hand check of the owner, and its 17 steps sit in `docs/design.md`. The Gitar trial ends about 2026-09-22. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
-- **Next ids:** D-153, OQ-9, M-4, PR-20, Session 28.
+- **Next ids:** D-160, OQ-9, M-4, PR-21, Session 29.
 
 ## Facts that expire
 
@@ -31,7 +31,10 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Claude Code reads `CLAUDE.md` and not `AGENTS.md`. A rule file with a `paths` list loads when Claude reads a matching file. The session read both facts in the Claude Code memory docs on 2026-09-12.
 - The toolchain on this Mac, read 2026-09-14: Python 3.9.6, pnpm 9.2.0, and gh 2.100.0. The default Node is 20.17.0, and nvm holds Node 22.23.2 with npm 10.9.8.
 - The Playwright cache in `~/Library/Caches/ms-playwright` holds Chromium build 1243 and its headless shell, read 2026-09-14.
-- The external facts of the roadmap, each with its source and its date, live in `docs/design.md`.
+- The external facts of the roadmap, each with its source and its date, live in `docs/external-facts.md` (D-156).
+- Claude Code keeps one JSONL file for each session of this repository in `~/.claude/projects/-Users-nate-Repos-portfolio/`. Each model call holds a `usage` object with the input, cache-read, cache-write, output, and thinking tokens (read 2026-09-16).
+- The ten sessions of 2026-09-13 to 2026-09-16 held 424.0M tokens, 96 percent of them cache reads. They wrote their prompt cache with a lifetime of one hour (read 2026-09-16).
+- Anthropic prices a 1-hour cache write at 2 times the base input price, and a 5-minute cache write at 1.25 times. A cache read costs 0.1 times (https://platform.claude.com/docs/en/build-with-claude/prompt-caching, read 2026-09-16).
 - The What You Carry repository `nkramber/what-you-carry` is public on 2026-09-15, and its D-106 still reads "Private until launch". The owner records that change in that repository (D-25).
 - The cloud tools on this Mac, read 2026-09-14: gcloud 533.0.0 in `/opt/homebrew/bin`, and a global Firebase CLI 14.14.0 under Node 20.17.0 alone. The newest gcloud is 584.0.0 of 2026-09-09 (https://docs.cloud.google.com/sdk/docs/release-notes).
 - The gcloud configurations on this Mac, read 2026-09-14: `default` (active) and `decktome` on the project `wallabee-dev`, and `natekramber` (inactive) for the owner projects.
@@ -95,6 +98,52 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The project `natekramber-prod` holds two saved queries since 13:42 UTC on 2026-09-16, `visits-page-requests` and `visits-after-machine-filter`, each with the visibility `SHARED` (D-140). It held none before.
 - The `_Default` log bucket of `natekramber-prod` keeps 30 days and has no Log Analytics, read 2026-09-16. Cloud Logging gives 50 GiB of ingestion for each project each month at no charge.
 - On 2026-09-15 the live site answered 901 requests, 580 of them a 404 scan. The page requests read 155, and the machine filter left 125 (D-139).
+
+## Session 28: 2026-09-16
+
+### What this session did, and why
+
+- The owner asked for a read-only token audit of this repository. The session read the usage records of the ten newest sessions, from 2026-09-13 to 2026-09-16.
+- The records held 424.0M tokens, and 96 percent of them were cache reads. The read order loaded 237,987 bytes before the work started, and each later model call sent them again.
+- The owner then asked for the P0 and P1 changes of the audit in one pull request, with no global change (D-153).
+- The session wrote `make resume`, `make decisions-index`, and `make context-budget`, with a self-test for each check (D-154, D-157, D-159).
+- It moved the entries of Phases 0 to 3 to `docs/roadmaps/`, and the external facts to `docs/external-facts.md` (D-155, D-156). Each non-blank line of the old design doc is in the new files.
+- It wrote the rule for a pause of more than one hour (D-158), the read order, the skill changes, and this entry. Session 18 moved to the archive.
+- A forward test gave the next action of the handoff to evaluators. The old read order read about 238 KB and used 134,336 tokens.
+- The first evaluator of the new read order read about 83 KB and used 70,811 tokens. It missed the decisions on the CSP, contrast, and the 404 words.
+- The read order now asks for a search of the index for each limit of the change. A new evaluator with the same prompt then named those decisions, with 78,599 tokens.
+
+### State of the repository
+
+- Base: `origin/main` at `1bee1b0` when the session started.
+- Remote head: `origin/docs/pr-20-session-start-context` at the commit that holds this entry, checked after the push.
+- `make verify`: every check passed. `make context-budget` reads the session-start set at about 27 percent of its bytes before this pull request.
+
+### In flight
+
+- PR-20 waits for the Gitar review of its newest head and the owner merge.
+- The next three sessions give the measurement for a shorter `CLAUDE.md`, a short Gitar status command, and bounded reads of test logs (D-153).
+- The owner keeps the global plugins, skills, and servers, and the reasoning effort, outside this repository (D-153).
+- The owner asked that each link opens in a new tab. That work needs a new clean session.
+- M-3 waits for the hand check of the owner. OQ-4 waits for a screenshot, and OQ-8 waits for a logo file.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+
+### Traps and gotchas
+
+- The Read tool returns part of a file above 25,000 tokens. The old `docs/design.md` counted 33,087 tokens, so a full read needed two calls.
+- Two rows of `docs/decisions.md` hold an escaped pipe (`\|`) in a cell. A split on each pipe gives the wrong cells.
+- The tool shell is zsh. A command such as `echo ===` fails with "== not found", and the compound command stops there.
+- A subagent gets the `CLAUDE.md` of the session start, not the file on disk. One evaluator read 20 KB of the old handoff before it found `make resume`.
+- An evaluator prompt that names the topics to search makes the test too easy. Give each evaluator the same prompt.
+- `make resume` reads the handoff on disk. Write the new entry only after each evaluator ran `make resume`.
+
+### Open questions that block progress
+
+None blocks PR-20. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the images of the cards.
+
+### Next concrete action
+
+In a new clean session, run `make resume`. Then ask the owner how a link tells the visitor that it opens a new tab (T-2).
 
 ## Session 27: 2026-09-16
 
@@ -511,44 +560,3 @@ None blocks PR-11. OQ-3 blocks the About text.
 ### Next concrete action
 
 Answer the Gitar review of #22, and post `Gitar review` only after the checks of the new head start. After the merge, start PR-12, the weekly outbound link check, from `main`.
-
-## Session 18: 2026-09-14
-
-### What this session did, and why
-
-- The owner merged #19 (PR-10) as `0f983bb` at 04:07 UTC on 2026-09-15. Its tree matches the reviewed head `5eec2ba`, and Gitar approved that head with no finding.
-- Deploy run 34927622727 passed. At 04:11 UTC, `make preview-check` passed on `https://natekramber.com`.
-- The owner asked for every doc to show the current state before a context reset. The session read the expiring facts again and wrote this refresh. Session 8 moved to the archive.
-- Both custom domains now read `CERT_ACTIVE` with the type `GROUPED`, the standard certificate for Spark plan custom domains. Hosting replaced the `TEMPORARY` certificates.
-- Of the facts that the session read again, one changed: firebase-tools 15.30.1 came out, and `deploy/` still pins 15.30.0. The facts list drops the merge facts of #16 to #18 and the branch results of PR-7 to PR-10.
-
-### State of the repository
-
-- `main` is `0f983bb`, the squash merge of PR #19.
-- Branch `docs/after-pr-10` holds this refresh, as a pull request of documents alone.
-- Remote head: `origin/docs/after-pr-10` at the commit that holds this entry, checked after the push.
-- `make ste-check`: 0 findings.
-
-### In flight
-
-- The refresh waits for the Gitar review, then for the merge.
-- PR-11 has no branch and no research yet. At 02:06 UTC on 2026-09-15, the external drive held `/Volumes/SSD-1TB/what-you-carry`.
-- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
-- The accessibility audit of PR-10 found one AAA item for PR-11. Two cards give two links the same name, "Source on GitHub" (WCAG 2.4.9). A visually hidden project name fixes it, and that fix changes every card.
-- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
-- Nobody checked Safari 26 yet for `::-webkit-details-marker`, the list role of `.tags`, and the summary in VoiceOver.
-- No run tested the PR-6 exit test of D-63 yet.
-- The private preview page of D-89 still exists on claude.ai.
-
-### Traps and gotchas
-
-- The first head of #19 got a full Gitar review in the pause note with no comment. After the next push, Gitar put no check on the new head for more than 4 minutes.
-- A `Gitar review` comment on that head gave a new summary comment with a new id, and a Gitar check on the head. So read the check runs of the head, not only the old summary comment.
-
-### Open questions that block progress
-
-None blocks the refresh. OQ-3 blocks the About text.
-
-### Next concrete action
-
-Answer the Gitar review of the refresh. After the merge, start PR-11, the What You Carry card, from `main` with the `add-project` skill.
