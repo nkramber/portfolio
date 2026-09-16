@@ -6,11 +6,11 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-16)
 
-- **Main:** `f656d84`, the squash merge of PR #26, the visit counts.
-- **Open pull requests:** #27, the branch `site/pr-18-audit-fixes`, PR-18, in review.
-- **Next action:** answer the Gitar review of #27. After the merge, give the owner the hand-check list of M-3.
-- **Blocked on:** M-3 waits for the hand check of the owner. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
-- **Next ids:** D-146, OQ-9, M-4, PR-19, Session 25.
+- **Main:** `fce6d7d`, the squash merge of PR #28, the GPL-3.0 license.
+- **Open pull requests:** #29, the branch `docs/after-pr-18`, the wrap-up, in review.
+- **Next action:** after the merge of #29, ask the owner for the result of the M-3 hand check. The 17 steps sit in the M-3 entry of `docs/design.md`.
+- **Blocked on:** M-3 waits for the hand check of the owner. The Gitar trial ends about 2026-09-22. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
+- **Next ids:** D-147, OQ-9, M-4, PR-19, Session 26.
 
 ## Facts that expire
 
@@ -23,7 +23,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Astro 7.3.2 is the latest Astro on 2026-09-16 (npm registry), and it needs Node 22.12.0 or newer. The variable `ASTRO_TELEMETRY_DISABLED=1` stops its telemetry.
 - On 2026-09-14, npm lists each check tool at its latest release: Playwright 1.63.0, axe-core 4.13.0, Lighthouse 13.4.1, html-validate 11.15.0, and linkinator 8.1.0. Chromium 153 (build 1243) and chrome-launcher 1.2.1 date from 2026-09-12.
 - `npm audit` reads 0 vulnerabilities on 2026-09-14. Lighthouse CI 0.15.1 added 12 advisories before D-50 removed it.
-- The Gitar trial still pauses automatic reviews on 2026-09-16, and it ends in 7 days. On 15 pull requests (#7, #8, #12 to #17, and #19 to #25), the pause note of the first head held a full review in its collapsed Code Review block. A later head of #17, of #19, and of #22 needed a `Gitar review` comment, and the `gitar-review` skill holds the traps.
+- The Gitar trial still pauses automatic reviews on 2026-09-16. Its note on #28 read "trial ends in 6 days", so the trial ends about 2026-09-22. On 18 pull requests (#7, #8, #12 to #17, and #19 to #28), the pause note of the first head held a full review in its collapsed Code Review block. A later head of #17, of #19, and of #22 needed a `Gitar review` comment, and the `gitar-review` skill holds the traps.
 - PR-5 created the projects `natekramber-prod` and `natekramber-preview` on 2026-09-14 (D-51, D-56, D-79). A project id is permanent, and a permission error before creation does not show whether an id is free.
 - WCAG 2.2 is the W3C Recommendation of 2024-12-12, read 2026-09-12. The minimum target size of 2.5.8 is 24 by 24 CSS pixels.
 - ASD-STE100 Issue 9, dated 2025-01-15, is the current issue, read 2026-09-14.
@@ -87,10 +87,57 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Lighthouse on the live site read 1 in every category on 2026-09-16. It read 55,240 total bytes, an LCP of 1,224 ms, a CLS of 0, and a TBT of 0. `make preview-check` passed on the live site after that deploy.
 - The M-3 audits of 2026-09-16 found 6 low responsive defects and 3 low accessibility items. Neither report holds a defect of medium or high severity, and neither page fails WCAG 2.2 level AA.
 - On `main` with PR-18, `make verify` reads 64,356 total bytes. The tag outline holds 3.19:1 in light and 3.30:1 in dark, and the card hairline stays at 1.24:1 and 1.34:1.
+- The owner merged #27 (PR-18) as `def59ef` at 16:31 UTC on 2026-09-16. Its tree matches the reviewed head `4b5d2d5`, and deploy run 35122477540 passed.
+- The owner merged #28 as `fce6d7d` at 16:36 UTC on 2026-09-16. It replaced `LICENSE` with GPL-3.0, Gitar approved it, and deploy run 35122957665 passed.
+- After both deploys, `make preview-check` passed on the live site, and all 10 live files matched `dist/` by SHA-256 (2026-09-16).
 - The owner merged #25 as `2e50f34` at 13:32 UTC on 2026-09-16. Its tree matches the reviewed head `cc8f5f1`, and Gitar approved that head with no finding. Deploy run 35102613219 passed.
 - The project `natekramber-prod` holds two saved queries since 13:42 UTC on 2026-09-16, `visits-page-requests` and `visits-after-machine-filter`, each with the visibility `SHARED` (D-140). It held none before.
 - The `_Default` log bucket of `natekramber-prod` keeps 30 days and has no Log Analytics, read 2026-09-16. Cloud Logging gives 50 GiB of ingestion for each project each month at no charge.
 - On 2026-09-15 the live site answered 901 requests, 580 of them a 404 scan. The page requests read 155, and the machine filter left 125 (D-139).
+
+## Session 25: 2026-09-16
+
+### What this session did, and why
+
+- The owner merged #27 (PR-18) as `def59ef`. Its tree matches the reviewed head `4b5d2d5`, and deploy run 35122477540 passed.
+- The owner then merged #28 as `fce6d7d`. It replaced the MIT text of `LICENSE` with GPL-3.0, and deploy run 35122957665 passed.
+- `make preview-check` passed on `https://natekramber.com`. All 10 live files matched `dist/` by SHA-256, and the live page holds the 5 list roles.
+- #28 left D-18, `README.md`, and `CLAUDE.md` on MIT. The owner answered that GPL-3.0 is on purpose, with the reservation of the site content (D-146).
+- The owner asked for a clean stopping point. The session wrote D-146, the license text of `README.md` and `CLAUDE.md`, and the PR-18 status.
+- The M-3 entry of `docs/design.md` now holds the hand check in 17 steps, so the list does not depend on the chat.
+- The PR-18 entry gains the safety sentence that the style skill asks for. Session 15 moved to the archive.
+
+### State of the repository
+
+- `main` is `fce6d7d`, the squash merge of PR #28.
+- Remote head: `origin/docs/after-pr-18` at the commit that holds this entry, checked after the push.
+- `make verify`: every check passed.
+
+### In flight
+
+- This wrap-up waits for the Gitar review and the merge.
+- M-3 waits for the hand check of the owner. The 17 steps sit in the M-3 entry of `docs/design.md`. The result becomes D-147, and M-3 then reads passed.
+- The Gitar trial ends about 2026-09-22. The note on #28 read "trial ends in 6 days". Gitar is the only review of D-5, so the owner needs a plan before that date.
+- OQ-4 waits for a screenshot, and OQ-8 waits for a logo file. Each card shows no image until then.
+- The accessibility audit asks for a new run when the first image lands.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- No run tested the PR-6 exit test of D-63 yet.
+- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
+
+### Traps and gotchas
+
+- The owner can merge a pull request and push a new one while the session works. Run `git fetch origin` before each wrap-up, and trust git.
+- A change to `LICENSE` alone leaves D-18, `README.md`, and `CLAUDE.md` behind. Search for the old license name after such a change.
+- `scripts/lighthouse-budget.mjs` takes a built directory alone. The live run of M-3 used a copy that takes an address, in the ignored folder `test-results/`.
+- The `design-doc-style` skill asks each plain-English note to say why the change is safe. Load the skill before each edit of `docs/design.md`.
+
+### Open questions that block progress
+
+None blocks the wrap-up. M-3 waits for the hand check of the owner. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the images of the cards.
+
+### Next concrete action
+
+After the merge of this wrap-up, ask the owner for the result of the M-3 hand check. Record it as D-147, and mark M-3 passed.
 
 ## Session 24: 2026-09-16
 
@@ -518,54 +565,3 @@ None blocks PR-9. OQ-3 blocks the About text.
 ### Next concrete action
 
 Answer the Gitar review of PR-9, and request it only after the checks of the new head start. After the merge, start PR-10, the Deck Tome card, with the `add-project` skill.
-
-## Session 15: 2026-09-14
-
-### What this session did, and why
-
-- The owner merged #16, the docs refresh, as `8119f95` at 19:41 UTC. Its tree matches the reviewed head `0614f9d`, and Gitar approved it with no finding.
-- The session started PR-8 with two read-only research passes: the head metadata, and the motion and page structure.
-- The owner chose an interview for the bio (D-94). The session asked four interview questions, and the answers are still open.
-- The owner chose the hero rise (D-95), the NK icon (D-96), and the share image with the headline (D-97). The 404 page keeps the words of D-74 (D-98).
-- The session wrote PR-8: the layout, both pages, the icons, the share image script, the new tests, and the docs. Session 5 moved to the archive.
-- The CSP drops `data:` from `img-src`, because D-57 kept it only for the placeholder favicon.
-- The copy review found no defect. The owner took its one suggestion, a meta description in the words of D-29 (D-99).
-- The responsive audit found four defects. The branch fixes three, and the fourth is a bare word break at 200 percent text on a 320 px screen.
-- The accessibility audit found no WCAG 2.2 AA defect in the light or the dark scheme.
-- The session opened #17. Every check passed on `c18d8ad`, and the pause note of Gitar held an approval with no finding.
-- The owner kept both lists of profile links (D-100) and chose a hairline above the footer (D-101). The second commit applies D-99 and D-101.
-- On a phone, the owner saw the same links twice with nothing between them. The owner then chose the hero list alone until the project cards arrive (D-102).
-
-### State of the repository
-
-- `main` is `8119f95`, the squash merge of PR #16.
-- Branch `site/pr-8-page-shell` holds PR-8 as #17, and this entry.
-- Remote head: `origin/site/pr-8-page-shell` at the commit that holds this entry, checked after the push.
-- `make verify` on Node 22.23.2 passes on the branch.
-
-### In flight
-
-- #17 waits for a Gitar review of the new head, the phone check of the owner, and the merge.
-- The bio interview waits for the answers of the owner. OQ-3 stays open until the owner approves the words (D-94).
-- No run tested the PR-6 exit test of D-63 yet.
-- Each certificate has the type `TEMPORARY` at 19:50 UTC, and nobody checked the permanent certificate yet.
-- The private preview page of D-89 still exists on claude.ai.
-
-### Traps and gotchas
-
-- `grep` on this Mac is ugrep. A pattern with a long range such as `.{0,160}` stops with "exceeds complexity limits", so use Perl for a context search.
-- Under `prefers-reduced-motion: reduce`, the reset gives each property a 0.01 ms transition. A script that reads a style right after a change gets the old value, so wait one frame.
-- A `translate` start offset adds scroll to a page whose content fills the window. `main` clips vertical overflow, and a test holds the first frame still.
-- The clip on `main` leaves 6 px below a focus ring in the worst case. In PR-9, give the last link inside `main` more than 6 px of space below it.
-- The research pass saw no favicon request from the Playwright headless shell. The full Chromium build requested the icon with `channel: 'chromium'`.
-- `make site-checks` runs the accessibility tests after the responsive tests, and Playwright empties `test-results/` at the start of each run. So read the responsive screenshots before the next Playwright run.
-- On #17, a `Gitar review` comment came seconds after a push. Gitar put its check on the old head, and its text named no change of the new head. Post the comment after the checks of the new head start. Then read the commit of the Gitar check run.
-- A push to #17 kept the preview address, and the preview comment named the new commit. So the owner can reload the same link after a push.
-
-### Open questions that block progress
-
-None blocks PR-8. OQ-3 blocks the About text.
-
-### Next concrete action
-
-Answer the Gitar review of PR-8, and ask the owner for the phone check on its preview address. Draft the bio when the interview answers come.
