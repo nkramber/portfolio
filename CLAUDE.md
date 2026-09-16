@@ -112,7 +112,7 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `scripts/check-preview-headers.mjs`, `playwright.preview.config.ts`, and `tests/preview/`: the header check and the console check of a deployed preview (D-59).
 - `.github/dependabot.yml`: the monthly update of the pinned actions and the npm dependencies (D-16).
 - `Makefile`: the local commands.
-- `LICENSE`: the MIT license of the code. The site text and images are not under it (D-18).
+- `LICENSE`: the GPL-3.0 license of the code. The site text and images are not under it (D-146).
 
 ## Commands
 

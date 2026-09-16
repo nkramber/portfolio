@@ -26,6 +26,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-16 correction pass (Session 22): PR-17 reads merged, and the Phase 3 gate reads passed. The external facts add the image research of PR-17.
 2026-09-16 correction pass (Session 23): PR-13 follows D-139 to D-141. D-141 adds a command to its scope. The external facts add the log research of PR-13.
 2026-09-16 correction pass (Session 24): PR-13 reads merged. M-3 holds the result of the two audits and of Lighthouse on the live site. PR-18 follows D-142 to D-145.
+2026-09-16 correction pass (Session 25): PR-18 reads merged. M-3 holds the hand check of the owner. D-146 supersedes D-18, and the code license is GPL-3.0.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -698,7 +699,7 @@ Gate: the owner merges PR-13.
 
 #### M-3: Launch audit
 
-Status: in progress. The two agent audits ran on 2026-09-16 against `main` at `f656d84`, and every live file matched `dist/` byte for byte. Neither report holds a defect of high severity or of medium severity, and the accessibility audit found no WCAG 2.2 level AA failure. Lighthouse on `https://natekramber.com` read 1 in every category, 55,240 total bytes, an LCP of 1,224 ms, a CLS of 0, and a TBT of 0. PR-18 fixes the two findings that the owner chose to fix. The hand check of the owner is open.
+Status: in progress. The two agent audits ran on 2026-09-16 against `main` at `f656d84`, and every live file matched `dist/` byte for byte. Neither report holds a defect of high severity or of medium severity, and the accessibility audit found no WCAG 2.2 level AA failure. Lighthouse on `https://natekramber.com` read 1 in every category, 55,240 total bytes, an LCP of 1,224 ms, a CLS of 0, and a TBT of 0. PR-18 (#27) fixed the two findings that the owner chose to fix. The hand check of the owner is open.
 
 Scope: run the `responsive-auditor` agent, the `accessibility-auditor` agent, and Lighthouse against `https://natekramber.com`. The owner checks the site on a real phone and a real desktop.
 
@@ -708,13 +709,33 @@ Exit tests:
 - Lighthouse on the live site meets the budget of D-37.
 - The owner records the phones and the browsers of the hand check.
 
+Hand check, on `https://natekramber.com`. The two agent audits of 2026-09-16 gave the items that no script can prove.
+
+1. Open the site in Safari on the iPhone, in portrait. Make sure that the hero fits with the toolbar shown.
+2. Scroll until the toolbar hides. Make sure that the hero still fits.
+3. Hold the phone in landscape. Make sure that no text sits under the Dynamic Island or the home indicator.
+4. Touch each of the five links with a thumb. Make sure that each link opens on the first touch.
+5. Set the largest text size in the iOS display settings. Load the site again.
+6. Make sure that no text clips and that nothing scrolls sideways.
+7. Set Reduce Motion to on in iOS. Load the site again. Make sure that the headline does not move.
+8. Start VoiceOver on the iPhone. Move through both project cards.
+9. Make sure that each tag list announces as a list, with its item count (D-143).
+10. Make sure that VoiceOver reads each source link with its project name (D-122). Stop VoiceOver.
+11. Zoom the page with two fingers, then pan. Make sure that no content stays out of reach.
+12. On the Mac in Safari 26, push Tab five times. Make sure that a focus ring shows on each link.
+13. Start VoiceOver on the Mac, and open the rotor. Make sure that the link list and the three lists read correctly.
+14. Set Reduce Motion to on in macOS. Load the site again. Make sure that the headline does not move.
+15. Zoom Safari to 400 percent. Make sure that nothing scrolls sideways and that no text disappears.
+16. Open the site in Firefox, in the light scheme and in the dark scheme. Make sure that the layout matches Safari.
+17. Tell the session the phone model, the iOS version, each browser version, and each defect.
+
 Gate: the owner signs off, and the result goes into `docs/decisions.md`.
 
 > *In plain English:* the automatic checks run on a local build. This audit checks the real site on real devices before the owner calls it done.
 
 #### PR-18: The audit fixes of M-3
 
-Status: in progress. D-142 to D-145 answer its design questions.
+Status: merged as #27, `def59ef`, on 2026-09-16 UTC. Gitar approved it with no finding, and D-142 to D-145 answer its design questions. After the deploy, `make preview-check` passed on `https://natekramber.com`, and the live files matched `dist/` byte for byte.
 
 Scope: the tag outline of the card, the list role of each `ul`, and the `html-validate` rule that the role needs (D-142, D-143).
 
@@ -726,7 +747,7 @@ Exit tests:
 
 Gate: the owner merges PR-18.
 
-> *In plain English:* the launch audit found a faint outline that does a real job, and a list that Safari can strip of its meaning. This change fixes both.
+> *In plain English:* the launch audit found a faint outline that does a real job, and a list that Safari can strip of its meaning. This change fixes both. Neither fix moves the layout, and every site check still passes.
 
 ### Later
 

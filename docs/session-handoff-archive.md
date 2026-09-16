@@ -2,6 +2,57 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 15: 2026-09-14
+
+### What this session did, and why
+
+- The owner merged #16, the docs refresh, as `8119f95` at 19:41 UTC. Its tree matches the reviewed head `0614f9d`, and Gitar approved it with no finding.
+- The session started PR-8 with two read-only research passes: the head metadata, and the motion and page structure.
+- The owner chose an interview for the bio (D-94). The session asked four interview questions, and the answers are still open.
+- The owner chose the hero rise (D-95), the NK icon (D-96), and the share image with the headline (D-97). The 404 page keeps the words of D-74 (D-98).
+- The session wrote PR-8: the layout, both pages, the icons, the share image script, the new tests, and the docs. Session 5 moved to the archive.
+- The CSP drops `data:` from `img-src`, because D-57 kept it only for the placeholder favicon.
+- The copy review found no defect. The owner took its one suggestion, a meta description in the words of D-29 (D-99).
+- The responsive audit found four defects. The branch fixes three, and the fourth is a bare word break at 200 percent text on a 320 px screen.
+- The accessibility audit found no WCAG 2.2 AA defect in the light or the dark scheme.
+- The session opened #17. Every check passed on `c18d8ad`, and the pause note of Gitar held an approval with no finding.
+- The owner kept both lists of profile links (D-100) and chose a hairline above the footer (D-101). The second commit applies D-99 and D-101.
+- On a phone, the owner saw the same links twice with nothing between them. The owner then chose the hero list alone until the project cards arrive (D-102).
+
+### State of the repository
+
+- `main` is `8119f95`, the squash merge of PR #16.
+- Branch `site/pr-8-page-shell` holds PR-8 as #17, and this entry.
+- Remote head: `origin/site/pr-8-page-shell` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on the branch.
+
+### In flight
+
+- #17 waits for a Gitar review of the new head, the phone check of the owner, and the merge.
+- The bio interview waits for the answers of the owner. OQ-3 stays open until the owner approves the words (D-94).
+- No run tested the PR-6 exit test of D-63 yet.
+- Each certificate has the type `TEMPORARY` at 19:50 UTC, and nobody checked the permanent certificate yet.
+- The private preview page of D-89 still exists on claude.ai.
+
+### Traps and gotchas
+
+- `grep` on this Mac is ugrep. A pattern with a long range such as `.{0,160}` stops with "exceeds complexity limits", so use Perl for a context search.
+- Under `prefers-reduced-motion: reduce`, the reset gives each property a 0.01 ms transition. A script that reads a style right after a change gets the old value, so wait one frame.
+- A `translate` start offset adds scroll to a page whose content fills the window. `main` clips vertical overflow, and a test holds the first frame still.
+- The clip on `main` leaves 6 px below a focus ring in the worst case. In PR-9, give the last link inside `main` more than 6 px of space below it.
+- The research pass saw no favicon request from the Playwright headless shell. The full Chromium build requested the icon with `channel: 'chromium'`.
+- `make site-checks` runs the accessibility tests after the responsive tests, and Playwright empties `test-results/` at the start of each run. So read the responsive screenshots before the next Playwright run.
+- On #17, a `Gitar review` comment came seconds after a push. Gitar put its check on the old head, and its text named no change of the new head. Post the comment after the checks of the new head start. Then read the commit of the Gitar check run.
+- A push to #17 kept the preview address, and the preview comment named the new commit. So the owner can reload the same link after a push.
+
+### Open questions that block progress
+
+None blocks PR-8. OQ-3 blocks the About text.
+
+### Next concrete action
+
+Answer the Gitar review of PR-8, and ask the owner for the phone check on its preview address. Draft the bio when the interview answers come.
+
 ## Session 14: 2026-09-14
 
 ### What this session did, and why
