@@ -97,6 +97,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The owner answered three questions (D-139 to D-141). The count gives two numbers, the saved queries live in the project, and `make visits` joins the scope.
 - The Logging API created `visits-page-requests` and `visits-after-machine-filter` at 13:42 UTC. The project held no saved query before.
 - The session wrote `docs/analytics.md`, `scripts/visits.sh`, the `visits` target, the three decisions, six external facts, and this entry. Session 13 moved to the archive.
+- Gitar found one bug in `scripts/visits.sh`: a pipe hid the exit status of gcloud, so a failed read printed a count of 0. The fix `2bef180` closed it, and Gitar approved that head.
 
 ### State of the repository
 
@@ -106,7 +107,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ### In flight
 
-- PR-13 waits for the Gitar review and the merge.
+- PR-13 waits for the merge. Gitar approved the head that holds the fix, and it closed its one finding.
 - A filter change needs the same change in `scripts/visits.sh` and in the saved query. Nothing checks that the two agree.
 - The owner left out the referrer query, the country query, the scan note, and the cost note of the same question (D-141).
 - M-3, the launch audit, is the last item before the launch. It needs the two agents and a hand check on a real phone.
@@ -123,6 +124,8 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - A saved query holds no time range. The Logs Explorer control selects the day, and `make visits` adds the day to the filter.
 - gcloud 533.0.0 has no `saved-queries` command group, so the create call goes to the REST API.
 - The live log is mostly noise. 580 of the 901 entries of 2026-09-15 were a 404 scan.
+- A pipe hides the exit status of the first command, and POSIX `sh` has no `pipefail`. So `gcloud ... | wc -l` turns a failed read into a count of 0.
+- `grep -c` exits 1 when it counts 0 lines. Under `set -e`, that stops a script on a day with no entry, so the count needs `|| true`.
 
 ### Open questions that block progress
 
