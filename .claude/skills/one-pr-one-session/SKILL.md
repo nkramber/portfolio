@@ -37,7 +37,7 @@ Stop when one of these conditions is true:
 Do not start the work until each item is true:
 
 1. The stop conditions of section 2 are all false.
-2. You read `docs/session-handoff.md` and the read order of `CLAUDE.md`.
+2. You ran `make resume` and followed the read order of `CLAUDE.md` (D-154).
 3. You know the repository, the branch, and the one concern (hard rule 3).
 4. You recorded the base commit with `git rev-parse origin/main`.
 5. You listed each document category that the change can affect.
@@ -71,6 +71,13 @@ A pull request cannot know its squash commit or its merge time. Git and GitHub h
 ## 6. Review
 
 Gitar reviews each head (D-5). The session of the pull request answers each finding of each round itself, and it needs no new session for that (D-152). Answer every finding before the owner merges. Put each fix and the review state in this branch. The Gitar result of the last head lives on GitHub, and it needs no commit of its own.
+
+A resume after a pause of more than one hour sends the full conversation to the model again, with no cache (D-158). So a long pause ends the session:
+
+1. Before a wait of more than one hour for the owner, commit and push the work.
+2. Write the handoff entry of this session, with the review state and the next action.
+3. Tell the owner to continue this pull request in a new session.
+4. The new session keeps the base, sets its role, and adds its own handoff entry (section 1).
 
 ## 7. Completion gate
 

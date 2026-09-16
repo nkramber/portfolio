@@ -33,11 +33,12 @@ HANDOFF = "docs/session-handoff.md"
 
 # Each category: the name in the matrix, and the path prefixes it covers.
 # The handoff archive belongs to the handoff, because entries move there.
+# The roadmap phases and the external facts belong to the design (D-155, D-156).
 CATEGORIES = [
     ("CLAUDE.md", ["CLAUDE.md"]),
     ("README.md", ["README.md"]),
     (HANDOFF, [HANDOFF, "docs/session-handoff-archive.md"]),
-    ("docs/design.md", ["docs/design.md"]),
+    ("docs/design.md", ["docs/design.md", "docs/roadmaps/", "docs/external-facts.md"]),
     ("docs/decisions.md", ["docs/decisions.md"]),
     ("docs/questions.md", ["docs/questions.md"]),
     ("docs/deploy.md", ["docs/deploy.md"]),
@@ -185,6 +186,9 @@ def selftest():
     branch = "docs/one-pr-one-session"
     without_handoff = [path for path in changed if path != HANDOFF]
     questions = next(line for line in good.splitlines() if line.startswith("- `docs/questions.md`"))
+    design = next(line for line in good.splitlines() if line.startswith("- `docs/design.md`"))
+    unchanged_design = good.replace(design, "- `docs/design.md`: Reviewed; no change needed: the plan of this change stays as it is")
+    roadmap_only = [path for path in changed if path != "docs/design.md"] + ["docs/roadmaps/phase-1.md"]
     cases = [
         ("a complete pull request", good, changed, branch, None),
         ("a missing handoff", good, without_handoff, branch, "does not change docs/session-handoff.md"),
@@ -193,6 +197,7 @@ def selftest():
         ("a missing category", good.replace(questions + "\n", ""), changed, branch, "no entry for 'docs/questions.md'"),
         ("a Changed entry with no file", good.replace(questions, "- `docs/questions.md`: Changed: the register gains the new question"), changed, branch, "says Changed, but the diff"),
         ("a changed file with no Changed entry", good, changed + ["docs/questions.md"], branch, "the diff changes 'docs/questions.md'"),
+        ("a changed roadmap phase with no Changed design entry", unchanged_design, roadmap_only, branch, "the diff changes 'docs/design.md'"),
         ("a second pull request", good.replace("- Pull request: this pull request", "- Pull request: #31 and #32"), changed, branch, "more than one pull request"),
         ("a merge record branch", good.replace(branch, "docs/after-pr-18"), changed, "docs/after-pr-18", "record of an earlier merge"),
         ("the merge record branch of #21", good.replace(branch, "docs/resume-after-pr-20"), changed, "docs/resume-after-pr-20", "record of an earlier merge"),

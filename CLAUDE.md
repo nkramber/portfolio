@@ -4,14 +4,16 @@
 
 ## First action
 
-Read `docs/session-handoff.md` before any other file and before any other tool call. It gives the state of the repository and the next action. Then read the rest of this file.
+Run `make resume` before any other tool call. It prints the header, "Resume here", and the newest entry of `docs/session-handoff.md`. That text gives the state of the repository and the next action (D-154). Then read the rest of this file.
+
+Each file that a session reads stays in its context, and the model gets that text again with each later call. So read the history on demand.
 
 ## Read order
 
-1. `docs/session-handoff.md`: the state and the next action.
+1. `make resume`: the state and the next action. Read the full handoff at the end of the session. Read it earlier when the task needs an older entry or a fact that expires.
 2. This file: the tenets, the hard rules, and the maps.
-3. `docs/design.md`: the thesis, the guardrails, the roadmap, and the sequence.
-4. `docs/decisions.md`: every owner decision, D-1 onward. Cite the D-# id when you apply one.
+3. `docs/design.md`: the thesis, the guardrails, the current phase, and the sequence. Read `docs/roadmaps/` for a completed phase, and `docs/external-facts.md` for a version, a term, or a standard (D-155, D-156).
+4. `make decisions-index`: the id, the date, the topic, and the first words of each owner decision (D-157). Search the index with `grep -i` for each term of the task. Also search for each limit that the change can meet, for example CSP, contrast, budget, or 404. Read each matching row with `grep -F '| D-122 |' docs/decisions.md`. Read the full register only to audit it. Cite the D-# id when you apply one.
 5. `docs/questions.md`: every open question, OQ-1 onward. File each new question there.
 6. `docs/session-handoff-archive.md`: the sessions older than the ten in the handoff. Read it only when the handoff points to it.
 
@@ -36,7 +38,7 @@ The tenets are the constitution of the site. When a tenet conflicts with speed o
 
 1. **Write scope.** This repository permits writes. Treat every other repository as read-only (D-1). Read a project repository to describe it, and never change it.
 2. **Every change starts on a branch.** Never commit to `main`, and never push to it. Push the branch, and open a pull request. The owner merges. The `main` ruleset refuses a direct push, a force push, and every merge method except squash (D-11).
-3. **One pull request, one clean session.** Each pull request has one concern and gets a new, clean session. That session works on no other pull request. The pull request holds its documents and its handoff, and no later pull request records its merge. Read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-12, D-147).
+3. **One pull request, one clean session.** Each pull request has one concern and gets a new, clean session. That session works on no other pull request. The pull request holds its documents and its handoff, and no later pull request records its merge. Read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-12, D-147). After a pause of more than one hour, continue the pull request in a new session (D-158).
 4. **Gitar reviews every pull request.** A pull request of documents alone waits for the review too. Load the `gitar-review` skill after each push. Gitar is the only review this repository asks for (D-5).
 5. **Write docs in ASD-STE100.** Load the `ste-writing` skill before you write a `.md` file. The words a visitor reads on the site are exempt (D-7). Run `make ste-check` before you commit a `.md` file.
 6. **No attribution.** Tenet T-6 applies. `.claude/settings.json` turns off the co-author trailer and the pull request footer (D-6).
@@ -76,13 +78,15 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 | Rule file | Paths |
 |---|---|
 | `.claude/rules/docs.md` | Every `.md` file |
-| `.claude/rules/registers.md` | `docs/decisions.md`, `docs/questions.md`, `docs/design.md` |
+| `.claude/rules/registers.md` | `docs/decisions.md`, `docs/questions.md`, `docs/design.md`, `docs/roadmaps/*.md`, `docs/external-facts.md` |
 | `.claude/rules/github.md` | `.github/**` |
 | `.claude/rules/site.md` | `src/**`, `public/**`, `astro.config.mjs`, `package.json` |
 
 ## File map
 
-- `docs/design.md`: the design document, with the thesis, the guardrails, the roadmap, and the sequence.
+- `docs/design.md`: the design document, with the thesis, the guardrails, the current roadmap, and the sequence.
+- `docs/roadmaps/`: the entries of each completed phase, word for word (D-155).
+- `docs/external-facts.md`: each external fact, with its source and its date (D-156).
 - `docs/decisions.md`: every owner decision, with its date.
 - `docs/questions.md`: every open question, and the decision that closed each one.
 - `docs/session-handoff.md`: the resume point and the ten newest sessions.
@@ -102,6 +106,7 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `.htmlvalidate.json`: the rules of `html-validate` (D-46). It excludes the keyword `list` from the `no-redundant-role` rule, because each `ul` of the site carries `role="list"` (D-143).
 - `.claude/settings.json`: the project settings of Claude Code. It turns off attribution (D-6), and it runs `scripts/session-bind-hook.py` before each Bash command (D-150).
 - `scripts/ste-check.py`: the STE checker (D-7).
+- `scripts/resume.py`, `scripts/decisions-index.py`, and `scripts/context-budget.py`: the session-start context of D-154, D-157, and D-159.
 - `.github/workflows/verify.yml`: the checks on each pull request, `verify:docs`, `verify:site`, and the four `verify:site-*` jobs.
 - `.github/workflows/pr-lifecycle.yml`: the `verify:pr-lifecycle` check of each pull request body with `scripts/pr-lifecycle-check.py` (D-148).
 - `.github/workflows/preview.yml`: the preview deploy of each pull request, its comment, the `verify:site-preview` check, and the channel cleanup (D-59, D-66 to D-68).
@@ -138,6 +143,9 @@ Every command is free. Only `make install`, `make browsers`, `make link-check`, 
 - `make visits DAY=<YYYY-MM-DD>`: print the page requests of one UTC day, and the same count after the machine filter (D-139 to D-141). It reads the Hosting request log with the gcloud configuration `natekramber`, so it needs the network. No check calls it.
 - `make site-checks`: run the four site checks.
 - `make ste-check`: check every hand-written `.md` file against the STE rules.
+- `make resume`: print the header, "Resume here", and the newest session entry of the handoff (D-154).
+- `make decisions-index`: print the id, the date, the topic, and the first words of each decision (D-157).
+- `make context-budget`: fail when the session-start set grows past its byte caps, then prove that the check can fail (D-159).
 - `make lifecycle-check`, `make pr-template`, and `make pr-check BODY=<file>`: the checks and the body format of the `one-pr-one-session` skill (D-147, D-148).
 - `make verify`: run every check that the verify workflow runs. Run it before each pull request.
 - `make help`: list the targets.
