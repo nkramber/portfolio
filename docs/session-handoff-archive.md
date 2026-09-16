@@ -2,6 +2,46 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 14: 2026-09-14
+
+### What this session did, and why
+
+- Gitar approved #15 (PR-7) with no finding, and all 12 checks passed.
+- The first phone check showed a Firebase "Site Not Found" page. The owner typed the preview address, and its lowercase L reads like 1 or i.
+- The owner chose the Mac clipboard for the address (D-93). The phone check then passed on an iPhone 16 Pro in Chrome.
+- The owner merged #15 as `a865051` at 19:31 UTC. Its tree matches the reviewed head `6a05110`.
+- Deploy run 34887408480 passed, and `make preview-check` passed on `https://natekramber.com`.
+- The owner asked for every doc to show the current state before a context reset. The session read the expiring facts again and wrote this refresh.
+
+### State of the repository
+
+- `main` is `a865051`, the squash merge of PR #15.
+- Branch `docs/after-pr-7` holds this refresh, as a pull request of documents alone.
+- Remote head: `origin/docs/after-pr-7` at the commit that holds this entry, checked after the push.
+- `make ste-check`: 0 findings.
+
+### In flight
+
+- The refresh waits for the Gitar review, then for the merge.
+- PR-8 has no branch and no research yet. OQ-3 blocks its About text.
+- No run tested the PR-6 exit test of D-63 yet.
+- Each certificate has the type `TEMPORARY`, and nobody checked the permanent certificate yet.
+- The private preview page of D-89 still exists on claude.ai.
+
+### Traps and gotchas
+
+- A preview address holds a random part, and a phone keyboard makes a look-alike typo easy. Give the owner the address with no typing (D-93).
+- In zsh, an unquoted `--include=*.md` stops `grep` with "no matches found". The Session 7 trap cost time again, so quote the pattern.
+- `/Users/nate/Repos/terminal-rpg` no longer exists on this Mac. Ask the owner before any work on that project.
+
+### Open questions that block progress
+
+None blocks the refresh. OQ-3 blocks the About text of PR-8.
+
+### Next concrete action
+
+Answer the Gitar review of the refresh. After the merge, start PR-8 from `main` with read-only research and owner questions.
+
 ## Session 13: 2026-09-14
 
 ### What this session did, and why

@@ -6,11 +6,11 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-16)
 
-- **Main:** `2e50f34`, the squash merge of PR #25, the docs refresh.
-- **Open pull requests:** #26, the branch `site/pr-13-visit-counts`, PR-13, in review.
-- **Next action:** answer the Gitar review of #26. After the merge, start M-3, the launch audit, from `main`.
-- **Blocked on:** OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
-- **Next ids:** D-142, OQ-9, M-4, PR-18, Session 24.
+- **Main:** `f656d84`, the squash merge of PR #26, the visit counts.
+- **Open pull requests:** #27, the branch `site/pr-18-audit-fixes`, PR-18, in review.
+- **Next action:** answer the Gitar review of #27. After the merge, give the owner the hand-check list of M-3.
+- **Blocked on:** M-3 waits for the hand check of the owner. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
+- **Next ids:** D-146, OQ-9, M-4, PR-19, Session 25.
 
 ## Facts that expire
 
@@ -82,10 +82,60 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The owner merged #23 (PR-12) as `3ca291e` on 2026-09-16. Its tree matches the reviewed head `503dfd5`, and Gitar approved that head with no finding. Deploy run 35064220205 passed.
 - The owner merged #24 (PR-17) as `eb1dccf` on 2026-09-16. Its tree matches the reviewed head `8da4c11`, and Gitar approved that head with no finding. Deploy run 35065647135 passed.
 - Run 35064260365 of `links.yml`, started by hand on 2026-09-16, read 13 links of the live site. Each one answered 200, and the self-test failed on the planted dead link.
+- The owner merged #26 as `f656d84` at 14:04 UTC on 2026-09-16. Its tree matches the reviewed head `b908e31`, and deploy run 35106063488 passed.
+- The live site serves the build of `main` at `f656d84` byte for byte. Each of the 8 published files matched `dist/` by SHA-256, read 2026-09-16.
+- Lighthouse on the live site read 1 in every category on 2026-09-16. It read 55,240 total bytes, an LCP of 1,224 ms, a CLS of 0, and a TBT of 0. `make preview-check` passed on the live site after that deploy.
+- The M-3 audits of 2026-09-16 found 6 low responsive defects and 3 low accessibility items. Neither report holds a defect of medium or high severity, and neither page fails WCAG 2.2 level AA.
+- On `main` with PR-18, `make verify` reads 64,356 total bytes. The tag outline holds 3.19:1 in light and 3.30:1 in dark, and the card hairline stays at 1.24:1 and 1.34:1.
 - The owner merged #25 as `2e50f34` at 13:32 UTC on 2026-09-16. Its tree matches the reviewed head `cc8f5f1`, and Gitar approved that head with no finding. Deploy run 35102613219 passed.
 - The project `natekramber-prod` holds two saved queries since 13:42 UTC on 2026-09-16, `visits-page-requests` and `visits-after-machine-filter`, each with the visibility `SHARED` (D-140). It held none before.
 - The `_Default` log bucket of `natekramber-prod` keeps 30 days and has no Log Analytics, read 2026-09-16. Cloud Logging gives 50 GiB of ingestion for each project each month at no charge.
 - On 2026-09-15 the live site answered 901 requests, 580 of them a 404 scan. The page requests read 155, and the machine filter left 125 (D-139).
+
+## Session 24: 2026-09-16
+
+### What this session did, and why
+
+- The owner merged #26 as `f656d84`. Its tree matches the reviewed head, and deploy run 35106063488 passed.
+- The session then started M-3, the launch audit. It first compared each of the 8 live files with `dist/`, and every file matched by SHA-256.
+- Lighthouse on `https://natekramber.com` read 1 in every category, with 55,240 total bytes and an LCP of 1,224 ms. `make preview-check` passed on the live site.
+- The `responsive-auditor` agent ran 58 tests and swept every width from 320 to 2560. It found 6 low defects and no defect of medium or high severity.
+- The `accessibility-auditor` agent found no WCAG 2.2 level AA failure, and 3 low items. It confirmed the hairline at 1.24:1 and 1.34:1.
+- The owner answered four questions (D-142 to D-145). PR-18 holds the two fixes, and the other findings stay as they are.
+- The session wrote the token `--color-tag-rule`, the three list roles, the html-validate exclusion, the four decisions, five external facts, and this entry.
+
+### State of the repository
+
+- `main` is `f656d84`, the squash merge of PR #26.
+- Remote head: `origin/site/pr-18-audit-fixes` at the commit that holds this entry, checked after the push.
+- `make verify`: every check passed.
+
+### In flight
+
+- PR-18 waits for the Gitar review and the merge.
+- M-3 waits for the hand check of the owner, and then for the sign-off. The two audits gave a list of 12 items for the phone, and a list of 8 items for the screen reader.
+- Nobody ran Safari 26 and VoiceOver yet. D-143 lowers that risk, and it does not close the check.
+- OQ-4 waits for a screenshot, and OQ-8 waits for a logo file. Each card shows no image until then.
+- The accessibility audit asks for a new run when the first image lands, because no script can judge the words of an alt text.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- No run tested the PR-6 exit test of D-63 yet.
+- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
+
+### Traps and gotchas
+
+- `html-validate` calls `role="list"` on a `ul` redundant, and `make verify` stops there. The rule takes an `exclude` list, so the fix stays narrow.
+- The audit gave a dark value of `#5a5a57` for the tag border, and that value reads 2.75:1. Measure each color before you write it.
+- `astro preview` binds to `localhost` and not to `127.0.0.1` on this Mac. A poll of `127.0.0.1` never sees the server.
+- The two audits together took about 18 minutes. Start the responsive audit first, and run the live checks while it works.
+- A tool sandbox can refuse a settings change of Claude Code, and a log read that names an IP field.
+
+### Open questions that block progress
+
+None blocks PR-18. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the images of the cards.
+
+### Next concrete action
+
+Answer the Gitar review of PR-18. After the merge, give the owner the hand-check list of M-3, and record the result as a decision.
 
 ## Session 23: 2026-09-16
 
@@ -519,43 +569,3 @@ None blocks PR-8. OQ-3 blocks the About text.
 ### Next concrete action
 
 Answer the Gitar review of PR-8, and ask the owner for the phone check on its preview address. Draft the bio when the interview answers come.
-
-## Session 14: 2026-09-14
-
-### What this session did, and why
-
-- Gitar approved #15 (PR-7) with no finding, and all 12 checks passed.
-- The first phone check showed a Firebase "Site Not Found" page. The owner typed the preview address, and its lowercase L reads like 1 or i.
-- The owner chose the Mac clipboard for the address (D-93). The phone check then passed on an iPhone 16 Pro in Chrome.
-- The owner merged #15 as `a865051` at 19:31 UTC. Its tree matches the reviewed head `6a05110`.
-- Deploy run 34887408480 passed, and `make preview-check` passed on `https://natekramber.com`.
-- The owner asked for every doc to show the current state before a context reset. The session read the expiring facts again and wrote this refresh.
-
-### State of the repository
-
-- `main` is `a865051`, the squash merge of PR #15.
-- Branch `docs/after-pr-7` holds this refresh, as a pull request of documents alone.
-- Remote head: `origin/docs/after-pr-7` at the commit that holds this entry, checked after the push.
-- `make ste-check`: 0 findings.
-
-### In flight
-
-- The refresh waits for the Gitar review, then for the merge.
-- PR-8 has no branch and no research yet. OQ-3 blocks its About text.
-- No run tested the PR-6 exit test of D-63 yet.
-- Each certificate has the type `TEMPORARY`, and nobody checked the permanent certificate yet.
-- The private preview page of D-89 still exists on claude.ai.
-
-### Traps and gotchas
-
-- A preview address holds a random part, and a phone keyboard makes a look-alike typo easy. Give the owner the address with no typing (D-93).
-- In zsh, an unquoted `--include=*.md` stops `grep` with "no matches found". The Session 7 trap cost time again, so quote the pattern.
-- `/Users/nate/Repos/terminal-rpg` no longer exists on this Mac. Ask the owner before any work on that project.
-
-### Open questions that block progress
-
-None blocks the refresh. OQ-3 blocks the About text of PR-8.
-
-### Next concrete action
-
-Answer the Gitar review of the refresh. After the merge, start PR-8 from `main` with read-only research and owner questions.

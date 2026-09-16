@@ -25,6 +25,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-16 correction pass (Session 21): PR-12 reads merged, and PR-17 follows D-133 to D-138. PR-17 removes the highlights, the disclosure, and the Links section.
 2026-09-16 correction pass (Session 22): PR-17 reads merged, and the Phase 3 gate reads passed. The external facts add the image research of PR-17.
 2026-09-16 correction pass (Session 23): PR-13 follows D-139 to D-141. D-141 adds a command to its scope. The external facts add the log research of PR-13.
+2026-09-16 correction pass (Session 24): PR-13 reads merged. M-3 holds the result of the two audits and of Lighthouse on the live site. PR-18 follows D-142 to D-145.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -167,6 +168,11 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - Cloud Logging gives 50 GiB of ingestion for each project each month at no charge, and the default retention of 30 days costs nothing. Source: https://cloud.google.com/products/observability/pricing, read 2026-09-16.
 - A Cloud Logging filter reads `=~` and `!~` as RE2 patterns, and `(?i)` makes a pattern ignore letter case. Source: two test reads of the live log, 2026-09-16.
 - gcloud 533.0.0 has no `saved-queries` command group. The Logging API v2 holds `projects.locations.savedQueries`, and a saved query needs a `displayName` and a `visibility` of `PRIVATE` or `SHARED`. Source: the v2 discovery document, revision 20260818, read 2026-09-16.
+- The live site `https://natekramber.com` serves the build of `main` at `f656d84` byte for byte. Each of the 8 published files matched the local `dist/` by SHA-256. Source: a local comparison, 2026-09-16.
+- Lighthouse 13.4.1 on the live site read 1 in every category over three runs. It read 55,240 total bytes, a median LCP of 1,224 ms, a CLS of 0, and a TBT of 0. The live total is below the local 64,242 bytes, because Firebase Hosting serves Brotli. Source: the M-3 audit, 2026-09-16.
+- Safari removes the list semantics of a `ul` that sets `list-style: none` and carries no explicit role. VoiceOver then announces no list and no item count. Chromium keeps the list role. Source: the M-3 accessibility audit, 2026-09-16.
+- The `no-redundant-role` rule of html-validate 11.15.0 takes an `exclude` list of role keywords. With `list` in that list, the rule still fails on `role="main"` on a `main` element. Source: the installed rule and a test file, read 2026-09-16.
+- The token `--color-rule` reads 1.24:1 in the light scheme and 1.34:1 in the dark scheme against the page. The new token `--color-tag-rule` reads 3.19:1 and 3.30:1, measured in the browser on the built page. Source: the M-3 audit and a browser measurement, 2026-09-16.
 - On 2026-09-15 the live site answered 901 requests. 580 of them were a 404 scan for addresses such as `/wp-admin/install.php` and `/.env`. 155 were a 200 answer for a page address. 30 of those came from a self-declared machine, and 35 more from one agent of 2019 with a false referrer. Every referrer named this same site or a spam address. Source: a read of the request log, 2026-09-16.
 - The What You Carry workflow `bit-identity.yml` runs on each pull request and each push to `main`. It has a Linux, a Windows, and a macOS job, and a job that compares the three hashes. Its workflow `night.yml` runs at 08:07 UTC, with 5,000 seeds for each of two bots and a reachability sweep of 100,000 seeds. Source: What You Carry `main` at `a4bf6d6`, read 2026-09-15.
 
@@ -677,7 +683,7 @@ Gate: the owner merges PR-12.
 
 #### PR-13: Visit counts
 
-Status: in progress. D-139 to D-141 answer its design questions.
+Status: merged as #26, `f656d84`, on 2026-09-16 UTC. Gitar found one bug, the fix `2bef180` closed it, and Gitar approved that head. D-139 to D-141 answer its design questions.
 
 Scope: `docs/analytics.md` with a saved Cloud Logging query that counts page views and referrers from the Hosting request logs (D-36). D-141 adds `make visits` and `scripts/visits.sh`, which widens the scope past the documents.
 
@@ -692,7 +698,7 @@ Gate: the owner merges PR-13.
 
 #### M-3: Launch audit
 
-Status: planned.
+Status: in progress. The two agent audits ran on 2026-09-16 against `main` at `f656d84`, and every live file matched `dist/` byte for byte. Neither report holds a defect of high severity or of medium severity, and the accessibility audit found no WCAG 2.2 level AA failure. Lighthouse on `https://natekramber.com` read 1 in every category, 55,240 total bytes, an LCP of 1,224 ms, a CLS of 0, and a TBT of 0. PR-18 fixes the two findings that the owner chose to fix. The hand check of the owner is open.
 
 Scope: run the `responsive-auditor` agent, the `accessibility-auditor` agent, and Lighthouse against `https://natekramber.com`. The owner checks the site on a real phone and a real desktop.
 
@@ -705,6 +711,22 @@ Exit tests:
 Gate: the owner signs off, and the result goes into `docs/decisions.md`.
 
 > *In plain English:* the automatic checks run on a local build. This audit checks the real site on real devices before the owner calls it done.
+
+#### PR-18: The audit fixes of M-3
+
+Status: in progress. D-142 to D-145 answer its design questions.
+
+Scope: the tag outline of the card, the list role of each `ul`, and the `html-validate` rule that the role needs (D-142, D-143).
+
+Exit tests:
+
+- The tag outline holds 3:1 against the page in the light scheme and in the dark scheme.
+- Each `ul` of the site carries `role="list"`, and `make verify` passes.
+- The `no-redundant-role` rule still fails on a redundant role that is not `list`.
+
+Gate: the owner merges PR-18.
+
+> *In plain English:* the launch audit found a faint outline that does a real job, and a list that Safari can strip of its meaning. This change fixes both.
 
 ### Later
 
@@ -737,6 +759,7 @@ One owner runs the sequence in strict order. A step starts only when the gate of
 18. PR-17, the card shape, the images, and the page end. Gate: the owner merges it.
 19. PR-13, the visit counts. It runs only when M-2 passes.
 20. M-3, the launch audit. Gate: the owner signs off.
+21. PR-18, the audit fixes of M-3. Gate: the owner merges it.
 
 ## 6. Open questions
 
