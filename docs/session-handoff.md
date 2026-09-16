@@ -7,11 +7,11 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 ## Resume here (2026-09-16)
 
 - **Do this first:** start a new clean session for each pull request. Read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-147).
-- **Base:** `20d1e7e`, the commit of `origin/main` where PR-19 started.
-- **Pull requests:** #32, the branch `docs/one-pr-one-session`, PR-19, pending the owner merge. No other pull request is open.
+- **Base:** `799cbaa`, the commit of `origin/main` where this pull request started.
+- **Pull requests:** the branch `update-gitar-skill`, pending the owner merge. No other pull request is open.
 - **Next action:** in a new clean session, ask the owner how a link tells the visitor about a new tab (T-2). The owner asked on 2026-09-16 that each link opens in a new tab.
 - **Blocked on:** M-3 waits for the hand check of the owner, and its 17 steps sit in `docs/design.md`. The Gitar trial ends about 2026-09-22. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
-- **Next ids:** D-153, OQ-9, M-4, PR-20, Session 27.
+- **Next ids:** D-153, OQ-9, M-4, PR-20, Session 28.
 
 ## Facts that expire
 
@@ -95,6 +95,44 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The project `natekramber-prod` holds two saved queries since 13:42 UTC on 2026-09-16, `visits-page-requests` and `visits-after-machine-filter`, each with the visibility `SHARED` (D-140). It held none before.
 - The `_Default` log bucket of `natekramber-prod` keeps 30 days and has no Log Analytics, read 2026-09-16. Cloud Logging gives 50 GiB of ingestion for each project each month at no charge.
 - On 2026-09-15 the live site answered 901 requests, 580 of them a 404 scan. The page requests read 155, and the machine filter left 125 (D-139).
+
+## Session 27: 2026-09-16
+
+### What this session did, and why
+
+- The owner asked for a pull request of the branch `update-gitar-skill`. The branch holds one commit, `747d3ec`, with a change to the `gitar-review` skill.
+- The skill change reads the Gitar reply to each `Gitar review` comment. A refusal reply starts no review, and the dashboard comment then does not change.
+- The skill change also reads the newest dashboard comment in each check, because Gitar can replace that comment with a new id.
+- The summary of a review is no longer a condition of a current review. A review that adds no finding can keep the old summary, word for word.
+- Pull request #33 used the same branch, and it closed at 20:39 UTC with no merge. Its body had no session binding and no matrix (D-147, D-148).
+- The commit `747d3ec` also added the worktree `.claude/worktrees/one-pr-one-session` as a submodule pointer by mistake. The owner approved a fix, and this session removed the pointer from the index.
+- The session wrote this entry, and moved Session 17 to the archive.
+
+### State of the repository
+
+- Base: `origin/main` at `799cbaa` when the session started.
+- Remote head: `origin/update-gitar-skill` at the commit that holds this entry, checked after the push.
+- `make verify`: every check passed.
+
+### In flight
+
+- The branch `update-gitar-skill` waits for the Gitar review of its newest head and the owner merge.
+- The owner asked that each link opens in a new tab. That work needs a new clean session.
+- M-3 waits for the hand check of the owner. OQ-4 waits for a screenshot, and OQ-8 waits for a logo file.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+
+### Traps and gotchas
+
+- Git does not ignore `.claude/worktrees/`. A `git add -A` or `git commit -a` in the main checkout can add a worktree as a submodule pointer. Read `git diff --stat origin/main...HEAD` before each push.
+- A closed pull request keeps its branch. Read `gh pr list --state all --head <branch>` before you open a pull request for an old branch.
+
+### Open questions that block progress
+
+None blocks this pull request. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the images of the cards.
+
+### Next concrete action
+
+In a new clean session, ask the owner how a link tells the visitor that it opens a new tab (T-2).
 
 ## Session 26: 2026-09-16
 
@@ -514,54 +552,3 @@ None blocks the refresh. OQ-3 blocks the About text.
 ### Next concrete action
 
 Answer the Gitar review of the refresh. After the merge, start PR-11, the What You Carry card, from `main` with the `add-project` skill.
-
-## Session 17: 2026-09-14
-
-### What this session did, and why
-
-- The owner merged #18 (PR-9) as `1bced52` at 00:20 UTC on 2026-09-15. Its tree matches the reviewed head `56c9749`, and deploy run 34912742795 passed.
-- `make preview-check` passed on `https://natekramber.com` at 00:27 UTC. PR-9 added no check job, so the ruleset did not change.
-- The session started PR-10 with the `add-project` skill and a read-only research pass on the decktome repository.
-- The first real entry breaks the fixture build: `fixture-screenshot.json` and Deck Tome both take order 1. The owner chose a fixture build with the fixture cards alone (D-112).
-- The first card puts the mono face on the home page. A local measurement showed that a preload makes the face render on a fast first visit. The owner chose a preload on the home page alone (D-111).
-- The owner picked the pitch, the highlights, the tags, and the links (D-113 to D-116). The owner kept the chosen words over two changes of the copy review.
-- The session checked each card fact in the decktome repository, and with `gh` and `curl` (G-11).
-- The session wrote PR-10: the entry, the Links section of D-102, the mono preload, the fixture change, the new tests, and the docs. Session 7 moved to the archive.
-- The responsive audit passed 54 of 54 tests and found 4 defects. The owner chose three fixes (D-117 to D-119). The session accepts the fourth: at 320 px with 200 percent text and the 1.4.12 spacing together, "decktome.com" breaks before its last letter.
-- The accessibility audit found no WCAG 2.2 AA defect in the light or the dark scheme.
-- The session opened #19. Every check passed on `2948512`, and the Gitar pause note held an approval with no finding.
-- The owner skipped the phone check of the preview (D-120).
-
-### State of the repository
-
-- `main` is `1bced52`, the squash merge of PR #18.
-- Branch `site/pr-10-deck-tome-card` holds PR-10 and this entry.
-- Remote head: `origin/site/pr-10-deck-tome-card` at the commit that holds this entry, checked after the push.
-- `make verify` on Node 22.23.2 passes on the branch. Lighthouse reads 1 in every category, 65,511 total bytes, a median LCP of 1,354 ms, and a CLS of 0.
-
-### In flight
-
-- #19 waits for the Gitar review of the head that records D-120, and for the merge. The paused Gitar reviews a new head only after a `Gitar review` comment.
-- The accessibility audit found one AAA item for PR-11. Two cards give two links the same name, "Source on GitHub" (WCAG 2.4.9). A visually hidden project name fixes it, and that fix changes every card.
-- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
-- Nobody checked Safari 26 yet for `::-webkit-details-marker`, the list role of `.tags`, and the summary in VoiceOver.
-- No run tested the PR-6 exit test of D-63 yet.
-- Each certificate has the type `TEMPORARY`, and nobody checked the permanent certificate yet.
-- The private preview page of D-89 still exists on claude.ai.
-
-### Traps and gotchas
-
-- In zsh, `${PIPESTATUS[0]}` is empty, so an `EXIT=` line printed nothing. Use `$pipestatus` in zsh, or run the command in bash.
-- The research report said that the decktome working tree matched `origin/main`. The tree held uncommitted Go changes, so check the diff of each cited file.
-- A strict `grep` for the decision rows of decktome found 693 rows, and a count of unique ids found 721. Count the unique ids.
-- A fixture build that adds its entries to the site entries breaks on the first real entry. Two entries share an order number, and the tests count the cards (D-112).
-- The first card puts the mono face on the home page. So the font test that expects one font request must change with the card.
-- A measurement script under `prefers-reduced-motion: reduce` read a note 22 px above its link right after a text size change. After 500 ms it read 16 px below, as the screenshot showed. The reset transition covers font sizes too, so wait one frame, or measure with motion allowed.
-
-### Open questions that block progress
-
-None blocks PR-10. OQ-3 blocks the About text.
-
-### Next concrete action
-
-Answer the Gitar review of PR-10, and request it only after the checks of the new head start. After the merge, start PR-11, the What You Carry card, with the `add-project` skill.
