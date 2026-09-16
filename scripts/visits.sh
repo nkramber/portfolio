@@ -42,10 +42,17 @@ httpRequest.userAgent!~"^curl/"
 httpRequest.userAgent!~"^Go-http-client"
 httpRequest.userAgent!~"(?i)(bot|crawler|spider|scanner|checker|siteradar)"'
 
+# A pipe hides the exit status of gcloud, and POSIX `sh` has no `pipefail`. So
+# the read runs on its own, and the count reads the output after it. A failed
+# read then stops the script, and no failure prints as a count of 0.
 count() {
-	n=$(gcloud --configuration="$CONFIG" logging read "$1" \
-		--project "$PROJECT" --limit "$LIMIT" --format='value(insertId)' | wc -l)
-	n=$(echo "$n" | tr -d ' ')
+	if ! out=$(gcloud --configuration="$CONFIG" logging read "$1" \
+		--project "$PROJECT" --limit "$LIMIT" --format='value(insertId)'); then
+		echo "visits: the log read failed" >&2
+		exit 1
+	fi
+	# `grep -c` exits 1 on a day with no entry, and that day is not an error.
+	n=$(printf '%s' "$out" | grep -c . || true)
 	if [ "$n" -ge "$LIMIT" ]; then
 		echo "visits: the read hit the limit of $LIMIT, so the count is short" >&2
 		exit 1
