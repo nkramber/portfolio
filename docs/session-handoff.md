@@ -101,7 +101,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 ### State of the repository
 
 - `main` is `2e50f34`, the squash merge of PR #25.
-- Remote head: `origin/site/pr-13-visit-counts` at `<sha>`, checked after the push.
+- Remote head: `origin/site/pr-13-visit-counts` at the commit that holds this entry, checked after the push.
 - `make verify`: every check passed.
 
 ### In flight
