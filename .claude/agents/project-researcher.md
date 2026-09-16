@@ -24,8 +24,8 @@ Return this draft, in this order:
 - **Stack:** the main languages, frameworks, and platforms, max six.
 - **Status:** for example live, in development, or paused, with the evidence and the date.
 - **Links:** the live address, the repository address, and the visibility of the repository from `gh repo view`.
-- **Highlights:** three facts that show engineering depth, each with its source.
-- **Visuals:** the screens or media that show the project best, and where to capture them.
+- **Notable facts:** two or three facts that show engineering depth, each with its source. A card holds no highlights field (D-133), so these facts serve the pitch and the owner.
+- **Visuals:** the logo file of the project, when the repository holds one. Also the screens that show the project best, and the place to capture them (D-133).
 - **Open questions:** each fact the owner must confirm before the card goes live.
 
 The pitch and the summary are site copy. They follow the voice of the site, not ASD-STE100 (D-7). Write the rest of your report in ASD-STE100.

@@ -1,0 +1,9 @@
+{
+  "title": "Planted unknown field",
+  "pitch": "This entry holds a highlights field, and the strict schema must refuse it (D-133).",
+  "status": "Live",
+  "tags": ["Astro"],
+  "links": [{ "label": "Example", "href": "https://example.com/" }],
+  "highlights": ["A highlight that the schema no longer allows."],
+  "order": 1
+}

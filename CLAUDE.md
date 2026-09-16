@@ -86,12 +86,12 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `docs/questions.md`: every open question, and the decision that closed each one.
 - `docs/session-handoff.md`: the resume point and the ten newest sessions.
 - `docs/session-handoff-archive.md`: every older session, word for word.
-- `src/pages/index.astro`: the home page, with the hero, the About section, the project cards, and the Links section at the end (D-21, D-102). The About section stays off the page until the bio exists (OQ-3, D-94). While the page shows cards, it preloads the mono face (D-111).
+- `src/pages/index.astro`: the home page, with the hero, the About section, and the project cards (D-21, D-136). The About section stays off the page until the bio exists (OQ-3, D-94). While the page shows cards, it preloads the mono face (D-111).
 - `src/pages/404.astro`: the 404 page, with the words of D-74 (D-98).
 - `src/layouts/Page.astro`: the head, the icon links, the design tokens, the base styles, and the motion of both pages (D-73, D-95).
 - `public/`: the icon `favicon.svg` (D-96), and the three PNG files of `make images`. `scripts/make-images.mjs` draws the share image of D-97 and two icons.
 - `src/content.config.ts`: the `projects` collection and its strict schema (D-22, D-105). Each project is one JSON file in `src/content/projects/`, for example `deck-tome.json` (D-113 to D-116).
-- `src/components/ProjectCard.astro`: the one project card, with its own scoped styles (D-104, D-107).
+- `src/components/ProjectCard.astro`: the one project card, with its own scoped styles (D-104, D-133).
 - `src/fonts/`: the two Atkinson Hyperlegible WOFF2 files of D-91, each with its SIL Open Font License file.
 - `astro.config.mjs`, `package.json`, `package-lock.json`, and `tsconfig.json`: the Astro project.
 - `.nvmrc`: the pinned Node version (D-44).
@@ -125,7 +125,7 @@ Every command is free. Only `make install`, `make browsers`, and `make link-chec
 - `make images`: draw the share image and the two PNG icons into `public/` with the Chromium build of Playwright (D-96, D-97). Run it after a change to the headline, the colors, the text face, or `public/favicon.svg`.
 - `make no-script-check`: fail when a built HTML file holds a script element (G-5).
 - `make no-inline-style-check`: fail when a built HTML file holds a style element or a style attribute (D-72). Its self-test then proves that the check can fail.
-- `make test-responsive`: check both pages at each width of the `responsive-qa` skill for sideways scroll, and save a screenshot of each. It also checks a long word, text at 200 percent, and the text spacing of WCAG 1.4.12. It checks the growth of each fluid text size and the load of each font face too (D-111). Then it checks the hero motion under each motion setting, and the address of the share image and of each icon (D-95 to D-97). It checks the home page at each width with every card open (D-112). It checks the first screen of the home page, the footer, and the link notes too (D-117 to D-119). It also checks the fixture cards of D-103 at each width, closed and open, and with a mouse, a touch, and the keyboard.
+- `make test-responsive`: check both pages at each width of the `responsive-qa` skill for sideways scroll, and save a screenshot of each. It also checks a long word, text at 200 percent, and the text spacing of WCAG 1.4.12. It checks the growth of each fluid text size and the load of each font face too (D-111). Then it checks the hero motion under each motion setting, and the address of the share image and of each icon (D-95 to D-97). It checks the home page at each width with its cards (D-112). It checks the first screen of the home page and the link notes too (D-117, D-119). It also checks the fixture cards of D-103 at each width, the image of each card, and the page that holds no disclosure (D-133, D-134).
 - `make test-a11y`: scan both pages with axe for WCAG 2.2 AA, in the light and the dark scheme. It also scans the page structure with the best-practice rules of PR-8, and proves that this scan can fail. Then it scans the fixture cards, closed and open. It also checks the screen reader name of each card toggle and each card link (D-107, D-121).
 - `make content-selftest`: build with a planted project entry that has no pitch, and prove that the schema fails the build (D-103).
 - `make lighthouse`: check the Lighthouse budget over three runs, then prove that the budget fails on each planted defect.

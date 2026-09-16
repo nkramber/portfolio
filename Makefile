@@ -79,15 +79,22 @@ no-inline-style-selftest: ## Prove that the inline style check finds each plante
 		echo "no-inline-style-selftest: the check found \"$$found\", not both planted fixtures"; exit 1; \
 	fi
 
-# The planted defect of D-103: a project entry with no pitch. The build must fail
-# and name the schema error, so a crash never counts as a pass. The build writes
+# Two planted defects: an entry with no pitch (D-103), and an entry with a
+# `highlights` field, which D-133 removed from the schema. The build must fail on
+# each one and name the field, so a crash never counts as a pass. Each build writes
 # to test-results/, so dist/ stays the build of the site.
-content-selftest: ## Prove that the project schema fails the build on a missing field (D-103)
+content-selftest: ## Prove that the project schema fails the build on a missing field and on an unknown field (D-103, D-133)
 	@out=$$(PORTFOLIO_FIXTURES=invalid npm run build -- --outDir test-results/invalid-build 2>&1); rc=$$?; \
 	if [ $$rc -ne 0 ] && echo "$$out" | grep -q 'InvalidContentEntryDataError' && echo "$$out" | grep -q 'pitch'; then \
 		echo "content-selftest: the build failed on the planted entry with no pitch"; \
 	else \
 		echo "$$out"; echo "content-selftest: the build did not fail on the planted entry with no pitch"; exit 1; \
+	fi
+	@out=$$(PORTFOLIO_FIXTURES=unknown npm run build -- --outDir test-results/unknown-build 2>&1); rc=$$?; \
+	if [ $$rc -ne 0 ] && echo "$$out" | grep -q 'InvalidContentEntryDataError' && echo "$$out" | grep -q 'highlights'; then \
+		echo "content-selftest: the build failed on the planted entry with a highlights field"; \
+	else \
+		echo "$$out"; echo "content-selftest: the build did not fail on the planted highlights field"; exit 1; \
 	fi
 
 test-responsive: ## Check both pages at each responsive-qa width for sideways scroll, with screenshots, then the text, zoom, font, motion, and share image checks (G-1, D-92, D-95, D-97)
