@@ -24,6 +24,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-16 correction pass (Session 20): PR-11 reads merged, and PR-12 follows D-130 to D-132. The external facts add the research of PR-12.
 2026-09-16 correction pass (Session 21): PR-12 reads merged, and PR-17 follows D-133 to D-138. PR-17 removes the highlights, the disclosure, and the Links section.
 2026-09-16 correction pass (Session 22): PR-17 reads merged, and the Phase 3 gate reads passed. The external facts add the image research of PR-17.
+2026-09-16 correction pass (Session 23): PR-13 follows D-139 to D-141. D-141 adds a command to its scope. The external facts add the log research of PR-13.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -161,6 +162,12 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - `image()` of Astro 7.3.2 takes an SVG file. It reads the width and the height from the file or from its `viewBox`. The `Image` component then renders a plain `img` with the file untouched. It writes `width`, `height`, `loading`, and `decoding`, and no `style` attribute. Source: the installed `astro` package and two scratch builds, read 2026-09-16.
 - The `Picture` component fails a build on an SVG, because sharp refuses that file. The HTML still gets `source` addresses for files that never exist. An ESM import of an SVG renders an inline `svg` element, and that element can hold a `style` element, which the CSP of D-57 blocks. Source: the same reads, 2026-09-16.
 - A browser keeps the colors of an `img` in every scheme. The fixture logo measures 6.49:1 against the light page, 2.81:1 against the dark page, and 3.10:1 on forced black. Source: the accessibility audit of PR-17, 2026-09-16.
+- The Hosting request log of `natekramber-prod` reads with the gcloud configuration `natekramber`, on a project with no billing account. Each entry holds `httpRequest.requestUrl`, `.referer`, `.userAgent`, and `.status`, with `jsonPayload.remoteIpCountry` and `.remoteIpCity`. Source: `gcloud logging read`, 2026-09-16.
+- The `_Default` log bucket of `natekramber-prod` keeps 30 days and has no Log Analytics. Source: `gcloud logging buckets describe`, 2026-09-16.
+- Cloud Logging gives 50 GiB of ingestion for each project each month at no charge, and the default retention of 30 days costs nothing. Source: https://cloud.google.com/products/observability/pricing, read 2026-09-16.
+- A Cloud Logging filter reads `=~` and `!~` as RE2 patterns, and `(?i)` makes a pattern ignore letter case. Source: two test reads of the live log, 2026-09-16.
+- gcloud 533.0.0 has no `saved-queries` command group. The Logging API v2 holds `projects.locations.savedQueries`, and a saved query needs a `displayName` and a `visibility` of `PRIVATE` or `SHARED`. Source: the v2 discovery document, revision 20260818, read 2026-09-16.
+- On 2026-09-15 the live site answered 901 requests. 580 of them were a 404 scan for addresses such as `/wp-admin/install.php` and `/.env`. 155 were a 200 answer for a page address. 30 of those came from a self-declared machine, and 35 more from one agent of 2019 with a false referrer. Every referrer named this same site or a spam address. Source: a read of the request log, 2026-09-16.
 - The What You Carry workflow `bit-identity.yml` runs on each pull request and each push to `main`. It has a Linux, a Windows, and a macOS job, and a job that compares the three hashes. Its workflow `night.yml` runs at 08:07 UTC, with 5,000 seeds for each of two bots and a reachability sweep of 100,000 seeds. Source: What You Carry `main` at `a4bf6d6`, read 2026-09-15.
 
 ## 1. Thesis
@@ -670,9 +677,9 @@ Gate: the owner merges PR-12.
 
 #### PR-13: Visit counts
 
-Status: planned. M-2 passed on 2026-09-14 (D-88).
+Status: in progress. D-139 to D-141 answer its design questions.
 
-Scope: `docs/analytics.md` with a saved Cloud Logging query that counts page views and referrers from the Hosting request logs (D-36).
+Scope: `docs/analytics.md` with a saved Cloud Logging query that counts page views and referrers from the Hosting request logs (D-36). D-141 adds `make visits` and `scripts/visits.sh`, which widens the scope past the documents.
 
 Exit tests:
 

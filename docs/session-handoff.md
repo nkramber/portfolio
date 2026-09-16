@@ -6,11 +6,11 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-16)
 
-- **Main:** `eb1dccf`, the squash merge of PR #24, the flat card.
-- **Open pull requests:** none. The branch `docs/after-pr-17` holds this refresh, with no commit yet.
-- **Next action:** commit the refresh on `docs/after-pr-17`, and open its pull request. After the merge, start PR-13, the visit counts, from `main`.
+- **Main:** `2e50f34`, the squash merge of PR #25, the docs refresh.
+- **Open pull requests:** #26, the branch `site/pr-13-visit-counts`, PR-13, in review.
+- **Next action:** answer the Gitar review of #26. After the merge, start M-3, the launch audit, from `main`.
 - **Blocked on:** OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
-- **Next ids:** D-139, OQ-9, M-4, PR-18, Session 23.
+- **Next ids:** D-142, OQ-9, M-4, PR-18, Session 24.
 
 ## Facts that expire
 
@@ -23,7 +23,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Astro 7.3.2 is the latest Astro on 2026-09-16 (npm registry), and it needs Node 22.12.0 or newer. The variable `ASTRO_TELEMETRY_DISABLED=1` stops its telemetry.
 - On 2026-09-14, npm lists each check tool at its latest release: Playwright 1.63.0, axe-core 4.13.0, Lighthouse 13.4.1, html-validate 11.15.0, and linkinator 8.1.0. Chromium 153 (build 1243) and chrome-launcher 1.2.1 date from 2026-09-12.
 - `npm audit` reads 0 vulnerabilities on 2026-09-14. Lighthouse CI 0.15.1 added 12 advisories before D-50 removed it.
-- The Gitar trial still pauses automatic reviews on 2026-09-16. On 14 pull requests (#7, #8, #12 to #17, and #19 to #24), the pause note of the first head held a full review in its collapsed Code Review block. A later head of #17, of #19, and of #22 needed a `Gitar review` comment, and the `gitar-review` skill holds the traps.
+- The Gitar trial still pauses automatic reviews on 2026-09-16, and it ends in 7 days. On 15 pull requests (#7, #8, #12 to #17, and #19 to #25), the pause note of the first head held a full review in its collapsed Code Review block. A later head of #17, of #19, and of #22 needed a `Gitar review` comment, and the `gitar-review` skill holds the traps.
 - PR-5 created the projects `natekramber-prod` and `natekramber-preview` on 2026-09-14 (D-51, D-56, D-79). A project id is permanent, and a permission error before creation does not show whether an id is free.
 - WCAG 2.2 is the W3C Recommendation of 2024-12-12, read 2026-09-12. The minimum target size of 2.5.8 is 24 by 24 CSS pixels.
 - ASD-STE100 Issue 9, dated 2025-01-15, is the current issue, read 2026-09-14.
@@ -82,6 +82,55 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The owner merged #23 (PR-12) as `3ca291e` on 2026-09-16. Its tree matches the reviewed head `503dfd5`, and Gitar approved that head with no finding. Deploy run 35064220205 passed.
 - The owner merged #24 (PR-17) as `eb1dccf` on 2026-09-16. Its tree matches the reviewed head `8da4c11`, and Gitar approved that head with no finding. Deploy run 35065647135 passed.
 - Run 35064260365 of `links.yml`, started by hand on 2026-09-16, read 13 links of the live site. Each one answered 200, and the self-test failed on the planted dead link.
+- The owner merged #25 as `2e50f34` at 13:32 UTC on 2026-09-16. Its tree matches the reviewed head `cc8f5f1`, and Gitar approved that head with no finding. Deploy run 35102613219 passed.
+- The project `natekramber-prod` holds two saved queries since 13:42 UTC on 2026-09-16, `visits-page-requests` and `visits-after-machine-filter`, each with the visibility `SHARED` (D-140). It held none before.
+- The `_Default` log bucket of `natekramber-prod` keeps 30 days and has no Log Analytics, read 2026-09-16. Cloud Logging gives 50 GiB of ingestion for each project each month at no charge.
+- On 2026-09-15 the live site answered 901 requests, 580 of them a 404 scan. The page requests read 155, and the machine filter left 125 (D-139).
+
+## Session 23: 2026-09-16
+
+### What this session did, and why
+
+- The session committed the docs refresh of Session 22 as `cc8f5f1`, and opened #25. Every check passed, and Gitar approved it with no finding.
+- The owner merged #25 as `2e50f34`. Its tree matches the reviewed head, and deploy run 35102613219 passed.
+- The session then started PR-13 from `main`. A read of the live request log gave the numbers of 2026-09-15.
+- The owner answered three questions (D-139 to D-141). The count gives two numbers, the saved queries live in the project, and `make visits` joins the scope.
+- The Logging API created `visits-page-requests` and `visits-after-machine-filter` at 13:42 UTC. The project held no saved query before.
+- The session wrote `docs/analytics.md`, `scripts/visits.sh`, the `visits` target, the three decisions, six external facts, and this entry. Session 13 moved to the archive.
+
+### State of the repository
+
+- `main` is `2e50f34`, the squash merge of PR #25.
+- Remote head: `origin/site/pr-13-visit-counts` at `<sha>`, checked after the push.
+- `make verify`: every check passed.
+
+### In flight
+
+- PR-13 waits for the Gitar review and the merge.
+- A filter change needs the same change in `scripts/visits.sh` and in the saved query. Nothing checks that the two agree.
+- The owner left out the referrer query, the country query, the scan note, and the cost note of the same question (D-141).
+- M-3, the launch audit, is the last item before the launch. It needs the two agents and a hand check on a real phone.
+- OQ-4 waits for a screenshot, and OQ-8 waits for a logo file. Each card shows no image until then.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- Nobody checked Safari 26 and VoiceOver yet: the link names of D-122, the status line, and the logo row.
+- No run tested the PR-6 exit test of D-63 yet.
+- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
+
+### Traps and gotchas
+
+- The tool sandbox refused a log read that asked for `httpRequest.remoteIp`, because the field holds an IP address. Read the log with no IP field.
+- The sandbox also refused a change to the settings of Claude Code. Ask the owner for a permission rule.
+- A saved query holds no time range. The Logs Explorer control selects the day, and `make visits` adds the day to the filter.
+- gcloud 533.0.0 has no `saved-queries` command group, so the create call goes to the REST API.
+- The live log is mostly noise. 580 of the 901 entries of 2026-09-15 were a 404 scan.
+
+### Open questions that block progress
+
+None blocks PR-13. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the images of the cards.
+
+### Next concrete action
+
+Answer the Gitar review of PR-13. After the merge, start M-3, the launch audit, from `main`.
 
 ## Session 22: 2026-09-16
 
@@ -507,49 +556,3 @@ None blocks the refresh. OQ-3 blocks the About text of PR-8.
 ### Next concrete action
 
 Answer the Gitar review of the refresh. After the merge, start PR-8 from `main` with read-only research and owner questions.
-
-## Session 13: 2026-09-14
-
-### What this session did, and why
-
-- The owner merged #14, the M-2 result, as `175d9ff` at 17:49 UTC. Its tree matches the reviewed head `fb341ad`, and deploy run 34877052799 passed.
-- The session started PR-7 with two read-only research passes: the platform facts, and the font candidates.
-- The owner chose a private preview page (D-89) and the CSP change `font-src 'self'` (D-90).
-- The session published the preview with three font pairings and three accents. The owner picked Atkinson Hyperlegible Next and Mono with Blueprint cobalt (D-91), and `font-display: optional` (D-92).
-- The session wrote PR-7: the self-hosted fonts, the tokens, the base styles, six responsive checks, and the docs. Session 3 moved to the archive.
-- The responsive audit found five defects. The branch fixes four, and the fifth is the zoom reading of WCAG 1.4.4 under "In flight".
-- The accessibility audit found no WCAG 2.2 AA defect in light or dark. The branch fixes its one readability issue: the kept word pairs of the headline now wrap when enlarged text meets a narrow screen.
-
-### State of the repository
-
-- `main` is `175d9ff`, the squash merge of PR #14.
-- Branch `site/pr-7-design-tokens` holds PR-7 and this entry.
-- Remote head: `origin/site/pr-7-design-tokens` at the commit that holds this entry, checked after the push.
-- `make verify` on Node 22.23.2 passes on the branch.
-
-### In flight
-
-- PR-7 waits for the Gitar review, the phone check of the owner on its preview address, and the merge.
-- The zoom defect of Session 7 uses a stricter rule than the W3C text for WCAG 1.4.4. That text accepts any text scaling mechanism. A test holds each fluid text size within 2 times its minimum, so 400 percent zoom doubles it.
-- No run tested the PR-6 exit test of D-63 yet.
-- Each certificate has the type `TEMPORARY`, and nobody checked the permanent certificate yet.
-
-### Traps and gotchas
-
-- The Astro `Font` component writes a `style` element, so the CSP of D-57 blocks it. Write `@font-face` by hand in the layout.
-- A `?url` import of a font gives the same hashed file as the `url()` in a style block. So the preload and the CSS match.
-- `overflow-wrap: break-word` does not narrow an inline-block, so a long word in a link needs `anywhere`.
-- `hyphens: auto` at every width can hyphenate the approved headline, so it applies only inside `@container (max-width: 14em)`.
-- A Google Fonts request with a wrong axis range fails for every family in it. IBM Plex Mono is static on Google Fonts.
-- The Web Status API returns no feature for `text-decoration-thickness`. The compat key in web-features `data.json` gives its status.
-- Two audits cannot share one `astro preview` server, so the accessibility audit waited for the responsive audit.
-- A no-break space never wraps, so enlarged text splits its words in the middle. A `white-space: nowrap` span can wrap again inside a container query.
-- An `em` in a media query ignores the font size that the page sets, so a test with `html { font-size: 200% }` never reaches it. An `em` in a container query counts the font size of the container.
-
-### Open questions that block progress
-
-None blocks PR-7. OQ-3 blocks the About text of PR-8.
-
-### Next concrete action
-
-Answer the Gitar review of PR-7, and ask the owner for the phone check on its preview address. After the merge, start PR-8 from `main` with read-only research.
