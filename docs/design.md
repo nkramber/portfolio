@@ -27,7 +27,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-16 correction pass (Session 23): PR-13 follows D-139 to D-141. D-141 adds a command to its scope. The external facts add the log research of PR-13.
 2026-09-16 correction pass (Session 24): PR-13 reads merged. M-3 holds the result of the two audits and of Lighthouse on the live site. PR-18 follows D-142 to D-145.
 2026-09-16 correction pass (Session 25): PR-18 reads merged. M-3 holds the hand check of the owner. D-146 supersedes D-18, and the code license is GPL-3.0.
-2026-09-16 correction pass (Session 26): PR-19 follows D-147 to D-151, and G-12 joins the guardrails. From PR-19 on, a status reads "complete in #N" before the merge, and no later pull request changes it to "merged" (D-147). The external facts add the hook research of PR-19.
+2026-09-16 correction pass (Session 26): PR-19 follows D-147 to D-152, and G-12 joins the guardrails. From PR-19 on, a status reads "complete in #N" before the merge, and no later pull request changes it to "merged" (D-147). The external facts add the hook research of PR-19.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -180,6 +180,7 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - The hook `timeout` counts seconds. `${CLAUDE_PROJECT_DIR}` names the project root where the session started, also in a worktree. Hooks run inside a subagent, and the input then adds `agent_id`. Source: the same page, read 2026-09-16.
 - No documented environment variable gives the session id to a Bash command. The docs do not say whether `session_id` changes after `/compact`, `/clear`, or a resume. A fork makes a new session id. Sources: https://code.claude.com/docs/en/env-vars and https://code.claude.com/docs/en/sessions, read 2026-09-16.
 - The `pull_request` event runs a workflow on `opened`, `synchronize`, and `reopened` when `types` is absent, and `edited` is a valid type. The GitHub webhook page gives a wrong description of `edited`, so PR-19 checks it on its own pull request. Source: https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows, read 2026-09-16.
+- An edit of the body of #32 at 19:51:44 UTC started run 35143102517 of `pr-lifecycle.yml` at 19:51:49 UTC. The run used the same head, with no push. So `edited` covers a body edit. Source: `gh run list`, read 2026-09-16.
 - The What You Carry workflow `bit-identity.yml` runs on each pull request and each push to `main`. It has a Linux, a Windows, and a macOS job, and a job that compares the three hashes. Its workflow `night.yml` runs at 08:07 UTC, with 5,000 seeds for each of two bots and a reachability sweep of 100,000 seeds. Source: What You Carry `main` at `a4bf6d6`, read 2026-09-15.
 
 ## 1. Thesis
@@ -757,11 +758,11 @@ Gate: the owner merges PR-18.
 
 #### PR-19: One pull request, one session
 
-Status: in progress.
+Status: complete in #32. `verify:pr-lifecycle` passed on its first run and joined the `main` ruleset on 2026-09-16 (D-149).
 
 Scope:
 
-- The `one-pr-one-session` skill: the session binding, the stop condition, the start gate, the documentation gate, and the completion gate (D-147).
+- The `one-pr-one-session` skill: the session binding, the stop condition, the start gate, the documentation gate, the Gitar rounds, and the completion gate (D-147, D-152).
 - Hard rules 3 and 11 of `CLAUDE.md` name the skill path. The `session-handoff` and `design-doc-style` skills record no merge (D-147).
 - `scripts/pr-lifecycle-check.py`, `make pr-template`, `make pr-check`, and the job `verify:pr-lifecycle` (D-148, D-151).
 - The ruleset change of D-149 after the first green run of that job.
@@ -771,7 +772,7 @@ Scope:
 Out of scope:
 
 - The site. No file of `src/` or `public/` changes.
-- The `gitar-review` skill. The repository rule of D-147 wins over it.
+- The `gitar-review` skill. It already asks for an answer to each finding before the merge (D-152).
 
 Enforcement:
 

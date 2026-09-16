@@ -11,12 +11,12 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - **Pull requests:** #32, the branch `docs/one-pr-one-session`, PR-19, pending the owner merge. No other pull request is open.
 - **Next action:** in a new clean session, ask the owner how a link tells the visitor about a new tab (T-2). The owner asked on 2026-09-16 that each link opens in a new tab.
 - **Blocked on:** M-3 waits for the hand check of the owner, and its 17 steps sit in `docs/design.md`. The Gitar trial ends about 2026-09-22. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
-- **Next ids:** D-152, OQ-9, M-4, PR-20, Session 27.
+- **Next ids:** D-153, OQ-9, M-4, PR-20, Session 27.
 
 ## Facts that expire
 
 - The GitHub settings, read 2026-09-14: squash merge alone, automatic delete of a merged branch, and ruleset `main` (id 23087504). The ruleset requires a pull request and refuses a force push and a delete. From 2026-09-12, GitHub Actions requires a full commit SHA for each action (D-61).
-- The `main` ruleset requires seven checks from GitHub Actions (app id 15368), read 2026-09-16: `verify:docs`, `verify:site`, `verify:site-responsive`, `verify:site-a11y`, `verify:site-lighthouse`, `verify:site-html`, and `verify:site-preview`.
+- The `main` ruleset requires eight checks from GitHub Actions (app id 15368). The session read them back on 2026-09-16, after the change of D-149: `verify:docs`, `verify:site`, `verify:site-responsive`, `verify:site-a11y`, `verify:site-lighthouse`, `verify:site-html`, `verify:site-preview`, and `verify:pr-lifecycle`.
 - `actions/checkout` tag v7.0.1 points to commit `3d3c42e5aac5ba805825da76410c181273ba90b1`, read 2026-09-16 from the GitHub API. It is still the newest release.
 - `actions/setup-node` tag v7.0.0 points to commit `820762786026740c76f36085b0efc47a31fe5020`, read 2026-09-16 from the GitHub API. It is still the newest release.
 - `actions/upload-artifact` tag v7.0.1 points to commit `043fb46d1a93c77aae656e7c1c64a875d1fc6a0a`, read 2026-09-16 from the GitHub API. It is still the newest release.
@@ -105,6 +105,10 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Three rules permitted a later pull request that records a merge. They were D-12, the last rule of the `session-handoff` skill, and the status template of `design-doc-style`. 9 of the first 31 pull requests followed that pattern, from #5 to #29.
 - The owner answered four questions (D-148 to D-151), and D-147 records the request.
 - The session wrote the skill, the checks, the hook, the workflow, the decisions, G-12, PR-19, and this entry. Session 16 moved to the archive.
+- A forward test gave seven realistic requests to a fresh evaluator. It stopped a second pull request and a fork, and it refused a merge record. It found two gaps: a narrow pattern for a merge record, and the binding of a correction session. The branch fixes both.
+- The session opened #32. `verify:pr-lifecycle` passed on its first run, and the session added it to the `main` ruleset (D-149).
+- An edit of the body started a new run of `verify:pr-lifecycle` with no push, so the `edited` type works.
+- During the first Gitar round, the owner gave two rules (D-152). The session answers its own Gitar findings, and each finding gets its answer before the merge.
 - The work ran in the worktree `.claude/worktrees/one-pr-one-session`, from `origin/main` at `20d1e7e`.
 
 ### State of the repository
@@ -115,8 +119,8 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ### In flight
 
-- PR-19 (#32) waits for the Gitar review and the owner merge.
-- The ruleset change of D-149 comes after the first green run of `verify:pr-lifecycle`.
+- PR-19 (#32) waits for the Gitar review of its newest head and the owner merge.
+- From the ruleset change of D-149, a pull request with no session binding or no matrix cannot merge. A web pull request of the owner needs the matrix too (D-151).
 - The hook of D-150 did not guard this session, because the session started before the hook existed.
 - The owner asked that each link opens in a new tab. That work needs a new clean session.
 - M-3 waits for the hand check of the owner. OQ-4 waits for a screenshot, and OQ-8 waits for a logo file.

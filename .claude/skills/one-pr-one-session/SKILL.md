@@ -70,9 +70,7 @@ A pull request cannot know its squash commit or its merge time. Git and GitHub h
 
 ## 6. Review
 
-Gitar reviews each head (D-5). Put each answer and the review state in this branch. The Gitar result of the last head lives on GitHub, and it needs no commit of its own.
-
-When the owner merges before a finding has its answer, the fix needs a new pull request in a new clean session.
+Gitar reviews each head (D-5). The session of the pull request answers each finding of each round itself, and it needs no new session for that (D-152). Answer every finding before the owner merges. Put each fix and the review state in this branch. The Gitar result of the last head lives on GitHub, and it needs no commit of its own.
 
 ## 7. Completion gate
 
