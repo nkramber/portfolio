@@ -6,12 +6,12 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-16)
 
-- **Do this first:** the owner asks that each link opens in a new tab, not in this tab (2026-09-16). Ask the owner how a link tells the visitor about the new tab (T-2).
-- **Main:** `fce6d7d`, the squash merge of PR #28, the GPL-3.0 license.
-- **Open pull requests:** #29, the branch `docs/after-pr-18`, the wrap-up, in review.
-- **Next action:** after the merge of #29, ask the owner for the result of the M-3 hand check. The 17 steps sit in the M-3 entry of `docs/design.md`.
-- **Blocked on:** M-3 waits for the hand check of the owner. The Gitar trial ends about 2026-09-22. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
-- **Next ids:** D-147, OQ-9, M-4, PR-19, Session 26.
+- **Do this first:** start a new clean session for each pull request. Read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-147).
+- **Base:** `20d1e7e`, the commit of `origin/main` where PR-19 started.
+- **Pull requests:** #32, the branch `docs/one-pr-one-session`, PR-19, pending the owner merge. No other pull request is open.
+- **Next action:** in a new clean session, ask the owner how a link tells the visitor about a new tab (T-2). The owner asked on 2026-09-16 that each link opens in a new tab.
+- **Blocked on:** M-3 waits for the hand check of the owner, and its 17 steps sit in `docs/design.md`. The Gitar trial ends about 2026-09-22. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
+- **Next ids:** D-152, OQ-9, M-4, PR-20, Session 27.
 
 ## Facts that expire
 
@@ -95,6 +95,48 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The project `natekramber-prod` holds two saved queries since 13:42 UTC on 2026-09-16, `visits-page-requests` and `visits-after-machine-filter`, each with the visibility `SHARED` (D-140). It held none before.
 - The `_Default` log bucket of `natekramber-prod` keeps 30 days and has no Log Analytics, read 2026-09-16. Cloud Logging gives 50 GiB of ingestion for each project each month at no charge.
 - On 2026-09-15 the live site answered 901 requests, 580 of them a 404 scan. The page requests read 155, and the machine filter left 125 (D-139).
+
+## Session 26: 2026-09-16
+
+### What this session did, and why
+
+- The owner asked for one pull request in each clean session, with every document of the work in that pull request (2026-09-16).
+- The session read the handoff, `CLAUDE.md`, the design, both registers, and each skill. Git showed that #29, #30, and #31 merged before the session, and "Resume here" still named #29 as open.
+- Three rules permitted a later pull request that records a merge. They were D-12, the last rule of the `session-handoff` skill, and the status template of `design-doc-style`. 9 of the first 31 pull requests followed that pattern, from #5 to #29.
+- The owner answered four questions (D-148 to D-151), and D-147 records the request.
+- The session wrote the skill, the checks, the hook, the workflow, the decisions, G-12, PR-19, and this entry. Session 16 moved to the archive.
+- The work ran in the worktree `.claude/worktrees/one-pr-one-session`, from `origin/main` at `20d1e7e`.
+
+### State of the repository
+
+- Base: `origin/main` at `20d1e7e` when the session started.
+- Remote head: `origin/docs/one-pr-one-session` at the commit that holds this entry, checked after the push.
+- `make verify`: every check passed.
+
+### In flight
+
+- PR-19 (#32) waits for the Gitar review and the owner merge.
+- The ruleset change of D-149 comes after the first green run of `verify:pr-lifecycle`.
+- The hook of D-150 did not guard this session, because the session started before the hook existed.
+- The owner asked that each link opens in a new tab. That work needs a new clean session.
+- M-3 waits for the hand check of the owner. OQ-4 waits for a screenshot, and OQ-8 waits for a logo file.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- No run tested the PR-6 exit test of D-63 yet.
+
+### Traps and gotchas
+
+- In a worktree session, the tool refuses a shell command that names git inside a heredoc or a compound command. Run each git command alone, and edit files with the edit tool.
+- `$CLAUDE_PROJECT_DIR` names the main checkout, also in a worktree. Python exits 2 on a missing file, and exit 2 blocks the call, so the hook command exits 0 first when the file is absent.
+- The GitHub webhook page gives a wrong description of the `edited` type of `pull_request`. Watch a real run after a body edit.
+- A status in the matrix holds a semicolon. The STE checker skips inline code, so put each status in backticks.
+
+### Open questions that block progress
+
+None blocks PR-19. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the images of the cards.
+
+### Next concrete action
+
+In a new clean session, ask the owner how a link tells the visitor that it opens a new tab (T-2).
 
 ## Session 25: 2026-09-16
 
@@ -517,52 +559,3 @@ None blocks PR-10. OQ-3 blocks the About text.
 ### Next concrete action
 
 Answer the Gitar review of PR-10, and request it only after the checks of the new head start. After the merge, start PR-11, the What You Carry card, with the `add-project` skill.
-
-## Session 16: 2026-09-14
-
-### What this session did, and why
-
-- The owner merged #17 (PR-8) as `ec0d764` at 21:56 UTC. Its tree matches the reviewed head `bc8bb08`, and deploy run 34901522463 passed.
-- `make preview-check` passed on `https://natekramber.com` at 21:59 UTC, with `img-src 'self'` in the CSP.
-- The session started PR-9 with two read-only research passes: the content collection and images, and the disclosure card.
-- The owner answered the PR-9 questions: D-103 to D-110.
-- The session wrote PR-9: the schema, the card component, the Projects section, two fixture cards, the schema self-test, and the new tests.
-- A browser test found fixture cards in `dist/`. One shared content cache let a site build reuse fixture entries, so each fixture build now has its own `cacheDir`.
-- The responsive audit found 4 layout defects and 2 weak checks. The branch fixes all 6, and the owner chose D-108 to D-110.
-- The accessibility audit found no WCAG 2.2 AA defect. The branch applies its 3 low items: forced-color outlines, a row gap, and a note description.
-- The copy review found nothing to change. Session 6 moved to the archive.
-
-### State of the repository
-
-- `main` is `ec0d764`, the squash merge of PR #17.
-- Branch `site/pr-9-project-cards` holds PR-9 and this entry.
-- Remote head: `origin/site/pr-9-project-cards` at the commit that holds this entry, checked after the push.
-- `make verify` on Node 22.23.2 passes on the branch.
-
-### In flight
-
-- PR-9 waits for the Gitar review and the merge. The live page shows no card until PR-10.
-- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
-- Nobody checked Safari 26 yet for `::-webkit-details-marker`, the list role of `.tags`, and the summary in VoiceOver.
-- No run tested the PR-6 exit test of D-63 yet.
-- Each certificate has the type `TEMPORARY`, and nobody checked the permanent certificate yet.
-- The private preview page of D-89 still exists on claude.ai.
-
-### Traps and gotchas
-
-- Astro keeps the content store of a build in `cacheDir` (`dist/content/paths.js`). A site build after a fixture build with one shared cache reused the fixture entries, so each `PORTFOLIO_FIXTURES` value keeps its own cache.
-- A research claim said that a plain build drops fixture entries. A real build did not, so check each cache claim with the exact build order.
-- `page.addStyleTag` can return before the style applies. So the checks for text at 200 percent and the 1.4.12 spacing now wait for the computed style.
-- A resize loop needs an animation frame between steps, or a size in `vw` keeps its old value.
-- Under `prefers-reduced-motion: reduce`, the reset transition also covers `outline-offset`. So wait one frame before a script reads it.
-- `@axe-core/playwright` needs a page from `browser.newContext()`. A page from `browser.newPage()` stops the scan with an error.
-- The production build warns that the `projects` collection is empty. That warning is expected until PR-10 adds the first entry.
-- An upload of two screenshots to the owner failed once with "socket hang up", and a second try worked.
-
-### Open questions that block progress
-
-None blocks PR-9. OQ-3 blocks the About text.
-
-### Next concrete action
-
-Answer the Gitar review of PR-9, and request it only after the checks of the new head start. After the merge, start PR-10, the Deck Tome card, with the `add-project` skill.

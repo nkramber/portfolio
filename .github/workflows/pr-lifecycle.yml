@@ -1,0 +1,39 @@
+name: pr-lifecycle
+
+# The documentation gate of one pull request, one session (D-147, D-148). The
+# job reads the body of the pull request from the event file, never from an
+# expression in the shell, and compares its matrix with the diff. An edit of
+# the body starts a new run, so a fixed matrix clears the check with no push.
+# The site checks stay in verify.yml, so a body edit never cancels them.
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+concurrency:
+  group: pr-lifecycle-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+# Every action is pinned to a commit SHA, and the comment names its tag.
+# verified_at: 2026-09-16, source:
+#   https://api.github.com/repos/actions/checkout/git/ref/tags/v7.0.1
+#
+# The job name is a required check on the main ruleset (D-11, D-149).
+jobs:
+  lifecycle:
+    name: "verify:pr-lifecycle"
+    # Dependabot writes its own body with no matrix (D-148). A job that an
+    # `if:` condition skips reports success, so it does not block the merge.
+    if: github.event.pull_request.user.login != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # The full history holds the base commit and the head commit of the diff.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      # The ubuntu-latest image ships python3.
+      - name: session binding and documentation-impact matrix
+        run: python3 scripts/pr-lifecycle-check.py --event "$GITHUB_EVENT_PATH"

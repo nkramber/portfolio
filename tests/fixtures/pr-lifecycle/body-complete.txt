@@ -1,0 +1,25 @@
+## Session binding
+
+- Repository: `nkramber/portfolio`
+- Branch: `docs/one-pr-one-session`
+- Pull request: this pull request
+- Role: author
+- Base: `20d1e7e`
+
+## Summary
+
+A planted body for the self-test of `scripts/pr-lifecycle-check.py`. It holds the code, the tests, and every document of its change.
+
+## Documentation impact
+
+- `CLAUDE.md`: Changed: hard rule 3 names the skill path and the one pull request of each session.
+- `README.md`: Reviewed; no change needed: it names the handoff and the design, and neither rule of it changes.
+- `docs/session-handoff.md`: Changed: the new session entry, and the entry that moved to the archive.
+- `docs/design.md`: Changed: the roadmap entry and the correction line of this change.
+- `docs/decisions.md`: Changed: the owner decisions of this change, and the revised decisions.
+- `docs/questions.md`: Reviewed; no change needed: the owner answered each question, so no question stays open.
+- `docs/deploy.md`: Not applicable: the change touches no Google Cloud, Firebase, or DNS step.
+- `docs/analytics.md`: Not applicable: the change touches no visit count, log query, or `make visits` rule.
+- `.claude/skills/`: Changed: the new skill, and the handoff skill that follows it.
+- `.claude/agents/`: Reviewed; no change needed: no agent opens, reviews, or merges a pull request.
+- `.claude/rules/`: Reviewed; no change needed: the rule files hold no rule about sessions or merge records.

@@ -33,6 +33,9 @@ jobs:
       # The ubuntu-latest image ships make and python3.
       - name: ste check
         run: make ste-check
+      # The skills, the root guidance, the session hook, and the self-test of each lifecycle check (D-147).
+      - name: lifecycle check
+        run: make lifecycle-check
 
   site:
     name: "verify:site"
