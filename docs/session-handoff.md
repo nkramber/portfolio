@@ -7,11 +7,11 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 ## Resume here (2026-09-16)
 
 - **Do this first:** start a new clean session for each pull request. Run `make resume`, then read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-147, D-154).
-- **Base:** `1bee1b0`, the commit of `origin/main` where this pull request started.
-- **Pull requests:** #35, the branch `docs/pr-20-session-start-context` (PR-20), pending the owner merge. No other pull request is open.
+- **Base:** `7cdb7a8`, the commit of `origin/main` where this pull request started.
+- **Pull requests:** #36, the branch `docs/pr-21-gitar-wait` (PR-21), pending the owner merge. No other pull request is open.
 - **Next action:** in a new clean session, ask the owner how a link tells the visitor about a new tab (T-2). The owner asked on 2026-09-16 that each link opens in a new tab.
 - **Blocked on:** M-3 waits for the hand check of the owner, and its 17 steps sit in `docs/design.md`. The Gitar trial ends about 2026-09-22. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
-- **Next ids:** D-160, OQ-9, M-4, PR-21, Session 29.
+- **Next ids:** D-161, OQ-9, M-4, PR-22, Session 30.
 
 ## Facts that expire
 
@@ -25,6 +25,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - On 2026-09-14, npm lists each check tool at its latest release: Playwright 1.63.0, axe-core 4.13.0, Lighthouse 13.4.1, html-validate 11.15.0, and linkinator 8.1.0. Chromium 153 (build 1243) and chrome-launcher 1.2.1 date from 2026-09-12.
 - `npm audit` reads 0 vulnerabilities on 2026-09-14. Lighthouse CI 0.15.1 added 12 advisories before D-50 removed it.
 - The Gitar trial still pauses automatic reviews on 2026-09-16. Its note on #28 read "trial ends in 6 days", so the trial ends about 2026-09-22. On 18 pull requests (#7, #8, #12 to #17, and #19 to #28), the pause note of the first head held a full review in its collapsed Code Review block. A later head of #17, of #19, and of #22 needed a `Gitar review` comment, and the `gitar-review` skill holds the traps.
+- On 2026-09-16, the Gitar check of `gitar-bot` on the heads of #30, #31, and #32 started 8 to 31 seconds after the commit. Each check completed in 80 seconds or less. The push wait of D-160 is three minutes.
 - PR-5 created the projects `natekramber-prod` and `natekramber-preview` on 2026-09-14 (D-51, D-56, D-79). A project id is permanent, and a permission error before creation does not show whether an id is free.
 - WCAG 2.2 is the W3C Recommendation of 2024-12-12, read 2026-09-12. The minimum target size of 2.5.8 is 24 by 24 CSS pixels.
 - ASD-STE100 Issue 9, dated 2025-01-15, is the current issue, read 2026-09-14.
@@ -98,6 +99,43 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The project `natekramber-prod` holds two saved queries since 13:42 UTC on 2026-09-16, `visits-page-requests` and `visits-after-machine-filter`, each with the visibility `SHARED` (D-140). It held none before.
 - The `_Default` log bucket of `natekramber-prod` keeps 30 days and has no Log Analytics, read 2026-09-16. Cloud Logging gives 50 GiB of ingestion for each project each month at no charge.
 - On 2026-09-15 the live site answered 901 requests, 580 of them a 404 scan. The page requests read 155, and the machine filter left 125 (D-139).
+
+## Session 29: 2026-09-16
+
+### What this session did, and why
+
+- The owner asked that the `gitar-review` skill always waits three minutes or more after a push. After that wait, a session can ask for a manual review only when no automatic review started (D-160).
+- The session read the Gitar check runs of #30, #31, #32, and #35. On the first three, the check started 8 to 31 seconds after the commit. Each check completed in 80 seconds or less. #35 has no Gitar check on its head.
+- The skill now has the push wait in steps 4 to 8, the section "Find an automatic review", a trap, and command E. Command E read the Gitar check of the head of #32.
+- The skill no longer says that each repository holds the same file. The copies in decktome and What You Carry matched this file before the change, and this pull request does not change them (D-1).
+- The session wrote D-160, the PR-21 entry of the design, and this entry. Session 19 moved to the archive.
+
+### State of the repository
+
+- Base: `origin/main` at `7cdb7a8` when the session started.
+- Remote head: `origin/docs/pr-21-gitar-wait` at the commit that holds this entry, checked after the push.
+- `make verify`: every check passed.
+
+### In flight
+
+- PR-21 (#36) waits for the Gitar review of its newest head and the owner merge.
+- The owner can copy the new skill to decktome and What You Carry.
+- The owner asked that each link opens in a new tab. That work needs a new clean session.
+- M-3 waits for the hand check of the owner. OQ-4 waits for a screenshot, and OQ-8 waits for a logo file.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+
+### Traps and gotchas
+
+- The git snapshot at the session start named the branch of PR-20. `git status` showed `main`, because the owner merged #35 before the session started.
+- The design doc says the entries of Phases 0 to 3 "move", not "moves". An exact text match on the wrong verb failed.
+
+### Open questions that block progress
+
+None blocks PR-21. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the images of the cards.
+
+### Next concrete action
+
+In a new clean session, run `make resume`. Then ask the owner how a link tells the visitor that it opens a new tab (T-2).
 
 ## Session 28: 2026-09-16
 
@@ -511,52 +549,3 @@ None blocks PR-12. OQ-3 blocks the About text.
 ### Next concrete action
 
 Answer the Gitar review of #23, and post `Gitar review` only after the checks of the new head start. After the merge, start PR-17 from `main`: the flat card with a logo and a screenshot, and no Links section.
-
-## Session 19: 2026-09-15
-
-### What this session did, and why
-
-- The owner merged #21, the handoff pointer, as `1315691` at 04:52 UTC on 2026-09-15. Its tree matches the reviewed head `e8c8d3b`, Gitar approved that head, and deploy run 34930474549 passed.
-- The session started PR-11 with the `add-project` skill and a read-only research pass on What You Carry `main` at `a4bf6d6`.
-- The owner chose a visually hidden project name in each card link (D-121). The question named two wrong WCAG facts, and the session corrected them from the W3C pages.
-- The first run of the new link name test found a space before a hidden comma. A scratch page showed the cause, and the owner chose parentheses (D-122).
-- The owner picked the pitch, the tags, and two highlights (D-123 to D-125). The copy review found jargon in one highlight, and the owner took its plain words (D-126).
-- The session checked each card fact on What You Carry `main`, and the pull request text gives the source of each fact (G-11).
-- The responsive audit found no sideways scroll at any width, and two low defects. The owner accepted both (D-127, D-128).
-- The accessibility audit found no WCAG 2.2 AA defect in the light or the dark scheme. In the Chromium accessibility tree, each card link has the name of D-122 with no extra space.
-- The session opened #22, and every check passed on `f6fd79f`. The Gitar pause note held an approval with no finding.
-- The owner skipped the phone check and the VoiceOver check of the preview (D-129). Session 9 moved to the archive.
-
-### State of the repository
-
-- `main` is `1315691`, the squash merge of PR #21.
-- Branch `site/pr-11-what-you-carry-card` holds PR-11 and this entry.
-- Remote head: `origin/site/pr-11-what-you-carry-card` at the commit that holds this entry, checked after the push.
-- `make verify` on Node 22.23.2 passes on the branch. Lighthouse reads 1 in every category, 67,219 total bytes, a median LCP of 1,352 ms, and a CLS of 0.
-
-### In flight
-
-- #22 waits for the Gitar review of the head that records D-129, and for the merge.
-- What You Carry D-106 still reads "Private until launch", and that repository is public. The owner records the change there (D-25).
-- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
-- Nobody checked Safari 26 yet for `::-webkit-details-marker`, the list role of `.tags`, and the summary in VoiceOver. The link names of D-122 need the same check. Chromium keeps each hidden text in its own text node, so a screen reader can read "Status:" as a line of its own.
-- No run tested the PR-6 exit test of D-63 yet.
-- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
-- The private preview page of D-89 still exists on claude.ai.
-
-### Traps and gotchas
-
-- The working tree of What You Carry is on a feature branch. The research pass and the copy review both read files there, so read each cited file on `origin/main` with `git show`.
-- In another repository, `git status` can write the index. Pass `--no-optional-locks` to each git command there, and never run `git fetch` there.
-- A visually hidden span counts as a block in the accessible name, so the name gets a space before its text. A hidden text that starts with a comma then reads "Source on GitHub , Deck Tome" (D-122).
-- The question of D-121 gave WCAG 2.4.4 as level AA and the card heading as its context. Both were wrong: 2.4.4 is level A, and H80 is advisory alone. Read the W3C Understanding page before a question cites a level or a technique.
-- The date of the owner changed at midnight in the session. So D-121 has the date 2026-09-14, and D-122 to D-128 have 2026-09-15.
-- The responsive audit took about 20 minutes, and the two audits cannot share one `astro preview` server. So start the audits early, one after the other.
-
-### Open questions that block progress
-
-None blocks PR-11. OQ-3 blocks the About text.
-
-### Next concrete action
-
-Answer the Gitar review of #22, and post `Gitar review` only after the checks of the new head start. After the merge, start PR-12, the weekly outbound link check, from `main`.

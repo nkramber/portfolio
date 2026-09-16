@@ -2,6 +2,55 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 19: 2026-09-15
+
+### What this session did, and why
+
+- The owner merged #21, the handoff pointer, as `1315691` at 04:52 UTC on 2026-09-15. Its tree matches the reviewed head `e8c8d3b`, Gitar approved that head, and deploy run 34930474549 passed.
+- The session started PR-11 with the `add-project` skill and a read-only research pass on What You Carry `main` at `a4bf6d6`.
+- The owner chose a visually hidden project name in each card link (D-121). The question named two wrong WCAG facts, and the session corrected them from the W3C pages.
+- The first run of the new link name test found a space before a hidden comma. A scratch page showed the cause, and the owner chose parentheses (D-122).
+- The owner picked the pitch, the tags, and two highlights (D-123 to D-125). The copy review found jargon in one highlight, and the owner took its plain words (D-126).
+- The session checked each card fact on What You Carry `main`, and the pull request text gives the source of each fact (G-11).
+- The responsive audit found no sideways scroll at any width, and two low defects. The owner accepted both (D-127, D-128).
+- The accessibility audit found no WCAG 2.2 AA defect in the light or the dark scheme. In the Chromium accessibility tree, each card link has the name of D-122 with no extra space.
+- The session opened #22, and every check passed on `f6fd79f`. The Gitar pause note held an approval with no finding.
+- The owner skipped the phone check and the VoiceOver check of the preview (D-129). Session 9 moved to the archive.
+
+### State of the repository
+
+- `main` is `1315691`, the squash merge of PR #21.
+- Branch `site/pr-11-what-you-carry-card` holds PR-11 and this entry.
+- Remote head: `origin/site/pr-11-what-you-carry-card` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on the branch. Lighthouse reads 1 in every category, 67,219 total bytes, a median LCP of 1,352 ms, and a CLS of 0.
+
+### In flight
+
+- #22 waits for the Gitar review of the head that records D-129, and for the merge.
+- What You Carry D-106 still reads "Private until launch", and that repository is public. The owner records the change there (D-25).
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- Nobody checked Safari 26 yet for `::-webkit-details-marker`, the list role of `.tags`, and the summary in VoiceOver. The link names of D-122 need the same check. Chromium keeps each hidden text in its own text node, so a screen reader can read "Status:" as a line of its own.
+- No run tested the PR-6 exit test of D-63 yet.
+- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
+- The private preview page of D-89 still exists on claude.ai.
+
+### Traps and gotchas
+
+- The working tree of What You Carry is on a feature branch. The research pass and the copy review both read files there, so read each cited file on `origin/main` with `git show`.
+- In another repository, `git status` can write the index. Pass `--no-optional-locks` to each git command there, and never run `git fetch` there.
+- A visually hidden span counts as a block in the accessible name, so the name gets a space before its text. A hidden text that starts with a comma then reads "Source on GitHub , Deck Tome" (D-122).
+- The question of D-121 gave WCAG 2.4.4 as level AA and the card heading as its context. Both were wrong: 2.4.4 is level A, and H80 is advisory alone. Read the W3C Understanding page before a question cites a level or a technique.
+- The date of the owner changed at midnight in the session. So D-121 has the date 2026-09-14, and D-122 to D-128 have 2026-09-15.
+- The responsive audit took about 20 minutes, and the two audits cannot share one `astro preview` server. So start the audits early, one after the other.
+
+### Open questions that block progress
+
+None blocks PR-11. OQ-3 blocks the About text.
+
+### Next concrete action
+
+Answer the Gitar review of #22, and post `Gitar review` only after the checks of the new head start. After the merge, start PR-12, the weekly outbound link check, from `main`.
+
 ## Session 18: 2026-09-14
 
 ### What this session did, and why
