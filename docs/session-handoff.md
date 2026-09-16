@@ -6,6 +6,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-16)
 
+- **Do this first:** the owner asks that each link opens in a new tab, not in this tab (2026-09-16). Ask the owner how a link tells the visitor about the new tab (T-2).
 - **Main:** `fce6d7d`, the squash merge of PR #28, the GPL-3.0 license.
 - **Open pull requests:** #29, the branch `docs/after-pr-18`, the wrap-up, in review.
 - **Next action:** after the merge of #29, ask the owner for the result of the M-3 hand check. The 17 steps sit in the M-3 entry of `docs/design.md`.
