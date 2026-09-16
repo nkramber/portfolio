@@ -104,6 +104,7 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `.github/workflows/verify.yml`: the checks on each pull request, `verify:docs`, `verify:site`, and the four `verify:site-*` jobs.
 - `.github/workflows/preview.yml`: the preview deploy of each pull request, its comment, the `verify:site-preview` check, and the channel cleanup (D-59, D-66 to D-68).
 - `.github/workflows/deploy.yml`: the live deploy of each push to `main`, in the environment `production` (D-63, D-84).
+- `.github/workflows/links.yml`: the weekly check of every outbound link of the live site, and a run by hand (D-130 to D-132).
 - `docs/deploy.md`: the one-time setup of Google Cloud, Firebase, the domain, and the request logs, with a run record for each part (D-79, D-82, D-87).
 - `firebase.json`: the Hosting config, with the headers of D-57, D-58, D-75, and D-77.
 - `deploy/`: the npm project of the Firebase CLI alone (D-53).
@@ -114,7 +115,7 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 
 ## Commands
 
-Every command is free, and only `make install` and `make browsers` use the network. Run each command from the repository root.
+Every command is free. Only `make install`, `make browsers`, and `make link-check` use the network. Run each command from the repository root.
 
 - `make install`: install the exact dependencies of `package-lock.json`.
 - `make browsers`: download the Chromium build that Playwright and the Lighthouse budget use.
@@ -130,6 +131,7 @@ Every command is free, and only `make install` and `make browsers` use the netwo
 - `make lighthouse`: check the Lighthouse budget over three runs, then prove that the budget fails on each planted defect.
 - `make html-check`: validate the built HTML and check its internal links and anchors, then prove that both tools fail on planted defects.
 - `make preview-check PREVIEW_URL=<address>`: compare the headers of a deployed preview with `firebase.json`, and check its console (D-59). Its self-test then proves that the header check can fail.
+- `make link-check`: check every outbound link of the live site with `linkinator`, and skip `linkedin.com` (D-130 to D-132). Its self-test then proves that the check fails on a planted dead address. It needs the network.
 - `make site-checks`: run the four site checks.
 - `make ste-check`: check every hand-written `.md` file against the STE rules.
 - `make verify`: run every check that the verify workflow runs. Run it before each pull request.

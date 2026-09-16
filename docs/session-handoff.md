@@ -6,11 +6,11 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-16)
 
-- **Main:** `1315691`, the squash merge of PR #21, which points the handoff at the merge of PR #20.
-- **Open pull requests:** #22 on branch `site/pr-11-what-you-carry-card`, PR-11. Every check passed, and it waits for the Gitar review of its newest head and for the merge.
-- **Next action:** answer the Gitar review of #22. After the merge, start PR-12, the weekly outbound link check, from `main`.
+- **Main:** `c272a86`, the squash merge of PR #22, the What You Carry card.
+- **Open pull requests:** #23 on branch `site/pr-12-link-check`, PR-12. It waits for the Gitar review and the merge.
+- **Next action:** answer the Gitar review of #23. After the merge, start PR-17 from `main`: the flat card with a logo and a screenshot, and no Links section.
 - **Blocked on:** OQ-3 blocks the About text.
-- **Next ids:** D-130, OQ-8, M-4, PR-17, Session 20.
+- **Next ids:** D-133, OQ-8, M-4, PR-18, Session 21.
 
 ## Facts that expire
 
@@ -23,7 +23,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Astro 7.3.2 is the latest Astro on 2026-09-14 (npm registry), and it needs Node 22.12.0 or newer. The variable `ASTRO_TELEMETRY_DISABLED=1` stops its telemetry.
 - On 2026-09-14, npm lists each check tool at its latest release: Playwright 1.63.0, axe-core 4.13.0, Lighthouse 13.4.1, html-validate 11.15.0, and linkinator 8.1.0. Chromium 153 (build 1243) and chrome-launcher 1.2.1 date from 2026-09-12.
 - `npm audit` reads 0 vulnerabilities on 2026-09-14. Lighthouse CI 0.15.1 added 12 advisories before D-50 removed it.
-- The Gitar trial still pauses automatic reviews on 2026-09-15. On 11 pull requests (#7, #8, #12 to #17, and #19 to #21), the pause note of the first head held a full review in its collapsed Code Review block. A later head of #17 and of #19 needed a `Gitar review` comment, and the `gitar-review` skill holds the traps.
+- The Gitar trial still pauses automatic reviews on 2026-09-16. On 12 pull requests (#7, #8, #12 to #17, and #19 to #22), the pause note of the first head held a full review in its collapsed Code Review block. A later head of #17, of #19, and of #22 needed a `Gitar review` comment, and the `gitar-review` skill holds the traps.
 - PR-5 created the projects `natekramber-prod` and `natekramber-preview` on 2026-09-14 (D-51, D-56, D-79). A project id is permanent, and a permission error before creation does not show whether an id is free.
 - WCAG 2.2 is the W3C Recommendation of 2024-12-12, read 2026-09-12. The minimum target size of 2.5.8 is 24 by 24 CSS pixels.
 - ASD-STE100 Issue 9, dated 2025-01-15, is the current issue, read 2026-09-14.
@@ -68,11 +68,11 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Fontsource 5.3.0 serves the Latin variable WOFF2 files of both Atkinson faces: 33,996 bytes for Next and 17,752 bytes for Mono (read 2026-09-14). GitHub marks both upstream repositories as archived.
 - Astro 7.3.2 has a fonts API. Its `Font` component writes a `style` element, and the CSP of D-57 blocks that element (installed `astro/components/Font.astro`, read 2026-09-14).
 - web-features 3.38.0 is the latest release on 2026-09-14. The Web Status API has no feature id for some properties, so the compat key in its `data.json` gives their status.
-- Since deploy run 34927622727 on `0f983bb` (2026-09-15 UTC), `https://natekramber.com` serves PR-10 with the Deck Tome card. At 04:11 UTC, `make preview-check` passed on it, with `font-src 'self'` and `img-src 'self'` in the CSP.
+- Since deploy run 35061020052 on `c272a86` (2026-09-16 UTC), `https://natekramber.com` serves PR-11 with both project cards. At 05:50 UTC, `make preview-check` passed on it, with `font-src 'self'` and `img-src 'self'` in the CSP.
 - The owner checked the PR-7 preview on an iPhone 16 Pro in Chrome on 2026-09-14 (D-93).
 - `/Users/nate/Repos/terminal-rpg` does not exist on this Mac on 2026-09-14.
 - The Lighthouse budget of `make verify` read 1 in every category and a CLS of 0 from PR-7 to PR-11 (2026-09-15). The total bytes grew from 38,974 (PR-7) to 41,307 (PR-8), 44,768 (PR-9), 65,511 (PR-10), and 67,219 (PR-11). The median LCP grew from 1,052 ms to 1,352 ms.
-- On the PR-11 branch, `make verify` runs 57 responsive tests and 16 accessibility tests (2026-09-15).
+- On `main`, `make verify` runs 57 responsive tests and 16 accessibility tests (2026-09-16).
 - On `main`, a fixture build loads the fixture cards alone (D-112). It keeps its content cache in `node_modules/.astro-fixtures-1` or `node_modules/.astro-fixtures-invalid`, and the site build keeps `node_modules/.astro`.
 - The decktome working tree on this Mac holds the local branch `pr54-theme-words` with uncommitted Go changes, read 2026-09-14. Its docs match `origin/main` at `c7a4ff4`.
 - At 02:02 UTC on 2026-09-15, `gh repo view` read `nkramber/decktome` as public. `https://decktome.com` answered 200, and `www.decktome.com` answered 301 to the apex.
@@ -80,8 +80,55 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - At 05:45 UTC on 2026-09-15, the external drive holds `/Volumes/SSD-1TB/what-you-carry`, the source of PR-11. Its working tree is on the branch `feat/pr-65-ramp-meshes`, and the card of PR-11 cites its `main` at `a4bf6d6`. GitHub `main` then moved to `4bc8cd4`.
 - On the PR-11 build, the Projects heading sits 46 to 110 px above the bottom of the first screen in portrait (D-117). On a landscape phone, it sits below that screen (D-128). The footer line sits 48 px below the box of the last card at 320 to 430 px (D-118). The smallest pointer target is 49.7 by 36.2 px, and the home page has 9 tab stops.
 - The owner merged #21, the handoff pointer, as `1315691` at 04:52:03 UTC on 2026-09-15. Its tree matches the reviewed head `e8c8d3b`, and Gitar approved that head with no finding. Deploy run 34930474549 passed.
-- The owner merged #20, the docs refresh, as `5fffed4` at 04:32:35 UTC on 2026-09-15. Its tree matches the reviewed head `69a4689`, and Gitar approved that head with no finding. Deploy run 34929234875 passed.
-- Every check of #22 passed on `f6fd79f` at 04:33 UTC on 2026-09-16, and the Gitar pause note held an approval with no finding. The preview channel of #22 expires on 2026-10-16.
+- The owner merged #22 (PR-11) as `c272a86` at 05:48:44 UTC on 2026-09-16. Its tree matches the reviewed head `b8a640e`, and Gitar approved that head with no finding. Deploy run 35061020052 passed.
+
+## Session 20: 2026-09-16
+
+### What this session did, and why
+
+- The owner merged #22 (PR-11) as `c272a86` at 05:48 UTC. Its tree matches the reviewed head `b8a640e`, and Gitar approved that head with no finding.
+- Deploy run 35061020052 passed, and `make preview-check` passed on `https://natekramber.com` at 05:50 UTC.
+- The session started PR-12 with a read-only research pass on the outbound links of the site.
+- The research found that LinkedIn answers 999 to an automated request, and that its `robots.txt` prohibits such a request. The owner chose the skip (D-130).
+- The owner chose the live site as the target (D-131), and a failed run as the signal of a dead link (D-132).
+- The session wrote `.github/workflows/links.yml`, `make link-check`, `make link-selftest`, the planted fixture, and the docs. Session 10 moved to the archive.
+- `make link-check` read 13 links of the live site, each one at 200, and the self-test failed on the planted dead address.
+- The owner asked for four changes of the page. PR-17 records them as decisions and applies them.
+- The changes: no highlights, a flat card with a logo and a screenshot, no placeholder panel, and no Links section.
+
+### State of the repository
+
+- `main` is `c272a86`, the squash merge of PR #22.
+- Branch `site/pr-12-link-check` holds PR-12 and this entry.
+- Remote head: `origin/site/pr-12-link-check` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on the branch, and `make link-check` passes on the live site.
+
+### In flight
+
+- #23 waits for the Gitar review and the merge.
+- No run tested `links.yml` yet. A scheduled run reads the default branch, so its first run comes after the merge.
+- PR-17 holds the four changes of the page that the owner asked for. The AI workflow line of D-114 then leaves the site.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- OQ-4 stays open. After PR-17, a card shows no image until the owner gives a logo or a screenshot.
+- Nobody checked Safari 26 yet for `::-webkit-details-marker`, the list role of `.tags`, and the summary in VoiceOver. The link names of D-122 need the same check.
+- No run tested the PR-6 exit test of D-63 yet.
+- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
+- The private preview page of D-89 still exists on claude.ai.
+
+### Traps and gotchas
+
+- Two rows of `docs/decisions.md` ended with the same sentence, so an edit with that sentence alone matched both. Anchor each edit on the unique part of its row.
+- The help output of linkinator is longer than 60 lines. The flag `--status-code "CODE:ACTION"` sits in the second half, and it can make a status pass, warn, or fail.
+- LinkedIn answers 999 to an automated request, with a browser agent too, so a checker that reads it fails every week (D-130).
+- `make link-check` needs the network and the live site. It stays out of `make verify`, which runs offline.
+
+### Open questions that block progress
+
+None blocks PR-12. OQ-3 blocks the About text.
+
+### Next concrete action
+
+Answer the Gitar review of #23, and post `Gitar review` only after the checks of the new head start. After the merge, start PR-17 from `main`: the flat card with a logo and a screenshot, and no Links section.
 
 ## Session 19: 2026-09-15
 
@@ -492,43 +539,3 @@ None blocks the refresh. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the
 ### Next concrete action
 
 Answer the Gitar review of the refresh. After the merge, start M-2 from `main` with read-only research.
-
-## Session 10: 2026-09-14
-
-### What this session did, and why
-
-- The owner merged #11, the docs refresh, as `251afa5` on 2026-09-14 UTC. Its tree matches the reviewed head `1b41ce3`.
-- Two read-only research passes read the custom domains of Firebase Hosting and the GitHub environment `production`.
-- The owner answered four questions about PR-6: D-82 to D-85.
-- The session created the environment `production` and both custom domains, and the owner cleared the administrator bypass (D-85).
-- The owner added the three TXT records of the first DNS visit, and both domains then read `OWNERSHIP_ACTIVE` (D-82).
-- The session wrote PR-6: `.github/workflows/deploy.yml`, steps 11 to 14 and the rollback of `docs/deploy.md`, and this entry.
-
-### State of the repository
-
-- `main` is `251afa5`, the squash merge of PR #11.
-- Branch `site/pr-6-deploy-domain` holds PR-6 and this entry.
-- Remote head: `origin/site/pr-6-deploy-domain` at the commit that holds this entry, checked after the push.
-- `make ste-check`: 0 findings. The deploy workflow has no run yet, because it runs on `main` alone.
-
-### In flight
-
-- PR-6 waits for the Gitar review, then for the merge. The first run of `deploy.yml` comes with the merge.
-- Both certificates wait for validation. When both read `CERT_ACTIVE`, the owner makes the second DNS visit (D-82).
-- Step 12 of `docs/deploy.md` reads the state of both custom domains through the Hosting API.
-
-### Traps and gotchas
-
-- The API response of an environment holds `can_admins_bypass`. The jq operator `//` prints its fallback for `false`, so print the field with `tostring`.
-- The A records of `natekramber.com` serve a GoDaddy Website Builder site, not a parking page (D-83).
-- The Hosting API v1beta1 returns 403 without the header `x-goog-user-project`.
-- For `www`, the Hosting API asks for a CNAME to `natekramber-prod.web.app`, not an A record.
-- The deploy workflow runs on `main` alone, so no pull request can test the live deploy before its merge.
-
-### Open questions that block progress
-
-None blocks PR-6. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
-
-### Next concrete action
-
-Answer the Gitar review of PR-6. When both certificates read `CERT_ACTIVE`, ask the owner for the second DNS visit of `docs/deploy.md`.

@@ -20,6 +20,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-14 correction pass (Session 16): PR-8 reads merged, and the Phase 2 gate reads passed.
 2026-09-14 correction pass (Session 17): PR-9 reads merged. PR-10 follows D-111 to D-119, and D-112 changes the fixture build of PR-9. The external facts add the research of PR-10.
 2026-09-14 correction pass (Session 18): PR-10 reads merged. The external facts add the `GROUPED` certificates of both custom domains.
+2026-09-16 correction pass (Session 20): PR-11 reads merged, and PR-12 follows D-130 to D-132. The external facts add the research of PR-12.
 2026-09-15 correction pass (Session 19): PR-11 follows D-121 to D-128. D-121 and D-122 add the project name to the screen reader name of each card link, and D-128 limits D-117 to portrait screens. The external facts add the research of PR-11.
 
 Owner decisions live in `docs/decisions.md` (D-#). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
@@ -151,6 +152,10 @@ Each fact below has a source and the date the session read it. Verify a fact aga
 - WCAG 2.4.9 Link Purpose (Link Only) is level AAA. WCAG 2.5.3 Label in Name is level A, and its Understanding page calls a name that starts with the visible label a best practice. Sources: https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-link-only.html and https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html, read 2026-09-15.
 - The Chromium 153 accessibility tree and the name code of Playwright 1.63.0 give the same link names. A visually hidden span that starts with a comma gives "Source on GitHub , Deck Tome", with a space before the comma. An inline-block span gives the same space, and a span that starts with a space gives a clean name. Source: a scratch page with the `.visually-hidden` rules of the site, 2026-09-15 (D-122).
 - The What You Carry repository is public, with no description and no homepage, and its `main` is `a4bf6d6`. Its `README.md` calls the game "a solo third-person dungeon crawler for Steam" (line 3). Sources: `gh repo view nkramber/what-you-carry` and `git show`, read 2026-09-15.
+- `https://www.linkedin.com/in/nate-kramber` answered 999 to a GET with the default `curl` agent and with a browser agent. A HEAD with a browser agent answered 405. The LinkedIn `robots.txt` prohibits every automated access without the permission of LinkedIn. Sources: `curl` and https://www.linkedin.com/robots.txt, read 2026-09-16.
+- linkinator 8.1.0 has the flags `--skip`, `--status-code "CODE:ACTION"` with the actions ok, warn, skip, and error, `--retry`, `--retry-errors`, and `--user-agent`. Source: `npx linkinator --help`, read 2026-09-16.
+- The GitHub schedule event can come late under load, and the high load times include the start of every hour. A scheduled workflow runs on the newest commit of the default branch. GitHub stops a scheduled workflow after 60 days with no activity in a public repository. Source: https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows, read 2026-09-16.
+- On 2026-09-16, `make link-check` read 13 links of the live site, and each one answered 200. The site has four outbound addresses: `decktome.com` and three GitHub addresses. The run skipped the LinkedIn address. Source: a local run.
 - The What You Carry workflow `bit-identity.yml` runs on each pull request and each push to `main`. It has a Linux, a Windows, and a macOS job, and a job that compares the three hashes. Its workflow `night.yml` runs at 08:07 UTC, with 5,000 seeds for each of two bots and a reachability sweep of 100,000 seeds. Source: What You Carry `main` at `a4bf6d6`, read 2026-09-15.
 
 ## 1. Thesis
@@ -603,14 +608,25 @@ Phase gate: the owner signs off M-3. That sign-off is the launch.
 
 #### PR-12: Weekly outbound link check
 
-Status: planned.
+Status: in review. D-130 to D-132 answer its design questions.
 
-Scope: a scheduled workflow checks every outbound link of the built site once a week, and the owner can start it by hand (D-16).
+Scope: a scheduled workflow checks every outbound link of the live site once a week, and the owner can start it by hand (D-16, D-131).
+
+- `.github/workflows/links.yml`: the job `links:outbound` at 09:17 UTC each Monday, and a run by hand.
+- `make link-check`: linkinator crawls `https://natekramber.com` and follows each link that it finds.
+- The check skips every `linkedin.com` address, and a comment gives the reason (D-130).
+- A dead link fails the run. The workflow opens no issue, and it needs no write permission (D-132).
+- `make link-selftest`: a planted page with one dead address proves that the check can fail (G-3).
+
+Out of scope:
+
+- The internal links of the build. `make html-check` keeps them (D-47).
+- The outbound links of the documents. The check reads the site alone.
 
 Exit tests:
 
-- The workflow passes on the current site.
-- The workflow fails on a fixture with one dead link.
+- `make link-check` passes on the live site.
+- The self-test fails on the planted dead address, and its output names that address (G-3).
 
 Gate: the owner merges PR-12.
 

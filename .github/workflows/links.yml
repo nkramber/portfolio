@@ -1,0 +1,42 @@
+name: links
+
+# Checks every outbound link of the live site once a week, and by hand (D-16).
+# The live site is the target, so a link that a bad deploy broke also shows
+# (D-131). A dead link fails the run, and GitHub tells the owner about a failed
+# scheduled run (D-132). The job needs no write permission.
+#
+# The cron keeps its minute away from the start of the hour. GitHub delays the
+# schedule event under load, and "High load times include the start of every
+# hour". A scheduled workflow runs on the latest commit of the default branch,
+# and GitHub turns it off after 60 days with no activity in a public repository.
+# Source: https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows,
+# read 2026-09-16.
+on:
+  schedule:
+    - cron: "17 9 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Every action is pinned to a commit SHA, and the comment names its tag.
+# verified_at: 2026-09-16, sources:
+#   https://api.github.com/repos/actions/checkout/git/ref/tags/v7.0.1
+#   https://api.github.com/repos/actions/setup-node/git/ref/tags/v7.0.0
+jobs:
+  outbound:
+    name: "links:outbound"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: install
+        run: make install
+      # The target also runs its self-test, which proves that a dead link fails
+      # the check (G-3).
+      - name: outbound links of the live site
+        run: make link-check
