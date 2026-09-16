@@ -15,7 +15,7 @@ Each project is one JSON file in `src/content/projects/`. The schema in `src/con
 2. Run the `project-researcher` agent on the source repository. It reads the repository and never changes it.
 3. Show the draft entry to the owner. Ask what the site can show, for example a private repository link or a screenshot.
 4. Add one JSON file to `src/content/projects/`, named after the project, for example `deck-tome.json`. Fill every required field of the schema. Give the card an order number that no other entry uses (D-23).
-5. Put each screenshot next to its entry file. Name the file and its alt text in the `screenshot` field. With no screenshot, the card shows the placeholder panel of D-106.
+5. Put each image next to its entry file. Name a logo in the `logo` field, and a screenshot with its alt text in the `screenshot` field (D-133). A screenshot must be a raster file, because the card cannot convert an SVG. With no image, the card shows none (D-134).
 6. Run the `copy-editor` agent on the card text.
 7. Load the `responsive-qa` skill, and check the card at every width.
 8. Run the `accessibility-auditor` agent on the section that holds the card.

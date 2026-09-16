@@ -179,7 +179,7 @@ Every pull request keeps each guardrail. Only an owner decision changes a guardr
 5. **G-5. Zero client JavaScript.** The built site ships no script, unless a decision names the script and its purpose (D-33).
 6. **G-6. Baseline Widely available.** Every essential feature is Baseline Widely available. A Newly available feature adds polish alone, with a fallback (D-32).
 7. **G-7. The budget holds.** Every site pull request stays inside the performance budget of D-37, and CI enforces it.
-8. **G-8. WCAG 2.2 level AA.** The axe scan passes with every card closed and open (T-2, D-38).
+8. **G-8. WCAG 2.2 level AA.** The axe scan passes on each page and on the fixture cards (T-2, D-38, D-133).
 9. **G-9. No deploy key.** Every deploy authenticates through Workload Identity Federation. No service account key lives in the repository or in its secrets (D-35).
 10. **G-10. Only `main` deploys.** Only a merge to `main` reaches production (D-35).
 11. **G-11. Every card fact has a source.** Each fact on a card comes from its repository or from the owner. The site copy invents no metric (hard rule 9).
@@ -602,6 +602,37 @@ Gate: the owner merges PR-11.
 
 > *In plain English:* the page shows one project after PR-10. This change adds the game as the second card. It says nothing about release plans that the owner did not announce. Each card link also gives a screen reader the name of its project.
 
+#### PR-17: Card shape, images, and the page end
+
+Status: in progress. D-133 to D-138 answer its design questions.
+
+Scope: the card component, the project schema, and the end of the home page.
+
+- A card loses its highlights and its disclosure. It shows the title, the pitch, the status, the tags, the links, an optional logo, and an optional screenshot (D-133).
+- The schema loses the `highlights` field. It gains an optional `logo` beside the optional `screenshot` (D-133).
+- A card with no image shows no image, and the placeholder panel leaves the site (D-134).
+- No card describes the AI coding agents, so the Deck Tome highlights leave the site (D-135).
+- The Links section at the end of the home page leaves the site, with its heading and its line (D-136).
+- The page keeps at least 4rem of space below the last card (D-137).
+- A card draws each screenshot in a 16 by 10 frame, and a taller image shows its top (D-138).
+- The fixture cards, the responsive tests, and the accessibility tests follow the new card.
+
+Out of scope:
+
+- The logo files and the screenshot files. OQ-8 and OQ-4 hold them.
+
+Exit tests:
+
+- The build fails on an entry that holds a `highlights` field (G-3, D-103).
+- Each card shows every fact with no click, and the built page holds no `details` element.
+- The home page holds no footer, and the hero keeps both profile links.
+- The page keeps at least 4rem below the last card at each width (D-137).
+- Every site check passes, and the first load stays inside the cap of D-48.
+
+Gate: the owner merges PR-17.
+
+> *In plain English:* a card hides most of its words behind a click today, and the page repeats the profile links at its end. This change shows each project in one block, with room for a logo and a picture, and it ends the page after the projects.
+
 ### Phase 4: Launch and upkeep
 
 Phase gate: the owner signs off M-3. That sign-off is the launch.
@@ -691,8 +722,9 @@ One owner runs the sequence in strict order. A step starts only when the gate of
 15. PR-10, the Deck Tome card. Gate: the owner approves the card text.
 16. PR-11, the What You Carry card. Gate: the owner approves the card text.
 17. PR-12, the weekly outbound link check.
-18. PR-13, the visit counts. It runs only when M-2 passes.
-19. M-3, the launch audit. Gate: the owner signs off.
+18. PR-17, the card shape, the images, and the page end. Gate: the owner merges it.
+19. PR-13, the visit counts. It runs only when M-2 passes.
+20. M-3, the launch audit. Gate: the owner signs off.
 
 ## 6. Open questions
 

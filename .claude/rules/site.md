@@ -20,6 +20,7 @@ These rules apply to every file of the site (D-30 to D-33, G-1 to G-11).
 - Use a CSS feature only when Baseline lists it as Widely available. A Newly available feature adds polish alone, with a fallback (D-32, G-6).
 - Size text and spacing with `rem`, `clamp()`, and container units. Set no fixed width on a text container.
 - Give every image a width, a height, and alt text. Give a decorative image an empty `alt`.
+- A card logo is decoration beside the title, so it takes an empty `alt`. A card screenshot must be a raster file, because the card cannot convert an SVG (D-133).
 - Keep one card component for every project. Put the facts of a project in the content collection, never in the component (G-2).
 - Write each project as one JSON file in `src/content/projects/`. The schema in `src/content.config.ts` fails the build on a wrong field (D-22, D-105).
 - Put test entries in `tests/fixtures/projects/`, never in `src/content/projects/`. Only a build with `PORTFOLIO_FIXTURES=1` loads them, and that build loads no site entry (D-103, D-112).

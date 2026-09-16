@@ -7,6 +7,8 @@
 // - "1": the fixture cards of tests/fixtures/projects/. Playwright builds them into
 //   dist-fixture/ for the responsive and the accessibility tests.
 // - "invalid": an entry with a missing field, for `make content-selftest`.
+// - "unknown": an entry with a `highlights` field, which D-133 removed from the
+//   schema. The same target proves that the build refuses it.
 // A test build loads no site entry, so the fixture page stays the same when a project
 // joins the site. Each value keeps its own content cache (astro.config.mjs), so a
 // site build never reuses a test entry.
@@ -17,6 +19,7 @@ import { z } from 'astro/zod';
 const fixtureFolders: Record<string, string> = {
   '1': 'tests/fixtures/projects',
   invalid: 'tests/fixtures/projects-invalid',
+  unknown: 'tests/fixtures/projects-unknown',
 };
 const fixtureFolder = fixtureFolders[process.env.PORTFOLIO_FIXTURES ?? ''];
 
@@ -43,9 +46,23 @@ const projects = defineCollection({
         .array(z.strictObject({ label: text(40), href: z.url(), note: text(20).optional() }))
         .min(1)
         .max(3),
-      highlights: z.array(text(160)).min(1).max(5),
-      // A card with no screenshot shows the placeholder of D-106. The path is relative to the entry.
-      screenshot: z.strictObject({ src: image(), alt: text(160) }).optional(),
+      // A card shows no image while it has neither a logo nor a screenshot (D-134).
+      // Each path is relative to the entry file.
+      //
+      // The logo needs no alt text, because the title beside it names the project, so
+      // the card gives it an empty alt (D-133, WCAG 1.1.1).
+      logo: image().optional(),
+      // The card draws a screenshot with the Picture component, and sharp refuses an
+      // SVG there. The build then fails with a message about disabled SVG processing,
+      // so this check names the real cause instead.
+      screenshot: z
+        .strictObject({
+          src: image().refine((file) => file.format !== 'svg', {
+            message: 'A screenshot must be a raster image. The card cannot convert an SVG.',
+          }),
+          alt: text(160),
+        })
+        .optional(),
       // The cards sort by this number, lowest first (D-23).
       order: z.number().int().positive(),
     }),

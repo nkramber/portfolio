@@ -4,7 +4,6 @@
   "status": "Live",
   "tags": ["Astro", "Playwright"],
   "links": [{ "label": "Example site", "href": "https://example.com/" }],
-  "highlights": ["A highlight next to a screenshot.", "A second highlight."],
   "screenshot": { "src": "./screenshot.png", "alt": "The share image of natekramber.com, as a stand-in screenshot." },
   "order": 1
 }

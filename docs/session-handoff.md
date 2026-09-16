@@ -6,11 +6,11 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ## Resume here (2026-09-16)
 
-- **Main:** `c272a86`, the squash merge of PR #22, the What You Carry card.
-- **Open pull requests:** #23 on branch `site/pr-12-link-check`, PR-12. It waits for the Gitar review and the merge.
-- **Next action:** answer the Gitar review of #23. After the merge, start PR-17 from `main`: the flat card with a logo and a screenshot, and no Links section.
-- **Blocked on:** OQ-3 blocks the About text.
-- **Next ids:** D-133, OQ-8, M-4, PR-18, Session 21.
+- **Main:** `3ca291e`, the squash merge of PR #23, the weekly link check.
+- **Open pull requests:** #24 on branch `site/pr-17-card-shape`, PR-17. It waits for the Gitar review and the merge.
+- **Next action:** answer the Gitar review of #24. After the merge, start PR-13, the visit counts, from `main`.
+- **Blocked on:** OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
+- **Next ids:** D-139, OQ-9, M-4, PR-18, Session 22.
 
 ## Facts that expire
 
@@ -23,7 +23,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Astro 7.3.2 is the latest Astro on 2026-09-14 (npm registry), and it needs Node 22.12.0 or newer. The variable `ASTRO_TELEMETRY_DISABLED=1` stops its telemetry.
 - On 2026-09-14, npm lists each check tool at its latest release: Playwright 1.63.0, axe-core 4.13.0, Lighthouse 13.4.1, html-validate 11.15.0, and linkinator 8.1.0. Chromium 153 (build 1243) and chrome-launcher 1.2.1 date from 2026-09-12.
 - `npm audit` reads 0 vulnerabilities on 2026-09-14. Lighthouse CI 0.15.1 added 12 advisories before D-50 removed it.
-- The Gitar trial still pauses automatic reviews on 2026-09-16. On 12 pull requests (#7, #8, #12 to #17, and #19 to #22), the pause note of the first head held a full review in its collapsed Code Review block. A later head of #17, of #19, and of #22 needed a `Gitar review` comment, and the `gitar-review` skill holds the traps.
+- The Gitar trial still pauses automatic reviews on 2026-09-16. On 13 pull requests (#7, #8, #12 to #17, and #19 to #23), the pause note of the first head held a full review in its collapsed Code Review block. A later head of #17, of #19, and of #22 needed a `Gitar review` comment, and the `gitar-review` skill holds the traps.
 - PR-5 created the projects `natekramber-prod` and `natekramber-preview` on 2026-09-14 (D-51, D-56, D-79). A project id is permanent, and a permission error before creation does not show whether an id is free.
 - WCAG 2.2 is the W3C Recommendation of 2024-12-12, read 2026-09-12. The minimum target size of 2.5.8 is 24 by 24 CSS pixels.
 - ASD-STE100 Issue 9, dated 2025-01-15, is the current issue, read 2026-09-14.
@@ -68,19 +68,69 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Fontsource 5.3.0 serves the Latin variable WOFF2 files of both Atkinson faces: 33,996 bytes for Next and 17,752 bytes for Mono (read 2026-09-14). GitHub marks both upstream repositories as archived.
 - Astro 7.3.2 has a fonts API. Its `Font` component writes a `style` element, and the CSP of D-57 blocks that element (installed `astro/components/Font.astro`, read 2026-09-14).
 - web-features 3.38.0 is the latest release on 2026-09-14. The Web Status API has no feature id for some properties, so the compat key in its `data.json` gives their status.
-- Since deploy run 35061020052 on `c272a86` (2026-09-16 UTC), `https://natekramber.com` serves PR-11 with both project cards. At 05:50 UTC, `make preview-check` passed on it, with `font-src 'self'` and `img-src 'self'` in the CSP.
+- Since deploy run 35064220205 on `3ca291e` (2026-09-16 UTC), `https://natekramber.com` serves the two cards of PR-11. PR-12 changed no site file. At 05:50 UTC, `make preview-check` passed on the site, with `font-src 'self'` and `img-src 'self'` in the CSP.
 - The owner checked the PR-7 preview on an iPhone 16 Pro in Chrome on 2026-09-14 (D-93).
 - `/Users/nate/Repos/terminal-rpg` does not exist on this Mac on 2026-09-14.
-- The Lighthouse budget of `make verify` read 1 in every category and a CLS of 0 from PR-7 to PR-11 (2026-09-15). The total bytes grew from 38,974 (PR-7) to 41,307 (PR-8), 44,768 (PR-9), 65,511 (PR-10), and 67,219 (PR-11). The median LCP grew from 1,052 ms to 1,352 ms.
-- On `main`, `make verify` runs 57 responsive tests and 16 accessibility tests (2026-09-16).
+- The Lighthouse budget of `make verify` read 1 in every category and a CLS of 0 from PR-7 to PR-11 (2026-09-15). The total bytes grew from 38,974 (PR-7) to 41,307 (PR-8), 44,768 (PR-9), 65,511 (PR-10), and 67,219 (PR-11). The median LCP grew from 1,052 ms to 1,352 ms. On the PR-17 branch the total bytes fall to 64,242, because the highlights left the cards (2026-09-16).
+- On `main`, `make verify` runs 57 responsive tests and 16 accessibility tests. On the PR-17 branch it runs 58 and 15 (2026-09-16).
 - On `main`, a fixture build loads the fixture cards alone (D-112). It keeps its content cache in `node_modules/.astro-fixtures-1` or `node_modules/.astro-fixtures-invalid`, and the site build keeps `node_modules/.astro`.
 - The decktome working tree on this Mac holds the local branch `pr54-theme-words` with uncommitted Go changes, read 2026-09-14. Its docs match `origin/main` at `c7a4ff4`.
 - At 02:02 UTC on 2026-09-15, `gh repo view` read `nkramber/decktome` as public. `https://decktome.com` answered 200, and `www.decktome.com` answered 301 to the apex.
 - The decktome D-310 still reads "No public sign-up", and its D-577 of 2026-09-07 names the product "Deck Tome" (read 2026-09-14).
 - At 05:45 UTC on 2026-09-15, the external drive holds `/Volumes/SSD-1TB/what-you-carry`, the source of PR-11. Its working tree is on the branch `feat/pr-65-ramp-meshes`, and the card of PR-11 cites its `main` at `a4bf6d6`. GitHub `main` then moved to `4bc8cd4`.
-- On the PR-11 build, the Projects heading sits 46 to 110 px above the bottom of the first screen in portrait (D-117). On a landscape phone, it sits below that screen (D-128). The footer line sits 48 px below the box of the last card at 320 to 430 px (D-118). The smallest pointer target is 49.7 by 36.2 px, and the home page has 9 tab stops.
-- The owner merged #21, the handoff pointer, as `1315691` at 04:52:03 UTC on 2026-09-15. Its tree matches the reviewed head `e8c8d3b`, and Gitar approved that head with no finding. Deploy run 34930474549 passed.
+- On the PR-11 build, the Projects heading sits 46 to 110 px above the bottom of the first screen in portrait (D-117). On a landscape phone, it sits below that screen (D-128). The smallest pointer target is 49.7 by 36.2 px. On the PR-17 branch, the page keeps at least 64 px below its last card (D-137), and the home page has 5 tab stops.
+- The owner merged #23 (PR-12) as `3ca291e` on 2026-09-16. Its tree matches the reviewed head `503dfd5`, and Gitar approved that head with no finding. Deploy run 35064220205 passed.
+- Run 35064260365 of `links.yml`, started by hand on 2026-09-16, read 13 links of the live site. Each one answered 200, and the self-test failed on the planted dead link.
 - The owner merged #22 (PR-11) as `c272a86` at 05:48:44 UTC on 2026-09-16. Its tree matches the reviewed head `b8a640e`, and Gitar approved that head with no finding. Deploy run 35061020052 passed.
+
+## Session 21: 2026-09-16
+
+### What this session did, and why
+
+- The owner merged #23 (PR-12) as `3ca291e`. Its tree matches the reviewed head `503dfd5`, and Gitar approved that head with no finding.
+- Deploy run 35064220205 passed. The session then started `links.yml` by hand, and run 35064260365 read 13 links with no dead link.
+- The owner asked for a new card shape: no highlights, and room for a logo and a screenshot. The owner also asked to remove the Links section.
+- The owner answered four questions (D-133 to D-136). The two audits gave two more answers (D-137, D-138).
+- A read-only research pass read the image code of Astro 7.3.2. `Picture` cannot process an SVG, and an inline SVG import can carry a `style` element.
+- The session wrote the card, the schema, the tests, and the docs. Session 11 moved to the archive.
+- The responsive audit found no sideways scroll at any width. The branch fixes two of its four defects, and the owner accepted the other two.
+- The accessibility audit found no WCAG 2.2 AA defect. The branch applies two of its three low items.
+
+### State of the repository
+
+- `main` is `3ca291e`, the squash merge of PR #23.
+- Branch `site/pr-17-card-shape` holds PR-17 and this entry.
+- Remote head: `origin/site/pr-17-card-shape` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on the branch. Lighthouse reads 1 in every category, 64,242 total bytes, a median LCP of 1,352 ms, and a CLS of 0.
+
+### In flight
+
+- #24 waits for the Gitar review and the merge.
+- OQ-8 waits for a logo file, and OQ-4 waits for a screenshot. Each card shows no image until then.
+- A logo file needs an opaque ground. The fixture mark reads 2.81:1 against the dark page, and 3.10:1 on forced black.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- Nobody checked Safari 26 and VoiceOver yet: the link names of D-122, the status line, and the logo row.
+- The hairline around a screenshot reads 1.24:1 against the page, so the edge of a light screenshot is faint.
+- No run tested the PR-6 exit test of D-63 yet.
+- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
+- The private preview page of D-89 still exists on claude.ai.
+
+### Traps and gotchas
+
+- The rebase of this branch met one conflict: both branches add rows at the end of `docs/decisions.md`. PR-12 holds D-130 to D-132, so this branch starts at D-133.
+- `make verify` stops at its first step. A failed `make ste-check` hides every other check, so read the first lines of its log.
+- A numbered list item of a `.md` file counts as a procedural step, so its limit is 20 words, not 25.
+- An HTML comment in an Astro template reaches the built page. A note about the card belongs in the frontmatter.
+- `Picture` fails the build on an SVG, and it still writes `source` addresses for files that never exist. So the schema refuses an SVG screenshot first.
+- An ESM import of an SVG renders an inline `svg` element that can hold a `style` element, and the CSP of D-57 blocks it.
+
+### Open questions that block progress
+
+None blocks PR-17. OQ-3 blocks the About text.
+
+### Next concrete action
+
+Answer the Gitar review of #24, and post `Gitar review` only after the checks of the new head start. After the merge, start PR-13, the visit counts, from `main`.
 
 ## Session 20: 2026-09-16
 
@@ -496,46 +546,3 @@ None blocks the M-2 result. OQ-3 blocks the About text of PR-8, and OQ-5 blocks 
 ### Next concrete action
 
 Answer the Gitar review of the M-2 result. After the merge, start PR-7 from `main` with read-only research.
-
-## Session 11: 2026-09-14
-
-### What this session did, and why
-
-- The owner merged #12 (PR-6) as `af04c17` at 15:01 UTC on 2026-09-14. Its tree matches the reviewed head `4fa6ec8`, and Gitar approved it with no finding.
-- The first run of `deploy.yml`, 34859481347, released the placeholder page to `natekramber-prod` at 15:02 UTC with no manual step.
-- The owner asked the session to watch the certificates. Both certificates read `CERT_ACTIVE` at 15:58 UTC, while the A records still pointed to GoDaddy.
-- The owner chose to make the second DNS visit at once (D-86). The session read the GoDaddy help pages, then gave each step.
-- At 16:09 UTC, both GoDaddy name servers gave the new records. `www` read `HOST_ACTIVE` at 16:20 UTC, and the apex at 16:30 UTC.
-- The owner opened both addresses on a phone with Wi-Fi off, and saw the placeholder page with no warning. GoDaddy locked no record, so the owner removed no connection.
-- At 17:04 UTC, `make preview-check PREVIEW_URL=https://natekramber.com` passed. Every header of `firebase.json` matched, and that includes the HSTS header of D-58. The console check and both self-tests passed.
-- The session wrote this refresh. It adds D-86, the PR-6 status, a run record in `docs/deploy.md`, four external facts, `CLAUDE.md`, and this entry. Session 1 moved to the archive.
-
-### State of the repository
-
-- `main` is `af04c17`, the squash merge of PR #12.
-- Branch `docs/after-pr-6` holds this refresh, as a pull request of documents alone.
-- Remote head: `origin/docs/after-pr-6` at the commit that holds this entry, checked after the push.
-- `make ste-check`: 0 findings.
-
-### In flight
-
-- The refresh waits for the Gitar review, then for the merge.
-- Each certificate has the type `TEMPORARY` and expires on 2026-12-13. Hosting makes a more permanent certificate later, and nobody checked that step yet.
-- No run tested the PR-6 exit test of D-63. A workflow run outside the environment `production` must get no token for the live service account.
-- The GoDaddy Website Builder site can still exist in the GoDaddy account. The owner cancels any paid plan of that site (D-83).
-
-### Traps and gotchas
-
-- In zsh, `set -- $q` does not split the variable into words. A DNS loop then asked for the wrong names, and the empty answers gave a false sign of deleted records. Run such a loop in bash.
-- `dig` with no server skips the DNS cache of macOS, but `curl`, Node, and Chromium use that cache. After the DNS change at 16:09 UTC, this Mac reached the old GoDaddy address until 17:04 UTC. So the live check waited 55 minutes.
-- The Hosting API still found the old A records at 16:15 UTC, six minutes after the change. `www` became active at 16:20 UTC, and the apex 10 minutes later.
-- `curl --resolve NAME:443:199.36.158.100` shows the certificate and the headers of Firebase Hosting before any DNS change.
-- The HTTP challenge of Hosting fails with a 404 while the A records point to another host. The DNS challenge alone gives the certificate.
-
-### Open questions that block progress
-
-None blocks the refresh. OQ-3 blocks the About text of PR-8, and OQ-5 blocks the merge of PR-7.
-
-### Next concrete action
-
-Answer the Gitar review of the refresh. After the merge, start M-2 from `main` with read-only research.

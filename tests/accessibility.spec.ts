@@ -29,18 +29,9 @@ for (const colorScheme of ['light', 'dark'] as const) {
   test.describe(`${colorScheme} color scheme`, () => {
     test.use({ colorScheme });
 
-    test('no WCAG violation with every card closed', async ({ page }) => {
+    // A card shows every fact at once, so the page has one state (D-133).
+    test('no WCAG violation on the home page', async ({ page }) => {
       await page.goto('/');
-      expect(await violations(new AxeBuilder({ page }).withTags(wcagTags))).toEqual([]);
-    });
-
-    test('no WCAG violation with every card open', async ({ page }) => {
-      await page.goto('/');
-      await page.evaluate(() => {
-        document.querySelectorAll('details').forEach((details) => {
-          details.open = true;
-        });
-      });
       expect(await violations(new AxeBuilder({ page }).withTags(wcagTags))).toEqual([]);
     });
 
@@ -80,39 +71,22 @@ test('the structure scan catches a planted page with no main landmark and no h1'
 });
 
 // The fixture cards of D-103, which Playwright serves from dist-fixture/ on port
-// 4322: the WCAG scan with every card closed and open, in both schemes (G-8), and
-// the structure scan.
+// 4322: the WCAG scan in both schemes (G-8), and the structure scan. One fixture
+// card holds a screenshot, and the other holds a logo (D-133).
 const fixturePage = 'http://127.0.0.1:4322/';
 
 for (const colorScheme of ['light', 'dark'] as const) {
-  test(`no WCAG violation on the fixture cards, closed and open, in the ${colorScheme} scheme`, async ({ page }) => {
+  test(`no WCAG violation on the fixture cards in the ${colorScheme} scheme`, async ({ page }) => {
     await page.emulateMedia({ colorScheme });
     await page.goto(fixturePage);
     expect(await page.locator('.card').count()).toBe(2);
-    expect(await violations(new AxeBuilder({ page }).withTags(wcagTags)), 'closed').toEqual([]);
-    await page.evaluate(() => {
-      document.querySelectorAll('details').forEach((details) => {
-        details.open = true;
-      });
-    });
-    expect(await violations(new AxeBuilder({ page }).withTags(wcagTags)), 'open').toEqual([]);
+    expect(await violations(new AxeBuilder({ page }).withTags(wcagTags))).toEqual([]);
   });
 }
 
 test('the page structure of the fixture cards passes', async ({ page }) => {
   await page.goto(fixturePage);
   expect(await violations(new AxeBuilder({ page }).withRules(structureRules))).toEqual([]);
-});
-
-// D-107: each toggle names its card for a screen reader, as "Highlights of <title>".
-// The name joins the visible word and the visually hidden title.
-test('each card toggle names its card', async ({ page }) => {
-  await page.goto(fixturePage);
-  const titles = await page.locator('.card h3').allTextContents();
-  expect(titles).toHaveLength(2);
-  for (const [index, title] of titles.entries()) {
-    await expect(page.locator('.card summary').nth(index)).toHaveAccessibleName(`Highlights of ${title}`);
-  }
 });
 
 // D-121 and D-122: each card link names its card for a screen reader, as
@@ -146,5 +120,35 @@ test('each link note describes its link', async ({ page }) => {
     const note = notes.nth(index);
     const text = (await note.textContent()) ?? '';
     await expect(note.locator('xpath=preceding-sibling::a')).toHaveAccessibleDescription(text.trim());
+  }
+});
+
+// The tag list of each card carries its own name, so a screen reader says what the
+// list holds (WCAG 1.3.1). The status of a card names itself the same way (D-107).
+test('each card names its tag list', async ({ page }) => {
+  await page.goto(fixturePage);
+  const lists = page.locator('.card .tags');
+  const count = await lists.count();
+  expect(count).toBeGreaterThan(0);
+  for (let index = 0; index < count; index++) {
+    await expect(lists.nth(index)).toHaveAccessibleName('Tags');
+  }
+});
+
+// Each image of a card carries the right alt text: a screenshot describes itself
+// (D-22), and a logo is decoration beside the title, so its alt is empty (D-133,
+// WCAG 1.1.1).
+test('each card image has the right alt text', async ({ page }) => {
+  await page.goto(fixturePage);
+  const images = await page.locator('.card img').all();
+  expect(images.length).toBeGreaterThan(0);
+  for (const image of images) {
+    const className = (await image.getAttribute('class')) ?? '';
+    const alt = await image.getAttribute('alt');
+    if (className.includes('logo')) {
+      expect(alt, 'a logo is decoration').toBe('');
+    } else {
+      expect((alt ?? '').length, 'a screenshot describes itself').toBeGreaterThan(0);
+    }
   }
 });

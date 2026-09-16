@@ -11,8 +11,8 @@ const pages = [
 ];
 
 // The fixture cards of D-103: the longest title, links, and tags that the schema
-// allows, one card with a screenshot, and one with the placeholder of D-106.
-// Playwright builds them into dist-fixture/ and serves that folder on port 4322.
+// allows, one card with a screenshot, and one with no image (D-134). Playwright
+// builds them into dist-fixture/ and serves that folder on port 4322.
 const fixturePage = 'http://127.0.0.1:4322/';
 
 // How many CSS pixels the document is wider than the viewport. Zero means no sideways scroll.
@@ -89,13 +89,13 @@ test('a very long word stays inside its box at 320px', async ({ page }) => {
   expect(await sidewaysOverflow(page)).toBe(0);
 });
 
-// WCAG 2.4.11: Tab brings each link and each card toggle fully into view with its
-// focus ring, even in a short landscape window.
+// WCAG 2.4.11: Tab brings each link fully into view with its focus ring, even in a
+// short landscape window.
 for (const address of ['/', fixturePage]) {
   test(`the focus ring of each control stays on screen in a 568 by 320 window on ${address}`, async ({ page }) => {
     await page.setViewportSize({ width: 568, height: 320 });
     await page.goto(address);
-    const controls = await page.locator('a, summary').count();
+    const controls = await page.locator('a').count();
     for (let i = 0; i < controls; i++) {
       await page.keyboard.press('Tab');
       const ring = await page.evaluate(() => {
@@ -111,37 +111,33 @@ for (const address of ['/', fixturePage]) {
   });
 }
 
-// WCAG 1.4.4: text at 200 percent keeps all content at the smallest width, with
-// every card open (D-112).
+// WCAG 1.4.4: text at 200 percent keeps all content at the smallest width. A card
+// shows every fact at once, so the page has one state (D-133).
 test('text at 200 percent stays inside its boxes at 320px', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 900 });
   await page.goto('/');
-  await openEveryCard(page);
   await enlargeText(page);
   expect(await textOverflow(page)).toBe(0);
   expect(await sidewaysOverflow(page)).toBe(0);
 });
 
-// WCAG 1.4.12: the page keeps all content with the text spacing of the standard,
-// with every card open (D-112).
+// WCAG 1.4.12: the page keeps all content with the text spacing of the standard.
 test('the text spacing of WCAG 1.4.12 keeps every word inside its box at 320px', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 900 });
   await page.goto('/');
-  await openEveryCard(page);
   await applyTextSpacing(page);
   expect(await textOverflow(page)).toBe(0);
   expect(await sidewaysOverflow(page)).toBe(0);
 });
 
 // D-112: the fixture build holds the fixture cards alone, so the cards of the site
-// get their width check on the home page, with every card open.
+// get their width check on the home page. A card shows every fact at once (D-133).
 for (const width of widths) {
-  test(`home page: no sideways scroll and no clipped text at ${width}px, with every card open`, async ({ page }, testInfo) => {
+  test(`home page: no sideways scroll and no clipped text at ${width}px, with the cards`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/');
     expect(await page.locator('.card').count()).toBeGreaterThan(0);
-    await openEveryCard(page);
-    await page.screenshot({ path: testInfo.outputPath(`home-open-${width}.png`), fullPage: true });
+    await page.screenshot({ path: testInfo.outputPath(`home-cards-${width}.png`), fullPage: true });
     expect(await sidewaysOverflow(page)).toBe(0);
     expect(await textOverflow(page)).toBe(0);
   });
@@ -153,7 +149,7 @@ for (const width of widths) {
 // smallest (https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html). On a
 // phone, pinch zoom scales the whole page and doubles every size.
 test('each fluid text size grows at most 2 times from 320px to 2560px', async ({ page }) => {
-  const selectors = ['.name', 'h1', '.lede', '.links a', '.site-footer h2'];
+  const selectors = ['.name', 'h1', '.lede', '.links a', '.card h3'];
   const sizes: Record<number, number[]> = {};
   for (const width of [320, 2560]) {
     await page.setViewportSize({ width, height: 900 });
@@ -262,22 +258,11 @@ test('the production home page shows no fixture card', async ({ page }) => {
   expect(await page.locator('[aria-labelledby^="project-fixture-"]').count()).toBe(0);
 });
 
-async function openEveryCard(page: Page): Promise<void> {
-  await page.evaluate(() => {
-    document.querySelectorAll('details').forEach((details) => {
-      details.open = true;
-    });
-  });
-}
-
 for (const width of widths) {
-  test(`fixture cards: no sideways scroll and no clipped text at ${width}px, closed and open`, async ({ page }, testInfo) => {
+  test(`fixture cards: no sideways scroll and no clipped text at ${width}px`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto(fixturePage);
     expect(await page.locator('.card').count()).toBe(2);
-    expect(await sidewaysOverflow(page)).toBe(0);
-    expect(await textOverflow(page)).toBe(0);
-    await openEveryCard(page);
     // The screenshot loads lazily, so the test scrolls to it and waits, and the saved
     // picture shows the image, not an empty box.
     await page.locator('.shot').scrollIntoViewIfNeeded();
@@ -288,11 +273,10 @@ for (const width of widths) {
   });
 }
 
-// WCAG 1.4.4 and 1.4.12 on the open fixture cards at the smallest width.
-test('the open fixture cards keep every word inside its box at 320px with larger text and spacing', async ({ page }) => {
+// WCAG 1.4.4 and 1.4.12 on the fixture cards at the smallest width.
+test('the fixture cards keep every word inside its box at 320px with larger text and spacing', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 900 });
   await page.goto(fixturePage);
-  await openEveryCard(page);
   await enlargeText(page);
   expect(await textOverflow(page), 'text at 200 percent').toBe(0);
   expect(await sidewaysOverflow(page), 'text at 200 percent').toBe(0);
@@ -354,49 +338,41 @@ test('the Projects heading shows on the first screen, and the 404 hero keeps the
   expect(hero.height).toBeGreaterThanOrEqual(hero.viewport);
 });
 
-// D-118: the footer heading stays smaller than a card title, and the footer adds no
-// space above its hairline, so the Links section never reads as another card.
-test('the Links section reads as the end of the page, not as another card', async ({ page }) => {
-  for (const width of [390, 1440]) {
+// D-133: a card shows every fact with no click, so the page holds no disclosure.
+// The page also holds no script and no inline style (G-5, D-72).
+test('the fixture page has no disclosure, no script, and no inline style', async ({ page }) => {
+  await page.goto(fixturePage);
+  expect(await page.locator('details, summary').count()).toBe(0);
+  expect(await page.locator('script, style, [style]').count()).toBe(0);
+});
+
+// Every image reserves its space before it loads, so nothing moves on load (T-1).
+// A card with no image shows nothing in its place, because the placeholder panel left
+// the site with D-134.
+// D-137: the page ends with clear space below its last card, so the end never reads
+// as the start of another card. The measure is the space inside `main` below the last
+// card box.
+test('the page keeps at least 4rem below the last card', async ({ page }) => {
+  for (const width of [320, 390, 768, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/');
-    const footer = await page.evaluate(() => {
-      const fontSize = (selector: string) => parseFloat(getComputedStyle(document.querySelector(selector) as Element).fontSize);
-      const projects = (document.querySelector('.projects') as Element).getBoundingClientRect();
-      const heading = (document.querySelector('.site-footer h2') as Element).getBoundingClientRect();
-      return { headingSize: fontSize('.site-footer h2'), cardTitleSize: fontSize('.card h3'), spaceAbove: heading.top - projects.bottom };
+    const space = await page.evaluate(() => {
+      const cards = document.querySelectorAll('.card');
+      const last = cards[cards.length - 1].getBoundingClientRect();
+      return (document.querySelector('main') as Element).getBoundingClientRect().bottom - last.bottom;
     });
-    expect(footer.headingSize, `${width}px`).toBeLessThan(footer.cardTitleSize);
-    expect(footer.spaceAbove, `${width}px`).toBeLessThanOrEqual(1);
+    expect(space, `${width}px`).toBeGreaterThanOrEqual(64);
   }
 });
 
-// D-23: a card opens and closes in place with a mouse, a touch, and the keyboard.
-// The page holds no script and no inline style (G-5, D-72).
-test('a fixture card opens and closes with a mouse, a touch, and the keyboard', async ({ browser }) => {
-  const context = await browser.newContext({ hasTouch: true });
-  const page = await context.newPage();
-  await page.goto(fixturePage);
-  const details = page.locator('.card details').first();
-  const summary = details.locator('summary');
-  const isOpen = () => details.evaluate((element) => (element as HTMLDetailsElement).open);
-
-  await summary.click();
-  expect(await isOpen(), 'a click opens the card').toBe(true);
-  await summary.click();
-  expect(await isOpen(), 'a click closes the card').toBe(false);
-
-  await summary.tap();
-  expect(await isOpen(), 'a tap opens the card').toBe(true);
-  await summary.tap();
-  expect(await isOpen(), 'a tap closes the card').toBe(false);
-
-  await summary.focus();
-  await page.keyboard.press('Enter');
-  expect(await isOpen(), 'Enter opens the card').toBe(true);
-  await page.keyboard.press('Space');
-  expect(await isOpen(), 'Space closes the card').toBe(false);
-
-  expect(await page.locator('script, style, [style]').count()).toBe(0);
-  await context.close();
+test('each card image reserves its space, and no card draws a placeholder', async ({ page }) => {
+  for (const address of [fixturePage, '/']) {
+    await page.goto(address);
+    expect(await page.locator('.placeholder').count(), address).toBe(0);
+    for (const image of await page.locator('.card img').all()) {
+      expect(await image.getAttribute('width'), address).toBeTruthy();
+      expect(await image.getAttribute('height'), address).toBeTruthy();
+      expect(await image.getAttribute('loading'), address).toBe('lazy');
+    }
+  }
 });
