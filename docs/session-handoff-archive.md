@@ -2,6 +2,57 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 17: 2026-09-14
+
+### What this session did, and why
+
+- The owner merged #18 (PR-9) as `1bced52` at 00:20 UTC on 2026-09-15. Its tree matches the reviewed head `56c9749`, and deploy run 34912742795 passed.
+- `make preview-check` passed on `https://natekramber.com` at 00:27 UTC. PR-9 added no check job, so the ruleset did not change.
+- The session started PR-10 with the `add-project` skill and a read-only research pass on the decktome repository.
+- The first real entry breaks the fixture build: `fixture-screenshot.json` and Deck Tome both take order 1. The owner chose a fixture build with the fixture cards alone (D-112).
+- The first card puts the mono face on the home page. A local measurement showed that a preload makes the face render on a fast first visit. The owner chose a preload on the home page alone (D-111).
+- The owner picked the pitch, the highlights, the tags, and the links (D-113 to D-116). The owner kept the chosen words over two changes of the copy review.
+- The session checked each card fact in the decktome repository, and with `gh` and `curl` (G-11).
+- The session wrote PR-10: the entry, the Links section of D-102, the mono preload, the fixture change, the new tests, and the docs. Session 7 moved to the archive.
+- The responsive audit passed 54 of 54 tests and found 4 defects. The owner chose three fixes (D-117 to D-119). The session accepts the fourth: at 320 px with 200 percent text and the 1.4.12 spacing together, "decktome.com" breaks before its last letter.
+- The accessibility audit found no WCAG 2.2 AA defect in the light or the dark scheme.
+- The session opened #19. Every check passed on `2948512`, and the Gitar pause note held an approval with no finding.
+- The owner skipped the phone check of the preview (D-120).
+
+### State of the repository
+
+- `main` is `1bced52`, the squash merge of PR #18.
+- Branch `site/pr-10-deck-tome-card` holds PR-10 and this entry.
+- Remote head: `origin/site/pr-10-deck-tome-card` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on the branch. Lighthouse reads 1 in every category, 65,511 total bytes, a median LCP of 1,354 ms, and a CLS of 0.
+
+### In flight
+
+- #19 waits for the Gitar review of the head that records D-120, and for the merge. The paused Gitar reviews a new head only after a `Gitar review` comment.
+- The accessibility audit found one AAA item for PR-11. Two cards give two links the same name, "Source on GitHub" (WCAG 2.4.9). A visually hidden project name fixes it, and that fix changes every card.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- Nobody checked Safari 26 yet for `::-webkit-details-marker`, the list role of `.tags`, and the summary in VoiceOver.
+- No run tested the PR-6 exit test of D-63 yet.
+- Each certificate has the type `TEMPORARY`, and nobody checked the permanent certificate yet.
+- The private preview page of D-89 still exists on claude.ai.
+
+### Traps and gotchas
+
+- In zsh, `${PIPESTATUS[0]}` is empty, so an `EXIT=` line printed nothing. Use `$pipestatus` in zsh, or run the command in bash.
+- The research report said that the decktome working tree matched `origin/main`. The tree held uncommitted Go changes, so check the diff of each cited file.
+- A strict `grep` for the decision rows of decktome found 693 rows, and a count of unique ids found 721. Count the unique ids.
+- A fixture build that adds its entries to the site entries breaks on the first real entry. Two entries share an order number, and the tests count the cards (D-112).
+- The first card puts the mono face on the home page. So the font test that expects one font request must change with the card.
+- A measurement script under `prefers-reduced-motion: reduce` read a note 22 px above its link right after a text size change. After 500 ms it read 16 px below, as the screenshot showed. The reset transition covers font sizes too, so wait one frame, or measure with motion allowed.
+
+### Open questions that block progress
+
+None blocks PR-10. OQ-3 blocks the About text.
+
+### Next concrete action
+
+Answer the Gitar review of PR-10, and request it only after the checks of the new head start. After the merge, start PR-11, the What You Carry card, with the `add-project` skill.
+
 ## Session 16: 2026-09-14
 
 ### What this session did, and why
