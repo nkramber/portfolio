@@ -16,7 +16,8 @@ git never commits it: `<git common dir>/one-pr-one-session/<session_id>`.
 
 Limits: another tool, such as Codex, runs no Claude Code hook. A fork gets a
 new session id. A command that changes directory first can name a branch that
-the hook cannot see. The `one-pr-one-session` skill covers these cases.
+the hook cannot see. A push after a variable assignment (`X=1 git push`) or
+inside a subshell does not start its segment, so the hook does not see it. The `one-pr-one-session` skill covers these cases.
 
 Usage: the hook reads its JSON input on stdin. `--selftest` proves that the
 hook binds a session and blocks a second branch.
@@ -31,8 +32,8 @@ import tempfile
 from pathlib import Path
 
 BLOCKED = "Blocked: start a new clean session for this PR."
-PUSH = re.compile(r"\bgit\s+(?:-C\s+\S+\s+)?push\b(.*)")
-PR_CREATE = re.compile(r"\bgh\s+pr\s+create\b(.*)")
+PUSH = re.compile(r"git\s+(?:-C\s+\S+\s+)?push\b(.*)")
+PR_CREATE = re.compile(r"gh\s+pr\s+create\b(.*)")
 
 
 def git(cwd, *args):
@@ -43,7 +44,10 @@ def git(cwd, *args):
 def target_branch(command, cwd):
     """Return the branch that a publish command targets, "" when unknown, or None for another command."""
     for part in re.split(r"&&|\|\||;|\|", command):
-        push, create = PUSH.search(part), PR_CREATE.search(part)
+        # A segment publishes only when git or gh is its first word, so text that
+        # mentions "git push" in a quote, a commit message, or a grep never matches.
+        part = part.strip()
+        push, create = PUSH.match(part), PR_CREATE.match(part)
         if push:
             try:
                 words = shlex.split(push.group(1))
@@ -97,6 +101,10 @@ def selftest():
         ("a pull request on the same branch", "s1", "gh pr create --head docs/one-pr --title x", 0),
         ("a push to a second branch", "s1", "git push -u origin site/pr-20-other", 2),
         ("a pull request on a second branch", "s1", "make verify && gh pr create --head site/pr-20-other", 2),
+        ("a push after cd on a second branch", "s1", "cd repo && git push origin site/pr-20-other", 2),
+        ("a quoted push in a pipe", "s1", 'echo "git push origin site/pr-20-other" | cat', 0),
+        ("a push in a commit message", "s1", 'git commit -m "Never git push origin main by hand"', 0),
+        ("a push in a grep pattern", "s1", "grep -n 'git push origin site/x' notes.md", 0),
         ("another session on the second branch", "s2", "git push origin site/pr-20-other", 0),
     ]
     failed = 0

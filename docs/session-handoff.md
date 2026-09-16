@@ -108,6 +108,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - A forward test gave seven realistic requests to a fresh evaluator. It stopped a second pull request and a fork, and it refused a merge record. It found two gaps: a narrow pattern for a merge record, and the binding of a correction session. The branch fixes both.
 - The session opened #32. `verify:pr-lifecycle` passed on its first run, and the session added it to the `main` ruleset (D-149).
 - An edit of the body started a new run of `verify:pr-lifecycle` with no push, so the `edited` type works.
+- Gitar approved the first head with one finding. The hook read "git push" inside a quote, a commit message, or a grep, and it blocked that harmless command. The fix reads a push only at the start of a command segment.
 - During the first Gitar round, the owner gave two rules (D-152). The session answers its own Gitar findings, and each finding gets its answer before the merge.
 - The work ran in the worktree `.claude/worktrees/one-pr-one-session`, from `origin/main` at `20d1e7e`.
 
@@ -132,6 +133,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - In a worktree session, the tool refuses a shell command that names git inside a heredoc or a compound command. Run each git command alone, and edit files with the edit tool.
 - `$CLAUDE_PROJECT_DIR` names the main checkout, also in a worktree. Python exits 2 on a missing file, and exit 2 blocks the call, so the hook command exits 0 first when the file is absent.
 - The GitHub webhook page gives a wrong description of the `edited` type of `pull_request`. Watch a real run after a body edit.
+- The hook reads a push only at the start of a command segment. A push after a variable assignment, or in a subshell, gets no check.
 - A status in the matrix holds a semicolon. The STE checker skips inline code, so put each status in backticks.
 
 ### Open questions that block progress
