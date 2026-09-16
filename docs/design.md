@@ -235,7 +235,7 @@ Gate: the owner merges PR-19. The next pull request starts in a new clean sessio
 
 #### PR-20: Session-start context size
 
-Status: in progress.
+Status: complete in #35.
 
 Scope:
 

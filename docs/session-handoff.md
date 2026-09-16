@@ -8,7 +8,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 - **Do this first:** start a new clean session for each pull request. Run `make resume`, then read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-147, D-154).
 - **Base:** `1bee1b0`, the commit of `origin/main` where this pull request started.
-- **Pull requests:** the branch `docs/pr-20-session-start-context` (PR-20), pending the owner merge. No other pull request is open.
+- **Pull requests:** #35, the branch `docs/pr-20-session-start-context` (PR-20), pending the owner merge. No other pull request is open.
 - **Next action:** in a new clean session, ask the owner how a link tells the visitor about a new tab (T-2). The owner asked on 2026-09-16 that each link opens in a new tab.
 - **Blocked on:** M-3 waits for the hand check of the owner, and its 17 steps sit in `docs/design.md`. The Gitar trial ends about 2026-09-22. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
 - **Next ids:** D-160, OQ-9, M-4, PR-21, Session 29.
@@ -121,7 +121,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ### In flight
 
-- PR-20 waits for the Gitar review of its newest head and the owner merge.
+- PR-20 (#35) waits for the Gitar review of its newest head and the owner merge.
 - The next three sessions give the measurement for a shorter `CLAUDE.md`, a short Gitar status command, and bounded reads of test logs (D-153).
 - The owner keeps the global plugins, skills, and servers, and the reasoning effort, outside this repository (D-153).
 - The owner asked that each link opens in a new tab. That work needs a new clean session.
