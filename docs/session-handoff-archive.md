@@ -2,6 +2,53 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 22: 2026-09-16
+
+### What this session did, and why
+
+- The owner merged #24 (PR-17) as `eb1dccf`. Its tree matches the reviewed head `8da4c11`, and Gitar approved that head with no finding.
+- Deploy run 35065647135 passed, and `make preview-check` passed on `https://natekramber.com`. The live site shows the flat cards.
+- The owner asked for a docs refresh before a context reset, with no commit, no push, and no pull request.
+- The session read the facts that expire again. Two changed: the `main` of What You Carry, and the newest deploy run of this repository.
+- Each action pin is still the newest release, the ruleset still requires seven checks, and firebase-tools 15.30.1 is still ahead of the pinned 15.30.0.
+- The design doc marks PR-11, PR-12, and PR-17 merged, and the Phase 3 gate passed. Its correction lines read oldest first again.
+- The external facts of the design doc gain the image research of PR-17. Session 12 moved to the archive.
+
+### State of the repository
+
+- `main` is `eb1dccf`, the squash merge of PR #24.
+- Branch `docs/after-pr-17` holds this refresh, with no commit yet.
+- `make ste-check`: 0 findings.
+
+### In flight
+
+- This refresh waits for a commit, a pull request, and the Gitar review.
+- PR-13 has no branch and no research yet. It needs a way to count page views in Cloud Logging on a project with no billing account.
+- OQ-4 waits for a screenshot, and OQ-8 waits for a logo file. Each card shows no image until then.
+- A logo file needs an opaque ground. The fixture mark reads 2.81:1 against the dark page, and 3.10:1 on forced black.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- Nobody checked Safari 26 and VoiceOver yet: the link names of D-122, the status line, and the logo row.
+- The hairline around a screenshot reads 1.24:1 against the page, so the edge of a light screenshot is faint.
+- No run tested the PR-6 exit test of D-63 yet.
+- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
+- The private preview page of D-89 still exists on claude.ai.
+
+### Traps and gotchas
+
+- The correction lines of `docs/design.md` read oldest first. Session 20 put its line above Session 19, and this session put both in order.
+- A branch that starts before the merge of another pull request meets one conflict in `docs/decisions.md`. Each branch adds its rows at the end of the table.
+- The responsive audit of a card change took about 20 minutes, and the accessibility audit about 10. Start each audit early, and run one at a time.
+- `make verify` stops at its first step, so a failed `make ste-check` hides every other check.
+- An HTML comment in an Astro template reaches the built page. A note about a component belongs in its frontmatter.
+
+### Open questions that block progress
+
+None blocks the refresh. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the images of the cards.
+
+### Next concrete action
+
+Commit this refresh on `docs/after-pr-17`, open its pull request, and answer the Gitar review. After the merge, start PR-13, the visit counts, from `main` with read-only research.
+
 ## Session 21: 2026-09-16
 
 ### What this session did, and why

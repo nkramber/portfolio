@@ -15,7 +15,7 @@ This file is a port of the decktome checker (D-7). It applies these rules:
 It also applies the reference rules and the handoff rules of D-164:
 - MD 1: no HTML comment across two lines or more.
 - REF 1: a cited id exists in its register.
-- REF 2: a path of this repository in backticks exists.
+- REF 2: a path of this repository in backticks exists, or `.gitignore` names it.
 - REF 3: a citation of a superseded decision names the decision that replaced it.
 - HANDOFF 1/2/3: the session numbers are unique, in order, and ten or fewer.
 
@@ -297,6 +297,16 @@ def repo_files():
     return sorted(set(out.stdout.split()))
 
 
+def ignored_paths():
+    """Each path that `.gitignore` names, with no trailing slash (D-167, D-168)."""
+    out = set()
+    for line in (read_file(".gitignore") or "").splitlines():
+        entry = line.strip()
+        if entry and not entry.startswith("#") and not entry.startswith("!"):
+            out.add(entry.rstrip("/"))
+    return out
+
+
 def load_registers(read):
     """Return the set of ids that the registers define (D-164)."""
     ids = set()
@@ -327,11 +337,13 @@ def is_repo_path(candidate, tops):
     return Path(candidate).suffix in REPO_SUFFIX
 
 
-def path_exists(candidate, path, files):
+def path_exists(candidate, path, files, ignored):
     """True when the candidate resolves from the root, the file, or a unique end."""
     stem = candidate.split("*")[0].rstrip("/") if "*" in candidate else candidate.rstrip("/")
     if not stem:
         return True
+    if stem in ignored or any(stem.startswith(entry + "/") for entry in ignored):
+        return True  # git ignores the path, so no checkout holds it (D-167, D-168)
     folder = str(Path(path).parent)
     for base in ("", folder, str(Path(folder).parent)):
         full = f"{base}/{stem}".lstrip("/") if base not in ("", ".") else stem
@@ -340,7 +352,7 @@ def path_exists(candidate, path, files):
     return any(f.endswith("/" + stem) for f in files)
 
 
-def reference_findings(path, text, ids, superseded, files, tops):
+def reference_findings(path, text, ids, superseded, files, tops, ignored):
     """The findings of rules MD 1, REF 1, REF 2, and REF 3 for one file."""
     findings = []
     if path.startswith(DATED):
@@ -376,7 +388,7 @@ def reference_findings(path, text, ids, superseded, files, tops):
         if any(re.match(r"PR-\d+", c) for c in cited):
             continue  # G-3: a line that names an entry can name a planned file
         for span in BACKTICK.findall(line):
-            if is_repo_path(span, tops) and not path_exists(span, path, files):
+            if is_repo_path(span, tops) and not path_exists(span, path, files, ignored):
                 findings.append((n, "REF 2", f"no file holds the path '{span}'"))
     return findings
 
@@ -412,16 +424,19 @@ def selftest():
     tops = {f.split("/")[0] for f in files}
     ids = load_registers(read_file)
     superseded = load_superseded(read_file("docs/decisions.md"))
+    ignored = ignored_paths()
     old_id = sorted(superseded)[0] if superseded else "D-1"
     live = "".join(f"## Session {n}: 2026-09-16\n" for n in range(12, 1, -1))
 
     def refs(text):
-        return reference_findings("docs/design.md", text, ids, superseded, files, tops)
+        return reference_findings("docs/design.md", text, ids, superseded, files, tops, ignored)
 
     cases = [
         ("the repository as it is", refs(read_file("docs/design.md")) + handoff_findings(read_file(HANDOFF), read_file(ARCHIVE)), None),
         ("a cited id with no register", refs("The rule cites D-9999 here.\n"), "no register holds"),
         ("a path with no file", refs("The file `docs/absent-file.md` holds it.\n"), "no file holds the path"),
+        ("a path that `.gitignore` names", refs("The folder `.claude/worktrees/` holds it.\n"), None),
+        ("an absent path beside an ignored one", refs("The file `.claude/absent-file.md` holds it.\n"), "no file holds the path"),
         ("a superseded citation alone", refs(f"The rule cites {old_id} here.\n"), "is superseded by"),
         ("an HTML comment across two lines", refs("<!-- the first line\nthe second line -->\n"), "HTML comment"),
         ("a session number two times", handoff_findings("## Session 3: 2026-09-16\n## Session 3: 2026-09-15\n", ""), "two entries hold session"),
@@ -452,10 +467,11 @@ def main():
     tops = {f.split("/")[0] for f in files}
     ids = load_registers(read_file)
     superseded = load_superseded(read_file("docs/decisions.md"))
+    ignored = ignored_paths()
     total = 0
     for path in args:
         text = Path(path).read_text(encoding="utf-8")
-        findings = check(path) + reference_findings(path, text, ids, superseded, files, tops)
+        findings = check(path) + reference_findings(path, text, ids, superseded, files, tops, ignored)
         for n, rule, message in sorted(findings):
             print(f"{path}:{n}: rule {rule}: {message}")
             total += 1

@@ -349,6 +349,36 @@ Gate: the owner merges PR-23.
 
 > *In plain English:* today a link to GitHub or to a project takes over the tab, and the visitor leaves the site. This change opens each link that leaves the site in a new tab, so the site stays open behind it. A new check reads the built pages, so a later link cannot miss the rule.
 
+#### PR-24: The ignore line for the harness worktrees
+
+Status: complete in #39.
+
+Scope:
+
+- `.gitignore`: one line for `.claude/worktrees/`, and one line for `.claude/settings.local.json` (D-167, D-168).
+- `scripts/ste-check.py`: rule REF 2 accepts a path that `.gitignore` names. No checkout holds such a path, so the old rule refused the two new paths in every document.
+- The self-test of the same script proves that REF 2 still fails on an absent path beside an ignored one (G-3).
+- `.claude/skills/ste-writing/SKILL.md`: the rule table and the reference rules record the new branch of REF 2.
+- `docs/external-facts.md`: the two facts of the Claude Code documentation, read 2026-09-18.
+- `CLAUDE.md`: the file map names `.gitignore`.
+
+Out of scope:
+
+- The site. No file of `src/` or `public/` changes, and no check of the site changes.
+- The worktree `.claude/worktrees/one-pr-one-session` on the disk of the owner. Git ignores the folder now, and `git worktree remove` is a local command.
+- A `.worktreeinclude` file. No gitignored file of this repository must reach a new worktree.
+- The other lines of `.gitignore`. Each one stays word for word.
+
+Exit tests:
+
+- `make ste-check` gives no finding, and its self-test proves that each rule can still fail.
+- `git status` reports a clean tree while the worktree folder holds a checkout.
+- `make verify` passes.
+
+Gate: the owner merges PR-24.
+
+> *In plain English:* today a parallel session of the coding harness makes a second checkout inside the repository folder. Git does not ignore that folder, so it shows in each list of new files, and one commit added it by mistake. This change ignores that folder and the personal settings file of the harness. The site does not change.
+
 ### Later
 
 These items have no id yet. Each one gets an entry when it starts.
@@ -386,6 +416,7 @@ One owner runs the sequence in strict order. A step starts only when the gate of
 24. PR-21, the Gitar push wait. Gate: the owner merges it.
 25. PR-22, the skill port and the reference rules. Gate: the owner merges it.
 26. PR-23, the new tab for each outbound link. Gate: the owner merges it.
+27. PR-24, the ignore line for the harness worktrees. Gate: the owner merges it.
 
 ## 6. Open questions
 

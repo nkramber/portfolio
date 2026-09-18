@@ -7,11 +7,11 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 ## Resume here (2026-09-18)
 
 - **Do this first:** start a new clean session for each pull request. Run `make resume`, then read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-147, D-154).
-- **Base:** `6619aba`, the commit of `origin/main` where this pull request started.
-- **Pull requests:** #38, the branch site/pr-23-new-tab-links (PR-23), pending the owner merge. No other pull request is open.
-- **Next action:** in a new clean session, ask the owner which entry starts next. The roadmap holds no entry after PR-23, and the Later list holds the real screenshots (OQ-4) and the terminal-rpg card.
+- **Base:** `2b2e50a`, the commit of `origin/main` where this pull request started.
+- **Pull requests:** #39, the branch chore/pr-24-gitignore-worktrees (PR-24), pending the owner merge. No other pull request is open.
+- **Next action:** in a new clean session, ask the owner which entry starts next. The roadmap holds no entry after PR-24, and the Later list holds the real screenshots (OQ-4) and the terminal-rpg card.
 - **Blocked on:** M-3 waits for the hand check of the owner, and its 17 steps sit in `docs/design.md`. The Gitar trial ends about 2026-09-22. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
-- **Next ids:** D-167, OQ-9, M-4, PR-24, Session 32.
+- **Next ids:** D-169, OQ-9, M-4, PR-25, Session 33.
 
 ## Facts that expire
 
@@ -99,6 +99,45 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The project `natekramber-prod` holds two saved queries since 13:42 UTC on 2026-09-16, `visits-page-requests` and `visits-after-machine-filter`, each with the visibility `SHARED` (D-140). It held none before.
 - The `_Default` log bucket of `natekramber-prod` keeps 30 days and has no Log Analytics, read 2026-09-16. Cloud Logging gives 50 GiB of ingestion for each project each month at no charge.
 - On 2026-09-15 the live site answered 901 requests, 580 of them a 404 scan. The page requests read 155, and the machine filter left 125 (D-139).
+
+## Session 32: 2026-09-18
+
+### What this session did, and why
+
+- The owner asked whether `.claude/worktrees/` belongs in `.gitignore`, and whether another harness path needs the same line. The owner answered both (D-167, D-168).
+- `.gitignore` gets one line for `.claude/worktrees/` and one line for `.claude/settings.local.json`.
+- The Claude Code documentation asks for the worktree line. It protects the local settings file in the global git excludes file of one machine alone.
+- Session 28 records the cost of the absent line. The commit `747d3ec` added a worktree to the index as a submodule pointer by mistake.
+- Rule REF 2 of `scripts/ste-check.py` refused each new path, because no checkout holds an ignored path. The rule now accepts a path that `.gitignore` names.
+- The self-test of the same script gets two cases. One proves that an ignored path passes, and one proves that an absent path beside it still fails (G-3).
+- The rule table and the reference rules of the `ste-writing` skill record the new branch.
+
+### State of the repository
+
+- Base: `origin/main` at `2b2e50a` when the session started.
+- Effective head: `c406a6d`, checked after the push. Each later commit of this entry sits inside the metadata set, so the Gitar pass stays current (D-163).
+- `make verify`: every check passed. The STE self-test passed each of its ten cases.
+
+### In flight
+
+- PR-24 (#39) waits for the owner merge. The Gitar review of `c406a6d` approved it, with no thread and no finding. The preview address is https://natekramber-preview--pr-39-rmnoarje.web.app.
+- The Later list of `docs/design.md` holds the real screenshots (OQ-4) and the terminal-rpg card. Neither one has an entry id.
+
+### Traps and gotchas
+
+- Rule REF 2 reads `git ls-files --cached --others --exclude-standard`. A new line in `.gitignore` removes its path from that list at once, so each document that names the path in backticks fails the check.
+- The checker skips a fenced code block, but it reads a table cell. So a path in the Effect column of `docs/decisions.md` must pass REF 2.
+- `make pr-check` reads the committed diff against `origin/main`. It fails on a Changed line until the commit exists, so commit first and check the body after.
+- The two handoff files are exempt from the reference rules, so a path there proves nothing about the other documents.
+- The pause note of the Gitar trial came beside a full approval, 71 seconds after the push. The push wait ended with no request needed.
+
+### Open questions that block progress
+
+None blocks PR-24. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the images of the cards.
+
+### Next concrete action
+
+In a new clean session, run `make resume`. Then ask the owner which entry starts after PR-24.
 
 ## Session 31: 2026-09-18
 
@@ -485,49 +524,3 @@ None blocks PR-13. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the imag
 
 Answer the Gitar review of PR-13. After the merge, start M-3, the launch audit, from `main`.
 
-## Session 22: 2026-09-16
-
-### What this session did, and why
-
-- The owner merged #24 (PR-17) as `eb1dccf`. Its tree matches the reviewed head `8da4c11`, and Gitar approved that head with no finding.
-- Deploy run 35065647135 passed, and `make preview-check` passed on `https://natekramber.com`. The live site shows the flat cards.
-- The owner asked for a docs refresh before a context reset, with no commit, no push, and no pull request.
-- The session read the facts that expire again. Two changed: the `main` of What You Carry, and the newest deploy run of this repository.
-- Each action pin is still the newest release, the ruleset still requires seven checks, and firebase-tools 15.30.1 is still ahead of the pinned 15.30.0.
-- The design doc marks PR-11, PR-12, and PR-17 merged, and the Phase 3 gate passed. Its correction lines read oldest first again.
-- The external facts of the design doc gain the image research of PR-17. Session 12 moved to the archive.
-
-### State of the repository
-
-- `main` is `eb1dccf`, the squash merge of PR #24.
-- Branch `docs/after-pr-17` holds this refresh, with no commit yet.
-- `make ste-check`: 0 findings.
-
-### In flight
-
-- This refresh waits for a commit, a pull request, and the Gitar review.
-- PR-13 has no branch and no research yet. It needs a way to count page views in Cloud Logging on a project with no billing account.
-- OQ-4 waits for a screenshot, and OQ-8 waits for a logo file. Each card shows no image until then.
-- A logo file needs an opaque ground. The fixture mark reads 2.81:1 against the dark page, and 3.10:1 on forced black.
-- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
-- Nobody checked Safari 26 and VoiceOver yet: the link names of D-122, the status line, and the logo row.
-- The hairline around a screenshot reads 1.24:1 against the page, so the edge of a light screenshot is faint.
-- No run tested the PR-6 exit test of D-63 yet.
-- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
-- The private preview page of D-89 still exists on claude.ai.
-
-### Traps and gotchas
-
-- The correction lines of `docs/design.md` read oldest first. Session 20 put its line above Session 19, and this session put both in order.
-- A branch that starts before the merge of another pull request meets one conflict in `docs/decisions.md`. Each branch adds its rows at the end of the table.
-- The responsive audit of a card change took about 20 minutes, and the accessibility audit about 10. Start each audit early, and run one at a time.
-- `make verify` stops at its first step, so a failed `make ste-check` hides every other check.
-- An HTML comment in an Astro template reaches the built page. A note about a component belongs in its frontmatter.
-
-### Open questions that block progress
-
-None blocks the refresh. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the images of the cards.
-
-### Next concrete action
-
-Commit this refresh on `docs/after-pr-17`, open its pull request, and answer the Gitar review. After the merge, start PR-13, the visit counts, from `main` with read-only research.

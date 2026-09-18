@@ -179,7 +179,7 @@ These process terms come from the pull request rules (D-147 to D-163):
 | 8.1 | A semicolon |
 | MD 1 | An HTML comment across two lines or more. The checker removes a comment, so a long one hides prose from every rule |
 | REF 1 | A citation of a `D-`, `OQ-`, `F-`, `G-`, `T-`, `L-`, `M-`, or `PR-` id that no register holds |
-| REF 2 | A path of this repository in backticks that no file and no folder holds |
+| REF 2 | A path of this repository in backticks that no file and no folder holds, and that `.gitignore` does not name |
 | REF 3 | A citation of a superseded decision that names no decision which superseded it |
 | HANDOFF 1 | A session number that the handoff and its archive hold two times |
 | HANDOFF 2 | A session entry out of order. The two files hold one list, newest first (D-8) |
@@ -196,6 +196,7 @@ The reference rules read the registers of the repository (D-164):
 - A path in backticks is a path of this repository in two cases. Its first part names a top-level folder, or it is a bare name with a file type that this repository writes by hand.
 - A file type of the built site is prose, for example `robots.txt`. Write it in backticks with no risk.
 - A path resolves from the root, from the folder of the file, or from the folder above it. It also resolves as the one file of the checkout that ends with that name.
+- A path that `.gitignore` names passes, and so does a path below it. No checkout holds such a path, and a document must still name it (D-167, D-168).
 - A line that names a `PR-#` id marks each path of that entry, because G-3 permits a planned file.
 - A line that names another repository cites the ids and the paths of that repository. The rules read no id and no path of such a line.
 - A dated record keeps the text of its day, so the rules skip the two handoff files and `docs/roadmaps/`.
