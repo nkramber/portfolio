@@ -114,12 +114,12 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 ### State of the repository
 
 - Base: `origin/main` at `6619aba` when the session started.
-- Remote head: `origin/site/pr-23-new-tab-links`, checked after the push.
+- Remote head: `origin/site/pr-23-new-tab-links` at `8a638a7`, checked after the push. This entry adds one commit inside the metadata set (D-163).
 - `make verify`: every check passed. The check `link-target-check` read 2 files with 0 findings, and its self-test found each of the three planted defects.
 
 ### In flight
 
-- PR-23 (#38) waits for the Gitar review and the owner merge. No other pull request is open.
+- PR-23 (#38) waits for the owner merge. The Gitar review of `8a638a7` approved it, with no thread and no finding. Each of the eleven checks passed, and the preview address is https://natekramber-preview--pr-38-c492t5hj.web.app.
 - The Later list of `docs/design.md` holds the real screenshots (OQ-4) and the terminal-rpg card. Neither one has an entry id.
 
 ### Traps and gotchas
@@ -127,6 +127,8 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The HTML standard gives a `_blank` link the noopener behavior already, so `rel="noopener"` repeats it. The attribute stays, because it states the intent to a reader of the page source.
 - Rule REF 1 of `make ste-check` failed on the new decisions, because `docs/design.md` held no PR-23 entry at that time. Write the design entry with the decisions.
 - The schema of `src/content.config.ts` gives each card link an absolute address, so one attribute pair in the card component covers every project.
+- The first `Gitar review` comment got the reply "On it", and the Gitar check of the head completed success. Gitar edited no dashboard comment for that run, so the review stayed unproven for 8 minutes.
+- A second request ten minutes after the first one gave the reply and the dashboard edit together, 2 seconds apart. Read the dashboard edit time, not the end of the check.
 
 ### Open questions that block progress
 
