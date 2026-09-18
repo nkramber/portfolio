@@ -115,12 +115,12 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 ### State of the repository
 
 - Base: `origin/main` at `b561040` when the session started.
-- Remote head: `origin/docs/pr-22-skill-port` at the commit that holds this entry, checked after the push.
+- Remote head: `origin/docs/pr-22-skill-port` at `1d255cb`, checked after the push. This entry adds one commit inside the metadata set (D-163).
 - `make verify`: every check passed.
 
 ### In flight
 
-- PR-22 (#37) waits for the owner merge. The Gitar review of `4a62d56` approved it, with no thread.
+- PR-22 (#37) waits for the owner merge. The Gitar review of `1d255cb` approved it, with no thread and no finding.
 - The owner can copy the three skills to decktome and What You Carry.
 - The owner asked that each link opens in a new tab. That work needs a new clean session.
 - M-3 waits for the hand check of the owner. OQ-4 waits for a screenshot, and OQ-8 waits for a logo file.
@@ -130,6 +130,8 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The first run of the reference rules gave 39 findings, and each one named a real class of exemption. A dated record, a line that names another repository, and a bare name of a built file each need an exemption.
 - A bare name with the type `.txt`, `.html`, or `.yml` names a file of the built site or of another repository. The rule reads a bare name of a hand-written type alone.
 - The roadmap files use `## PR-#:` as the heading, and `docs/design.md` uses `#### PR-#:`. The first pattern found no id.
+- An automatic Gitar review ran on the first head of #37 and on no later head. The second round needed a `Gitar review` comment, and Gitar replied "On it" in 28 seconds.
+- Command F showed `docs/design.md` alone between `4a62d56` and `1d255cb`. The status line of the design entry needs the pull request number, so that round needed a second review (D-163).
 
 ### Open questions that block progress
 
