@@ -3,7 +3,7 @@
 .DEFAULT_GOAL := help
 .PHONY: help install browsers dev build preview images no-script-check no-inline-style-check \
 	no-inline-style-selftest content-selftest ste-check lifecycle-check resume decisions-index context-budget pr-template pr-check test-responsive test-a11y lighthouse lighthouse-selftest \
-	html-check html-selftest preview-check link-check link-selftest visits site-checks verify
+	html-check html-selftest preview-check link-check link-selftest link-target-check visits site-checks verify
 
 # Astro sends anonymous usage data unless this variable is set (D-45). Every
 # target below runs with it, and so do the CI jobs, because they call make.
@@ -69,6 +69,12 @@ no-inline-style-check: ## Fail when a built HTML file holds a style element or a
 		echo "no-inline-style-check: no style element and no style attribute in dist/"; \
 	fi
 	@$(MAKE) --no-print-directory no-inline-style-selftest
+
+# Each outbound link opens a new tab, and each internal link stays in the tab
+# (D-166). The self-test then proves that each of the three rules can fail (G-3).
+link-target-check: ## Check the target of each link of the build, then prove that the check can fail (D-166)
+	@python3 scripts/link-target-check.py dist
+	@python3 scripts/link-target-check.py --selftest
 
 # The planted defects: one fixture with a style element, and one with a style
 # attribute. The check must list both files, so a pattern that misses one fails.
@@ -240,5 +246,5 @@ pr-check: ## Check a pull request body file against the diff from origin/main, a
 	@test -n "$(BODY)" || { echo "pr-check: set BODY to a file that holds the pull request body"; exit 1; }
 	@python3 scripts/pr-lifecycle-check.py --body "$(BODY)" --base origin/main --branch "$$(git rev-parse --abbrev-ref HEAD)"
 
-verify: ste-check lifecycle-check context-budget build no-script-check no-inline-style-check content-selftest site-checks ## Run every check that the verify workflow runs
+verify: ste-check lifecycle-check context-budget build no-script-check no-inline-style-check link-target-check content-selftest site-checks ## Run every check that the verify workflow runs
 	@echo "verify: every check passed"

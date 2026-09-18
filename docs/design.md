@@ -30,6 +30,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-16 correction pass (Session 26): PR-19 follows D-147 to D-152, and G-12 joins the guardrails. From PR-19 on, a status reads "complete in #N" before the merge, and no later pull request changes it to "merged" (D-147). The external facts add the hook research of PR-19.
 2026-09-16 correction pass (Session 28): PR-20 follows D-153 to D-159. The external facts move to `docs/external-facts.md` (D-156), and the entries of Phases 0 to 3 move to `docs/roadmaps/` (D-155).
 2026-09-16 correction pass (Session 29): PR-21 follows D-160.
+2026-09-18 correction pass (Session 31): PR-23 follows D-165 and D-166. The external facts add the link research of PR-23.
 
 Owner decisions live in `docs/decisions.md` (D-#), and `make decisions-index` lists them (D-157). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -319,6 +320,35 @@ Gate: the owner merges PR-22.
 
 > *In plain English:* the game repository of the owner improved the shared rules for agents. This change brings those improvements here, and it adds a check that each cited decision and each file path in the documents is real. The site does not change.
 
+#### PR-23: The new tab for each outbound link
+
+Status: in progress.
+
+Scope:
+
+- `src/pages/index.astro`: each hero link gets `target="_blank"` and `rel="noopener"` (D-166).
+- `src/components/ProjectCard.astro`: each card link gets the same two attributes. One rule covers every card, because the schema keeps each card link an absolute address (G-2).
+- The site gives no notice of the new tab, in text or in an icon (D-165).
+- `scripts/link-target-check.py` and `make link-target-check`: the rules TARGET 1 to TARGET 3 read each HTML file of the build.
+- A self-test of the same script proves that each of the three rules can fail (G-3).
+- `.github/workflows/verify.yml`: the job `verify:site` runs the new check.
+
+Out of scope:
+
+- The internal link of the 404 page. It stays in the same tab (D-166).
+- A notice of the new tab. D-165 refuses the visible words, the icon, and the hidden text.
+- The layout, the tokens, and the words of the page. No CSS rule changes.
+
+Exit tests:
+
+- `make link-target-check` gives no finding on the build, and its self-test finds each planted defect.
+- `make test-responsive` and `make test-a11y` pass, so the new attributes break no layout and no name.
+- `make verify` passes.
+
+Gate: the owner merges PR-23.
+
+> *In plain English:* today a link to GitHub or to a project takes over the tab, and the visitor leaves the site. This change opens each link that leaves the site in a new tab, so the site stays open behind it. A new check reads the built pages, so a later link cannot miss the rule.
+
 ### Later
 
 These items have no id yet. Each one gets an entry when it starts.
@@ -355,6 +385,7 @@ One owner runs the sequence in strict order. A step starts only when the gate of
 23. PR-20, the session-start context size. Gate: the owner merges it.
 24. PR-21, the Gitar push wait. Gate: the owner merges it.
 25. PR-22, the skill port and the reference rules. Gate: the owner merges it.
+26. PR-23, the new tab for each outbound link. Gate: the owner merges it.
 
 ## 6. Open questions
 

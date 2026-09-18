@@ -2,6 +2,55 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 21: 2026-09-16
+
+### What this session did, and why
+
+- The owner merged #23 (PR-12) as `3ca291e`. Its tree matches the reviewed head `503dfd5`, and Gitar approved that head with no finding.
+- Deploy run 35064220205 passed. The session then started `links.yml` by hand, and run 35064260365 read 13 links with no dead link.
+- The owner asked for a new card shape: no highlights, and room for a logo and a screenshot. The owner also asked to remove the Links section.
+- The owner answered four questions (D-133 to D-136). The two audits gave two more answers (D-137, D-138).
+- A read-only research pass read the image code of Astro 7.3.2. `Picture` cannot process an SVG, and an inline SVG import can carry a `style` element.
+- The session wrote the card, the schema, the tests, and the docs. Session 11 moved to the archive.
+- The responsive audit found no sideways scroll at any width. The branch fixes two of its four defects, and the owner accepted the other two.
+- The accessibility audit found no WCAG 2.2 AA defect. The branch applies two of its three low items.
+
+### State of the repository
+
+- `main` is `3ca291e`, the squash merge of PR #23.
+- Branch `site/pr-17-card-shape` holds PR-17 and this entry.
+- Remote head: `origin/site/pr-17-card-shape` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on the branch. Lighthouse reads 1 in every category, 64,242 total bytes, a median LCP of 1,352 ms, and a CLS of 0.
+
+### In flight
+
+- #24 waits for the Gitar review and the merge.
+- OQ-8 waits for a logo file, and OQ-4 waits for a screenshot. Each card shows no image until then.
+- A logo file needs an opaque ground. The fixture mark reads 2.81:1 against the dark page, and 3.10:1 on forced black.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- Nobody checked Safari 26 and VoiceOver yet: the link names of D-122, the status line, and the logo row.
+- The hairline around a screenshot reads 1.24:1 against the page, so the edge of a light screenshot is faint.
+- No run tested the PR-6 exit test of D-63 yet.
+- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
+- The private preview page of D-89 still exists on claude.ai.
+
+### Traps and gotchas
+
+- The rebase of this branch met one conflict: both branches add rows at the end of `docs/decisions.md`. PR-12 holds D-130 to D-132, so this branch starts at D-133.
+- `make verify` stops at its first step. A failed `make ste-check` hides every other check, so read the first lines of its log.
+- A numbered list item of a `.md` file counts as a procedural step, so its limit is 20 words, not 25.
+- An HTML comment in an Astro template reaches the built page. A note about the card belongs in the frontmatter.
+- `Picture` fails the build on an SVG, and it still writes `source` addresses for files that never exist. So the schema refuses an SVG screenshot first.
+- An ESM import of an SVG renders an inline `svg` element that can hold a `style` element, and the CSP of D-57 blocks it.
+
+### Open questions that block progress
+
+None blocks PR-17. OQ-3 blocks the About text.
+
+### Next concrete action
+
+Answer the Gitar review of #24, and post `Gitar review` only after the checks of the new head start. After the merge, start PR-13, the visit counts, from `main`.
+
 ## Session 20: 2026-09-16
 
 ### What this session did, and why
