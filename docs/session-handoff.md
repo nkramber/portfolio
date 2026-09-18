@@ -115,7 +115,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 ### State of the repository
 
 - Base: `origin/main` at `2b2e50a` when the session started.
-- Remote head: `origin/chore/pr-24-gitignore-worktrees` at `0c85e95`, checked after the push.
+- Effective head: `c406a6d`, checked after the push. Each later commit of this entry sits inside the metadata set, so the Gitar pass stays current (D-163).
 - `make verify`: every check passed. The STE self-test passed each of its ten cases.
 
 ### In flight
