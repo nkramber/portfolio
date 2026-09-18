@@ -8,7 +8,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 - **Do this first:** start a new clean session for each pull request. Run `make resume`, then read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-147, D-154).
 - **Base:** `6619aba`, the commit of `origin/main` where this pull request started.
-- **Pull requests:** this pull request, the branch site/pr-23-new-tab-links (PR-23), pending the owner merge. No other pull request is open.
+- **Pull requests:** #38, the branch site/pr-23-new-tab-links (PR-23), pending the owner merge. No other pull request is open.
 - **Next action:** in a new clean session, ask the owner which entry starts next. The roadmap holds no entry after PR-23, and the Later list holds the real screenshots (OQ-4) and the terminal-rpg card.
 - **Blocked on:** M-3 waits for the hand check of the owner, and its 17 steps sit in `docs/design.md`. The Gitar trial ends about 2026-09-22. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
 - **Next ids:** D-167, OQ-9, M-4, PR-24, Session 32.
@@ -119,7 +119,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ### In flight
 
-- PR-23 waits for the Gitar review and the owner merge. No other pull request is open.
+- PR-23 (#38) waits for the Gitar review and the owner merge. No other pull request is open.
 - The Later list of `docs/design.md` holds the real screenshots (OQ-4) and the terminal-rpg card. Neither one has an entry id.
 
 ### Traps and gotchas

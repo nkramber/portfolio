@@ -322,7 +322,7 @@ Gate: the owner merges PR-22.
 
 #### PR-23: The new tab for each outbound link
 
-Status: in progress.
+Status: complete in #38.
 
 Scope:
 
