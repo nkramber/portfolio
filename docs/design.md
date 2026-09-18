@@ -351,7 +351,7 @@ Gate: the owner merges PR-23.
 
 #### PR-24: The ignore line for the harness worktrees
 
-Status: in progress.
+Status: complete in #39.
 
 Scope:
 
