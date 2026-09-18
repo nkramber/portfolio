@@ -15,8 +15,10 @@ Each repo that uses Gitar keeps a copy of this file. A rule of the repo wins ove
 - **Dashboard comment**: the Gitar comment on the pull request that holds the collapsed `Code Review` block. Gitar edits this comment for each review. Gitar can also delete it and post a new one with a new id.
 - **Pause note**: the note at the top of the dashboard comment that starts "Automatic reviews are paused".
 - **Manual review**: the review that a `Gitar review` comment starts.
-- **Current review**: a review of the head.
-- **Stale review**: a review of a commit older than the head.
+- **Metadata set**: the two files that hold the record of a session, `docs/session-handoff.md` and `docs/session-handoff-archive.md` (D-163).
+- **Effective head**: the newest commit that changes a path outside the metadata set (D-163).
+- **Current review**: a review of the effective head.
+- **Stale review**: a review of a commit older than the effective head.
 - **Push wait**: the minimum wait of three minutes after a push, before a `Gitar review` comment (D-160).
 
 ## Why a review goes stale
@@ -73,7 +75,7 @@ On 2026-09-16, the Gitar check on the heads of #30, #31, and #32 started 8 to 31
 
 A review is current only when each of these conditions is true:
 
-- The head from command B is the head that you recorded in step 3.
+- The head from command B is the head of step 3. A later commit inside the metadata set also passes this condition (D-163).
 - The dashboard comment has an edit time later than the push time that you recorded in step 3.
 - After a `Gitar review` comment, Gitar replied "On it", and the dashboard comment has an edit time later than that reply.
 - You read the newest dashboard comment. Gitar can delete the dashboard comment and post a new one with a new id.
@@ -82,6 +84,30 @@ The summary is not a condition. A review that adds no finding can keep the summa
 
 When one condition is false, the review is stale. When you cannot check one condition, treat the review as stale. A request for a manual review costs little. A merge on a stale review costs more.
 
+A commit inside the metadata set does not make a pass stale (D-163). The record of a Gitar pass goes in the handoff, and the handoff is in the metadata set. A rule that reads the branch tip alone makes each pass stale at the moment of its record, and the gate then never passes. Prove the effective head with command F, and name each path of its output in the handoff entry.
+
+## The scope of a finding
+
+A finding is a claim about the code, not a fact. Answer two questions before you make a fix:
+
+1. Does the change break a contract that this pull request names?
+2. Does an exit test of this pull request fail?
+
+A fix needs one answer of yes. A finding with two answers of no is out of scope. Reply with the scope, name the entry that holds the work, and resolve the thread. A suggestion outside the scope becomes an open question or a roadmap entry, never a silent fix.
+
+## How much a finding blocks
+
+Scope decides if a finding gets a fix. Severity decides how much it blocks the merge.
+
+| Severity | Meaning |
+|---|---|
+| P0 | The site is down, or a visitor sees a broken page. Fix it first |
+| P1 | A broken tenet, guardrail, or required check. Fix it before the merge |
+| P2 | A concrete defect under a supported condition. Fix it before the merge, or get an owner decision |
+| P3 | An optional improvement, and no broken rule. It blocks no merge |
+
+A small patch does not lower the severity. The words of the author do not lower it either. A finding out of scope gets no severity.
+
 ## Rules for each reply
 
 - State the evidence: the command, the test, the decision id, or the commit.
@@ -89,6 +115,31 @@ When one condition is false, the review is stale. When you cannot check one cond
 - Never accept a finding only to close the review faster. A wrong fix costs more than a written disagreement.
 - Never make a fix larger than the rule that the finding names.
 - When a finding conflicts with an owner decision, quote both and ask the owner.
+- Never delete a finding. A refuted finding keeps its thread and its answer.
+
+## Push back with evidence
+
+| Reason to push back | What to show |
+|---|---|
+| The finding reads a rule too broadly | Quote the rule. Name the other files that the broad reading also condemns |
+| The finding cites a superseded decision | Quote the Effect column, and name the current decision |
+| The trigger does not reproduce | Give the command, the commit, and the result |
+| The fix breaks another rule | Name the rule and the file that the fix breaks |
+| The finding states a preference | Name the rule that the code keeps |
+| The finding repeats an accepted risk | Quote the D-# id and the risk that it accepts |
+| The finding asks for work outside this pull request | Quote the roadmap entry and its exit tests. Name the entry that holds the work |
+
+## A tool name is not attribution
+
+T-6 refuses text that names an agent, a harness, or a model **as the source of the work** (D-6). A tool name that identifies a file, a schema, or a version is not attribution.
+
+| Raise it | Do not raise it |
+|---|---|
+| A commit body that says an agent wrote the change | The path `.claude/settings.json` |
+| A co-author trailer, or a line that names the model | A decision that names the tool it tested |
+| A pull request body that credits a harness | A document that records the tool that refused a file |
+
+Apply this test to each file before you accept a finding of this kind. A reading that condemns the decision register is too broad.
 
 ## Traps
 
@@ -193,6 +244,14 @@ gh api graphql -f id=<thread-id> -f query='
 
 # Ask for a manual review
 gh pr comment "$n" --body "Gitar review"
+```
+
+### F. The effective head
+
+```bash
+# Each path that changed between the reviewed head and the branch tip.
+# An empty result, or paths inside the metadata set alone, keeps the review current.
+git diff --stat <reviewed head>..HEAD -- . ':!:docs/session-handoff.md' ':!:docs/session-handoff-archive.md'
 ```
 
 ### E. The push wait and the Gitar check

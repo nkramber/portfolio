@@ -2,6 +2,54 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 20: 2026-09-16
+
+### What this session did, and why
+
+- The owner merged #22 (PR-11) as `c272a86` at 05:48 UTC. Its tree matches the reviewed head `b8a640e`, and Gitar approved that head with no finding.
+- Deploy run 35061020052 passed, and `make preview-check` passed on `https://natekramber.com` at 05:50 UTC.
+- The session started PR-12 with a read-only research pass on the outbound links of the site.
+- The research found that LinkedIn answers 999 to an automated request, and that its `robots.txt` prohibits such a request. The owner chose the skip (D-130).
+- The owner chose the live site as the target (D-131), and a failed run as the signal of a dead link (D-132).
+- The session wrote `.github/workflows/links.yml`, `make link-check`, `make link-selftest`, the planted fixture, and the docs. Session 10 moved to the archive.
+- `make link-check` read 13 links of the live site, each one at 200, and the self-test failed on the planted dead address.
+- The owner asked for four changes of the page. PR-17 records them as decisions and applies them.
+- The changes: no highlights, a flat card with a logo and a screenshot, no placeholder panel, and no Links section.
+
+### State of the repository
+
+- `main` is `c272a86`, the squash merge of PR #22.
+- Branch `site/pr-12-link-check` holds PR-12 and this entry.
+- Remote head: `origin/site/pr-12-link-check` at the commit that holds this entry, checked after the push.
+- `make verify` on Node 22.23.2 passes on the branch, and `make link-check` passes on the live site.
+
+### In flight
+
+- #23 waits for the Gitar review and the merge.
+- No run tested `links.yml` yet. A scheduled run reads the default branch, so its first run comes after the merge.
+- PR-17 holds the four changes of the page that the owner asked for. The AI workflow line of D-114 then leaves the site.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- OQ-4 stays open. After PR-17, a card shows no image until the owner gives a logo or a screenshot.
+- Nobody checked Safari 26 yet for `::-webkit-details-marker`, the list role of `.tags`, and the summary in VoiceOver. The link names of D-122 need the same check.
+- No run tested the PR-6 exit test of D-63 yet.
+- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
+- The private preview page of D-89 still exists on claude.ai.
+
+### Traps and gotchas
+
+- Two rows of `docs/decisions.md` ended with the same sentence, so an edit with that sentence alone matched both. Anchor each edit on the unique part of its row.
+- The help output of linkinator is longer than 60 lines. The flag `--status-code "CODE:ACTION"` sits in the second half, and it can make a status pass, warn, or fail.
+- LinkedIn answers 999 to an automated request, with a browser agent too, so a checker that reads it fails every week (D-130).
+- `make link-check` needs the network and the live site. It stays out of `make verify`, which runs offline.
+
+### Open questions that block progress
+
+None blocks PR-12. OQ-3 blocks the About text.
+
+### Next concrete action
+
+Answer the Gitar review of #23, and post `Gitar review` only after the checks of the new head start. After the merge, start PR-17 from `main`: the flat card with a logo and a screenshot, and no Links section.
+
 ## Session 19: 2026-09-15
 
 ### What this session did, and why

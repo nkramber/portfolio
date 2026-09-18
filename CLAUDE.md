@@ -38,7 +38,7 @@ The tenets are the constitution of the site. When a tenet conflicts with speed o
 
 1. **Write scope.** This repository permits writes. Treat every other repository as read-only (D-1). Read a project repository to describe it, and never change it.
 2. **Every change starts on a branch.** Never commit to `main`, and never push to it. Push the branch, and open a pull request. The owner merges. The `main` ruleset refuses a direct push, a force push, and every merge method except squash (D-11).
-3. **One pull request, one clean session.** Each pull request has one concern and gets a new, clean session. That session works on no other pull request. The pull request holds its documents and its handoff, and no later pull request records its merge. Read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-12, D-147). After a pause of more than one hour, continue the pull request in a new session (D-158).
+3. **One pull request, one clean session.** Each pull request has one concern and gets a new, clean session. That session works on no other pull request. The pull request holds its documents and its handoff, and no later pull request records its merge. Read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-12, D-147). After a pause of more than one hour, continue the pull request in a new session (D-158). After the merge message of the owner, write the prompt of D-162 for the next pull request.
 4. **Gitar reviews every pull request.** A pull request of documents alone waits for the review too. Load the `gitar-review` skill after each push. Gitar is the only review this repository asks for (D-5).
 5. **Write docs in ASD-STE100.** Load the `ste-writing` skill before you write a `.md` file. The words a visitor reads on the site are exempt (D-7). Run `make ste-check` before you commit a `.md` file.
 6. **No attribution.** Tenet T-6 applies. `.claude/settings.json` turns off the co-author trailer and the pull request footer (D-6).
@@ -105,7 +105,7 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `scripts/lighthouse-budget.mjs` and `lighthouse-budget.json`: the Lighthouse budget (D-48, D-50, D-60). `scripts/make-lighthouse-fixture.mjs` writes its planted defects.
 - `.htmlvalidate.json`: the rules of `html-validate` (D-46). It excludes the keyword `list` from the `no-redundant-role` rule, because each `ul` of the site carries `role="list"` (D-143).
 - `.claude/settings.json`: the project settings of Claude Code. It turns off attribution (D-6), and it runs `scripts/session-bind-hook.py` before each Bash command (D-150).
-- `scripts/ste-check.py`: the STE checker (D-7).
+- `scripts/ste-check.py`: the STE checker (D-7). It also checks each cited id, each path in backticks, and the session numbers of the handoff (D-164).
 - `scripts/resume.py`, `scripts/decisions-index.py`, and `scripts/context-budget.py`: the session-start context of D-154, D-157, and D-159.
 - `.github/workflows/verify.yml`: the checks on each pull request, `verify:docs`, `verify:site`, and the four `verify:site-*` jobs.
 - `.github/workflows/pr-lifecycle.yml`: the `verify:pr-lifecycle` check of each pull request body with `scripts/pr-lifecycle-check.py` (D-148).
@@ -142,7 +142,7 @@ Every command is free. Only `make install`, `make browsers`, `make link-check`, 
 - `make link-check`: check every outbound link of the live site with `linkinator`, and skip `linkedin.com` (D-130 to D-132). Its self-test then proves that the check fails on a planted dead address. It needs the network.
 - `make visits DAY=<YYYY-MM-DD>`: print the page requests of one UTC day, and the same count after the machine filter (D-139 to D-141). It reads the Hosting request log with the gcloud configuration `natekramber`, so it needs the network. No check calls it.
 - `make site-checks`: run the four site checks.
-- `make ste-check`: check every hand-written `.md` file against the STE rules.
+- `make ste-check`: check every hand-written `.md` file against the STE rules and the reference rules, then prove that each reference rule can fail (D-164).
 - `make resume`: print the header, "Resume here", and the newest session entry of the handoff (D-154).
 - `make decisions-index`: print the id, the date, the topic, and the first words of each decision (D-157).
 - `make context-budget`: fail when the session-start set grows past its byte caps, then prove that the check can fail (D-159).

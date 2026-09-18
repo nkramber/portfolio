@@ -135,15 +135,33 @@ The rules permit these names as written (rule 1.5):
 - The standard itself: ASD-STE100, STE.
 - Code identifiers in backticks.
 
-Use one term for each concept. Examples:
+## Glossary
 
-- "visitor" for a person who reads the site. Not "user" or "viewer".
-- "owner" for Nate Kramber in process text. Not "the user".
-- "project card" for the card of one project. Not "tile" or "project box".
-- "site" for all of `natekramber.com`, and "section" for one part of the page.
-- "viewport width" for the width of the browser window. Not "screen size".
-- "pull request" in text. Use "PR-#" only as a roadmap id.
-- "the Gitar review" for the review of `gitar-bot`. Not "the bot review".
+Use one term for each concept (1.11, 9.4). Add a row for each term the owner sets, with the refused words.
+
+| Term | Use it for | Do not use |
+|---|---|---|
+| visitor | a person who reads the site | user, viewer, reader |
+| owner | Nate Kramber in process text | the user, the maintainer |
+| project card | the card of one project | tile, project box |
+| site | all of `natekramber.com` | page, when the text means the whole site |
+| section | one part of the page | block, region |
+| viewport width | the width of the browser window | screen size, device width |
+| pull request | a GitHub pull request. "PR-#" is a roadmap id alone | PR in prose, MR |
+| the Gitar review | the review of `gitar-bot` | the bot review, the automatic check |
+
+These process terms come from the pull request rules (D-147 to D-163):
+
+| Term | Use it for | Do not use |
+|---|---|---|
+| session | one run of a harness, bound to one pull request (D-147) | conversation, chat |
+| clean session | a new top-level session that holds no work of another pull request | fresh context, new chat |
+| context compaction | the harness step that replaces the conversation with a summary | compaction alone |
+| session-start set | the files and the command output that each session reads first (D-159) | read order, when the text means these bytes |
+| matrix | the documentation impact list in the pull request body (D-148) | checklist, table, when the text means this list |
+| metadata set | the two handoff files, which do not move the effective head (D-163) | the docs files |
+| effective head | the newest commit outside the metadata set (D-163) | the tip, the real head |
+| hand-over point | the end of the work of a session on its pull request | handoff, which names `docs/session-handoff.md` |
 
 ## The checker
 
@@ -159,8 +177,31 @@ Use one term for each concept. Examples:
 | 6.3 | More than 25 words in any other sentence |
 | 6.6 | More than six sentences in one paragraph |
 | 8.1 | A semicolon |
+| MD 1 | An HTML comment across two lines or more. The checker removes a comment, so a long one hides prose from every rule |
+| REF 1 | A citation of a `D-`, `OQ-`, `F-`, `G-`, `T-`, `L-`, `M-`, or `PR-` id that no register holds |
+| REF 2 | A path of this repository in backticks that no file and no folder holds |
+| REF 3 | A citation of a superseded decision that names no decision which superseded it |
+| HANDOFF 1 | A session number that the handoff and its archive hold two times |
+| HANDOFF 2 | A session entry out of order. The two files hold one list, newest first (D-8) |
+| HANDOFF 3 | More than ten entries in `docs/session-handoff.md` (D-8) |
 
 The checker skips `AGENTS.md`, because it is a symlink to `CLAUDE.md`. It also skips `docs/session-handoff-archive.md`, because a dated record is history.
+
+`make context-budget` holds the byte caps of the session-start set (D-159). The checker does not repeat them.
+
+The reference rules read the registers of the repository (D-164):
+
+- `docs/decisions.md` defines each `D-` id, and `docs/questions.md` defines each `OQ-` id.
+- `docs/design.md` defines each `G-`, `T-`, `F-`, `L-`, `M-`, and `PR-` id, and `docs/roadmaps/` defines an id of a completed phase.
+- A path in backticks is a path of this repository in two cases. Its first part names a top-level folder, or it is a bare name with a file type that this repository writes by hand.
+- A file type of the built site is prose, for example `robots.txt`. Write it in backticks with no risk.
+- A path resolves from the root, from the folder of the file, or from the folder above it. It also resolves as the one file of the checkout that ends with that name.
+- A line that names a `PR-#` id marks each path of that entry, because G-3 permits a planned file.
+- A line that names another repository cites the ids and the paths of that repository. The rules read no id and no path of such a line.
+- A dated record keeps the text of its day, so the rules skip the two handoff files and `docs/roadmaps/`.
+- Write a name that is not a path of this repository without backticks, for example a branch name.
+- The rule of a superseded decision reads each file except `docs/decisions.md`, where the Effect column records the change.
+- `make ste-check` runs the self-test of these rules too, so each rule proves that it can fail (G-3).
 
 The verb rules are heuristics. A past participle is a word from a list of irregular forms, or a word that ends in "ed". A participle in `ALLOW_STATE` names a state, so "is merged" passes and "is required" fails. Rewrite a failed sentence with the actor as the subject: "the build needs the file". The words "can", "must", and "will" pass, because the standard approves them.
 
@@ -172,7 +213,9 @@ CAUTION: the checker reads "is read-only" as passive voice, because "read" is an
 
 - The checker skips tables, fenced code blocks, headings, and front matter. Keep the text in a table cell short.
 - Text in backticks counts as one word. So does text in double quotes or in parentheses (8.5, 8.6).
-- A numbered list item counts as a procedural step, so its limit is 20 words.
+- A numbered list item counts as a procedural step under any heading, so its limit is 20 words.
+- A bullet list item is one unit. Rule 6.3 applies, so its limit is 25 words.
+- Keep each HTML comment on one line. A comment across two lines or more is a finding (MD 1).
 - The checker counts the dash of a list item as a word of its first sentence.
 - A line that starts with bold text starts a new paragraph.
 - A sentence can wrap to the next line. The checker joins the lines of a paragraph before it counts.

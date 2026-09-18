@@ -207,8 +207,9 @@ visits: ## Count the page requests of one day, as make visits DAY=YYYY-MM-DD (D-
 
 site-checks: test-responsive test-a11y lighthouse html-check ## Run the four site checks of D-38 on the built site
 
-ste-check: ## Check every hand-written .md file against the STE rules (D-7)
+ste-check: ## Check every hand-written .md file against the STE rules and the reference rules, then prove that each new rule can fail (D-7, D-164)
 	@python3 scripts/ste-check.py $(STE_FILES)
+	@python3 scripts/ste-check.py --selftest
 
 # One pull request, one session (D-147 to D-150). Each script holds a self-test
 # that plants one defect at a time, so each check proves that it can fail (G-3).

@@ -16,7 +16,7 @@ These rules keep the decision register, the questions register, and the design d
 - Close a question in `docs/questions.md` with the date and the D-# id. Keep the question in the file.
 - Never delete a changed decision. Write `Superseded by D-N` in its Effect column when the whole answer changes.
 - Write `Revised in part by D-N` when one part changes. Name the part that changed and the part that stands.
-- Cite the newer decision when you cite a superseded one.
+- Cite the newer decision when you cite a superseded one. Rule REF 3 of `make ste-check` reads this line (D-164).
 - Never delete a refuted claim in `docs/design.md`, `docs/roadmaps/`, or `docs/external-facts.md`. Mark it refuted, give the date, and keep it.
 - Give each external fact a source and the date you read it.
 - Date each entry with the local date of the owner. Mark the time of a GitHub event with UTC, for example "2026-09-13 UTC".
