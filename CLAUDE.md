@@ -96,7 +96,7 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `src/layouts/Page.astro`: the head, the icon links, the design tokens, the base styles, and the motion of both pages (D-73, D-95). The token `--color-rule` is decoration, and `--color-tag-rule` holds 3:1 for the tag outline (D-142).
 - `public/`: the icon `favicon.svg` (D-96), and the three PNG files of `make images`. `scripts/make-images.mjs` draws the share image of D-97 and two icons.
 - `src/content.config.ts`: the `projects` collection and its strict schema (D-22, D-105, D-133). Each project is one JSON file in `src/content/projects/`, for example `deck-tome.json` (D-113 to D-116). An entry can also name a logo and a screenshot, and each image file sits next to it (D-133, D-134).
-- `src/components/ProjectCard.astro`: the one project card, with its own scoped styles (D-104, D-133).
+- `src/components/ProjectCard.astro`: the one project card, with its own scoped styles (D-104, D-133). Each card link opens a new tab, and so does each hero link of the home page (D-165, D-166).
 - `src/fonts/`: the two Atkinson Hyperlegible WOFF2 files of D-91, each with its SIL Open Font License file.
 - `astro.config.mjs`, `package.json`, `package-lock.json`, and `tsconfig.json`: the Astro project.
 - `.nvmrc`: the pinned Node version (D-44).
@@ -105,6 +105,7 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `scripts/lighthouse-budget.mjs` and `lighthouse-budget.json`: the Lighthouse budget (D-48, D-50, D-60). `scripts/make-lighthouse-fixture.mjs` writes its planted defects.
 - `.htmlvalidate.json`: the rules of `html-validate` (D-46). It excludes the keyword `list` from the `no-redundant-role` rule, because each `ul` of the site carries `role="list"` (D-143).
 - `.claude/settings.json`: the project settings of Claude Code. It turns off attribution (D-6), and it runs `scripts/session-bind-hook.py` before each Bash command (D-150).
+- `scripts/link-target-check.py`: the link target check of D-166. `make link-target-check` runs it on `dist/`, and the job `verify:site` runs the same target.
 - `scripts/ste-check.py`: the STE checker (D-7). It also checks each cited id, each path in backticks, and the session numbers of the handoff (D-164).
 - `scripts/resume.py`, `scripts/decisions-index.py`, and `scripts/context-budget.py`: the session-start context of D-154, D-157, and D-159.
 - `.github/workflows/verify.yml`: the checks on each pull request, `verify:docs`, `verify:site`, and the four `verify:site-*` jobs.
@@ -133,6 +134,7 @@ Every command is free. Only `make install`, `make browsers`, `make link-check`, 
 - `make images`: draw the share image and the two PNG icons into `public/` with the Chromium build of Playwright (D-96, D-97). Run it after a change to the headline, the colors, the text face, or `public/favicon.svg`.
 - `make no-script-check`: fail when a built HTML file holds a script element (G-5).
 - `make no-inline-style-check`: fail when a built HTML file holds a style element or a style attribute (D-72). Its self-test then proves that the check can fail.
+- `make link-target-check`: fail when a link of the build breaks D-166. Each link that leaves the site opens a new tab, and each internal link stays in the tab. Its self-test then proves that each of the three rules can fail.
 - `make test-responsive`: check both pages at each width of the `responsive-qa` skill for sideways scroll, and save a screenshot of each. It also checks a long word, text at 200 percent, and the text spacing of WCAG 1.4.12. It checks the growth of each fluid text size and the load of each font face too (D-111). Then it checks the hero motion under each motion setting, and the address of the share image and of each icon (D-95 to D-97). It checks the home page at each width with its cards (D-112). It checks the first screen of the home page and the link notes too (D-117, D-119). It also checks the fixture cards of D-103 at each width, the image of each card, and the page that holds no disclosure (D-133, D-134).
 - `make test-a11y`: scan both pages with axe for WCAG 2.2 AA, in the light and the dark scheme. It also scans the page structure with the best-practice rules of PR-8, and proves that this scan can fail. Then it scans the fixture cards. It also checks the name of each card link, the name of each tag list, and the alt text of each card image (D-121, D-133).
 - `make content-selftest`: build with two planted project entries, one with no pitch and one with a `highlights` field. It proves that the schema fails the build on each one (D-103, D-133).

@@ -4,14 +4,14 @@
 
 This file keeps the ten newest sessions, newest first. `docs/session-handoff-archive.md` keeps every older session, word for word.
 
-## Resume here (2026-09-17)
+## Resume here (2026-09-18)
 
 - **Do this first:** start a new clean session for each pull request. Run `make resume`, then read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-147, D-154).
-- **Base:** `b561040`, the commit of `origin/main` where this pull request started.
-- **Pull requests:** #37, the branch `docs/pr-22-skill-port` (PR-22), pending the owner merge. No other pull request is open.
-- **Next action:** in a new clean session, ask the owner how a link tells the visitor about a new tab (T-2). The owner asked on 2026-09-16 that each link opens in a new tab.
+- **Base:** `6619aba`, the commit of `origin/main` where this pull request started.
+- **Pull requests:** #38, the branch site/pr-23-new-tab-links (PR-23), pending the owner merge. No other pull request is open.
+- **Next action:** in a new clean session, ask the owner which entry starts next. The roadmap holds no entry after PR-23, and the Later list holds the real screenshots (OQ-4) and the terminal-rpg card.
 - **Blocked on:** M-3 waits for the hand check of the owner, and its 17 steps sit in `docs/design.md`. The Gitar trial ends about 2026-09-22. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
-- **Next ids:** D-165, OQ-9, M-4, PR-23, Session 31.
+- **Next ids:** D-167, OQ-9, M-4, PR-24, Session 32.
 
 ## Facts that expire
 
@@ -99,6 +99,44 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The project `natekramber-prod` holds two saved queries since 13:42 UTC on 2026-09-16, `visits-page-requests` and `visits-after-machine-filter`, each with the visibility `SHARED` (D-140). It held none before.
 - The `_Default` log bucket of `natekramber-prod` keeps 30 days and has no Log Analytics, read 2026-09-16. Cloud Logging gives 50 GiB of ingestion for each project each month at no charge.
 - On 2026-09-15 the live site answered 901 requests, 580 of them a 404 scan. The page requests read 155, and the machine filter left 125 (D-139).
+
+## Session 31: 2026-09-18
+
+### What this session did, and why
+
+- The owner asked on 2026-09-16 that each link opens in a new tab. This session asked the two open parts of that request, and the owner answered both (D-165, D-166).
+- The owner chose every outbound link, and no notice of the new tab. The session verified that WCAG 2.2 holds the notice at level AAA, so the site keeps level AA (T-2).
+- The two hero links of `src/pages/index.astro` and each card link of `src/components/ProjectCard.astro` got `target="_blank"` and `rel="noopener"`.
+- The internal link of `src/pages/404.astro` did not change. It stays in the same tab (D-166).
+- `scripts/link-target-check.py` and `make link-target-check` hold the three rules TARGET 1 to TARGET 3, with a self-test that plants one defect at a time (G-3).
+- The job `verify:site` of `.github/workflows/verify.yml` runs the new check on each pull request.
+
+### State of the repository
+
+- Base: `origin/main` at `6619aba` when the session started.
+- Remote head: `origin/site/pr-23-new-tab-links` at `8a638a7`, checked after the push. This entry adds one commit inside the metadata set (D-163).
+- `make verify`: every check passed. The check `link-target-check` read 2 files with 0 findings, and its self-test found each of the three planted defects.
+
+### In flight
+
+- PR-23 (#38) waits for the owner merge. The Gitar review of `8a638a7` approved it, with no thread and no finding. Each of the eleven checks passed, and the preview address is https://natekramber-preview--pr-38-c492t5hj.web.app.
+- The Later list of `docs/design.md` holds the real screenshots (OQ-4) and the terminal-rpg card. Neither one has an entry id.
+
+### Traps and gotchas
+
+- The HTML standard gives a `_blank` link the noopener behavior already, so `rel="noopener"` repeats it. The attribute stays, because it states the intent to a reader of the page source.
+- Rule REF 1 of `make ste-check` failed on the new decisions, because `docs/design.md` held no PR-23 entry at that time. Write the design entry with the decisions.
+- The schema of `src/content.config.ts` gives each card link an absolute address, so one attribute pair in the card component covers every project.
+- The first `Gitar review` comment got the reply "On it", and the Gitar check of the head completed success. Gitar edited no dashboard comment for that run, so the review stayed unproven for 8 minutes.
+- A second request ten minutes after the first one gave the reply and the dashboard edit together, 2 seconds apart. Read the dashboard edit time, not the end of the check.
+
+### Open questions that block progress
+
+None blocks PR-23. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the images of the cards.
+
+### Next concrete action
+
+In a new clean session, run `make resume`. Then ask the owner which entry starts after PR-23.
 
 ## Session 30: 2026-09-17
 
@@ -493,52 +531,3 @@ None blocks the refresh. OQ-3 blocks the About text, and OQ-4 with OQ-8 block th
 ### Next concrete action
 
 Commit this refresh on `docs/after-pr-17`, open its pull request, and answer the Gitar review. After the merge, start PR-13, the visit counts, from `main` with read-only research.
-
-## Session 21: 2026-09-16
-
-### What this session did, and why
-
-- The owner merged #23 (PR-12) as `3ca291e`. Its tree matches the reviewed head `503dfd5`, and Gitar approved that head with no finding.
-- Deploy run 35064220205 passed. The session then started `links.yml` by hand, and run 35064260365 read 13 links with no dead link.
-- The owner asked for a new card shape: no highlights, and room for a logo and a screenshot. The owner also asked to remove the Links section.
-- The owner answered four questions (D-133 to D-136). The two audits gave two more answers (D-137, D-138).
-- A read-only research pass read the image code of Astro 7.3.2. `Picture` cannot process an SVG, and an inline SVG import can carry a `style` element.
-- The session wrote the card, the schema, the tests, and the docs. Session 11 moved to the archive.
-- The responsive audit found no sideways scroll at any width. The branch fixes two of its four defects, and the owner accepted the other two.
-- The accessibility audit found no WCAG 2.2 AA defect. The branch applies two of its three low items.
-
-### State of the repository
-
-- `main` is `3ca291e`, the squash merge of PR #23.
-- Branch `site/pr-17-card-shape` holds PR-17 and this entry.
-- Remote head: `origin/site/pr-17-card-shape` at the commit that holds this entry, checked after the push.
-- `make verify` on Node 22.23.2 passes on the branch. Lighthouse reads 1 in every category, 64,242 total bytes, a median LCP of 1,352 ms, and a CLS of 0.
-
-### In flight
-
-- #24 waits for the Gitar review and the merge.
-- OQ-8 waits for a logo file, and OQ-4 waits for a screenshot. Each card shows no image until then.
-- A logo file needs an opaque ground. The fixture mark reads 2.81:1 against the dark page, and 3.10:1 on forced black.
-- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
-- Nobody checked Safari 26 and VoiceOver yet: the link names of D-122, the status line, and the logo row.
-- The hairline around a screenshot reads 1.24:1 against the page, so the edge of a light screenshot is faint.
-- No run tested the PR-6 exit test of D-63 yet.
-- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
-- The private preview page of D-89 still exists on claude.ai.
-
-### Traps and gotchas
-
-- The rebase of this branch met one conflict: both branches add rows at the end of `docs/decisions.md`. PR-12 holds D-130 to D-132, so this branch starts at D-133.
-- `make verify` stops at its first step. A failed `make ste-check` hides every other check, so read the first lines of its log.
-- A numbered list item of a `.md` file counts as a procedural step, so its limit is 20 words, not 25.
-- An HTML comment in an Astro template reaches the built page. A note about the card belongs in the frontmatter.
-- `Picture` fails the build on an SVG, and it still writes `source` addresses for files that never exist. So the schema refuses an SVG screenshot first.
-- An ESM import of an SVG renders an inline `svg` element that can hold a `style` element, and the CSP of D-57 blocks it.
-
-### Open questions that block progress
-
-None blocks PR-17. OQ-3 blocks the About text.
-
-### Next concrete action
-
-Answer the Gitar review of #24, and post `Gitar review` only after the checks of the new head start. After the merge, start PR-13, the visit counts, from `main`.
