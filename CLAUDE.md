@@ -100,6 +100,7 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 - `src/fonts/`: the two Atkinson Hyperlegible WOFF2 files of D-91, each with its SIL Open Font License file.
 - `astro.config.mjs`, `package.json`, `package-lock.json`, and `tsconfig.json`: the Astro project.
 - `.nvmrc`: the pinned Node version (D-44).
+- `.gitignore`: the build output, the test output, and the two harness paths of D-167 and D-168.
 - `tests/`: the Playwright tests of the responsive layout and of accessibility, and the fixtures with planted defects (D-38, D-72). `tests/fixtures/projects/` holds the fixture cards of D-103 with their logo file, and a fixture build loads those cards alone (D-112). `tests/fixtures/projects-invalid/` and `tests/fixtures/projects-unknown/` hold the two entries that the schema must refuse (D-103, D-133).
 - `playwright.config.ts`: the Playwright setup. It serves `dist/` with `astro preview` on port 4321. It also builds the fixture cards alone into `dist-fixture/`, and serves that folder on port 4322 (D-103, D-112).
 - `scripts/lighthouse-budget.mjs` and `lighthouse-budget.json`: the Lighthouse budget (D-48, D-50, D-60). `scripts/make-lighthouse-fixture.mjs` writes its planted defects.
