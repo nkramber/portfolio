@@ -5,7 +5,7 @@ It fails when:
 - a `.claude/skills/<name>/SKILL.md` file has no front matter, a `name` that
   is not its folder name, or no `description` of 1024 characters or less,
 - `one-pr-one-session/SKILL.md` lacks its stop message or its end message,
-  or grows past its size cap, because every pull request session loads it,
+  or grows past its size cap of 10000 bytes, because each session loads it (D-162),
 - `CLAUDE.md` does not name the skill path, or `AGENTS.md` is not a symlink
   to `CLAUDE.md` (D-9),
 - `.claude/settings.json` does not run the session hook on Bash, or it sets an
@@ -21,7 +21,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SKILL = ".claude/skills/one-pr-one-session/SKILL.md"
-SKILL_MAX_BYTES = 6000
+SKILL_MAX_BYTES = 10000
 STOP = "Blocked: start a new clean session for this PR."
 END = "This session is bound to PR #N and is complete. End this session. Start a new clean session before beginning another PR."
 HOOK_SCRIPT = "scripts/session-bind-hook.py"

@@ -292,6 +292,33 @@ Gate: the owner merges PR-21.
 
 > *In plain English:* a session can ask for a review before the automatic review starts, and two reviews then run. This change makes each session wait three minutes first. The site does not change.
 
+#### PR-22: The skill port and the reference rules
+
+Status: complete in #37.
+
+Scope:
+
+- The `gitar-review` skill gets the metadata set and the effective head (D-163). It also gets the scope of a finding, the severity table, the push-back table, and the attribution test (D-161).
+- The `one-pr-one-session` skill gets the compaction rule, the deferral phrases, the refusal result, and the enforcement table (D-161). It also gets the prompt for the next pull request (D-162).
+- The `ste-writing` skill gets the glossary table and the rules of the checker (D-161, D-164).
+- `scripts/ste-check.py` gets the rules MD 1, REF 1 to REF 3, and HANDOFF 1 to HANDOFF 3, with a self-test (D-164).
+
+Out of scope:
+
+- A `pr-review` skill. Gitar is the only reviewer of this repository (D-5, D-161).
+- The byte caps of the session-start set. `make context-budget` keeps them (D-159).
+- The site. No file of `src/` or `public/` changes.
+
+Exit tests:
+
+- `make ste-check` gives no finding, and its self-test proves that each new rule can fail.
+- `make lifecycle-check` passes with the new size cap of the bound skill.
+- `make verify` passes.
+
+Gate: the owner merges PR-22.
+
+> *In plain English:* the game repository of the owner improved the shared rules for agents. This change brings those improvements here, and it adds a check that each cited decision and each file path in the documents is real. The site does not change.
+
 ### Later
 
 These items have no id yet. Each one gets an entry when it starts.
@@ -327,6 +354,7 @@ One owner runs the sequence in strict order. A step starts only when the gate of
 22. PR-19, one pull request, one session. Gate: the owner merges it.
 23. PR-20, the session-start context size. Gate: the owner merges it.
 24. PR-21, the Gitar push wait. Gate: the owner merges it.
+25. PR-22, the skill port and the reference rules. Gate: the owner merges it.
 
 ## 6. Open questions
 

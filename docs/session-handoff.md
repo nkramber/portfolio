@@ -4,14 +4,14 @@
 
 This file keeps the ten newest sessions, newest first. `docs/session-handoff-archive.md` keeps every older session, word for word.
 
-## Resume here (2026-09-16)
+## Resume here (2026-09-17)
 
 - **Do this first:** start a new clean session for each pull request. Run `make resume`, then read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-147, D-154).
-- **Base:** `7cdb7a8`, the commit of `origin/main` where this pull request started.
-- **Pull requests:** #36, the branch `docs/pr-21-gitar-wait` (PR-21), pending the owner merge. No other pull request is open.
+- **Base:** `b561040`, the commit of `origin/main` where this pull request started.
+- **Pull requests:** #37, the branch `docs/pr-22-skill-port` (PR-22), pending the owner merge. No other pull request is open.
 - **Next action:** in a new clean session, ask the owner how a link tells the visitor about a new tab (T-2). The owner asked on 2026-09-16 that each link opens in a new tab.
 - **Blocked on:** M-3 waits for the hand check of the owner, and its 17 steps sit in `docs/design.md`. The Gitar trial ends about 2026-09-22. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
-- **Next ids:** D-161, OQ-9, M-4, PR-22, Session 30.
+- **Next ids:** D-165, OQ-9, M-4, PR-23, Session 31.
 
 ## Facts that expire
 
@@ -99,6 +99,47 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The project `natekramber-prod` holds two saved queries since 13:42 UTC on 2026-09-16, `visits-page-requests` and `visits-after-machine-filter`, each with the visibility `SHARED` (D-140). It held none before.
 - The `_Default` log bucket of `natekramber-prod` keeps 30 days and has no Log Analytics, read 2026-09-16. Cloud Logging gives 50 GiB of ingestion for each project each month at no charge.
 - On 2026-09-15 the live site answered 901 requests, 580 of them a 404 scan. The page requests read 155, and the machine filter left 125 (D-139).
+
+## Session 30: 2026-09-17
+
+### What this session did, and why
+
+- The owner asked for the skill improvements of the-thing-below. The session read that repository read-only, compared each shared skill, and reported the difference (D-1).
+- The `design-doc-style` skill of that repository is older than this one, so it gave nothing. The `pr-review` skill of that repository rests on a cross-provider review, and this repository uses Gitar alone (D-5, D-161).
+- The `gitar-review` skill got the metadata set, the effective head, and command F (D-163). It also got the scope of a finding, the severity table, the push-back table, and the attribution test (D-161).
+- The `one-pr-one-session` skill got the compaction rule, the deferral phrases, the refusal result, and the enforcement table (D-161). It also got the prompt of D-162.
+- The `ste-writing` skill got the glossary table, the process terms, and the rules of the checker (D-161, D-164).
+- `scripts/ste-check.py` got the rules MD 1, REF 1 to REF 3, and HANDOFF 1 to HANDOFF 3, with a self-test. The owner accepted this code beside the skill port in one pull request (D-164).
+- The session raised the size cap of the bound skill from 6000 to 10000 bytes in `scripts/skill-check.py`. Section 8 and section 9 made that file larger.
+
+### State of the repository
+
+- Base: `origin/main` at `b561040` when the session started.
+- Remote head: `origin/docs/pr-22-skill-port` at `1d255cb`, checked after the push. This entry adds one commit inside the metadata set (D-163).
+- `make verify`: every check passed.
+
+### In flight
+
+- PR-22 (#37) waits for the owner merge. The Gitar review of `1d255cb` approved it, with no thread and no finding.
+- The owner can copy the three skills to decktome and What You Carry.
+- The owner asked that each link opens in a new tab. That work needs a new clean session.
+- M-3 waits for the hand check of the owner. OQ-4 waits for a screenshot, and OQ-8 waits for a logo file.
+
+### Traps and gotchas
+
+- The first run of the reference rules gave 39 findings, and each one named a real class of exemption. A dated record, a line that names another repository, and a bare name of a built file each need an exemption.
+- A bare name with the type `.txt`, `.html`, or `.yml` names a file of the built site or of another repository. The rule reads a bare name of a hand-written type alone.
+- The roadmap files use `## PR-#:` as the heading, and `docs/design.md` uses `#### PR-#:`. The first pattern found no id.
+- An automatic Gitar review ran on the first head of #37 and on no later head. The second round needed a `Gitar review` comment, and Gitar replied "On it" in 28 seconds.
+- Command F showed `docs/design.md` alone between `4a62d56` and `1d255cb`. The status line of the design entry needs the pull request number, so that round needed a second review (D-163).
+
+### Open questions that block progress
+
+None blocks PR-22. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the images of the cards.
+
+### Next concrete action
+
+In a new clean session, run `make resume`. Then ask the owner how a link tells the visitor that it opens a new tab (T-2).
 
 ## Session 29: 2026-09-16
 
@@ -501,51 +542,3 @@ None blocks PR-17. OQ-3 blocks the About text.
 ### Next concrete action
 
 Answer the Gitar review of #24, and post `Gitar review` only after the checks of the new head start. After the merge, start PR-13, the visit counts, from `main`.
-
-## Session 20: 2026-09-16
-
-### What this session did, and why
-
-- The owner merged #22 (PR-11) as `c272a86` at 05:48 UTC. Its tree matches the reviewed head `b8a640e`, and Gitar approved that head with no finding.
-- Deploy run 35061020052 passed, and `make preview-check` passed on `https://natekramber.com` at 05:50 UTC.
-- The session started PR-12 with a read-only research pass on the outbound links of the site.
-- The research found that LinkedIn answers 999 to an automated request, and that its `robots.txt` prohibits such a request. The owner chose the skip (D-130).
-- The owner chose the live site as the target (D-131), and a failed run as the signal of a dead link (D-132).
-- The session wrote `.github/workflows/links.yml`, `make link-check`, `make link-selftest`, the planted fixture, and the docs. Session 10 moved to the archive.
-- `make link-check` read 13 links of the live site, each one at 200, and the self-test failed on the planted dead address.
-- The owner asked for four changes of the page. PR-17 records them as decisions and applies them.
-- The changes: no highlights, a flat card with a logo and a screenshot, no placeholder panel, and no Links section.
-
-### State of the repository
-
-- `main` is `c272a86`, the squash merge of PR #22.
-- Branch `site/pr-12-link-check` holds PR-12 and this entry.
-- Remote head: `origin/site/pr-12-link-check` at the commit that holds this entry, checked after the push.
-- `make verify` on Node 22.23.2 passes on the branch, and `make link-check` passes on the live site.
-
-### In flight
-
-- #23 waits for the Gitar review and the merge.
-- No run tested `links.yml` yet. A scheduled run reads the default branch, so its first run comes after the merge.
-- PR-17 holds the four changes of the page that the owner asked for. The AI workflow line of D-114 then leaves the site.
-- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
-- OQ-4 stays open. After PR-17, a card shows no image until the owner gives a logo or a screenshot.
-- Nobody checked Safari 26 yet for `::-webkit-details-marker`, the list role of `.tags`, and the summary in VoiceOver. The link names of D-122 need the same check.
-- No run tested the PR-6 exit test of D-63 yet.
-- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
-- The private preview page of D-89 still exists on claude.ai.
-
-### Traps and gotchas
-
-- Two rows of `docs/decisions.md` ended with the same sentence, so an edit with that sentence alone matched both. Anchor each edit on the unique part of its row.
-- The help output of linkinator is longer than 60 lines. The flag `--status-code "CODE:ACTION"` sits in the second half, and it can make a status pass, warn, or fail.
-- LinkedIn answers 999 to an automated request, with a browser agent too, so a checker that reads it fails every week (D-130).
-- `make link-check` needs the network and the live site. It stays out of `make verify`, which runs offline.
-
-### Open questions that block progress
-
-None blocks PR-12. OQ-3 blocks the About text.
-
-### Next concrete action
-
-Answer the Gitar review of #23, and post `Gitar review` only after the checks of the new head start. After the merge, start PR-17 from `main`: the flat card with a logo and a screenshot, and no Links section.
