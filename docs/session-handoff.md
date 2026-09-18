@@ -8,7 +8,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 - **Do this first:** start a new clean session for each pull request. Run `make resume`, then read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-147, D-154).
 - **Base:** `b561040`, the commit of `origin/main` where this pull request started.
-- **Pull requests:** the branch `docs/pr-22-skill-port` (PR-22), pending the owner merge. No other pull request is open.
+- **Pull requests:** #37, the branch `docs/pr-22-skill-port` (PR-22), pending the owner merge. No other pull request is open.
 - **Next action:** in a new clean session, ask the owner how a link tells the visitor about a new tab (T-2). The owner asked on 2026-09-16 that each link opens in a new tab.
 - **Blocked on:** M-3 waits for the hand check of the owner, and its 17 steps sit in `docs/design.md`. The Gitar trial ends about 2026-09-22. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
 - **Next ids:** D-165, OQ-9, M-4, PR-23, Session 31.
@@ -120,7 +120,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ### In flight
 
-- PR-22 waits for the Gitar review of its head and the owner merge.
+- PR-22 (#37) waits for the owner merge. The Gitar review of `4a62d56` approved it, with no thread.
 - The owner can copy the three skills to decktome and What You Carry.
 - The owner asked that each link opens in a new tab. That work needs a new clean session.
 - M-3 waits for the hand check of the owner. OQ-4 waits for a screenshot, and OQ-8 waits for a logo file.

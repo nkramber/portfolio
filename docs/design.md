@@ -294,7 +294,7 @@ Gate: the owner merges PR-21.
 
 #### PR-22: The skill port and the reference rules
 
-Status: complete in #TBD.
+Status: complete in #37.
 
 Scope:
 
