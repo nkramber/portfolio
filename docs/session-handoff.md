@@ -120,7 +120,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ### In flight
 
-- PR-24 (#39) waits for the Gitar review and the owner merge. No other pull request is open.
+- PR-24 (#39) waits for the owner merge. The Gitar review of `c406a6d` approved it, with no thread and no finding. The preview address is https://natekramber-preview--pr-39-rmnoarje.web.app.
 - The Later list of `docs/design.md` holds the real screenshots (OQ-4) and the terminal-rpg card. Neither one has an entry id.
 
 ### Traps and gotchas
@@ -129,6 +129,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The checker skips a fenced code block, but it reads a table cell. So a path in the Effect column of `docs/decisions.md` must pass REF 2.
 - `make pr-check` reads the committed diff against `origin/main`. It fails on a Changed line until the commit exists, so commit first and check the body after.
 - The two handoff files are exempt from the reference rules, so a path there proves nothing about the other documents.
+- The pause note of the Gitar trial came beside a full approval, 71 seconds after the push. The push wait ended with no request needed.
 
 ### Open questions that block progress
 
