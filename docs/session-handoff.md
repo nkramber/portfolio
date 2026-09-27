@@ -8,7 +8,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 - **Do this first:** start a new clean session for each pull request. Run `make resume`, then read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-147, D-154).
 - **Base:** `6c3cb86`, the commit of `origin/main` where this pull request started.
-- **Pull requests:** the branch site/pr-25-visual-refresh (PR-25), pending the Gitar review and the owner merge. No other pull request is open.
+- **Pull requests:** #40, the branch site/pr-25-visual-refresh (PR-25),, pending the Gitar review and the owner merge. No other pull request is open.
 - **Next action:** the owner checks the look on the preview address of PR-25, and on a real phone. A correction session answers each note.
 - **Blocked on:** M-3 waits for the hand check of the owner. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
 - **Next ids:** D-172, OQ-9, M-4, PR-26, Session 34.
@@ -120,7 +120,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ### In flight
 
-- PR-25 waits for the Gitar review and for the owner merge. The owner checks the look on the preview address and on a real phone.
+- PR-25 (#40) waits for the Gitar review and for the owner merge. The owner checks the look on the preview address and on a real phone.
 - The local branch site/pr-25-card-screenshots holds the stopped draft. The session did not delete it, and its ids now belong to this pull request.
 
 ### Traps and gotchas
