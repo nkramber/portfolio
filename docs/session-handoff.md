@@ -8,7 +8,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 - **Do this first:** start a new clean session for each pull request. Run `make resume`, then read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-147, D-154).
 - **Base:** `6c3cb86`, the commit of `origin/main` where this pull request started.
-- **Pull requests:** #40, the branch site/pr-25-visual-refresh (PR-25), pending the Gitar review and the owner merge. No other pull request is open.
+- **Pull requests:** #40, the branch site/pr-25-visual-refresh (PR-25), pending the owner merge. No other pull request is open.
 - **Next action:** the owner checks the look on the preview address of PR-25, and on a real phone. A correction session answers each note.
 - **Blocked on:** M-3 waits for the hand check of the owner. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
 - **Next ids:** D-172, OQ-9, M-4, PR-26, Session 34.
@@ -115,12 +115,14 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 ### State of the repository
 
 - Base: `origin/main` at `6c3cb86` when the session started.
-- Effective head: `c1547e6`. The handoff commit sits inside the metadata set (D-163).
+- Effective head: `c1547e6`. Each later commit changes `docs/session-handoff.md` alone, inside the metadata set (D-163).
+- Remote head: `origin/site/pr-25-visual-refresh` at `182860e` for the Gitar pass. The commit of this record follows it.
 - `make verify`: every check passed. The Lighthouse budget read 69,760 bytes of 300,000, with 0 script bytes.
 
 ### In flight
 
-- PR-25 (#40) waits for the Gitar review and for the owner merge. The owner checks the look on the preview address and on a real phone.
+- PR-25 (#40) waits for the owner merge. The Gitar review of the tip `182860e` approved it at 03:31 UTC on 2026-09-27, with no thread and no finding. The owner checks the look on the preview address and on a real phone.
+- The preview address is https://natekramber-preview--pr-40-qqj7rzwg.web.app.
 - The local branch site/pr-25-card-screenshots holds the stopped draft. The session did not delete it, and its ids now belong to this pull request.
 
 ### Traps and gotchas
