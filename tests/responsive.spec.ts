@@ -392,3 +392,15 @@ test('each card image reserves its space, and no card draws a placeholder', asyn
     }
   }
 });
+
+// D-172: the links of a card lost their own padding, so the line height alone makes
+// each one a pointer target. WCAG 2.5.8 asks for at least 24 by 24 CSS pixels.
+test('each card link is at least 24 CSS pixels tall', async ({ page }) => {
+  for (const address of ['/', fixturePage]) {
+    await page.setViewportSize({ width: 320, height: 900 });
+    await page.goto(address);
+    const heights = await page.locator('.card-links a').evaluateAll((links) => links.map((link) => link.getBoundingClientRect().height));
+    expect(heights.length, address).toBeGreaterThan(0);
+    for (const height of heights) expect(height, address).toBeGreaterThanOrEqual(24);
+  }
+});

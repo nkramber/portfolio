@@ -438,11 +438,13 @@ const { title } = Astro.props;
     padding-block-end: max(4rem, var(--space-section));
   }
 
-  /* With project cards below it, the hero stops 10rem short of the screen height, so
-     the Projects heading shows at the bottom of the first screen (D-117). The 404
-     page has no cards, so its hero keeps the full height. */
+  /* With project cards below it, the hero takes the height of its content, and the
+     Projects section follows the profile links after a short space (D-173). The
+     space above the name keeps the first screen open. The 404 page has no cards, so
+     its hero keeps the full height. */
   .hero:has(~ .projects) {
-    min-height: calc(100svh - 10rem);
+    min-height: 0;
+    padding-block: clamp(4rem, 18svh, 10rem) var(--space-l);
   }
 
   /* The project cards sit in a grid (D-169): two columns on a wide screen, and one

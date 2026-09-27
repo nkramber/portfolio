@@ -288,34 +288,32 @@ const headingId = `project-${project.id}`;
     background: var(--color-bg);
   }
 
-  /* The gap between two links is wider than the gap between a link and its note, so
-     a note that moves under its link stays with that link (D-119). */
+  /* The links of a card stack close together, with one even space between any two
+     rows (D-172). Each row carries its own padding, and the list adds no row gap, so
+     a link with a note and a link without one get the same space. */
   .card-links {
-    gap: var(--space-l);
+    gap: 0 var(--space-l);
     font-size: var(--text-link);
   }
 
   /* A note stays beside its link, or moves under it as one unit, so it never splits
-     across two lines or hangs between two links. The row gap keeps the 6 px focus
-     ring of the link off a note below it. */
+     across two lines or hangs between two links. The space from a link to a note
+     under it (0.375rem) is less than half the space to the next link (1rem), so the
+     note stays with its own link (D-119). That space also keeps the 6 px focus ring
+     of the link off the note. */
   .card-links li {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 0.5em;
+    gap: 0.375rem 0.5em;
+    padding-block: 0.5rem;
   }
 
-  /* The padding makes each link a pointer target well above 24 by 24 CSS pixels (WCAG 2.5.8). */
+  /* The line height alone makes each link at least 24 CSS pixels tall, the minimum
+     target of WCAG 2.5.8. */
   .card-links a {
     display: inline-block;
-    padding-block: var(--space-s);
     overflow-wrap: anywhere;
-  }
-
-  /* A link with a note has no bottom padding, so a note under it sits close to it
-     (D-119). The top padding and the line height keep the target above 24 CSS pixels. */
-  .card-links a:has(+ .note) {
-    padding-block-end: 0;
   }
 
   .note {

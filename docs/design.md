@@ -31,7 +31,7 @@ Draft 1 applies the roadmap answers D-19 to D-43. It supersedes draft 0, which h
 2026-09-16 correction pass (Session 28): PR-20 follows D-153 to D-159. The external facts move to `docs/external-facts.md` (D-156), and the entries of Phases 0 to 3 move to `docs/roadmaps/` (D-155).
 2026-09-16 correction pass (Session 29): PR-21 follows D-160.
 2026-09-18 correction pass (Session 31): PR-23 follows D-165 and D-166. The external facts add the link research of PR-23.
-2026-09-26 correction pass (Session 33): PR-25 follows D-169 to D-171. The visual refresh revises D-27, D-95, and D-97 in part. OQ-4 stays open.
+2026-09-26 correction pass (Session 33): PR-25 follows D-169 to D-175, and it adds the card of The Thing Below (D-174). The visual refresh revises D-27, D-95, and D-97 in part. OQ-4 stays open.
 
 Owner decisions live in `docs/decisions.md` (D-#), and `make decisions-index` lists them (D-157). Open questions live in `docs/questions.md` (OQ-#). The `design-doc-style` skill holds the template of this file (D-10).
 
@@ -380,7 +380,7 @@ Gate: the owner merges PR-24.
 
 > *In plain English:* today a parallel session of the coding harness makes a second checkout inside the repository folder. Git does not ignore that folder, so it shows in each list of new files, and one commit added it by mistake. This change ignores that folder and the personal settings file of the harness. The site does not change.
 
-#### PR-25: The visual refresh
+#### PR-25: The visual refresh and The Thing Below card
 
 Status: in progress.
 
@@ -388,11 +388,13 @@ Scope:
 
 - `src/layouts/Page.astro`: the new tokens of both schemes, with a card surface, three gradient stops, the glow, the grid, and the shadows (D-169). The backdrop of the first screen, the gradient headline, the name label, the section heading bar, the pill links, and the card grid.
 - `src/pages/index.astro`: an icon in each hero link, and the grid around the cards (D-169).
-- `src/components/ProjectCard.astro`: the raised card, the border light, and the rise on hover (D-169, D-170). A still outer box takes the hover, so the rise does not flicker. The screenshot frame of D-138 gets `height: auto`, because the height attribute of the image won over the frame.
+- `src/components/ProjectCard.astro`: the raised card, the border light, and the rise on hover (D-169, D-170). A still outer box takes the hover, so the rise does not flicker. The screenshot frame of D-138 gets `height: auto`, because the height attribute of the image won over the frame. The links of a card stack with one even, smaller space (D-172).
 - `scripts/make-images.mjs` and `public/og.png`: the share image on the new grid, glow, and gradient (D-169).
-- `tests/responsive.spec.ts`: the keyframes test accepts the gradient angle (D-170). A new test proves that the border light turns on hover alone, and only when the system allows motion.
+- `tests/responsive.spec.ts`: the keyframes test accepts the gradient angle (D-170). A test proves that each card link is 24 pixels tall or more (D-172). A new test proves that the border light turns on hover alone, and only when the system allows motion.
 - `tests/accessibility.spec.ts`: axe cannot find the ground of a text over a pseudo element, so a new scan removes the decoration first (D-169). It measures each text once for each gradient stop.
-- `docs/decisions.md`: D-169 to D-171, and the notes on D-27, D-95, and D-97.
+- `src/layouts/Page.astro`: with cards below it, the hero takes the height of its content (D-173).
+- `src/content/projects/the-thing-below.json`: the third card, with no image (D-174, D-175).
+- `docs/decisions.md`: D-169 to D-175, and the notes on D-27, D-95, D-97, D-117, and D-119.
 
 Out of scope:
 
@@ -401,6 +403,7 @@ Out of scope:
 - A new face, a new accent, or new site copy (D-91).
 - An icon or a notice on the card links (D-165).
 - The About text (OQ-3), and the card of terminal-rpg.
+- A screenshot of The Thing Below. Its best image is a test baseline, and OQ-4 holds the images of every card.
 
 Exit tests:
 
@@ -408,11 +411,11 @@ Exit tests:
 - `make test-a11y` passes in the light and the dark scheme (G-8).
 - `make lighthouse` passes, so the first mobile load stays under the cap of D-48.
 - `make verify` passes.
-- The owner approves the look on the preview address.
+- The owner approves the look on the preview address, and the text of the new card (D-175).
 
 Gate: the owner merges PR-25.
 
-> *In plain English:* today the page is plain black text on a flat ground, and each project is a row under a thin line. This change adds color, depth, and some motion, with the portfolio of Travis Lang as the model. The page still ships no script, and each motion stops when the system asks for reduced motion.
+> *In plain English:* today the page is plain black text on a flat ground, and each project is a row under a thin line. This change adds color, depth, and some motion, with the portfolio of Travis Lang as the model. It also adds a third card, for The Thing Below. The page still ships no script, and each motion stops when the system asks for reduced motion.
 
 ### Later
 
@@ -452,7 +455,7 @@ One owner runs the sequence in strict order. A step starts only when the gate of
 25. PR-22, the skill port and the reference rules. Gate: the owner merges it.
 26. PR-23, the new tab for each outbound link. Gate: the owner merges it.
 27. PR-24, the ignore line for the harness worktrees. Gate: the owner merges it.
-28. PR-25, the visual refresh. Gate: the owner merges it.
+28. PR-25, the visual refresh and The Thing Below card. Gate: the owner merges it.
 
 ## 6. Open questions
 

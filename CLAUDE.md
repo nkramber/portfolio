@@ -19,7 +19,7 @@ Each file that a session reads stays in its context, and the model gets that tex
 
 ## Project
 
-This repository holds the portfolio site of Nate Kramber at `natekramber.com` (D-3). The site is one page with a maximum focus on responsive layout, simple and readable code, and best practices (D-4). Each project shows on a card. One card component and one data entry for each project make a new project easy to add (D-2). Deck Tome and What You Carry are the first two projects.
+This repository holds the portfolio site of Nate Kramber at `natekramber.com` (D-3). The site is one page with a maximum focus on responsive layout, simple and readable code, and best practices (D-4). Each project shows on a card. One card component and one data entry for each project make a new project easy to add (D-2). Deck Tome, What You Carry, and The Thing Below are the first three projects (D-175).
 
 The repository is public. GoDaddy is the registrar of the domain (D-3). The stack is Astro 7 on Node 22.23.2, with vanilla CSS and zero client JavaScript (D-30 to D-33, D-44). Since 2026-09-14, Firebase Hosting serves the site from the dedicated Google Cloud project `natekramber-prod`, and pull request previews from `natekramber-preview` (D-34, D-35, D-51, D-56, D-86).
 
@@ -159,10 +159,11 @@ The Makefile sets `ASTRO_TELEMETRY_DISABLED=1`, so Astro sends no usage data (D-
 
 ## Reference repositories
 
-Treat all three as read-only (hard rule 1).
+Treat all four as read-only (hard rule 1).
 
 - `/Users/nate/Repos/decktome`: the model for these docs, the review rule, and the Gitar procedure. It is also the source of the Deck Tome card.
 - `/Volumes/SSD-1TB/what-you-carry`: the model for the tenets, the registers, and the handoff entries. It is also the source of the What You Carry card.
+- `/Volumes/SSD-1TB/the-thing-below`: the source of The Thing Below card (D-175).
 - `/Users/nate/Repos/terminal-rpg`: a later project. It held no code on 2026-09-12, and the path does not exist on 2026-09-14. Ask the owner where the project lives before you read it.
 
 CAUTION: `/Volumes/SSD-1TB` is an external drive. The path is absent when the owner disconnects the drive. Ask the owner to connect it. Do not guess a project fact.

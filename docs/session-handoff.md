@@ -9,9 +9,9 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - **Do this first:** start a new clean session for each pull request. Run `make resume`, then read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-147, D-154).
 - **Base:** `6c3cb86`, the commit of `origin/main` where this pull request started.
 - **Pull requests:** #40, the branch site/pr-25-visual-refresh (PR-25), pending the owner merge. No other pull request is open.
-- **Next action:** the owner checks the look on the preview address of PR-25, and on a real phone. A correction session answers each note.
+- **Next action:** the owner checks the look and the new card on the preview address of PR-25, and on a real phone. A correction session answers each note.
 - **Blocked on:** M-3 waits for the hand check of the owner. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
-- **Next ids:** D-172, OQ-9, M-4, PR-26, Session 34.
+- **Next ids:** D-176, OQ-9, M-4, PR-26, Session 34.
 
 ## Facts that expire
 
@@ -111,17 +111,19 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The border of each card shows a turning conic gradient on hover and on keyboard focus. The motion stops under reduced motion.
 - The share image gets the same look through `make images`.
 - A responsive audit and an accessibility audit found no WCAG defect. They found a broken screenshot frame, a hover flicker, a split pill word, and a contrast gap in the tests. This pull request fixes all four.
+- The owner saw a dark headline on the preview. The cause was the Dark Reader extension, and the owner withdrew the three requests of that note.
+- The owner asked for less space between the card links, and between the profile links and the cards (D-172, D-173).
+- The owner asked for a card of The Thing Below in this pull request, against hard rule 3 (D-174). The researcher agent read that repository read-only, and the owner approved the draft text with no image (D-175).
 
 ### State of the repository
 
 - Base: `origin/main` at `6c3cb86` when the session started.
-- Effective head: `c1547e6`. Each later commit changes `docs/session-handoff.md` alone, inside the metadata set (D-163).
-- Remote head: `origin/site/pr-25-visual-refresh` at `182860e` for the Gitar pass. The commit of this record follows it.
+- The first Gitar pass approved the tip `182860e`, with the effective head `c1547e6`. The second round adds the card and the two space changes, and it needs its own pass.
 - `make verify`: every check passed. The Lighthouse budget read 69,760 bytes of 300,000, with 0 script bytes.
 
 ### In flight
 
-- PR-25 (#40) waits for the owner merge. The Gitar review of the tip `182860e` approved it at 03:31 UTC on 2026-09-27, with no thread and no finding. The owner checks the look on the preview address and on a real phone.
+- PR-25 (#40) waits for the Gitar review of the second round and for the owner merge. The owner checks the look and the new card on the preview address and on a real phone.
 - The preview address is https://natekramber-preview--pr-40-qqj7rzwg.web.app.
 - The local branch site/pr-25-card-screenshots holds the stopped draft. The session did not delete it, and its ids now belong to this pull request.
 
@@ -132,6 +134,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - Baseline lists no clip of the background to the text (web-features 3.40.0), so the gradient headline sits inside a support query.
 - D-165 refuses an icon on a new-tab link. The session added an arrow to the card links, found the conflict, and removed the arrow.
 - A preview server that a script starts through `npx` keeps its port after the script kills the child. The next `make verify` then fails to start its own server.
+- A scripted edit that cuts the text between two search strings duplicates a block when the second string also occurs earlier in the file. One card edit copied 77 lines this way. Replace one exact old block instead.
 
 ### Open questions that block progress
 
