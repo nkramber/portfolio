@@ -191,8 +191,9 @@ test('each face loads once, from its preloaded file', async ({ page }) => {
 });
 
 // D-95: the hero rises into place when the system allows motion, and it holds still
-// under reduced motion (WCAG 2.3.3). Every set of keyframes changes `translate` alone,
-// never the opacity, so text shows from the first frame.
+// under reduced motion (WCAG 2.3.3). Every set of keyframes moves a box or turns the
+// angle of the card border gradient (D-170), and never changes the opacity, so text
+// shows from the first frame.
 test('the hero moves only when the system allows motion, and nothing fades', async ({ page }) => {
   for (const reducedMotion of ['no-preference', 'reduce'] as const) {
     await page.emulateMedia({ reducedMotion });
@@ -207,7 +208,22 @@ test('the hero moves only when the system allows motion, and nothing fades', asy
       .flatMap((keyframes) => [...(keyframes as CSSKeyframesRule).cssRules])
       .flatMap((frame) => [...(frame as CSSKeyframeRule).style]),
   );
-  expect([...new Set(animatedProperties)]).toEqual(['translate']);
+  expect([...new Set(animatedProperties)].sort()).toEqual(['--turn', 'translate']);
+});
+
+// D-170: the light of each card border turns only while a pointer rests on the card,
+// and only when the system allows motion. It never starts on its own (WCAG 2.2.2).
+test('the card border turns only on hover, and only when the system allows motion', async ({ page }) => {
+  for (const reducedMotion of ['no-preference', 'reduce'] as const) {
+    await page.emulateMedia({ reducedMotion });
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/');
+    const card = page.locator('.card').first();
+    const turn = () => card.locator('.face').evaluate((face) => getComputedStyle(face, '::before').animationName);
+    expect(await turn(), `at rest, ${reducedMotion}`).toBe('none');
+    await card.hover();
+    expect(await turn(), `on hover, ${reducedMotion}`).toBe(reducedMotion === 'reduce' ? 'none' : 'turn');
+  }
 });
 
 // The hero of the 404 page fills the window. At the first frame of the rise, the

@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 // WCAG 2.2 level AA (T-2, G-8). An axe tag does not include the levels below
 // it, so the scan names every level up to 2.2 AA.
@@ -45,6 +45,48 @@ for (const colorScheme of ['light', 'dark'] as const) {
     });
   });
 }
+
+// D-169: the backdrop, the two card layers, and the gradient headline paint in
+// pseudo elements and background images. So axe cannot find the ground of any text,
+// and it reports each contrast check as incomplete, not as a pass. This scan removes
+// the decoration, and it gives the headline one gradient stop at a time as a plain
+// color. axe then measures each text against the plain ground of the page or the
+// card. The worst case over the glow sits in the token comments of the layout.
+const plainGrounds = (stop: string) => `
+  body::before, .face::before, .face::after { display: none !important; }
+  .face { background: var(--color-surface) !important; }
+  .hero h1 { background: none !important; color: ${stop} !important; }`;
+
+async function contrastScan(page: Page, stop: string): Promise<{ failed: string[]; unknown: number; passed: number }> {
+  await page.goto('/');
+  await page.addStyleTag({ content: plainGrounds(stop) });
+  await expect.poll(() => page.locator('.hero h1').evaluate((h1) => getComputedStyle(h1).backgroundImage)).toBe('none');
+  const results = await new AxeBuilder({ page }).withRules(['color-contrast']).analyze();
+  return {
+    failed: results.violations.flatMap((violation) => violation.nodes.map((node) => node.target.join(' '))),
+    unknown: results.incomplete.reduce((count, result) => count + result.nodes.length, 0),
+    passed: results.passes.reduce((count, result) => count + result.nodes.length, 0),
+  };
+}
+
+for (const colorScheme of ['light', 'dark'] as const) {
+  test(`each text meets its contrast on its plain ground, ${colorScheme}`, async ({ page }) => {
+    await page.emulateMedia({ colorScheme });
+    for (const stop of ['var(--gradient-1)', 'var(--gradient-2)', 'var(--gradient-3)']) {
+      const scan = await contrastScan(page, stop);
+      expect(scan.failed, stop).toEqual([]);
+      expect(scan.unknown, `${stop}: axe measured every text`).toBe(0);
+      expect(scan.passed, stop).toBeGreaterThan(0);
+    }
+  });
+}
+
+// The contrast scan must fail on a planted faint headline (G-3).
+test('the contrast scan catches a planted faint headline', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'light' });
+  const scan = await contrastScan(page, '#d0d0d0');
+  expect(scan.failed).toContain('h1');
+});
 
 // The color scheme does not change the structure, so one scheme is enough.
 for (const path of ['/', '/no-such-page']) {

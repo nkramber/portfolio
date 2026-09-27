@@ -34,56 +34,175 @@ const headingId = `project-${project.id}`;
 ---
 
 <article class="card" aria-labelledby={headingId}>
-  <div class="head">
-    {logo && <Image class="logo" src={logo} alt="" />}
-    <h3 id={headingId}>{title}</h3>
-    <p class="status"><span class="visually-hidden">Status: </span>{status}</p>
-  </div>
-  <p class="pitch">{pitch}</p>
-  <ul class="tags" role="list" aria-label="Tags">
-    {tags.map((tag) => <li>{tag}</li>)}
-  </ul>
-  <ul class="card-links" role="list">
+  <div class="face">
+    <div class="head">
+      {logo && <Image class="logo" src={logo} alt="" />}
+      <h3 id={headingId}>{title}</h3>
+      <p class="status"><span class="visually-hidden">Status: </span>{status}</p>
+    </div>
+    <p class="pitch">{pitch}</p>
+    <ul class="tags" role="list" aria-label="Tags">
+      {tags.map((tag) => <li>{tag}</li>)}
+    </ul>
+    <ul class="card-links" role="list">
+      {
+        links.map((link, index) => {
+          const noteId = `${headingId}-note-${index}`;
+          return (
+            <li>
+              <a href={link.href} target="_blank" rel="noopener" aria-describedby={link.note ? noteId : undefined}>
+                {link.label}<span class="visually-hidden"> ({title})</span>
+              </a>
+              {link.note && (
+                <span class="note" id={noteId}>
+                  {link.note}
+                </span>
+              )}
+            </li>
+          );
+        })
+      }
+    </ul>
     {
-      links.map((link, index) => {
-        const noteId = `${headingId}-note-${index}`;
-        return (
-          <li>
-            <a href={link.href} target="_blank" rel="noopener" aria-describedby={link.note ? noteId : undefined}>
-              {link.label}<span class="visually-hidden"> ({title})</span>
-            </a>
-            {link.note && (
-              <span class="note" id={noteId}>
-                {link.note}
-              </span>
-            )}
-          </li>
-        );
-      })
+      screenshot && (
+        <Picture
+          class="shot"
+          src={screenshot.src}
+          alt={screenshot.alt}
+          formats={['avif', 'webp']}
+          widths={[480, 960, 1440]}
+          sizes="(min-width: 48rem) 29rem, calc(100vw - 5rem)"
+        />
+      )
     }
-  </ul>
-  {
-    screenshot && (
-      <Picture
-        class="shot"
-        src={screenshot.src}
-        alt={screenshot.alt}
-        formats={['avif', 'webp']}
-        widths={[480, 960, 1440]}
-        sizes="(min-width: 60rem) 57.5rem, calc(100vw - 2.5rem)"
-      />
-    )
-  }
+  </div>
 </article>
 
 <style>
-  /* One project row (D-27): a hairline above the card, then its facts in one column. */
+  /* One raised project card in the grid of the home page (D-169): its facts in one
+     column on the card surface, with rounded corners and a soft shadow.
+     The card itself is a still box that takes the hover, and its face carries the
+     look. So when the face rises, the pointer stays inside the card, and the hover
+     never flickers at the bottom edge. The card fills its grid cell, and the face
+     fills the card, so two cards in one row share one height. */
   .card {
+    display: grid;
+  }
+
+  /* The face draws its border in three layers. The face ground shows the border
+     color, the ::after layer lays the surface over it 2 px in from each edge, and
+     the ::before layer holds a conic gradient between the two. The gradient shows
+     only while a pointer rests on the card or a card link shows the keyboard focus,
+     and then it turns, so a colored light runs around the border (D-170). Both
+     layers keep the exact box of the face, so neither one adds scroll (G-1). */
+  .face {
+    position: relative;
+    isolation: isolate;
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
-    padding-block: var(--space-l);
-    border-block-start: 1px solid var(--color-rule);
+    padding: var(--space-l) clamp(1.25rem, 3vw, 2rem);
+    border-radius: var(--radius-card);
+    background: var(--color-rule);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* The light turns with the start angle of the gradient, not with the box, so the
+     layer never leaves the face. */
+  .face::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    border-radius: inherit;
+    background: conic-gradient(
+      from var(--turn),
+      transparent 0 25%,
+      var(--gradient-1),
+      var(--gradient-2),
+      var(--gradient-3),
+      var(--gradient-1)
+    );
+    opacity: 0;
+  }
+
+  .face::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    z-index: -1;
+    border-radius: calc(var(--radius-card) - 2px);
+    background: var(--color-surface);
+  }
+
+  .card:has(:focus-visible) .face {
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .card:has(:focus-visible) .face::before {
+    opacity: 1;
+  }
+
+  @media (hover: hover) {
+    .card:hover .face {
+      box-shadow: var(--shadow-card-hover);
+    }
+
+    .card:hover .face::before {
+      opacity: 1;
+    }
+  }
+
+  /* The motion of D-170 runs only when the system allows motion (WCAG 2.3.3). The
+     light turns only while a visitor points at the card or focuses a link in it, so
+     it never starts on its own (WCAG 2.2.2). Under reduced motion, the gradient shows
+     and holds still. */
+  @media (prefers-reduced-motion: no-preference) {
+    .face {
+      transition:
+        translate 250ms cubic-bezier(0.2, 0.8, 0.2, 1),
+        box-shadow 250ms ease-out;
+    }
+
+    .face::before {
+      transition: opacity 250ms ease-out;
+    }
+
+    .card:has(:focus-visible) .face::before {
+      animation: turn 4s linear infinite;
+    }
+
+    @media (hover: hover) {
+      .card:hover .face {
+        translate: 0 -4px;
+      }
+
+      .card:hover .face::before {
+        animation: turn 4s linear infinite;
+      }
+    }
+  }
+
+  /* A registered angle can animate, so the gradient turns smoothly. @property is
+     Baseline Newly available, so it adds polish alone (G-6): a browser without it
+     keeps the gradient still at its start angle. */
+  @property --turn {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  @keyframes turn {
+    to {
+      --turn: 1turn;
+    }
+  }
+
+  /* Forced colors drop each background, so the face draws a plain border there. */
+  @media (forced-colors: active) {
+    .face {
+      border: 1px solid CanvasText;
+    }
   }
 
   /* The logo, the title, and the status badge share one row, and each part wraps
@@ -149,6 +268,11 @@ const headingId = `project-${project.id}`;
     list-style: none;
   }
 
+  /* The links sit at the foot of the card, so two cards in one row line up. */
+  .card-links {
+    margin-block-start: auto;
+  }
+
   .tags {
     gap: var(--space-s);
     color: var(--color-muted);
@@ -158,9 +282,10 @@ const headingId = `project-${project.id}`;
      (D-108). That outline carries information, so it holds 3:1 against the page
      (WCAG 1.4.11, D-142). The card hairline stays decoration at --color-rule. */
   .tags li {
-    padding-inline: 0.4em;
+    padding: 0.1em 0.6em;
     border: 1px solid var(--color-tag-rule);
-    border-radius: 0.25rem;
+    border-radius: 999px;
+    background: var(--color-bg);
   }
 
   /* The gap between two links is wider than the gap between a link and its note, so
@@ -206,10 +331,14 @@ const headingId = `project-${project.id}`;
   .shot {
     display: block;
     width: 100%;
+    /* The height attribute of the image would win over the frame, so the height
+       follows the width. */
+    height: auto;
     aspect-ratio: 16 / 10;
     object-fit: cover;
     object-position: top;
     margin-block-start: var(--space-s);
     border: 1px solid var(--color-rule);
+    border-radius: calc(var(--radius-card) / 2);
   }
 </style>
