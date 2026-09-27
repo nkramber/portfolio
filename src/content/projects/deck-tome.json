@@ -4,8 +4,8 @@
   "status": "Live",
   "tags": ["Go", "TypeScript", "React"],
   "links": [
-    { "label": "decktome.com", "href": "https://decktome.com/", "note": "Invite only" },
-    { "label": "Source on GitHub", "href": "https://github.com/nkramber/decktome" }
+    { "label": "Source on GitHub", "href": "https://github.com/nkramber/decktome" },
+    { "label": "decktome.com", "href": "https://decktome.com/", "note": "Invite only" }
   ],
   "order": 1
 }

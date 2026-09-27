@@ -70,7 +70,7 @@ A line that names the entry of independent roadmap work is not a deferral. G-3 p
 
 A pull request cannot know its squash commit or its merge time. Git and GitHub hold both.
 
-- Write the design status as "complete in #N". Write the handoff state as "pending the owner merge".
+- Write the design status as "complete in #N". Write the handoff state as "pending the merge" (D-176).
 - Record no merge commit, merge time, or deploy run of this pull request.
 - Never open a pull request that only records the merge, the documents, or the handoff of an earlier pull request.
 - The next pull request can read the new base, but it does not exist to record the merge.
@@ -81,7 +81,7 @@ Refuse such a request with this result, and start no pull request:
 
 ## 6. Review
 
-Gitar reviews each head (D-5). The session of the pull request answers each finding of each round itself, and it needs no new session for that (D-152). Answer every finding before the owner merges. Put each fix and the review state in this branch. The Gitar result of the last head lives on GitHub, and it needs no commit of its own.
+Gitar reviews each head (D-5). The session of the pull request answers each finding of each round itself, and it needs no new session for that (D-152). Answer every finding before the merge, and resolve each thread (D-179). Put each fix and the review state in this branch. The Gitar result of the last head lives on GitHub, and it needs no commit of its own.
 
 The handoff commit of this session is in the metadata set, so it does not make the Gitar pass stale (D-163). The `gitar-review` skill holds the metadata set and the effective head.
 
@@ -105,15 +105,17 @@ Tell the owner that the pull request is ready only when each item is true:
 7. The Gitar review of the head is current, and each finding has its answer.
 8. No work waits for a second pull request.
 
-Then send this message with the number, and stop:
+Then load `references/merge.md`. Ask the owner to confirm the merge with the summary of that file, and turn on the auto-merge after a yes (D-176). Gitar is the only review gate (D-177).
+
+When the owner chooses to merge by hand, send this message with the number:
 
 `This session is bound to PR #N and is complete. End this session. Start a new clean session before beginning another PR.`
 
-Do not offer to start the next pull request. Wait for the merge message of the owner.
+Do not offer to start the next pull request. Give the handover prompt of section 8.
 
 ## 8. The prompt for the next pull request
 
-After the completion gate, the owner merges the pull request and says "Merged". The session then writes one prompt, and it does no other work (D-162). Write the prompt for the pull request of this session alone. A merge message for another pull request gets the stop result of section 2.
+The pull request merges in one of two ways. The session reads the state `MERGED` after the auto-merge, or the owner says "Merged". The session then writes one prompt, and it does no other work (D-162, D-176). Write the prompt for the pull request of this session alone. A merge message for another pull request gets the stop result of section 2.
 
 Get the merge commit from git first:
 
@@ -137,6 +139,13 @@ First action: <the first concrete action>.
 
 The session ends with this prompt. It makes no branch, no commit, and no document for the next pull request.
 
+Each session ends with a handover prompt, also before the merge (D-180). Before the merge, the prompt continues this pull request in a new clean session. Use the same block with these changes:
+
+- The title: `Continue PR-<n>: <the one concern>`.
+- The second line: `Pull request #<x> is open at <head>, pending the merge.`
+- The base: the base of this pull request. The role: author or correction author.
+- The first action: the next action of the handoff entry.
+
 ## 9. Enforcement
 
 | Rule | Enforced by |
@@ -145,5 +154,7 @@ The session ends with this prompt. It makes no branch, no commit, and no documen
 | A push or a pull request from a bound session | `scripts/session-bind-hook.py` (D-150) |
 | The skill files, the stop message, and the end message | `make lifecycle-check` |
 | The size of the session-start set | `make context-budget` (D-159) |
+| The merge: the required checks, the `Gitar` check, resolved threads, and squash alone | The `main` ruleset (D-11, D-178, D-179) |
+| The owner confirmation before the auto-merge | The session and the owner. No check reads the confirmation (D-176) |
 | The start gate, the merge records, and the completion gate | The session |
 | One pull request in each session, and a clean session for each one | The owner. No check reads the conversation |

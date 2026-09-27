@@ -15,7 +15,7 @@ This repository holds the source of the portfolio site of Nate Kramber. The site
 
 - Read `CLAUDE.md` first. It holds the tenets, the rules, and the read order.
 - Run `make verify` before you open a pull request.
-- The owner merges every pull request.
+- The owner confirms each merge, and GitHub auto-merge merges the pull request when each required check passes.
 
 ## License
 

@@ -131,7 +131,7 @@ The rules permit these names as written (rule 1.5):
 - Hosting and deploy: Google Cloud, Firebase Hosting, Spark plan, preview channel, Cloud Logging, Workload Identity Federation.
 - Web standards and tools: HTML, CSS, JavaScript, SVG, WCAG, Baseline, Astro, axe, Playwright, Lighthouse, Core Web Vitals, html-validate, linkinator, chrome-launcher, "Chrome for Testing".
 - Web terms: viewport, viewport width, breakpoint, layout, section, project card, component, touch target, focus indicator, reduced motion, sideways scroll, performance budget.
-- Process terms: tenet, hard rule, guardrail, session handoff, decision register, questions register, rule file, ruleset, squash merge, required check, pull request.
+- Process terms: tenet, hard rule, guardrail, session handoff, decision register, questions register, rule file, ruleset, squash merge, auto-merge, required check, review thread, pull request.
 - The standard itself: ASD-STE100, STE.
 - Code identifiers in backticks.
 
