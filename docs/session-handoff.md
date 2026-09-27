@@ -118,12 +118,13 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 ### State of the repository
 
 - Base: `origin/main` at `6c3cb86` when the session started.
-- The first Gitar pass approved the tip `182860e`, with the effective head `c1547e6`. The second round adds the card and the two space changes, and it needs its own pass.
+- The first Gitar pass approved the tip `182860e`, with the effective head `c1547e6`.
+- Effective head: `2ff9306`, the second round with the card and the two space changes. Remote head: `origin/site/pr-25-visual-refresh` at `2ff9306` for the second Gitar pass. The commit of this record follows it.
 - `make verify`: every check passed. The Lighthouse budget read 69,760 bytes of 300,000, with 0 script bytes.
 
 ### In flight
 
-- PR-25 (#40) waits for the Gitar review of the second round and for the owner merge. The owner checks the look and the new card on the preview address and on a real phone.
+- PR-25 (#40) waits for the owner merge. The Gitar review of `2ff9306` approved it at 04:05 UTC on 2026-09-27, with no thread and no finding. The owner checks the look and the new card on the preview address and on a real phone.
 - The preview address is https://natekramber-preview--pr-40-qqj7rzwg.web.app.
 - The local branch site/pr-25-card-screenshots holds the stopped draft. The session did not delete it, and its ids now belong to this pull request.
 
