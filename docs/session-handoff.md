@@ -9,7 +9,7 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - **Do this first:** start a new clean session for each pull request. Run `make resume`, then read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-147, D-154).
 - **Base:** `c293bd9`, the commit of `origin/main` where this pull request started.
 - **Pull requests:** #41, the branch docs/pr-26-auto-merge (PR-26), pending the merge. No other pull request is open.
-- **Next action:** the Gitar pass of #41, then the merge confirmation of the owner and the auto-merge (D-176).
+- **Next action:** the merge confirmation of the owner for #41, then the auto-merge (D-176).
 - **Blocked on:** M-3 waits for the hand check of the owner. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
 - **Next ids:** D-183, OQ-9, M-4, PR-27, Session 35.
 
@@ -121,7 +121,8 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 
 ### In flight
 
-- PR-26 (#41), the branch docs/pr-26-auto-merge, pending the merge. It waits for the Gitar pass, then for the merge confirmation of the owner.
+- PR-26 (#41), the branch docs/pr-26-auto-merge, pending the merge. The Gitar review of `ac905b8`, with the effective head `07d5847`, approved it at 05:06 UTC on 2026-09-27, with no thread and no finding. Each required check passed. It waits for the merge confirmation of the owner.
+- The preview address is https://natekramber-preview--pr-41-ntztg0cu.web.app.
 
 ### Traps and gotchas
 
@@ -136,7 +137,7 @@ None blocks PR-26. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the imag
 
 ### Next concrete action
 
-Get the Gitar pass of #41, then ask the owner to confirm the merge with the summary of `.claude/skills/one-pr-one-session/references/merge.md`.
+Ask the owner to confirm the merge of #41 with the summary of `.claude/skills/one-pr-one-session/references/merge.md`.
 
 ## Session 33: 2026-09-26
 
