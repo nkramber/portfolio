@@ -4,14 +4,14 @@
 
 This file keeps the ten newest sessions, newest first. `docs/session-handoff-archive.md` keeps every older session, word for word.
 
-## Resume here (2026-09-18)
+## Resume here (2026-09-26)
 
 - **Do this first:** start a new clean session for each pull request. Run `make resume`, then read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-147, D-154).
-- **Base:** `2b2e50a`, the commit of `origin/main` where this pull request started.
-- **Pull requests:** #39, the branch chore/pr-24-gitignore-worktrees (PR-24), pending the owner merge. No other pull request is open.
-- **Next action:** in a new clean session, ask the owner which entry starts next. The roadmap holds no entry after PR-24, and the Later list holds the real screenshots (OQ-4) and the terminal-rpg card.
-- **Blocked on:** M-3 waits for the hand check of the owner, and its 17 steps sit in `docs/design.md`. The Gitar trial ends about 2026-09-22. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
-- **Next ids:** D-169, OQ-9, M-4, PR-25, Session 33.
+- **Base:** `6c3cb86`, the commit of `origin/main` where this pull request started.
+- **Pull requests:** the branch site/pr-25-visual-refresh (PR-25), pending the Gitar review and the owner merge. No other pull request is open.
+- **Next action:** the owner checks the look on the preview address of PR-25, and on a real phone. A correction session answers each note.
+- **Blocked on:** M-3 waits for the hand check of the owner. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
+- **Next ids:** D-172, OQ-9, M-4, PR-26, Session 34.
 
 ## Facts that expire
 
@@ -99,6 +99,45 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The project `natekramber-prod` holds two saved queries since 13:42 UTC on 2026-09-16, `visits-page-requests` and `visits-after-machine-filter`, each with the visibility `SHARED` (D-140). It held none before.
 - The `_Default` log bucket of `natekramber-prod` keeps 30 days and has no Log Analytics, read 2026-09-16. Cloud Logging gives 50 GiB of ingestion for each project each month at no charge.
 - On 2026-09-15 the live site answered 901 requests, 580 of them a 404 scan. The page requests read 155, and the machine filter left 125 (D-139).
+
+## Session 33: 2026-09-26
+
+### What this session did, and why
+
+- The owner asked for "much more styling", with travislang.io as the example. The session read that page and its stylesheet, and it compared both sites at two widths.
+- The owner answered four questions: the system color scheme, a grid of two columns, all four touches, and more motion (D-169, D-170).
+- The owner stopped the local draft of the card screenshots (D-171). Its branch never reached GitHub, so this pull request takes the ids PR-25 and D-169 to D-171.
+- The page gets new tokens and a gradient headline. A grid and a glow sit behind the first screen. The links become pills with icons, and the cards rise from the page.
+- The border of each card shows a turning conic gradient on hover and on keyboard focus. The motion stops under reduced motion.
+- The share image gets the same look through `make images`.
+- A responsive audit and an accessibility audit found no WCAG defect. They found a broken screenshot frame, a hover flicker, a split pill word, and a contrast gap in the tests. This pull request fixes all four.
+
+### State of the repository
+
+- Base: `origin/main` at `6c3cb86` when the session started.
+- Effective head: `c1547e6`. The handoff commit sits inside the metadata set (D-163).
+- `make verify`: every check passed. The Lighthouse budget read 69,760 bytes of 300,000, with 0 script bytes.
+
+### In flight
+
+- PR-25 waits for the Gitar review and for the owner merge. The owner checks the look on the preview address and on a real phone.
+- The local branch site/pr-25-card-screenshots holds the stopped draft. The session did not delete it, and its ids now belong to this pull request.
+
+### Traps and gotchas
+
+- A layer that turns with its box adds scroll width, also inside a clipped card. The text overflow test read 280 pixels at 320. So the gradient angle turns through `@property`, and the layer keeps the box of the card.
+- axe reports contrast as incomplete, not as a pass, when a pseudo element sits behind the text. The WCAG scan then proves no contrast. The new scan removes the decoration first.
+- Baseline lists no clip of the background to the text (web-features 3.40.0), so the gradient headline sits inside a support query.
+- D-165 refuses an icon on a new-tab link. The session added an arrow to the card links, found the conflict, and removed the arrow.
+- A preview server that a script starts through `npx` keeps its port after the script kills the child. The next `make verify` then fails to start its own server.
+
+### Open questions that block progress
+
+None blocks PR-25. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the images of the cards.
+
+### Next concrete action
+
+The owner opens the preview address of PR-25, and checks the look in both schemes and on a phone.
 
 ## Session 32: 2026-09-18
 
@@ -475,52 +514,3 @@ None blocks PR-18. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the imag
 ### Next concrete action
 
 Answer the Gitar review of PR-18. After the merge, give the owner the hand-check list of M-3, and record the result as a decision.
-
-## Session 23: 2026-09-16
-
-### What this session did, and why
-
-- The session committed the docs refresh of Session 22 as `cc8f5f1`, and opened #25. Every check passed, and Gitar approved it with no finding.
-- The owner merged #25 as `2e50f34`. Its tree matches the reviewed head, and deploy run 35102613219 passed.
-- The session then started PR-13 from `main`. A read of the live request log gave the numbers of 2026-09-15.
-- The owner answered three questions (D-139 to D-141). The count gives two numbers, the saved queries live in the project, and `make visits` joins the scope.
-- The Logging API created `visits-page-requests` and `visits-after-machine-filter` at 13:42 UTC. The project held no saved query before.
-- The session wrote `docs/analytics.md`, `scripts/visits.sh`, the `visits` target, the three decisions, six external facts, and this entry. Session 13 moved to the archive.
-- Gitar found one bug in `scripts/visits.sh`: a pipe hid the exit status of gcloud, so a failed read printed a count of 0. The fix `2bef180` closed it, and Gitar approved that head.
-
-### State of the repository
-
-- `main` is `2e50f34`, the squash merge of PR #25.
-- Remote head: `origin/site/pr-13-visit-counts` at the commit that holds this entry, checked after the push.
-- `make verify`: every check passed.
-
-### In flight
-
-- PR-13 waits for the merge. Gitar approved the head that holds the fix, and it closed its one finding.
-- A filter change needs the same change in `scripts/visits.sh` and in the saved query. Nothing checks that the two agree.
-- The owner left out the referrer query, the country query, the scan note, and the cost note of the same question (D-141).
-- M-3, the launch audit, is the last item before the launch. It needs the two agents and a hand check on a real phone.
-- OQ-4 waits for a screenshot, and OQ-8 waits for a logo file. Each card shows no image until then.
-- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
-- Nobody checked Safari 26 and VoiceOver yet: the link names of D-122, the status line, and the logo row.
-- No run tested the PR-6 exit test of D-63 yet.
-- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
-
-### Traps and gotchas
-
-- The tool sandbox refused a log read that asked for `httpRequest.remoteIp`, because the field holds an IP address. Read the log with no IP field.
-- The sandbox also refused a change to the settings of Claude Code. Ask the owner for a permission rule.
-- A saved query holds no time range. The Logs Explorer control selects the day, and `make visits` adds the day to the filter.
-- gcloud 533.0.0 has no `saved-queries` command group, so the create call goes to the REST API.
-- The live log is mostly noise. 580 of the 901 entries of 2026-09-15 were a 404 scan.
-- A pipe hides the exit status of the first command, and POSIX `sh` has no `pipefail`. So `gcloud ... | wc -l` turns a failed read into a count of 0.
-- `grep -c` exits 1 when it counts 0 lines. Under `set -e`, that stops a script on a day with no entry, so the count needs `|| true`.
-
-### Open questions that block progress
-
-None blocks PR-13. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the images of the cards.
-
-### Next concrete action
-
-Answer the Gitar review of PR-13. After the merge, start M-3, the launch audit, from `main`.
-

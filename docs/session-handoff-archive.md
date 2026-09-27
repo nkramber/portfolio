@@ -2,6 +2,54 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 23: 2026-09-16
+
+### What this session did, and why
+
+- The session committed the docs refresh of Session 22 as `cc8f5f1`, and opened #25. Every check passed, and Gitar approved it with no finding.
+- The owner merged #25 as `2e50f34`. Its tree matches the reviewed head, and deploy run 35102613219 passed.
+- The session then started PR-13 from `main`. A read of the live request log gave the numbers of 2026-09-15.
+- The owner answered three questions (D-139 to D-141). The count gives two numbers, the saved queries live in the project, and `make visits` joins the scope.
+- The Logging API created `visits-page-requests` and `visits-after-machine-filter` at 13:42 UTC. The project held no saved query before.
+- The session wrote `docs/analytics.md`, `scripts/visits.sh`, the `visits` target, the three decisions, six external facts, and this entry. Session 13 moved to the archive.
+- Gitar found one bug in `scripts/visits.sh`: a pipe hid the exit status of gcloud, so a failed read printed a count of 0. The fix `2bef180` closed it, and Gitar approved that head.
+
+### State of the repository
+
+- `main` is `2e50f34`, the squash merge of PR #25.
+- Remote head: `origin/site/pr-13-visit-counts` at the commit that holds this entry, checked after the push.
+- `make verify`: every check passed.
+
+### In flight
+
+- PR-13 waits for the merge. Gitar approved the head that holds the fix, and it closed its one finding.
+- A filter change needs the same change in `scripts/visits.sh` and in the saved query. Nothing checks that the two agree.
+- The owner left out the referrer query, the country query, the scan note, and the cost note of the same question (D-141).
+- M-3, the launch audit, is the last item before the launch. It needs the two agents and a hand check on a real phone.
+- OQ-4 waits for a screenshot, and OQ-8 waits for a logo file. Each card shows no image until then.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- Nobody checked Safari 26 and VoiceOver yet: the link names of D-122, the status line, and the logo row.
+- No run tested the PR-6 exit test of D-63 yet.
+- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
+
+### Traps and gotchas
+
+- The tool sandbox refused a log read that asked for `httpRequest.remoteIp`, because the field holds an IP address. Read the log with no IP field.
+- The sandbox also refused a change to the settings of Claude Code. Ask the owner for a permission rule.
+- A saved query holds no time range. The Logs Explorer control selects the day, and `make visits` adds the day to the filter.
+- gcloud 533.0.0 has no `saved-queries` command group, so the create call goes to the REST API.
+- The live log is mostly noise. 580 of the 901 entries of 2026-09-15 were a 404 scan.
+- A pipe hides the exit status of the first command, and POSIX `sh` has no `pipefail`. So `gcloud ... | wc -l` turns a failed read into a count of 0.
+- `grep -c` exits 1 when it counts 0 lines. Under `set -e`, that stops a script on a day with no entry, so the count needs `|| true`.
+
+### Open questions that block progress
+
+None blocks PR-13. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the images of the cards.
+
+### Next concrete action
+
+Answer the Gitar review of PR-13. After the merge, start M-3, the launch audit, from `main`.
+
 ## Session 22: 2026-09-16
 
 ### What this session did, and why
