@@ -4,19 +4,19 @@
 
 This file keeps the ten newest sessions, newest first. `docs/session-handoff-archive.md` keeps every older session, word for word.
 
-## Resume here (2026-09-26)
+## Resume here (2026-09-27)
 
 - **Do this first:** start a new clean session for each pull request. Run `make resume`, then read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-147, D-154).
-- **Base:** `6c3cb86`, the commit of `origin/main` where this pull request started.
-- **Pull requests:** #40, the branch site/pr-25-visual-refresh (PR-25), pending the owner merge. No other pull request is open.
-- **Next action:** the owner checks the look and the new card on the preview address of PR-25, and on a real phone. A correction session answers each note.
+- **Base:** `c293bd9`, the commit of `origin/main` where this pull request started.
+- **Pull requests:** #41, the branch docs/pr-26-auto-merge (PR-26), pending the merge. No other pull request is open.
+- **Next action:** the merge confirmation of the owner for #41, then the auto-merge (D-176).
 - **Blocked on:** M-3 waits for the hand check of the owner. OQ-3 blocks the About text. OQ-4 and OQ-8 block the images of the cards.
-- **Next ids:** D-176, OQ-9, M-4, PR-26, Session 34.
+- **Next ids:** D-183, OQ-9, M-4, PR-27, Session 35.
 
 ## Facts that expire
 
-- The GitHub settings, read 2026-09-14: squash merge alone, automatic delete of a merged branch, and ruleset `main` (id 23087504). The ruleset requires a pull request and refuses a force push and a delete. From 2026-09-12, GitHub Actions requires a full commit SHA for each action (D-61).
-- The `main` ruleset requires eight checks from GitHub Actions (app id 15368). The session read them back on 2026-09-16, after the change of D-149: `verify:docs`, `verify:site`, `verify:site-responsive`, `verify:site-a11y`, `verify:site-lighthouse`, `verify:site-html`, `verify:site-preview`, and `verify:pr-lifecycle`.
+- The GitHub settings, read 2026-09-27: squash merge alone, automatic delete of a merged branch, "Allow auto-merge" on, and ruleset `main` (id 23087504). The ruleset requires a pull request with resolved review threads, and refuses a force push and a delete (D-178, D-179). From 2026-09-12, GitHub Actions requires a full commit SHA for each action (D-61).
+- The `main` ruleset requires nine checks, read back on 2026-09-27 after D-178. Eight come from GitHub Actions (app id 15368): `verify:docs`, `verify:site`, `verify:site-responsive`, `verify:site-a11y`, `verify:site-lighthouse`, `verify:site-html`, `verify:site-preview`, and `verify:pr-lifecycle`. The check `Gitar` comes from `gitar-bot` (app id 827041).
 - `actions/checkout` tag v7.0.1 points to commit `3d3c42e5aac5ba805825da76410c181273ba90b1`, read 2026-09-16 from the GitHub API. It is still the newest release.
 - `actions/setup-node` tag v7.0.0 points to commit `820762786026740c76f36085b0efc47a31fe5020`, read 2026-09-16 from the GitHub API. It is still the newest release.
 - `actions/upload-artifact` tag v7.0.1 points to commit `043fb46d1a93c77aae656e7c1c64a875d1fc6a0a`, read 2026-09-16 from the GitHub API. It is still the newest release.
@@ -99,6 +99,45 @@ This file keeps the ten newest sessions, newest first. `docs/session-handoff-arc
 - The project `natekramber-prod` holds two saved queries since 13:42 UTC on 2026-09-16, `visits-page-requests` and `visits-after-machine-filter`, each with the visibility `SHARED` (D-140). It held none before.
 - The `_Default` log bucket of `natekramber-prod` keeps 30 days and has no Log Analytics, read 2026-09-16. Cloud Logging gives 50 GiB of ingestion for each project each month at no charge.
 - On 2026-09-15 the live site answered 901 requests, 580 of them a 404 scan. The page requests read 155, and the machine filter left 125 (D-139).
+
+## Session 34: 2026-09-27
+
+### What this session did, and why
+
+- The owner asked to copy the end-of-session auto-merge of What You Carry and The Thing Below into this repository. The session read both sources on `/Volumes/SSD-1TB` and changed neither.
+- The owner confirms each merge, and then the session turns on the auto-merge (D-176). Gitar stays the only review gate, with no Codex gate (D-177).
+- The session turned on "Allow auto-merge". The `main` ruleset now requires the `Gitar` check and resolved review threads (D-178, D-179).
+- Each session now ends with a handover prompt, also before the merge (D-180).
+- The skill file had room for 1,700 bytes alone, so the new file `.claude/skills/one-pr-one-session/references/merge.md` holds the commands and the settings.
+- The session-start set had 820 bytes of room. The correction passes of the design moved to `docs/roadmaps/correction-passes.md` (D-181).
+- PR-25 read "in progress" in the design after its merge. The status now reads "complete in #40".
+- The owner added the link order of the Deck Tome card to this pull request, against hard rule 3 (D-182).
+
+### State of the repository
+
+- Base: `origin/main` at `c293bd9` when the session started.
+- Effective head: `07d5847`, the work of PR-26. The commit of this record follows it.
+- `make verify`: every check passed. The context budget read 77,843 of 80,000 bytes.
+
+### In flight
+
+- PR-26 (#41), the branch docs/pr-26-auto-merge, pending the merge. The Gitar review of `ac905b8`, with the effective head `07d5847`, approved it at 05:06 UTC on 2026-09-27, with no thread and no finding. Each required check passed. It waits for the merge confirmation of the owner.
+- The preview address is https://natekramber-preview--pr-41-ntztg0cu.web.app.
+
+### Traps and gotchas
+
+- The `Gitar` check turns green with open findings, and Gitar posts no GitHub approval. So the ruleset needs the thread rule beside the check (D-179).
+- The ruleset reads the `Gitar` check of the tip. The handoff commit keeps the pass current (D-163), but it still needs its own check.
+- A push from an account with write access keeps the auto-merge on. Turn it off before a push after the confirmation.
+- `docs/design.md` had 19 bytes of room under its cap. Run `make context-budget` before a new design entry.
+
+### Open questions that block progress
+
+None blocks PR-26. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the images of the cards.
+
+### Next concrete action
+
+Ask the owner to confirm the merge of #41 with the summary of `.claude/skills/one-pr-one-session/references/merge.md`.
 
 ## Session 33: 2026-09-26
 
@@ -475,48 +514,3 @@ None blocks the wrap-up. M-3 waits for the hand check of the owner. OQ-3 blocks 
 ### Next concrete action
 
 After the merge of this wrap-up, ask the owner for the result of the M-3 hand check. Record it as D-147, and mark M-3 passed.
-
-## Session 24: 2026-09-16
-
-### What this session did, and why
-
-- The owner merged #26 as `f656d84`. Its tree matches the reviewed head, and deploy run 35106063488 passed.
-- The session then started M-3, the launch audit. It first compared each of the 8 live files with `dist/`, and every file matched by SHA-256.
-- Lighthouse on `https://natekramber.com` read 1 in every category, with 55,240 total bytes and an LCP of 1,224 ms. `make preview-check` passed on the live site.
-- The `responsive-auditor` agent ran 58 tests and swept every width from 320 to 2560. It found 6 low defects and no defect of medium or high severity.
-- The `accessibility-auditor` agent found no WCAG 2.2 level AA failure, and 3 low items. It confirmed the hairline at 1.24:1 and 1.34:1.
-- The owner answered four questions (D-142 to D-145). PR-18 holds the two fixes, and the other findings stay as they are.
-- The session wrote the token `--color-tag-rule`, the three list roles, the html-validate exclusion, the four decisions, five external facts, and this entry.
-
-### State of the repository
-
-- `main` is `f656d84`, the squash merge of PR #26.
-- Remote head: `origin/site/pr-18-audit-fixes` at the commit that holds this entry, checked after the push.
-- `make verify`: every check passed.
-
-### In flight
-
-- PR-18 waits for the Gitar review and the merge.
-- M-3 waits for the hand check of the owner, and then for the sign-off. The two audits gave a list of 12 items for the phone, and a list of 8 items for the screen reader.
-- Nobody ran Safari 26 and VoiceOver yet. D-143 lowers that risk, and it does not close the check.
-- OQ-4 waits for a screenshot, and OQ-8 waits for a logo file. Each card shows no image until then.
-- The accessibility audit asks for a new run when the first image lands, because no script can judge the words of an alt text.
-- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
-- No run tested the PR-6 exit test of D-63 yet.
-- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
-
-### Traps and gotchas
-
-- `html-validate` calls `role="list"` on a `ul` redundant, and `make verify` stops there. The rule takes an `exclude` list, so the fix stays narrow.
-- The audit gave a dark value of `#5a5a57` for the tag border, and that value reads 2.75:1. Measure each color before you write it.
-- `astro preview` binds to `localhost` and not to `127.0.0.1` on this Mac. A poll of `127.0.0.1` never sees the server.
-- The two audits together took about 18 minutes. Start the responsive audit first, and run the live checks while it works.
-- A tool sandbox can refuse a settings change of Claude Code, and a log read that names an IP field.
-
-### Open questions that block progress
-
-None blocks PR-18. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the images of the cards.
-
-### Next concrete action
-
-Answer the Gitar review of PR-18. After the merge, give the owner the hand-check list of M-3, and record the result as a decision.

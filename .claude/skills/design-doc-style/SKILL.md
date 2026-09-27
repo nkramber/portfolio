@@ -14,7 +14,7 @@ The design doc is `docs/design.md`. Each session reads it at the start, so it ho
 
 ## Section template
 
-1. **Status header.** State the status of the doc. Add a dated line for each correction pass. Point to `docs/external-facts.md` (D-156).
+1. **Status header.** State the status of the doc. Add a dated line for each correction pass at the end of `docs/roadmaps/correction-passes.md` (D-181). Point to `docs/external-facts.md` (D-156).
 2. **Thesis.** Write one paragraph. Say what the site is for and why the plan has its order.
 3. **Tenets.** List the tenet ids. Point to `CLAUDE.md` for the full text.
 4. **Guardrails.** Number each invariant that every pull request must keep (G-#).

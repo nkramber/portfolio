@@ -2,6 +2,51 @@
 
 This file keeps every session that `docs/session-handoff.md` no longer holds, newest first, word for word. The STE checker skips this file, because a dated record is history.
 
+## Session 24: 2026-09-16
+
+### What this session did, and why
+
+- The owner merged #26 as `f656d84`. Its tree matches the reviewed head, and deploy run 35106063488 passed.
+- The session then started M-3, the launch audit. It first compared each of the 8 live files with `dist/`, and every file matched by SHA-256.
+- Lighthouse on `https://natekramber.com` read 1 in every category, with 55,240 total bytes and an LCP of 1,224 ms. `make preview-check` passed on the live site.
+- The `responsive-auditor` agent ran 58 tests and swept every width from 320 to 2560. It found 6 low defects and no defect of medium or high severity.
+- The `accessibility-auditor` agent found no WCAG 2.2 level AA failure, and 3 low items. It confirmed the hairline at 1.24:1 and 1.34:1.
+- The owner answered four questions (D-142 to D-145). PR-18 holds the two fixes, and the other findings stay as they are.
+- The session wrote the token `--color-tag-rule`, the three list roles, the html-validate exclusion, the four decisions, five external facts, and this entry.
+
+### State of the repository
+
+- `main` is `f656d84`, the squash merge of PR #26.
+- Remote head: `origin/site/pr-18-audit-fixes` at the commit that holds this entry, checked after the push.
+- `make verify`: every check passed.
+
+### In flight
+
+- PR-18 waits for the Gitar review and the merge.
+- M-3 waits for the hand check of the owner, and then for the sign-off. The two audits gave a list of 12 items for the phone, and a list of 8 items for the screen reader.
+- Nobody ran Safari 26 and VoiceOver yet. D-143 lowers that risk, and it does not close the check.
+- OQ-4 waits for a screenshot, and OQ-8 waits for a logo file. Each card shows no image until then.
+- The accessibility audit asks for a new run when the first image lands, because no script can judge the words of an alt text.
+- The bio interview still waits for the answers of the owner (D-94). OQ-3 stays open.
+- No run tested the PR-6 exit test of D-63 yet.
+- firebase-tools 15.30.1 is out, and `deploy/` pins 15.30.0. The monthly Dependabot update of D-16 can move it.
+
+### Traps and gotchas
+
+- `html-validate` calls `role="list"` on a `ul` redundant, and `make verify` stops there. The rule takes an `exclude` list, so the fix stays narrow.
+- The audit gave a dark value of `#5a5a57` for the tag border, and that value reads 2.75:1. Measure each color before you write it.
+- `astro preview` binds to `localhost` and not to `127.0.0.1` on this Mac. A poll of `127.0.0.1` never sees the server.
+- The two audits together took about 18 minutes. Start the responsive audit first, and run the live checks while it works.
+- A tool sandbox can refuse a settings change of Claude Code, and a log read that names an IP field.
+
+### Open questions that block progress
+
+None blocks PR-18. OQ-3 blocks the About text, and OQ-4 with OQ-8 block the images of the cards.
+
+### Next concrete action
+
+Answer the Gitar review of PR-18. After the merge, give the owner the hand-check list of M-3, and record the result as a decision.
+
 ## Session 23: 2026-09-16
 
 ### What this session did, and why

@@ -43,7 +43,7 @@ The file has four parts, in this order:
 ## Resume here (<YYYY-MM-DD>)
 
 - **Base:** `<sha>`, the commit of `origin/main` where this pull request started.
-- **Pull requests:** <#number and branch of this session>, pending the owner merge. <Each other open pull request, or none>.
+- **Pull requests:** <#number and branch of this session>, pending the merge. <Each other open pull request, or none>.
 - **Next action:** <the first thing to do, in a new clean session>.
 - **Blocked on:** <each OQ-# and the work it blocks, or nothing>.
 - **Next ids:** D-<n>, OQ-<n>, Session <n>.

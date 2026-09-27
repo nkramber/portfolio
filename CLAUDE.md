@@ -37,9 +37,9 @@ The tenets are the constitution of the site. When a tenet conflicts with speed o
 ## Hard rules from the owner
 
 1. **Write scope.** This repository permits writes. Treat every other repository as read-only (D-1). Read a project repository to describe it, and never change it.
-2. **Every change starts on a branch.** Never commit to `main`, and never push to it. Push the branch, and open a pull request. The owner merges. The `main` ruleset refuses a direct push, a force push, and every merge method except squash (D-11).
-3. **One pull request, one clean session.** Each pull request has one concern and gets a new, clean session. That session works on no other pull request. The pull request holds its documents and its handoff, and no later pull request records its merge. Read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-12, D-147). After a pause of more than one hour, continue the pull request in a new session (D-158). After the merge message of the owner, write the prompt of D-162 for the next pull request.
-4. **Gitar reviews every pull request.** A pull request of documents alone waits for the review too. Load the `gitar-review` skill after each push. Gitar is the only review this repository asks for (D-5).
+2. **Every change starts on a branch.** Never commit to `main`, and never push to it. Push the branch, and open a pull request. The owner confirms each merge, and then the session turns on the auto-merge (D-176). The `main` ruleset refuses a direct push, a force push, and every merge method except squash (D-11). It also requires the `Gitar` check and resolved review threads (D-178, D-179).
+3. **One pull request, one clean session.** Each pull request has one concern and gets a new, clean session. That session works on no other pull request. The pull request holds its documents and its handoff, and no later pull request records its merge. Read `.claude/skills/one-pr-one-session/SKILL.md` before any work for a pull request (D-12, D-147). After a pause of more than one hour, continue the pull request in a new session (D-158). After the merge, write the prompt of D-162 for the next pull request. Before the merge, end each session with a prompt that continues the pull request (D-180).
+4. **Gitar reviews every pull request.** A pull request of documents alone waits for the review too. Load the `gitar-review` skill after each push. Gitar is the only review this repository asks for (D-5, D-177).
 5. **Write docs in ASD-STE100.** Load the `ste-writing` skill before you write a `.md` file. The words a visitor reads on the site are exempt (D-7). Run `make ste-check` before you commit a `.md` file.
 6. **No attribution.** Tenet T-6 applies. `.claude/settings.json` turns off the co-author trailer and the pull request footer (D-6).
 7. **Ask questions when you think of them.** Use `AskUserQuestion` in small batches. Give the options, the tradeoffs, and a recommendation. Record each answer in `docs/decisions.md` with the next D-# id and the date.
@@ -85,12 +85,13 @@ Claude Code loads each file in `.claude/rules/` when the session reads a file th
 ## File map
 
 - `docs/design.md`: the design document, with the thesis, the guardrails, the current roadmap, and the sequence.
-- `docs/roadmaps/`: the entries of each completed phase, word for word (D-155).
+- `docs/roadmaps/`: the entries of each completed phase, word for word (D-155). `docs/roadmaps/correction-passes.md` holds the correction passes of the design (D-181).
 - `docs/external-facts.md`: each external fact, with its source and its date (D-156).
 - `docs/decisions.md`: every owner decision, with its date.
 - `docs/questions.md`: every open question, and the decision that closed each one.
 - `docs/session-handoff.md`: the resume point and the ten newest sessions.
 - `docs/session-handoff-archive.md`: every older session, word for word.
+- `.claude/skills/one-pr-one-session/references/merge.md`: the merge summary, the auto-merge commands, and the merge settings (D-176 to D-179).
 - `src/pages/index.astro`: the home page, with the hero, the About section, and the project cards (D-21, D-136). The About section stays off the page until the bio exists (OQ-3, D-94). While the page shows cards, it preloads the mono face (D-111).
 - `src/pages/404.astro`: the 404 page, with the words of D-74 (D-98).
 - `src/layouts/Page.astro`: the head, the icon links, the design tokens, the base styles, and the motion of both pages (D-73, D-95). The token `--color-rule` is decoration, and `--color-tag-rule` holds 3:1 for the tag outline (D-142). The token `--color-surface` is the ground of each card, and the gradient tokens fill the headline and the card border light (D-169, D-170).

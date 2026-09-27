@@ -54,9 +54,9 @@ Do these steps after each push.
 21. For full merit, make the smallest change that fixes the finding. Commit it.
 22. For no merit, reply on the thread with the reason and the evidence. Then resolve the thread.
 23. For partial merit, fix the part with merit. Refute the rest in the same reply.
-24. When you have commits, go to step 1. After the push, reply on each thread with the commit that fixes it.
+24. When you have commits, go to step 1. After the push, reply on each thread with the commit that fixes it. Then resolve the thread (D-179).
 25. Stop when a current review approves, or when a current review adds no finding and each finding has its answer.
-26. Tell the owner that the pull request is ready to merge.
+26. Go to the completion gate of the `one-pr-one-session` skill. The owner confirms the merge there (D-176).
 
 ## Find an automatic review
 
@@ -157,6 +157,7 @@ Apply this test to each file before you accept a finding of this kind. A reading
 - The issue comments API returns 30 comments on each page. Use `--paginate`, or you can read an old dashboard comment.
 - The owner can merge a pull request before a finding gets its answer. A commit on that branch then never gets to `main`. Carry the fix to a new branch from `main`. Reply on the old thread with the new pull request.
 - Gitar can confirm a fix in a reply and resolve its own thread. Read the thread before you resolve it yourself.
+- The `main` ruleset requires the `Gitar` check and resolved review threads (D-178, D-179). An open thread or a `Gitar` check at `in_progress` on the tip holds the auto-merge.
 
 ## Commands
 
