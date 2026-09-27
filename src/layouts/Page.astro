@@ -65,22 +65,40 @@ const { title } = Astro.props;
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
   }
 
-  /* The design tokens (D-27, D-31). The light scheme is the default, and the dark
-     scheme follows the system setting, with no toggle. Each ratio is the WCAG 2.2
-     contrast against --color-bg of the same scheme. */
+  /* The design tokens (D-27, D-31, D-169). The light scheme is the default, and the
+     dark scheme follows the system setting, with no toggle. Each ratio is the WCAG 2.2
+     contrast against --color-bg of the same scheme, and then against
+     --color-surface, the ground of each card. */
   :root {
     color-scheme: light dark;
 
     --font-text: 'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
     --font-mono: 'Atkinson Hyperlegible Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
-    --color-bg: #fafaf8;
-    --color-text: #151515; /* 17.47:1 */
-    --color-muted: #5e5e59; /* 6.24:1 */
-    --color-rule: #e3e2dd; /* a hairline between rows, decorative */
-    --color-tag-rule: #8d8d88; /* 3.19:1, the tag outline carries information (D-142) */
-    --color-accent: #1f4fd1; /* 6.49:1, Blueprint cobalt (D-91) */
-    --color-accent-tint: #e0e5f3; /* the accent on this tint: 5.38:1 */
+    --color-bg: #f4f5f8;
+    --color-surface: #ffffff; /* the ground of each card */
+    --color-text: #14161c; /* 16.59:1, 18.08:1 */
+    --color-muted: #565c69; /* 6.15:1, 6.71:1 */
+    --color-rule: #dfe2ea; /* the card border, decorative */
+    --color-tag-rule: #878c98; /* 3.09:1, 3.37:1, the tag outline carries information (D-142) */
+    --color-accent: #1f4fd1; /* 6.22:1, 6.78:1, Blueprint cobalt (D-91) */
+    --color-accent-tint: #e3e9fa; /* the accent on this tint: 5.59:1 */
+
+    /* The three stops of the headline gradient (D-169). Each stop alone meets 4.5:1
+       against --color-bg, so every point of the headline meets it too:
+       6.22:1, 6.36:1, and 5.76:1. */
+    --gradient-1: #1f4fd1;
+    --gradient-2: #6d2fd6;
+    --gradient-3: #b4235f;
+
+    /* Decoration alone: the glow behind the hero, the blueprint grid, and the card
+       shadow. No text depends on them. Where both glows and a grid line meet at full
+       strength, each headline stop still keeps 4.30:1 or more. */
+    --glow-1: rgb(31 79 209 / 0.08);
+    --glow-2: rgb(109 47 214 / 0.06);
+    --grid-line: rgb(31 79 209 / 0.06);
+    --shadow-card: 0 1px 2px rgb(20 22 28 / 0.04), 0 12px 32px -12px rgb(20 22 28 / 0.14);
+    --shadow-card-hover: 0 2px 4px rgb(20 22 28 / 0.05), 0 24px 48px -16px rgb(31 79 209 / 0.28);
 
     /* The type scale. Each fluid size stays at or under 2 times its smallest value,
        so browser zoom at 400 percent still doubles the text (WCAG 1.4.4). */
@@ -100,17 +118,31 @@ const { title } = Astro.props;
     --space-l: 1.5rem;
     --space-section: clamp(1.5rem, 6vw, 5rem);
     --gutter: 1.25rem;
+    --radius-card: 1.5rem;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --color-bg: #101010;
-      --color-text: #ecece8; /* 16.07:1 */
-      --color-muted: #a4a49f; /* 7.60:1 */
-      --color-rule: #2b2b29;
-      --color-tag-rule: #666662; /* 3.30:1 */
-      --color-accent: #86a8ff; /* 8.21:1 */
-      --color-accent-tint: #232836; /* the accent on this tint: 6.34:1 */
+      --color-bg: #0e1016;
+      --color-surface: #161a24;
+      --color-text: #eceef3; /* 16.38:1, 14.98:1 */
+      --color-muted: #a5abb8; /* 8.26:1, 7.55:1 */
+      --color-rule: #2a3142;
+      --color-tag-rule: #6b7282; /* 3.94:1, 3.61:1 */
+      --color-accent: #86a8ff; /* 8.20:1, 7.50:1 */
+      --color-accent-tint: #232b40; /* the accent on this tint: 6.08:1 */
+
+      /* 8.20:1, 9.06:1, and 9.51:1. Over the full glow and a grid line, 4.89:1 or
+         more. */
+      --gradient-1: #86a8ff;
+      --gradient-2: #c3a3ff;
+      --gradient-3: #f3a0b4;
+
+      --glow-1: rgb(79 118 255 / 0.2);
+      --glow-2: rgb(160 110 255 / 0.14);
+      --grid-line: rgb(134 168 255 / 0.06);
+      --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px -12px rgb(0 0 0 / 0.6);
+      --shadow-card-hover: 0 2px 4px rgb(0 0 0 / 0.3), 0 24px 56px -16px rgb(79 118 255 / 0.35);
     }
   }
 
@@ -131,6 +163,25 @@ const { title } = Astro.props;
     line-height: var(--leading-body);
     /* A long word breaks inside its box, so it never pushes the page sideways (G-1). */
     overflow-wrap: break-word;
+  }
+
+  /* The backdrop of the first screen (D-169): a blueprint grid and a soft glow in the
+     accent colors, both fading out toward the bottom. It is decoration alone, so it
+     sits behind every landmark and takes no pointer. The box covers the width of the
+     window and no more, so it never scrolls the page sideways (G-1). */
+  body::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: -1;
+    height: min(100svh, 56rem);
+    background:
+      radial-gradient(40rem 28rem at 78% 8%, var(--glow-2), transparent 70%),
+      radial-gradient(48rem 32rem at 12% 0%, var(--glow-1), transparent 70%),
+      linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0 / 2.5rem 2.5rem,
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 / 2.5rem 2.5rem;
+    mask-image: linear-gradient(to bottom, black 40%, transparent);
+    pointer-events: none;
   }
 
   h1,
@@ -195,6 +246,19 @@ const { title } = Astro.props;
     a {
       transition: text-decoration-thickness 150ms ease-out;
     }
+
+    .links a {
+      transition:
+        color 150ms ease-out,
+        border-color 150ms ease-out,
+        translate 150ms ease-out;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) and (hover: hover) {
+    .links a:hover {
+      translate: 0 -2px;
+    }
   }
 
   /* The hero rises a few pixels into place. Only `translate` changes, never the
@@ -224,7 +288,7 @@ const { title } = Astro.props;
   /* The page layout (PR-8). Each landmark sits in one centered column. */
 
   main {
-    max-width: 60rem;
+    max-width: 68rem;
     margin-inline: auto;
     padding-inline: var(--gutter);
   }
@@ -249,9 +313,25 @@ const { title } = Astro.props;
     container-type: inline-size;
   }
 
+  /* The name reads as a label above the headline (D-27): the mono face, with a small
+     accent mark before it. */
   .name {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    font-family: var(--font-mono);
     font-size: var(--text-name);
     font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .name::before {
+    content: '';
+    flex: none;
+    width: 0.6em;
+    height: 0.6em;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gradient-1), var(--gradient-3));
   }
 
   h1 {
@@ -262,6 +342,26 @@ const { title } = Astro.props;
     letter-spacing: -0.02em;
     /* Baseline Newly available: a browser without it wraps the line normally (G-6). */
     text-wrap: balance;
+  }
+
+  /* The headline fills with the gradient of D-169. Baseline does not list a clip of
+     the background to the text (web-features 3.40.0), so it adds polish alone (G-6).
+     A browser that cannot clip keeps the plain text color. Forced colors drop the
+     gradient, so the text takes the system color there (WCAG 1.4.3). */
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    .hero h1 {
+      background: linear-gradient(100deg, var(--gradient-1), var(--gradient-2) 55%, var(--gradient-3));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .hero h1 {
+      background: none;
+      color: CanvasText;
+    }
   }
 
   /* A word pair that must not split across a line end (src/pages/index.astro). */
@@ -292,11 +392,27 @@ const { title } = Astro.props;
     text-wrap: balance;
   }
 
-  /* A section heading: About, Projects, and Links in the footer. */
+  /* A section heading: About and Projects. A short gradient bar leads into it. */
   h2 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
     font-size: var(--text-lead);
     font-weight: 650;
     line-height: var(--leading-lead);
+    /* The heading text is a flex item, which keeps its longest word as its minimum
+       width. With the bar beside it, a word must break anywhere to stay inside the
+       page at 320 px with large text (G-1). */
+    overflow-wrap: anywhere;
+  }
+
+  h2::before {
+    content: '';
+    flex: none;
+    width: 1.5rem;
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--gradient-1), var(--gradient-3));
   }
 
   /* The About section of the home page (OQ-3). */
@@ -311,36 +427,78 @@ const { title } = Astro.props;
     max-width: 65ch;
   }
 
-  /* The Projects section of the home page (D-21). Each card draws its own hairline
-     (src/components/ProjectCard.astro). The page ends here, so the section keeps at
-     least 4rem below its last card. With less, the end reads as the start of another
-     card (D-137). */
+  /* The Projects section of the home page (D-21). The page ends here, so the section
+     keeps at least 4rem below its last card. With less, the end reads as the start of
+     another card (D-137). */
   .projects {
     display: flex;
     flex-direction: column;
-    gap: var(--space-m);
+    gap: var(--space-l);
     padding-block: var(--space-section);
     padding-block-end: max(4rem, var(--space-section));
   }
 
-  /* With project cards below it, the hero stops 10rem short of the screen height, so
-     the Projects heading shows at the bottom of the first screen (D-117). The 404
-     page has no cards, so its hero keeps the full height. */
+  /* With project cards below it, the hero takes the height of its content, and the
+     Projects section follows the profile links after a short space (D-173). The
+     space above the name keeps the first screen open. The 404 page has no cards, so
+     its hero keeps the full height. */
   .hero:has(~ .projects) {
-    min-height: calc(100svh - 10rem);
+    min-height: 0;
+    padding-block: clamp(4rem, 18svh, 10rem) var(--space-l);
+  }
+
+  /* The project cards sit in a grid (D-169): two columns on a wide screen, and one
+     column on a phone. A column never gets narrower than 22rem or the full width, so
+     a third card starts a new row. Each card in a row takes the height of the tallest. */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: var(--space-l);
   }
 
   .links {
     display: flex;
     flex-wrap: wrap;
-    gap: 0 var(--space-l);
+    gap: var(--space-s);
+    margin-block-start: var(--space-s);
     padding: 0;
     list-style: none;
     font-size: var(--text-link);
   }
 
+  /* Each profile link is a pill with its icon and its name (D-144, D-169). The name
+     stays visible, and the icon is hidden from assistive technology. The padding
+     makes each link a pointer target well above 24 by 24 CSS pixels (WCAG 2.5.8). */
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    padding: 0.5em 0.9em;
+    border: 1px solid var(--color-tag-rule);
+    border-radius: 999px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-weight: 600;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  .links svg {
+    flex: none;
+    width: 1.1em;
+    height: 1.1em;
+  }
+
+  /* The pill border already marks each profile link as a control, so it needs no
+     underline (WCAG 1.4.1). A pointer that can hover gets the accent. */
+  @media (hover: hover) {
+    .links a:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+  }
+
   /* The padding makes each link a pointer target well above 24 by 24 CSS pixels (WCAG 2.5.8). */
-  .links a,
   .home a {
     display: inline-block;
     padding-block: var(--space-s);

@@ -1,0 +1,8 @@
+{
+  "title": "The Thing Below",
+  "pitch": "Lead a party through a dark fantasy role-playing game where enemies think, supplies run out, and choices close roads.",
+  "status": "In development",
+  "tags": ["C#", "Godot", ".NET"],
+  "links": [{ "label": "Source on GitHub", "href": "https://github.com/nkramber/the-thing-below" }],
+  "order": 3
+}

@@ -8,17 +8,21 @@
 import { readFileSync } from 'node:fs';
 import { chromium } from '@playwright/test';
 
-// The light scheme of the design tokens in src/layouts/Page.astro (D-91).
-const background = '#fafaf8';
-const text = '#151515';
+// The light scheme of the design tokens in src/layouts/Page.astro (D-91, D-169).
+const background = '#f4f5f8';
+const text = '#14161c';
 const accent = '#1f4fd1';
+const gradient = 'linear-gradient(100deg, #1f4fd1, #6d2fd6 55%, #b4235f)';
+const glow = 'radial-gradient(640px 420px at 12% 0%, rgb(31 79 209 / 0.08), transparent 70%), radial-gradient(560px 380px at 88% 10%, rgb(109 47 214 / 0.06), transparent 70%)';
+const grid = 'linear-gradient(rgb(31 79 209 / 0.06) 1px, transparent 1px) 0 0 / 40px 40px, linear-gradient(90deg, rgb(31 79 209 / 0.06) 1px, transparent 1px) 0 0 / 40px 40px';
 
 // Each page loads its font and its icon from a data URL, so no server is necessary.
 const textFace = readFileSync('src/fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2').toString('base64');
 const icon = readFileSync('public/favicon.svg').toString('base64');
 
-// The name, the headline of D-29, and a rule in the accent. The "keep" spans hold
-// the same word pairs as the headline in src/pages/index.astro.
+// The name, the headline of D-29, and a rule, on the grid and the glow of the hero,
+// with the headline in its gradient (D-169). The "keep" spans hold the same word
+// pairs as the headline in src/pages/index.astro.
 const shareImage = `<!doctype html>
 <html lang="en">
 <head>
@@ -38,14 +42,14 @@ const shareImage = `<!doctype html>
     flex-direction: column;
     justify-content: center;
     gap: 32px;
-    background: ${background};
+    background: ${glow}, ${grid}, ${background};
     color: ${text};
     font-family: 'Atkinson Hyperlegible Next', sans-serif;
   }
   p { margin: 0; font-size: 36px; font-weight: 600; }
-  h1 { margin: 0; max-width: 20ch; font-size: 80px; font-weight: 650; line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance; }
+  h1 { margin: 0; max-width: 20ch; font-size: 80px; font-weight: 650; line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance; background: ${gradient}; background-clip: text; color: transparent; }
   .keep { white-space: nowrap; }
-  .rule { width: 112px; height: 10px; background: ${accent}; }
+  .rule { width: 112px; height: 10px; border-radius: 10px; background: ${gradient}; }
 </style>
 </head>
 <body>
